@@ -1,0 +1,18 @@
+{
+    "name": "YellowSquad.Application",
+    "rootNamespace": "YellowSquad.Application",
+    "references": [
+        "GUID:26b82d191b6890848926b9f960099a47",
+        "GUID:c1a201351f2fcb34dad2d362ac290285",
+        "GUID:a65d9a73e86e8a16094732b640e510ef"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
