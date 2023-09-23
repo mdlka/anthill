@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace YellowSquad.HexMath
 {
@@ -6,20 +7,20 @@ namespace YellowSquad.HexMath
     {
         private const float Sqrt3 = 1.73205080757f;
 
-        public static AxialCoordinate ConvertToAxialCoordinate(this Vector2 vector2, float hexGridScale)
+        public static AxialCoordinate ToAxialCoordinate(this Vector2 value, float hexGridScale)
         {
-            float q = 2f / 3f * vector2.x / hexGridScale;
-            float r = (-1f / 3f * vector2.x + Sqrt3 / 3f * vector2.y) / hexGridScale;
+            float q = 2f / 3f * value.x / hexGridScale;
+            float r = (-1f / 3f * value.x + Sqrt3 / 3f * value.y) / hexGridScale;
 
             return new FracAxialCoordinate(q, r).AxialRound();
         }
         
-        public static AxialCoordinate ConvertToAxialCoordinate(this Vector3 vector3, float hexGridScale)
+        public static AxialCoordinate ToAxialCoordinate(this Vector3 value, float hexGridScale)
         {
-            return ConvertToAxialCoordinate(new Vector2(vector3.x, vector3.z), hexGridScale);
+            return new Vector2(value.x, value.z).ToAxialCoordinate(hexGridScale);
         }
 
-        public static Vector2 ConvertToVector2(this AxialCoordinate axialCoordinate, float hexGridScale)
+        public static Vector2 ToVector2(this AxialCoordinate axialCoordinate, float hexGridScale)
         {
             float x = axialCoordinate.Q * 1.5f * hexGridScale;
             float y = hexGridScale * Sqrt3 * (axialCoordinate.R + axialCoordinate.Q / 2f);
@@ -27,10 +28,26 @@ namespace YellowSquad.HexMath
             return new Vector2(x, y);
         }
 
-        public static Vector3 ConvertToVector3(this AxialCoordinate axialCoordinate, float hexGridScale)
+        public static Vector3 ToVector3(this AxialCoordinate axialCoordinate, float hexGridScale)
         {
-            Vector2 vector2 = axialCoordinate.ConvertToVector2(hexGridScale);
+            Vector2 vector2 = axialCoordinate.ToVector2(hexGridScale);
             return new Vector3(vector2.x, 0, vector2.y);
+        }
+        
+        public static Vector3 HexCornerPosition(this AxialCoordinate axialCoordinate, int cornerIndex, float hexGridScale = 1f)
+        {
+            if (cornerIndex is < 0 or > 5)
+                throw new ArgumentOutOfRangeException(nameof(cornerIndex));
+            
+            Vector3 centerPosition = axialCoordinate.ToVector3(hexGridScale);
+            
+            float angle = 60f * cornerIndex;
+            float radians = angle * Mathf.Deg2Rad;
+            
+            return new Vector3(
+                centerPosition.x + hexGridScale * Mathf.Cos(radians), 
+                0f, 
+                centerPosition.z + hexGridScale * Mathf.Sin(radians));
         }
     }
 }

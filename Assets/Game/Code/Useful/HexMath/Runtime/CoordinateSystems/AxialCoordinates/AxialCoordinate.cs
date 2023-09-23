@@ -23,14 +23,13 @@ namespace YellowSquad.HexMath
         /// <summary>
         /// Estimated path distance without obstacles.
         /// </summary>
-        public double DistanceEstimate() 
-            => Math.Max(Math.Abs(Q + R), Math.Max(Math.Abs(Q), Math.Abs(R)));
+        public double DistanceEstimate()
+        {
+            return Math.Max(Math.Abs(Q + R), Math.Max(Math.Abs(Q), Math.Abs(R)));
+        }
 
-        public bool Equals(AxialCoordinate other)
-            => Q == other.Q && R == other.R;
-
-        public override bool Equals(object obj) 
-            => obj is AxialCoordinate other && Equals(other);
+        public bool Equals(AxialCoordinate other) => Q == other.Q && R == other.R;
+        public override bool Equals(object obj) => obj is AxialCoordinate other && Equals(other);
 
         public override int GetHashCode() => _hash;
         public override string ToString() => $"({Q}, {R})";

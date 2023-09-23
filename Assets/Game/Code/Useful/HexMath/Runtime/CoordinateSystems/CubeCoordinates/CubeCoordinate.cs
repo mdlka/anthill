@@ -22,8 +22,7 @@ namespace YellowSquad.HexMath
         public int R { get; }
         public int S { get; }
         
-        public AxialCoordinate ToAxial() 
-            => new AxialCoordinate(Q, R);
+        public AxialCoordinate ToAxial() => new AxialCoordinate(Q, R);
 
         public bool Equals(CubeCoordinate other)
             => Q == other.Q && R == other.R && S == other.S;
