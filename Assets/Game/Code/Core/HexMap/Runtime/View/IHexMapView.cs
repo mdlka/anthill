@@ -5,6 +5,6 @@ namespace YellowSquad.Core.HexMap
 {
     public interface IHexMapView
     {
-        void Render(ICollection<AxialCoordinate> hexPositions);
+        void Render(float mapScale, ICollection<AxialCoordinate> hexPositions);
     }
 }

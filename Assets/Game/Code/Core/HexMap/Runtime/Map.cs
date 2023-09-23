@@ -5,10 +5,12 @@ namespace YellowSquad.Core.HexMap
 {
     public class Map : IHexMap
     {
+        private readonly float _mapScale;
         private readonly Dictionary<AxialCoordinate, IHex> _hexes;
         
-        public Map(IReadOnlyDictionary<AxialCoordinate, IHex> hexes)
+        public Map(float mapScale, IReadOnlyDictionary<AxialCoordinate, IHex> hexes)
         {
+            _mapScale = mapScale;
             _hexes = new Dictionary<AxialCoordinate, IHex>(hexes);
         }
 
@@ -19,7 +21,7 @@ namespace YellowSquad.Core.HexMap
 
         public void Visualize(IHexMapView view)
         {
-            view.Render(_hexes.Keys);
+            view.Render(_mapScale, _hexes.Keys);
         }
     }
 }

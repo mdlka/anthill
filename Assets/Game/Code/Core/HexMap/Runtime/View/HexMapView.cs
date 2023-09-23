@@ -12,6 +12,7 @@ namespace YellowSquad.Core.HexMap
 
         [SerializeField] private Mesh _hexMesh;
         [SerializeField] private Material _hexMaterial;
+        [SerializeField, Min(0.01f)] private Vector3 _hexScale;
 
         private bool _hasChanges;
         private RenderParams _renderParams;
@@ -23,19 +24,23 @@ namespace YellowSquad.Core.HexMap
 
         private void Update()
         {
+            if (_matrices.Count == 0)
+                return;
+
             Graphics.RenderMeshInstanced(_renderParams, _hexMesh, 0, _matrices);
         }
 
-        public void Render(ICollection<AxialCoordinate> hexPositions)
+        public void Render(float mapScale, ICollection<AxialCoordinate> hexPositions)
         {
             RemoveExtraPositions(hexPositions);
-            AddNewPositions(hexPositions);
+            AddNewPositions(mapScale, hexPositions);
 
             if (_hasChanges == false)
                 return;
             
             _matrices.Clear();
             _matrices.AddRange(_matricesByPosition.Values);
+            _hasChanges = false;
         }
         
         private void RemoveExtraPositions(ICollection<AxialCoordinate> hexPositions)
@@ -44,7 +49,7 @@ namespace YellowSquad.Core.HexMap
             {
                 var position = _lastRenderedPositions[i];
                 
-                if (_lastRenderedPositions.Contains(position))
+                if (hexPositions.Contains(position))
                     continue;
 
                 _lastRenderedPositions.Remove(position);
@@ -54,7 +59,7 @@ namespace YellowSquad.Core.HexMap
             }
         }
 
-        private void AddNewPositions(ICollection<AxialCoordinate> hexPositions)
+        private void AddNewPositions(float mapScale, ICollection<AxialCoordinate> hexPositions)
         {
             foreach (var position in hexPositions)
             {
@@ -62,7 +67,7 @@ namespace YellowSquad.Core.HexMap
                     continue;
                 
                 _lastRenderedPositions.Add(position);
-                _matricesByPosition.Add(position, MatrixBy(position.ToVector3()));
+                _matricesByPosition.Add(position, MatrixBy(position.ToVector3(mapScale)));
 
                 _hasChanges = true;
             }
@@ -70,7 +75,8 @@ namespace YellowSquad.Core.HexMap
 
         private Matrix4x4 MatrixBy(Vector3 worldPosition)
         {
-            return Matrix4x4.TRS(worldPosition, Quaternion.identity, Vector3.one);
+            // TODO: Maybe the rotation will need to be removed
+            return Matrix4x4.TRS(worldPosition, Quaternion.Euler(0, 30f, 0f), _hexScale);
         }
     }
 }
