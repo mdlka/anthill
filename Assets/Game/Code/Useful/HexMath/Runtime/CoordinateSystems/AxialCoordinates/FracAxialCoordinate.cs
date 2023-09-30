@@ -22,7 +22,7 @@ namespace YellowSquad.HexMath
         public float R { get; }
 
         public AxialCoordinate AxialRound() 
-            => new FracCubeCoordinate(Q, R, -Q - R).CubeRound().ToAxial();
+            => new FracCubeCoordinate(Q, R).CubeRound().ToAxial();
 
         public bool Equals(FracAxialCoordinate other) 
             => Math.Abs(Q - other.Q) < Epsilon && Math.Abs(R - other.R) < Epsilon;

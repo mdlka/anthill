@@ -8,10 +8,17 @@ namespace YellowSquad.HexMath
     /// </summary>
     public readonly struct FracCubeCoordinate : IEquatable<FracCubeCoordinate>
     {
+        private const float Epsilon = 1e-6f;
+        
         private readonly int _hash;
+        
+        public FracCubeCoordinate(float q, float r) : this(q, r, -q - r) { }
 
         public FracCubeCoordinate(float q, float r, float s)
         {
+            if (q + r + s > Epsilon)
+                throw new ArgumentException("q + r + s must equals to 0");
+            
             Q = q;
             R = r;
             S = s;
@@ -43,7 +50,7 @@ namespace YellowSquad.HexMath
         }
 
         public bool Equals(FracCubeCoordinate other)
-            => Math.Abs(Q - other.Q) < float.Epsilon && Math.Abs(R - other.R) < float.Epsilon && Math.Abs(S - other.S) < float.Epsilon;
+            => Math.Abs(Q - other.Q) < Epsilon && Math.Abs(R - other.R) < Epsilon && Math.Abs(S - other.S) < Epsilon;
 
         public override bool Equals(object obj) 
             => obj is FracCubeCoordinate other && Equals(other);

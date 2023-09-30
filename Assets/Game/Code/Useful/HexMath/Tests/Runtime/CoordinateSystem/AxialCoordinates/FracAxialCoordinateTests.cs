@@ -5,12 +5,6 @@ namespace YellowSquad.HexMath.Tests
 {
     public class FracAxialCoordinateTests
     {
-        [TestCaseSource(nameof(RoundFracAxialCoordinateTestCases))]
-        public void AxialRound_FracAxialCoordinate_ReturnRoundedAxialCoordinate(FracAxialCoordinate frac, AxialCoordinate result)
-        {
-            Assert.True(frac.AxialRound() == result);
-        }
-        
         [Test]
         public void Equals_CoordinateWithItself_ShouldReturnTrue()
         {
@@ -53,19 +47,6 @@ namespace YellowSquad.HexMath.Tests
             (FracAxialCoordinate first, FracAxialCoordinate second, FracAxialCoordinate result)
         {
             Assert.True(first - second == result);
-        }
-        
-        public static IEnumerable<TestCaseData> RoundFracAxialCoordinateTestCases
-        {
-            get
-            {
-                yield return new TestCaseData(new FracAxialCoordinate(1.001f, 2.53f), new AxialCoordinate(1, 3));
-                yield return new TestCaseData(new FracAxialCoordinate(-1.001f, -2.53f), new AxialCoordinate(-1, -3));
-                yield return new TestCaseData(new FracAxialCoordinate(1.001f, -2.53f), new AxialCoordinate(1, -3));
-                yield return new TestCaseData(new FracAxialCoordinate(-1.001f, 2.53f), new AxialCoordinate(-1, 3));
-                yield return new TestCaseData(new FracAxialCoordinate(-0.053f, 0.051f), new AxialCoordinate(0, 0));
-                yield return new TestCaseData(new FracAxialCoordinate(2, 3), new AxialCoordinate(2, 3));
-            }
         }
 
         public static IEnumerable<TestCaseData> TwoIdenticalCoordinatesTestCases

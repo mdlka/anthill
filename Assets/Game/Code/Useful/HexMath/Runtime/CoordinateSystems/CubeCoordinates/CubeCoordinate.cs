@@ -10,8 +10,13 @@ namespace YellowSquad.HexMath
     {
         private readonly int _hash;
 
+        public CubeCoordinate(int q, int r) : this(q, r, -q - r) { }
+
         public CubeCoordinate(int q, int r, int s)
         {
+            if (q + r + s != 0)
+                throw new ArgumentException("q + r + s must equals to 0");
+            
             Q = q;
             R = r;
             S = s;
