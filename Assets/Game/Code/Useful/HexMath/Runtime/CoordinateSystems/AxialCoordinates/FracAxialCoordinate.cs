@@ -8,6 +8,7 @@ namespace YellowSquad.HexMath
     /// </summary>
     public readonly struct FracAxialCoordinate : IEquatable<FracAxialCoordinate>
     {
+        private const float Epsilon = 1e-6f;
         private readonly int _hash;
 
         public FracAxialCoordinate(float q, float r)
@@ -24,7 +25,7 @@ namespace YellowSquad.HexMath
             => new FracCubeCoordinate(Q, R, -Q - R).CubeRound().ToAxial();
 
         public bool Equals(FracAxialCoordinate other) 
-            => Math.Abs(Q - other.Q) < float.Epsilon && Math.Abs(R - other.R) < float.Epsilon;
+            => Math.Abs(Q - other.Q) < Epsilon && Math.Abs(R - other.R) < Epsilon;
 
         public override bool Equals(object obj) 
             => obj is FracAxialCoordinate other && Equals(other);
