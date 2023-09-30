@@ -9,7 +9,7 @@ namespace YellowSquad.Application
 {
     public class Game : MonoBehaviour
     {
-        [SerializeField] private Vector2Int _area;
+        [SerializeField, Range(0, 10)] private int _range;
         [SerializeField, Min(0.01f)] private float _maxScale;
         [SerializeField, InterfaceType(typeof(IHexMapView))] private Object _hexMapViewObject;
 
@@ -17,10 +17,15 @@ namespace YellowSquad.Application
         {
             var hexes = new Dictionary<AxialCoordinate, IHex>();
             
-            for (int i = _area.x; i < _area.y; i++)
-                for (int j = _area.x; j < _area.y; j++)
-                    hexes.TryAdd(new AxialCoordinate(i, j), new NullableHex());
-            
+            for (int q = -_range; q <= _range; q++) 
+            {
+                int r1 = Mathf.Max(-_range, -q - _range);
+                int r2 = Mathf.Min(_range, -q + _range);
+                
+                for (int r = r1; r <= r2; r++)
+                    hexes.TryAdd(new AxialCoordinate(q, r), new NullableHex());
+            }
+
             var hexMap = new Map(_maxScale, hexes);
             hexMap.Visualize(_hexMapViewObject as IHexMapView);
 
