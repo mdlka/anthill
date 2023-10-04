@@ -23,7 +23,7 @@ namespace YellowSquad.Application
                 int r2 = Mathf.Min(_range, -q + _range);
                 
                 for (int r = r1; r <= r2; r++)
-                    hexes.TryAdd(new AxialCoordinate(q, r), new NullableHex());
+                    hexes.TryAdd(new AxialCoordinate(q, r), new NullHex());
             }
 
             var hexMap = new Map(_maxScale, hexes);
