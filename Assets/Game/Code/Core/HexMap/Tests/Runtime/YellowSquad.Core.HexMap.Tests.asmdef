@@ -1,0 +1,23 @@
+{
+    "name": "YellowSquad.Core.HexMap.Tests",
+    "rootNamespace": "YellowSquad.Core.HexMap.Tests",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "YellowSquad.Core.HexMap",
+        "YellowSquad.HexMath"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

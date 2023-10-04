@@ -27,11 +27,17 @@ namespace YellowSquad.Core.HexMap
 
         public void AddHex(AxialCoordinate position, IHex hex)
         {
+            if (_hexes.ContainsKey(position))
+                throw new InvalidOperationException();
+            
             _hexes.Add(position, hex);
         }
 
         public void RemoveHex(AxialCoordinate position)
         {
+            if (_hexes.ContainsKey(position) == false)
+                throw new InvalidOperationException();
+            
             _hexes.Remove(position);
         }
 
