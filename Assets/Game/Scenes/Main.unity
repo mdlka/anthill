@@ -407,8 +407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aca19cc8f94431e4b85891a7c559ed49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _range: 2
-  _maxScale: 0.57
+  _hexMapFactory: {fileID: 11400000, guid: 96aaeffa1b8310b4c90c555b02fe8518, type: 2}
   _hexMapViewObject: {fileID: 2052305926}
 --- !u!1 &2052305925
 GameObject:

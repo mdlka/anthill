@@ -4,21 +4,23 @@ using YellowSquad.HexMath;
 
 namespace YellowSquad.Core.HexMap
 {
-    public class Map : IHexMap
+    internal class Map : IHexMap
     {
-        private readonly float _mapScale;
+        private readonly float _scale;
         private readonly Dictionary<AxialCoordinate, IHex> _hexes;
 
-        public Map(float mapScale = 1f) : this(mapScale, new Dictionary<AxialCoordinate, IHex>()) { }
+        public Map(float scale = 1f) : this(scale, new Dictionary<AxialCoordinate, IHex>()) { }
         
-        public Map(float mapScale, IReadOnlyDictionary<AxialCoordinate, IHex> hexes)
+        public Map(float scale, IReadOnlyDictionary<AxialCoordinate, IHex> hexes)
         {
-            if (mapScale <= 0)
-                throw new ArgumentOutOfRangeException(nameof(mapScale));
+            if (scale <= 0)
+                throw new ArgumentOutOfRangeException(nameof(scale));
             
-            _mapScale = mapScale;
+            _scale = scale;
             _hexes = new Dictionary<AxialCoordinate, IHex>(hexes);
         }
+
+        public float Scale => _scale;
 
         public bool HasHexIn(AxialCoordinate position)
         {
@@ -43,7 +45,12 @@ namespace YellowSquad.Core.HexMap
 
         public void Visualize(IHexMapView view)
         {
-            view.Render(_mapScale, _hexes.Keys);
+            view.Render(_scale, _hexes.Keys);
+        }
+
+        public override string ToString()
+        {
+            return string.Join(' ', _hexes);
         }
     }
 }
