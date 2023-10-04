@@ -1,0 +1,18 @@
+{
+    "name": "YellowSquad.Core.HexMap.Editor",
+    "rootNamespace": "YellowSquad.Core.HexMap.Editor",
+    "references": [
+        "GUID:26b82d191b6890848926b9f960099a47"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

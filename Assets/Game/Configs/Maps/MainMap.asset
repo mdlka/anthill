@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a18a57fa8efd47a9857fa2c0bdd0ca10, type: 3}
   m_Name: MainMap
   m_EditorClassIdentifier: 
-  _range: 2
-  _maxScale: 0.57
+  _mapRange: 2
+  _mapScale: 0.57

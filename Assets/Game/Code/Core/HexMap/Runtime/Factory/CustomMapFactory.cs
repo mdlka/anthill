@@ -5,12 +5,14 @@ using YellowSquad.HexMath;
 namespace YellowSquad.Core.HexMap
 {
     [CreateAssetMenu(menuName = "Anthill/Maps/Create HexMapFactory", fileName = "HexMapFactory", order = 56)]
-    public class HexMapFactory : ScriptableObject, IHexMapFactory
+    public class CustomMapFactory : BaseMapFactory
     {
         [SerializeField, Range(0, 10)] private int _mapRange = 2;
-        [SerializeField, Min(0.01f)] private float _mapScale = 0.57f;   
+        [SerializeField, Min(0.01f)] private float _mapScale = 0.57f;
+
+        internal float MapScale => _mapScale;
         
-        public IHexMap Create()
+        public override IHexMap Create()
         {
             var hexes = new Dictionary<AxialCoordinate, IHex>();
             

@@ -8,12 +8,12 @@ namespace YellowSquad.Application
 {
     public class Game : MonoBehaviour
     {
-        [SerializeField] private HexMapFactory _hexMapFactory;
+        [SerializeField] private BaseMapFactory _mapFactory;
         [SerializeField, InterfaceType(typeof(IHexMapView))] private Object _hexMapViewObject;
 
         private IEnumerator Start()
         {
-            var hexMap = _hexMapFactory.Create();
+            var hexMap = _mapFactory.Create();
             hexMap.Visualize(_hexMapViewObject as IHexMapView);
             
             while (true)
