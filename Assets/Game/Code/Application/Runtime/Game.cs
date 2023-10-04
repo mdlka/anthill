@@ -11,26 +11,39 @@ namespace YellowSquad.Application
         [SerializeField] private BaseMapFactory _mapFactory;
         [SerializeField, InterfaceType(typeof(IHexMapView))] private Object _hexMapViewObject;
 
+        private Camera _camera;
+
         private IEnumerator Start()
         {
             var hexMap = _mapFactory.Create();
             hexMap.Visualize(_hexMapViewObject as IHexMapView);
             
+            _camera = Camera.main;
+            
             while (true)
             {
-                yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+                yield return null;
+                yield return new WaitUntil(() => Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1));
 
-                var clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Vector3 mouseClickPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _camera.transform.position.y);
+                var targetPosition = _camera.ScreenToWorldPoint(mouseClickPosition).ToAxialCoordinate(hexMap.Scale);
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (hexMap.HasHexIn(targetPosition) == false)
+                        continue;
                 
-                if (Physics.Raycast(clickRay, out RaycastHit hitInfo) == false)
-                    continue;
+                    hexMap.RemoveHex(targetPosition);
+                }
 
-                var position = hitInfo.point.ToAxialCoordinate(hexMap.Scale);
-
-                if (hexMap.HasHexIn(position) == false)
-                    continue;
+                if (Input.GetMouseButtonDown(1))
+                {
+                    if (hexMap.HasHexIn(targetPosition))
+                        continue;
                 
-                hexMap.RemoveHex(position);
+                    hexMap.AddHex(targetPosition, new NullHex());
+                }
+                
                 hexMap.Visualize(_hexMapViewObject as IHexMapView);
             }
         }
