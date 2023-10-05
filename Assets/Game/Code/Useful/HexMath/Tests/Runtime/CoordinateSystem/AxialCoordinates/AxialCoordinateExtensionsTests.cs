@@ -25,22 +25,6 @@ namespace YellowSquad.HexMath.Tests
             Assert.True(coordinate.HexCornerPosition(cornerIndex) == result);
         }
 
-        [Test]
-        public void HexCornerPosition_CornerIndexLessThan0_ShouldThrowException()
-        {
-            AxialCoordinate coordinate = new AxialCoordinate(0, 0);
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => coordinate.HexCornerPosition(-1));
-        }
-        
-        [Test]
-        public void HexCornerPosition_CornerIndexMoreThan5_ShouldThrowException()
-        {
-            AxialCoordinate coordinate = new AxialCoordinate(0, 0);
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => coordinate.HexCornerPosition(6));
-        }
-
         public static IEnumerable<TestCaseData> Vector2ToAxialCoordinateTestCases
         {
             get

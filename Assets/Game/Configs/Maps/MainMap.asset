@@ -12,5 +12,99 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a18a57fa8efd47a9857fa2c0bdd0ca10, type: 3}
   m_Name: MainMap
   m_EditorClassIdentifier: 
-  _mapRange: 2
-  _mapScale: 0.57
+  _mapScale: 0.5775
+  _hexes:
+  - _position:
+      <Q>k__BackingField: 0
+      <R>k__BackingField: 0
+    _hex:
+      rid: 8789425713332093407
+  - _position:
+      <Q>k__BackingField: 2
+      <R>k__BackingField: 0
+    _hex:
+      rid: 8789425713332093445
+  - _position:
+      <Q>k__BackingField: 1
+      <R>k__BackingField: 1
+    _hex:
+      rid: 8789425713332093446
+  - _position:
+      <Q>k__BackingField: 0
+      <R>k__BackingField: 2
+    _hex:
+      rid: 8789425713332093447
+  - _position:
+      <Q>k__BackingField: -1
+      <R>k__BackingField: 2
+    _hex:
+      rid: 8789425713332093448
+  - _position:
+      <Q>k__BackingField: -2
+      <R>k__BackingField: 2
+    _hex:
+      rid: 8789425713332093449
+  - _position:
+      <Q>k__BackingField: -2
+      <R>k__BackingField: 1
+    _hex:
+      rid: 8789425713332093450
+  - _position:
+      <Q>k__BackingField: -2
+      <R>k__BackingField: 0
+    _hex:
+      rid: 8789425713332093451
+  - _position:
+      <Q>k__BackingField: -1
+      <R>k__BackingField: -1
+    _hex:
+      rid: 8789425713332093452
+  - _position:
+      <Q>k__BackingField: 0
+      <R>k__BackingField: -2
+    _hex:
+      rid: 8789425713332093453
+  - _position:
+      <Q>k__BackingField: 1
+      <R>k__BackingField: -2
+    _hex:
+      rid: 8789425713332093454
+  - _position:
+      <Q>k__BackingField: 2
+      <R>k__BackingField: -2
+    _hex:
+      rid: 8789425713332093455
+  - _position:
+      <Q>k__BackingField: 2
+      <R>k__BackingField: -1
+    _hex:
+      rid: 8789425713332093456
+  references:
+    version: 2
+    RefIds:
+    - rid: 8789425713332093407
+      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+    - rid: 8789425713332093445
+      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+    - rid: 8789425713332093446
+      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+    - rid: 8789425713332093447
+      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+    - rid: 8789425713332093448
+      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+    - rid: 8789425713332093449
+      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+    - rid: 8789425713332093450
+      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+    - rid: 8789425713332093451
+      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+    - rid: 8789425713332093452
+      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+    - rid: 8789425713332093453
+      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+    - rid: 8789425713332093454
+      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+    - rid: 8789425713332093455
+      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+    - rid: 8789425713332093456
+      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}

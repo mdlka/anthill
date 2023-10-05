@@ -41,7 +41,7 @@ namespace YellowSquad.Application
                     if (hexMap.HasHexIn(targetPosition))
                         continue;
                 
-                    hexMap.AddHex(targetPosition, new NullHex());
+                    hexMap.AddHex(targetPosition, new EmptyHex());
                 }
                 
                 hexMap.Visualize(_hexMapViewObject as IHexMapView);

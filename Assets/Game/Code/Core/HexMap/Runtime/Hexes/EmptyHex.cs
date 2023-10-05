@@ -1,4 +1,4 @@
 ﻿namespace YellowSquad.Core.HexMap
 {
-    public class NullHex : IHex { }
+    public class EmptyHex : IHex { }
 }

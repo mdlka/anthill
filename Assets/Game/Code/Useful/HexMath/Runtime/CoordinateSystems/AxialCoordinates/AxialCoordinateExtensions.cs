@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace YellowSquad.HexMath
 {
@@ -36,9 +35,6 @@ namespace YellowSquad.HexMath
         
         public static Vector3 HexCornerPosition(this AxialCoordinate axialCoordinate, int cornerIndex, float hexGridScale = 1f)
         {
-            if (cornerIndex is < 0 or > 5)
-                throw new ArgumentOutOfRangeException(nameof(cornerIndex));
-            
             Vector3 centerPosition = axialCoordinate.ToVector3(hexGridScale);
             
             float angle = 60f * cornerIndex;
