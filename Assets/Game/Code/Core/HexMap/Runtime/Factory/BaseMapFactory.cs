@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace YellowSquad.Core.HexMap
+namespace YellowSquad.Anthill.Core.HexMap
 {
     public abstract class BaseMapFactory : ScriptableObject, IHexMapFactory
     {

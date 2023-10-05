@@ -1,4 +1,4 @@
-﻿namespace YellowSquad.Core.HexMap.Tests
+﻿namespace YellowSquad.Anthill.Core.HexMap.Tests
 {
     internal class TestHex : IHex { }
 }

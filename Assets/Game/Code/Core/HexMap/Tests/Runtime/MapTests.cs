@@ -2,7 +2,7 @@ using System;
 using NUnit.Framework;
 using YellowSquad.HexMath;
 
-namespace YellowSquad.Core.HexMap.Tests
+namespace YellowSquad.Anthill.Core.HexMap.Tests
 {
     public class MapTests
     {

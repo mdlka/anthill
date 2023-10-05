@@ -2,7 +2,7 @@
 using YellowSquad.HexMath;
 using UnityEngine;
 
-namespace YellowSquad.Core.HexMap
+namespace YellowSquad.Anthill.Core.HexMap
 {
     internal class HexMapView : MonoBehaviour, IHexMapView
     {

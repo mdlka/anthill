@@ -1,6 +1,6 @@
 ﻿using YellowSquad.HexMath;
 
-namespace YellowSquad.Core.HexMap
+namespace YellowSquad.Anthill.Core.HexMap
 {
     public interface IHexMap
     {

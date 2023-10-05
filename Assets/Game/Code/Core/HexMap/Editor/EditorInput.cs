@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace YellowSquad.Core.HexMap.Editor
+namespace YellowSquad.Anthill.Core.HexMap.Editor
 {
     internal class EditorInput
     {

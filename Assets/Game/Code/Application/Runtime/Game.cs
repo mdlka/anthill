@@ -1,10 +1,10 @@
 using System.Collections;
 using UnityEngine;
-using YellowSquad.Core.HexMap;
+using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.HexMath;
 using Object = UnityEngine.Object;
 
-namespace YellowSquad.Application
+namespace YellowSquad.Anthill.Application
 {
     public class Game : MonoBehaviour
     {

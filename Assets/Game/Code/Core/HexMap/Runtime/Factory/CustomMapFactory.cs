@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using YellowSquad.HexMath;
 
-namespace YellowSquad.Core.HexMap
+namespace YellowSquad.Anthill.Core.HexMap
 {
     [CreateAssetMenu(menuName = "Anthill/Maps/Create HexMapFactory", fileName = "HexMapFactory", order = 56)]
     public class CustomMapFactory : BaseMapFactory

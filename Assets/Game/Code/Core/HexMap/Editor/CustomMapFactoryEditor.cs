@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using YellowSquad.HexMath;
 
-namespace YellowSquad.Core.HexMap.Editor
+namespace YellowSquad.Anthill.Core.HexMap.Editor
 {
     [CustomEditor(typeof(CustomMapFactory))]
     public class CustomMapFactoryEditor : UnityEditor.Editor

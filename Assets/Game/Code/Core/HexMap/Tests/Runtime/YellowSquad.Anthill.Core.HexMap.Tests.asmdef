@@ -1,11 +1,11 @@
 {
-    "name": "YellowSquad.Core.HexMap.Tests",
-    "rootNamespace": "YellowSquad.Core.HexMap.Tests",
+    "name": "YellowSquad.Anthill.Core.HexMap.Tests",
+    "rootNamespace": "YellowSquad.Anthill.Core.HexMap.Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "YellowSquad.Core.HexMap",
-        "YellowSquad.HexMath"
+        "YellowSquad.HexMath",
+        "YellowSquad.Anthill.Core.HexMap"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
