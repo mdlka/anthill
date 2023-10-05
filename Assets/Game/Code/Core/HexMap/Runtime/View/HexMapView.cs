@@ -75,7 +75,6 @@ namespace YellowSquad.Anthill.Core.HexMap
 
         private Matrix4x4 MatrixBy(Vector3 worldPosition)
         {
-            // TODO: Maybe the rotation will need to be removed
             return Matrix4x4.TRS(worldPosition, Quaternion.Euler(0, 30f, 0f), _hexScale);
         }
     }
