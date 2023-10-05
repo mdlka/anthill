@@ -71,7 +71,7 @@ namespace YellowSquad.Core.HexMap.Editor
                         _customMapFactory.RemoveHex(targetPosition);
                         
                 }
-                catch (Exception) { /* ignored*/ }
+                catch (Exception) { /* ignored */ }
 
                 currentEvent.Use();
             }
