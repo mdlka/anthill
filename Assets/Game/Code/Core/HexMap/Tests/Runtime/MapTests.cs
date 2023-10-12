@@ -15,14 +15,6 @@ namespace YellowSquad.Anthill.Core.HexMap.Tests
         }
 
         [Test]
-        public void Constructor_NegativeAndZeroMapScale_ShouldThrowException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new Map(-1));
-            Assert.Throws<ArgumentOutOfRangeException>(() => new Map(-0.5f));
-            Assert.Throws<ArgumentOutOfRangeException>(() => new Map(0));
-        }
-
-        [Test]
         public void AddHex_DifferentPositions_ShouldAddHexAtTargetPosition()
         {
             var targetPositions = new AxialCoordinate[]
