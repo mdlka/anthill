@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using YellowSquad.Anthill.Core.AStarPathfinding;
 using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.HexMath;
 using Object = UnityEngine.Object;
@@ -12,39 +13,65 @@ namespace YellowSquad.Anthill.Application
         [SerializeField, InterfaceType(typeof(IHexMapView))] private Object _hexMapViewObject;
 
         private Camera _camera;
+        private IHexMap _map;
 
         private IEnumerator Start()
         {
-            var hexMap = _mapFactory.Create();
-            hexMap.Visualize(_hexMapViewObject as IHexMapView);
-            
+            _map = _mapFactory.Create();
+            _map.Visualize(_hexMapViewObject as IHexMapView);
+
+            var path = new Path(new MapMovePolicy(_map));
+
             _camera = Camera.main;
             
             while (true)
             {
                 yield return null;
-                yield return new WaitUntil(() => Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1));
+                yield return new WaitUntil(() => Input.anyKey);
 
                 Vector3 mouseClickPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _camera.transform.position.y);
-                var targetPosition = _camera.ScreenToWorldPoint(mouseClickPosition).ToAxialCoordinate(hexMap.Scale);
+                var targetPosition = _camera.ScreenToWorldPoint(mouseClickPosition).ToAxialCoordinate(_map.Scale);
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (hexMap.HasHexIn(targetPosition) == false)
+                    if (_map.HasHexIn(targetPosition) == false)
                         continue;
                 
-                    hexMap.RemoveHex(targetPosition);
+                    _map.RemoveHex(targetPosition);
+                }
+
+                if (Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    if (_map.HasHexIn(targetPosition))
+                        continue;
+                
+                    _map.AddHex(targetPosition, new EmptyHex());
+                }
+                
+                if (Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    if (_map.HasHexIn(targetPosition))
+                        continue;
+                
+                    _map.AddHex(targetPosition, new ObstacleHex());
                 }
 
                 if (Input.GetMouseButtonDown(1))
                 {
-                    if (hexMap.HasHexIn(targetPosition))
+                    Debug.Log($"Try find path from (0, 0) to {targetPosition}");
+
+                    if (path.Calculate(new AxialCoordinate(0, 0), targetPosition, out var result) == false)
                         continue;
-                
-                    hexMap.AddHex(targetPosition, new EmptyHex());
+
+                    Debug.Log(string.Join(' ', result));
+                }
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    Debug.Log(_map.ToString());
                 }
                 
-                hexMap.Visualize(_hexMapViewObject as IHexMapView);
+                _map.Visualize(_hexMapViewObject as IHexMapView);
             }
         }
     }

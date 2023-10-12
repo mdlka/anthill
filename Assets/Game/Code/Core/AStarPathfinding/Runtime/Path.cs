@@ -34,7 +34,7 @@ namespace YellowSquad.Anthill.Core.AStarPathfinding
             _output = new List<AxialCoordinate>(initialCapacity);
         }
 
-        public bool Calculate(AxialCoordinate start, AxialCoordinate target, out IReadOnlyCollection<AxialCoordinate> path)
+        public bool Calculate(AxialCoordinate start, AxialCoordinate target, out IReadOnlyList<AxialCoordinate> path)
         {
             if (GenerateNodes(start, target, _movePolicy) == false)
             {

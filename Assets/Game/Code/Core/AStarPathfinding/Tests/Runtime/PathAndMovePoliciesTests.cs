@@ -13,7 +13,7 @@ namespace YellowSquad.Anthill.Core.AStarPathfinding.Tests
         {
             var path = new Path(movePolicy);
 
-            IReadOnlyCollection<AxialCoordinate> result;
+            IReadOnlyList<AxialCoordinate> result;
 
             path.Calculate(new AxialCoordinate(0, 0), new AxialCoordinate(3, 6), out result);
             Assert.AreEqual(10, result.Count);
@@ -33,7 +33,7 @@ namespace YellowSquad.Anthill.Core.AStarPathfinding.Tests
         {
             var path = new Path(movePolicy);
 
-            IReadOnlyCollection<AxialCoordinate> result;
+            IReadOnlyList<AxialCoordinate> result;
 
             path.Calculate(new AxialCoordinate(0, 0), new AxialCoordinate(3, 1), out result);
             Assert.AreEqual(6, result.Count);
@@ -59,7 +59,7 @@ namespace YellowSquad.Anthill.Core.AStarPathfinding.Tests
         {
             var path = new Path(movePolicy, maxSteps: 100);
 
-            IReadOnlyCollection<AxialCoordinate> result;
+            IReadOnlyList<AxialCoordinate> result;
 
             path.Calculate(new AxialCoordinate(0, 0), new AxialCoordinate(3, 1), out result);
             Assert.AreEqual(0, result.Count);

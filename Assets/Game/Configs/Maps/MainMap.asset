@@ -83,28 +83,28 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 8789425713332093407
-      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
     - rid: 8789425713332093445
-      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
     - rid: 8789425713332093446
-      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
     - rid: 8789425713332093447
-      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
     - rid: 8789425713332093448
-      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
     - rid: 8789425713332093449
-      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
     - rid: 8789425713332093450
-      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
     - rid: 8789425713332093451
-      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
     - rid: 8789425713332093452
-      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
     - rid: 8789425713332093453
-      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
     - rid: 8789425713332093454
-      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
     - rid: 8789425713332093455
-      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
     - rid: 8789425713332093456
-      type: {class: EmptyHex, ns: YellowSquad.Core.HexMap, asm: YellowSquad.Core.HexMap}
+      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}

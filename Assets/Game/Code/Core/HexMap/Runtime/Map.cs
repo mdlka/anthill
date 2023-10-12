@@ -27,20 +27,24 @@ namespace YellowSquad.Anthill.Core.HexMap
             return _hexes.ContainsKey(position);
         }
 
-        public void AddHex(AxialCoordinate position, IHex hex)
+        public IHex HexFrom(AxialCoordinate position)
         {
-            if (_hexes.ContainsKey(position))
+            if (HasHexIn(position) == false)
                 throw new InvalidOperationException();
             
-            _hexes.Add(position, hex);
+            return _hexes[position];
+        }
+
+        public void AddHex(AxialCoordinate position, IHex hex)
+        {
+            if (_hexes.TryAdd(position, hex) == false)
+                throw new InvalidOperationException();
         }
 
         public void RemoveHex(AxialCoordinate position)
         {
-            if (_hexes.ContainsKey(position) == false)
+            if (_hexes.Remove(position) == false)
                 throw new InvalidOperationException();
-            
-            _hexes.Remove(position);
         }
 
         public void Visualize(IHexMapView view)
