@@ -1,0 +1,16 @@
+{
+    "name": "YellowSquad.Anthill.Core.AStarPathfinding",
+    "rootNamespace": "YellowSquad.Anthill.Core.AStarPathfinding",
+    "references": [
+        "GUID:c1a201351f2fcb34dad2d362ac290285"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

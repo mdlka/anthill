@@ -19,6 +19,12 @@ namespace YellowSquad.HexMath
 
         public int Q { get; }
         public int R { get; }
+        
+        /// <summary>
+        /// Estimated path distance without obstacles.
+        /// </summary>
+        public double DistanceEstimate() 
+            => Math.Max(Math.Abs(Q + R), Math.Max(Math.Abs(Q), Math.Abs(R)));
 
         public bool Equals(AxialCoordinate other) => Q == other.Q && R == other.R;
         public override bool Equals(object obj) => obj is AxialCoordinate other && Equals(other);

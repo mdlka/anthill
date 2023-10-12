@@ -1,0 +1,23 @@
+{
+    "name": "YellowSquad.Anthill.Core.AStarPathfinding.Tests",
+    "rootNamespace": "YellowSquad.Anthill.Core.AStarPathfinding.Tests",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "YellowSquad.Anthill.Core.AStarPathfinding",
+        "YellowSquad.HexMath"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

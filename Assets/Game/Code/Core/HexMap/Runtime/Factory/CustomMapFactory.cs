@@ -9,7 +9,7 @@ namespace YellowSquad.Anthill.Core.HexMap
     [CreateAssetMenu(menuName = "Anthill/Maps/Create HexMapFactory", fileName = "HexMapFactory", order = 56)]
     public class CustomMapFactory : BaseMapFactory
     {
-        [SerializeField, Min(0.01f)] private float _mapScale = 0.57f;
+        [SerializeField, Min(0.01f)] private float _mapScale;
         [SerializeField, HideInInspector] private List<HexWithPosition> _hexes;
         
         internal float MapScale => _mapScale;
