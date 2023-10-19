@@ -62,3 +62,4 @@ crashlytics-build.properties
 /UserSettings
 /.idea
 /ProjectSettings/Packages/com.unity.testtools.codecoverage
+/CodeCoverage
