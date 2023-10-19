@@ -49,7 +49,7 @@ namespace YellowSquad.Anthill.Core.HexMap
 
         public void Visualize(IHexMapView view)
         {
-            view.Render(_scale, _hexes.Keys);
+            view.Render(_scale, _hexes);
         }
 
         public override string ToString()

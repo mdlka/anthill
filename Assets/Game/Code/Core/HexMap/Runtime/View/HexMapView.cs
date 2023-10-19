@@ -30,10 +30,10 @@ namespace YellowSquad.Anthill.Core.HexMap
             Graphics.RenderMeshInstanced(_renderParams, _hexMesh, 0, _matrices);
         }
 
-        public void Render(float mapScale, ICollection<AxialCoordinate> hexPositions)
+        public void Render(float mapScale, IReadOnlyDictionary<AxialCoordinate, IHex> hexes)
         {
-            RemoveExtraPositions(hexPositions);
-            AddNewPositions(mapScale, hexPositions);
+            RemoveExtraPositions(hexes);
+            AddNewPositions(mapScale, hexes);
 
             if (_hasChanges == false)
                 return;
@@ -43,13 +43,13 @@ namespace YellowSquad.Anthill.Core.HexMap
             _hasChanges = false;
         }
         
-        private void RemoveExtraPositions(ICollection<AxialCoordinate> hexPositions)
+        private void RemoveExtraPositions(IReadOnlyDictionary<AxialCoordinate, IHex> hexes)
         {
             for (int i = _lastRenderedPositions.Count - 1; i >= 0; i--)
             {
                 var position = _lastRenderedPositions[i];
                 
-                if (hexPositions.Contains(position))
+                if (hexes.ContainsKey(position))
                     continue;
 
                 _lastRenderedPositions.Remove(position);
@@ -59,9 +59,9 @@ namespace YellowSquad.Anthill.Core.HexMap
             }
         }
 
-        private void AddNewPositions(float mapScale, ICollection<AxialCoordinate> hexPositions)
+        private void AddNewPositions(float mapScale, IReadOnlyDictionary<AxialCoordinate, IHex> hexes)
         {
-            foreach (var position in hexPositions)
+            foreach (var position in hexes.Keys)
             {
                 if (_lastRenderedPositions.Contains(position))
                     continue;

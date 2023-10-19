@@ -1,7 +1,12 @@
-﻿namespace YellowSquad.Anthill.Core.HexMap
+﻿using System;
+
+namespace YellowSquad.Anthill.Core.HexMap
 {
-    public class EmptyHex : IHex
+    public class EmptyHex : BaseHex
     {
-        public bool IsObstacle => false;
+        public EmptyHex() : base(Array.Empty<IHexPart>()) { }
+        public EmptyHex(IHexMesh hexMesh) : base(hexMesh) { }
+        
+        public override bool IsObstacle => false;
     }
 }
