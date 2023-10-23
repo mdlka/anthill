@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    public interface IHexMesh
+    internal interface IHexMesh
     {
-        IEnumerable<IHexPart> Parts { get; }
+        IReadOnlyDictionary<Vector3, Mesh> MeshByPartLocalPosition { get; }
+
+        IEnumerable<IHexPart> CreateParts();
     }
 }

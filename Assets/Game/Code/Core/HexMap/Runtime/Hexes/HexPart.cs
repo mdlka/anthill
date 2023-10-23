@@ -6,10 +6,10 @@ namespace YellowSquad.Anthill.Core.HexMap
     {
         public HexPart(Vector3 position)
         {
-            Position = position;
+            LocalPosition = position;
         }
         
-        public Vector3 Position { get; }
+        public Vector3 LocalPosition { get; }
         public bool NeedRender { get; private set; } = true;
         
         public void Disable()

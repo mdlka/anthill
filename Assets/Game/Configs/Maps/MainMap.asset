@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a18a57fa8efd47a9857fa2c0bdd0ca10, type: 3}
   m_Name: MainMap
   m_EditorClassIdentifier: 
-  _mapScale: 1.0
+  _mapScale: 1
+  _hexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
   _hexes:
   - _position:
       <Q>k__BackingField: 0

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using YellowSquad.HexMath;
 
@@ -8,15 +9,17 @@ namespace YellowSquad.Anthill.Core.HexMap
     public abstract class BaseHex : IHex
     {
         private readonly List<IHexPart> _parts;
+        private int _renderedParts;
 
-        protected BaseHex(IHexMesh mesh) : this(mesh.Parts) { }
+        internal BaseHex(IHexMesh mesh) : this(mesh.CreateParts()) { }
 
         internal BaseHex(IEnumerable<IHexPart> parts)
         {
             _parts = new List<IHexPart>(parts);
+            _renderedParts = _parts.Count(part => part.NeedRender);
         }
 
-        public bool HasParts => _parts.Count != 0;
+        public bool HasParts => _renderedParts != 0;
 
         IReadOnlyList<IReadOnlyHexPart> IHex.Parts => _parts;
 
@@ -27,7 +30,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (HasParts == false)
                 throw new InvalidOperationException();
 
-            return ClosestPartFor(position.ToVector3()).Position;
+            return ClosestPartFor(position.ToVector3()).LocalPosition;
         }
 
         public void RemoveClosestPartFor(Vector3 localPosition)
@@ -36,16 +39,23 @@ namespace YellowSquad.Anthill.Core.HexMap
                 throw new InvalidOperationException();
 
             ClosestPartFor(localPosition).Disable();
+            _renderedParts -= 1;
         }
 
         private IHexPart ClosestPartFor(Vector3 position)
         {
+            if (HasParts == false)
+                throw new InvalidOperationException();
+            
             IHexPart closestPart = null;
             float closestDistance = int.MaxValue;
 
             foreach (var part in _parts)
             {
-                float distance = Vector3.Distance(part.Position, position);
+                if (part.NeedRender == false)
+                    continue;
+                    
+                float distance = Vector3.Distance(part.LocalPosition, position);
 
                 if (distance >= closestDistance) 
                     continue;

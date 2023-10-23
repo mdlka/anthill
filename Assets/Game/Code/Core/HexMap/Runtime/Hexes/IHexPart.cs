@@ -9,7 +9,7 @@ namespace YellowSquad.Anthill.Core.HexMap
 
     public interface IReadOnlyHexPart
     {
-        Vector3 Position { get; }
+        Vector3 LocalPosition { get; }
         bool NeedRender { get; }
     }
 }

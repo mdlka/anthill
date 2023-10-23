@@ -10,6 +10,7 @@ namespace YellowSquad.Anthill.Core.HexMap
     public class CustomMapFactory : BaseMapFactory
     {
         [SerializeField, Min(0.01f)] private float _mapScale;
+        [SerializeField] private HexMesh _hexMesh;
         [SerializeField, HideInInspector] private List<HexWithPosition> _hexes;
         
         internal float MapScale => _mapScale;
@@ -17,7 +18,8 @@ namespace YellowSquad.Anthill.Core.HexMap
 
         public override IHexMap Create()
         {
-            var hexes = _hexes.ToDictionary(pair => pair.Position, pair => pair.Hex);
+            // TODO: Need to remove manual create of hex via code
+            var hexes = _hexes.ToDictionary(pair => pair.Position, pair => (IHex)new EmptyHex(_hexMesh));
             
             return new Map(_mapScale, hexes);
         }

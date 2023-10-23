@@ -54,7 +54,7 @@ namespace YellowSquad.Anthill.Core.HexMap
 
         public override string ToString()
         {
-            return string.Join(' ', _hexes);
+            return $"Count: {_hexes.Count}\n{string.Join(' ', _hexes)}";
         }
     }
 }

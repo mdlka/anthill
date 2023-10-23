@@ -6,76 +6,18 @@ namespace YellowSquad.Anthill.Core.HexMap
 {
     internal class HexMapView : MonoBehaviour, IHexMapView
     {
-        private readonly Dictionary<AxialCoordinate, Matrix4x4> _matricesByPosition = new();
-        private readonly List<AxialCoordinate> _lastRenderedPositions = new();
-        private readonly List<Matrix4x4> _matrices = new();
-
-        [SerializeField] private Mesh _hexMesh;
-        [SerializeField] private Material _hexMaterial;
         [SerializeField, Min(0.01f)] private Vector3 _hexScale;
-
-        private bool _hasChanges;
-        private RenderParams _renderParams;
-
-        private void Awake()
-        {
-            _renderParams = new RenderParams(_hexMaterial);
-        }
-
-        private void Update()
-        {
-            if (_matrices.Count == 0)
-                return;
-
-            Graphics.RenderMeshInstanced(_renderParams, _hexMesh, 0, _matrices);
-        }
+        [SerializeField] private HexView _hexView;
 
         public void Render(float mapScale, IReadOnlyDictionary<AxialCoordinate, IHex> hexes)
         {
-            RemoveExtraPositions(hexes);
-            AddNewPositions(mapScale, hexes);
-
-            if (_hasChanges == false)
-                return;
+            _hexView.Clear();
             
-            _matrices.Clear();
-            _matrices.AddRange(_matricesByPosition.Values);
-            _hasChanges = false;
-        }
-        
-        private void RemoveExtraPositions(IReadOnlyDictionary<AxialCoordinate, IHex> hexes)
-        {
-            for (int i = _lastRenderedPositions.Count - 1; i >= 0; i--)
+            foreach (var pair in hexes)
             {
-                var position = _lastRenderedPositions[i];
-                
-                if (hexes.ContainsKey(position))
-                    continue;
-
-                _lastRenderedPositions.Remove(position);
-                _matricesByPosition.Remove(position);
-
-                _hasChanges = true;
+                var hexMatrix = Matrix4x4.TRS(pair.Key.ToVector3(mapScale), Quaternion.Euler(0f, 30f, 0f), _hexScale);
+                _hexView.Render(pair.Value.Parts, hexMatrix);
             }
-        }
-
-        private void AddNewPositions(float mapScale, IReadOnlyDictionary<AxialCoordinate, IHex> hexes)
-        {
-            foreach (var position in hexes.Keys)
-            {
-                if (_lastRenderedPositions.Contains(position))
-                    continue;
-                
-                _lastRenderedPositions.Add(position);
-                _matricesByPosition.Add(position, MatrixBy(position.ToVector3(mapScale)));
-
-                _hasChanges = true;
-            }
-        }
-
-        private Matrix4x4 MatrixBy(Vector3 worldPosition)
-        {
-            return Matrix4x4.TRS(worldPosition, Quaternion.Euler(0, 30f, 0f), _hexScale);
         }
     }
 }

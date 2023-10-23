@@ -9,27 +9,66 @@ namespace YellowSquad.Anthill.Core.HexMap
     {
         [SerializeField] private string _objectPath;
 
-        private List<IHexPart> _cachedParts;
+        private Pair[] _cachedMesh;
+        private Dictionary<Vector3, Mesh> _cachedMeshByPartPosition;
 
-        public IEnumerable<IHexPart> Parts
+        public IReadOnlyDictionary<Vector3, Mesh> MeshByPartLocalPosition
         {
             get
             {
-                if (_cachedParts != null)
-                    return _cachedParts;
-
-                var meshes = Resources.LoadAll<Mesh>(_objectPath);
-
-                if (meshes == null || meshes.Length == 0)
-                    throw new InvalidOperationException("Object doesn't exist");
+                if (_cachedMeshByPartPosition != null)
+                    return _cachedMeshByPartPosition;
                 
-                _cachedParts = new List<IHexPart>();
+                var meshes = LoadMeshes();
+                _cachedMeshByPartPosition = new Dictionary<Vector3, Mesh>();
 
-                foreach (var mesh in meshes)
-                    _cachedParts.Add(new HexPart(mesh.bounds.center));
+                foreach (var pair in meshes)
+                    _cachedMeshByPartPosition.Add(pair.CenterPosition, pair.Mesh);
 
-                return _cachedParts;
+                return _cachedMeshByPartPosition;
+            } 
+        }
+
+        public IEnumerable<IHexPart> CreateParts()
+        {
+            var meshes = LoadMeshes();
+            var parts = new IHexPart[meshes.Length];
+
+            for (int i = 0; i < meshes.Length; i++)
+                parts[i] = new HexPart(meshes[i].CenterPosition);
+
+            return parts;
+        }
+
+        private Pair[] LoadMeshes()
+        {
+            if (_cachedMesh != null)
+                return _cachedMesh;
+            
+            var hexModel = Resources.Load<GameObject>(_objectPath);
+
+            if (hexModel == null)
+                throw new InvalidOperationException("Object doesn't exist");
+
+            var hexParts = hexModel.GetComponentsInChildren<MeshFilter>();
+            _cachedMesh = new Pair[hexParts.Length];
+
+            for (int i = 0; i < hexParts.Length; i++)
+                _cachedMesh[i] = new Pair(hexParts[i].sharedMesh, hexParts[i].transform.position);
+
+            return _cachedMesh;
+        }
+
+        private struct Pair
+        {
+            public Pair(Mesh mesh, Vector3 centerPosition)
+            {
+                Mesh = mesh;
+                CenterPosition = centerPosition;
             }
+
+            public Mesh Mesh { get; }
+            public Vector3 CenterPosition { get; }
         }
     }
 }

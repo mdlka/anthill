@@ -355,6 +355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mapFactory: {fileID: 11400000, guid: 96aaeffa1b8310b4c90c555b02fe8518, type: 2}
+  _hexFactory: {fileID: 11400000, guid: ba4041bbd4dc0bf4fb3d96bb9fa58ece, type: 2}
   _hexMapViewObject: {fileID: 2052305926}
 --- !u!1 &2041005408
 GameObject:
@@ -400,8 +401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107a3a131a6f42edb8e764a72e8f4fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hexMaterial: {fileID: 0}
-  _targetHexModelPath: Hex20
+  _hexMaterial: {fileID: 2100000, guid: 6f198f2194027034e9273ae2f023fdcf, type: 2}
+  _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
 --- !u!1 &2052305925
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,9 +432,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8108638cc0fd405da04a93fbb1c2d7a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hexMesh: {fileID: 2770389371296501935, guid: 31919b3ed4728e2419689ec37a9ee2ac, type: 3}
-  _hexMaterial: {fileID: 2100000, guid: 6f198f2194027034e9273ae2f023fdcf, type: 2}
   _hexScale: {x: 1.7316017, y: 4, z: 1.731602}
+  _hexView: {fileID: 2041005410}
 --- !u!4 &2052305927
 Transform:
   m_ObjectHideFlags: 0
