@@ -6,24 +6,23 @@ using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    public abstract class BaseHex : IHex
+    public class DefaultHex : IHex
     {
         private readonly List<IHexPart> _parts;
         private int _renderedParts;
 
-        internal BaseHex(IHexMesh mesh) : this(mesh.CreateParts()) { }
+        public DefaultHex() : this(Array.Empty<IHexPart>()) { }
+        internal DefaultHex(IHexMesh mesh) : this(mesh.CreateParts()) { }
 
-        internal BaseHex(IEnumerable<IHexPart> parts)
+        private DefaultHex(IEnumerable<IHexPart> parts)
         {
             _parts = new List<IHexPart>(parts);
             _renderedParts = _parts.Count(part => part.NeedRender);
         }
 
         public bool HasParts => _renderedParts != 0;
-
+        public bool IsObstacle => HasParts;
         IReadOnlyList<IReadOnlyHexPart> IHex.Parts => _parts;
-
-        public abstract bool IsObstacle { get; }
 
         public Vector3 ClosestPartLocalPositionFor(AxialCoordinate position)
         {

@@ -66,7 +66,7 @@ namespace YellowSquad.Anthill.Core.HexMap.Editor
                 try
                 {
                     if (_currentEditState == EditState.Add)
-                        _customMapFactory.AddHex(targetPosition, new EmptyHex());
+                        _customMapFactory.AddHex(targetPosition, new DefaultHex());
                     else if (_currentEditState == EditState.Remove)
                         _customMapFactory.RemoveHex(targetPosition);
                         

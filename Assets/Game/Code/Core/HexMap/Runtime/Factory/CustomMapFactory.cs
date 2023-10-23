@@ -19,7 +19,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         public override IHexMap Create()
         {
             // TODO: Need to remove manual create of hex via code
-            var hexes = _hexes.ToDictionary(pair => pair.Position, pair => (IHex)new EmptyHex(_hexMesh));
+            var hexes = _hexes.ToDictionary(pair => pair.Position, _ => (IHex)new DefaultHex(_hexMesh));
             
             return new Map(_mapScale, hexes);
         }

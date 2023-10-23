@@ -26,7 +26,7 @@ namespace YellowSquad.Anthill.Core.HexMap.Tests
 
             foreach (var position in targetPositions)
             {
-                _map.AddHex(position, new EmptyHex());
+                _map.AddHex(position, new DefaultHex());
                 Assert.True(_map.HasHexIn(position));
             }
         }
@@ -36,10 +36,10 @@ namespace YellowSquad.Anthill.Core.HexMap.Tests
         {
             var targetPosition = new AxialCoordinate(1, 1);
 
-            _map.AddHex(targetPosition, new EmptyHex());
+            _map.AddHex(targetPosition, new DefaultHex());
 
             Assert.True(_map.HasHexIn(targetPosition));
-            Assert.Throws<InvalidOperationException>(() => _map.AddHex(targetPosition, new EmptyHex()));
+            Assert.Throws<InvalidOperationException>(() => _map.AddHex(targetPosition, new DefaultHex()));
         }
         
         [Test]
@@ -54,7 +54,7 @@ namespace YellowSquad.Anthill.Core.HexMap.Tests
 
             foreach (var position in targetPositions)
             {
-                _map.AddHex(position, new EmptyHex());
+                _map.AddHex(position, new DefaultHex());
                 Assert.True(_map.HasHexIn(position));
             }
 

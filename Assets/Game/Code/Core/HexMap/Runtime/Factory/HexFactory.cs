@@ -9,7 +9,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         
         public IHex Create()
         {
-            return new EmptyHex(_hexMesh);
+            return new DefaultHex(_hexMesh);
         }
     }
 }

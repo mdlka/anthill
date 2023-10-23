@@ -54,9 +54,7 @@ namespace YellowSquad.Anthill.Application
                 }
 
                 if (Input.GetKeyDown(KeyCode.Space))
-                {
                     Debug.Log(_map.ToString());
-                }
 
                 _map.Visualize(_hexMapViewObject as IHexMapView);
             }
