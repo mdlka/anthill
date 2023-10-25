@@ -26,7 +26,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         
         public override string ToString()
         {
-            return string.Join(' ', _hexes.Select(pair => $"({pair.Hex}, {pair.Position.ToString()})"));
+            return string.Join(' ', _hexes.Select(pair => $"({pair.Position.ToString()})"));
         }
 
         internal void AddHex(AxialCoordinate position, IHex hex)
@@ -34,7 +34,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (_hexes.Any(pair => pair.Position == position))
                 throw new InvalidOperationException();
             
-            _hexes.Add(new HexWithPosition(position, hex));
+            _hexes.Add(new HexWithPosition(position));
         }
 
         internal void RemoveHex(AxialCoordinate position)
@@ -51,15 +51,12 @@ namespace YellowSquad.Anthill.Core.HexMap
         internal class HexWithPosition
         {
             [SerializeField] private SerializedAxialCoordinate _position;
-            [SerializeReference] private IHex _hex;
             
-            public HexWithPosition(AxialCoordinate position, IHex hex)
+            public HexWithPosition(AxialCoordinate position)
             {
                 _position = position;
-                _hex = hex;
             }
 
-            public IHex Hex => _hex;
             public AxialCoordinate Position => _position;
         }
     }

@@ -463,6 +463,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4289fd8ef6f846deba03a3f4cefe49d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _groundHexScale: {x: 1.731602, y: 1, z: 1.731602}
-  _groundHexMesh: {fileID: 2770389371296501935, guid: 31919b3ed4728e2419689ec37a9ee2ac, type: 3}
-  _groundHexMaterial: {fileID: 2100000, guid: 12a967621630ed148ad88f2212e1347a, type: 2}
+  _hexMesh: {fileID: 2770389371296501935, guid: 31919b3ed4728e2419689ec37a9ee2ac, type: 3}
+  _hexMaterial: {fileID: 2100000, guid: 12a967621630ed148ad88f2212e1347a, type: 2}

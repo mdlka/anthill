@@ -13,7 +13,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         public void Render(float mapScale, IReadOnlyDictionary<AxialCoordinate, IHex> hexes)
         {
             if (_groundMapView.Initialized == false)
-                _groundMapView.Initialize(mapScale, hexes.Keys);
+                _groundMapView.Initialize(mapScale, _hexScale, hexes.Keys);
             
             _hexView.Clear();
             

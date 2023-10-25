@@ -9,9 +9,8 @@ namespace YellowSquad.Anthill.Core.HexMap
     {
         private readonly List<Matrix4x4> _groundHexMatrices = new();
 
-        [SerializeField, Min(0.01f)] private Vector3 _groundHexScale;
-        [SerializeField] private Mesh _groundHexMesh;
-        [SerializeField] private Material _groundHexMaterial;
+        [SerializeField] private Mesh _hexMesh;
+        [SerializeField] private Material _hexMaterial;
 
         private RenderParams _groundRenderParams;
         
@@ -19,7 +18,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         
         private void Awake()
         {
-            _groundRenderParams = new RenderParams(_groundHexMaterial);
+            _groundRenderParams = new RenderParams(_hexMaterial);
         }
 
         private void Update()
@@ -27,18 +26,19 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (_groundHexMatrices.Count == 0)
                 return;
 
-            Graphics.RenderMeshInstanced(_groundRenderParams, _groundHexMesh, 0, _groundHexMatrices);
+            Graphics.RenderMeshInstanced(_groundRenderParams, _hexMesh, 0, _groundHexMatrices);
         }
 
-        public void Initialize(float mapScale, IEnumerable<AxialCoordinate> hexPositions)
+        public void Initialize(float mapScale, Vector3 hexScale, IEnumerable<AxialCoordinate> hexPositions)
         {
             if (Initialized)
                 throw new InvalidOperationException("Already initialized");
             
-            var offsetY = Vector3.up * _groundHexMesh.bounds.size.y;
+            Vector3 offsetY = Vector3.up * _hexMesh.bounds.size.y;
+            Vector3 groundHexScale = new Vector3(hexScale.x, 1f, hexScale.z);
             
             foreach (var position in hexPositions)
-                _groundHexMatrices.Add(Matrix4x4.TRS(position.ToVector3(mapScale) - offsetY, Quaternion.Euler(0f, 30f, 0f), _groundHexScale));
+                _groundHexMatrices.Add(Matrix4x4.TRS(position.ToVector3(mapScale) - offsetY, Quaternion.Euler(0f, 30f, 0f), groundHexScale));
 
             Initialized = true;
         }
