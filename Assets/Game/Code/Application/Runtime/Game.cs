@@ -10,7 +10,6 @@ namespace YellowSquad.Anthill.Application
     public class Game : MonoBehaviour
     {
         [SerializeField] private BaseMapFactory _mapFactory;
-        [SerializeField] private HexFactory _hexFactory;
         [SerializeField, InterfaceType(typeof(IHexMapView))] private Object _hexMapViewObject;
 
         private Camera _camera;
@@ -43,14 +42,6 @@ namespace YellowSquad.Anthill.Application
                     
                     if (targetHex.HasParts)
                         targetHex.RemoveClosestPartFor(targetPosition);
-                }
-
-                if (Input.GetMouseButtonDown(1))
-                {
-                    if (_map.HasHexIn(targetAxialPosition))
-                        continue;
-                
-                    _map.AddHex(targetAxialPosition, _hexFactory.Create());
                 }
 
                 if (Input.GetKeyDown(KeyCode.Space))

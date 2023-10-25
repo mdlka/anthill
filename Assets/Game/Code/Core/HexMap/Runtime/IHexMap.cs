@@ -9,9 +9,6 @@ namespace YellowSquad.Anthill.Core.HexMap
         bool HasHexIn(AxialCoordinate position);
         IHex HexFrom(AxialCoordinate position);
         
-        void AddHex(AxialCoordinate position, IHex hex);
-        void RemoveHex(AxialCoordinate position);
-        
         void Visualize(IHexMapView view);
     }
 }

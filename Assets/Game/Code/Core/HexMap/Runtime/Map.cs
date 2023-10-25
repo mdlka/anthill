@@ -35,18 +35,6 @@ namespace YellowSquad.Anthill.Core.HexMap
             return _hexes[position];
         }
 
-        public void AddHex(AxialCoordinate position, IHex hex)
-        {
-            if (_hexes.TryAdd(position, hex) == false)
-                throw new InvalidOperationException();
-        }
-
-        public void RemoveHex(AxialCoordinate position)
-        {
-            if (_hexes.Remove(position) == false)
-                throw new InvalidOperationException();
-        }
-
         public void Visualize(IHexMapView view)
         {
             view.Render(_scale, _hexes);
