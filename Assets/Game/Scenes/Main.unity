@@ -123,6 +123,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &303099589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 303099591}
+  - component: {fileID: 303099590}
+  m_Layer: 0
+  m_Name: MaxHardnessHexView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &303099590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303099589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107a3a131a6f42edb8e764a72e8f4fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetMaterial: {fileID: 2100000, guid: 120c1ef95471a9f429920ea7922b27ff, type: 2}
+  _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+--- !u!4 &303099591
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303099589}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2052305927}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +402,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mapFactory: {fileID: 11400000, guid: 96aaeffa1b8310b4c90c555b02fe8518, type: 2}
   _hexMapViewObject: {fileID: 2052305926}
+--- !u!1 &1846138167
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1846138168}
+  - component: {fileID: 1846138169}
+  m_Layer: 0
+  m_Name: MediumHardnessHexView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1846138168
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846138167}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2052305927}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1846138169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846138167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107a3a131a6f42edb8e764a72e8f4fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetMaterial: {fileID: 2100000, guid: 6f198f2194027034e9273ae2f023fdcf, type: 2}
+  _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
 --- !u!1 &2041005408
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,7 +459,7 @@ GameObject:
   - component: {fileID: 2041005409}
   - component: {fileID: 2041005410}
   m_Layer: 0
-  m_Name: HexView20
+  m_Name: MinHardnessHexView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -400,7 +492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107a3a131a6f42edb8e764a72e8f4fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hexMaterial: {fileID: 2100000, guid: 6f198f2194027034e9273ae2f023fdcf, type: 2}
+  _targetMaterial: {fileID: 2100000, guid: dbc4ef709485fad4b9e80d770408e4c3, type: 2}
   _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
 --- !u!1 &2052305925
 GameObject:
@@ -433,8 +525,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hexScale: {x: 1.731602, y: 4, z: 1.731602}
-  _groundMapView: {fileID: 2052305928}
-  _hexView: {fileID: 2041005410}
+  _groundView: {fileID: 2052305928}
+  _hexViews:
+  - <Hardness>k__BackingField: 0
+    <View>k__BackingField: {fileID: 2041005410}
+  - <Hardness>k__BackingField: 1
+    <View>k__BackingField: {fileID: 1846138169}
+  - <Hardness>k__BackingField: 2
+    <View>k__BackingField: {fileID: 303099590}
 --- !u!4 &2052305927
 Transform:
   m_ObjectHideFlags: 0
@@ -448,6 +546,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2041005409}
+  - {fileID: 1846138168}
+  - {fileID: 303099591}
   m_Father: {fileID: 1286294733}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

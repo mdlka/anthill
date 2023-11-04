@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using YellowSquad.HexMath;
+using Random = UnityEngine.Random;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
@@ -19,7 +20,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         public override IHexMap Create()
         {
             // TODO: Need to remove manual create of hex via code
-            var hexes = _hexes.ToDictionary(pair => pair.Position, _ => (IHex)new DefaultHex(_hexMesh));
+            var hexes = _hexes.ToDictionary(pair => pair.Position, _ => (IHex)new DefaultHex((Hardness)Random.Range(0, 3), _hexMesh));
             
             return new Map(_mapScale, hexes);
         }

@@ -29,7 +29,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             } 
         }
 
-        public IEnumerable<IHexPart> CreateParts()
+        public IEnumerable<IHexPart> Parts()
         {
             var meshes = LoadMeshes();
             var parts = new IHexPart[meshes.Length];

@@ -7,6 +7,6 @@ namespace YellowSquad.Anthill.Core.HexMap
     {
         IReadOnlyDictionary<Vector3, Mesh> MeshByPartLocalPosition { get; }
 
-        IEnumerable<IHexPart> CreateParts();
+        IEnumerable<IHexPart> Parts();
     }
 }

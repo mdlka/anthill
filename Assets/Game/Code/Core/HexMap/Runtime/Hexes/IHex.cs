@@ -8,6 +8,7 @@ namespace YellowSquad.Anthill.Core.HexMap
     {
         bool IsObstacle { get; }
         bool HasParts { get; }
+        Hardness Hardness { get; }
         internal IReadOnlyList<IReadOnlyHexPart> Parts { get; }
 
         Vector3 ClosestPartLocalPositionFor(AxialCoordinate position);

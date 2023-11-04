@@ -10,11 +10,11 @@ namespace YellowSquad.Anthill.Core.HexMap
         }
         
         public Vector3 LocalPosition { get; }
-        public bool NeedRender { get; private set; } = true;
+        public bool Destroyed { get; private set; }
         
-        public void Disable()
+        public void Destroy()
         {
-            NeedRender = false;
+            Destroyed = true;
         }
     }
 }

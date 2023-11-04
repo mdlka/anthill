@@ -9,19 +9,21 @@ namespace YellowSquad.Anthill.Core.HexMap
     public class DefaultHex : IHex
     {
         private readonly List<IHexPart> _parts;
-        private int _renderedParts;
+        private int _destroyedParts;
 
-        public DefaultHex() : this(Array.Empty<IHexPart>()) { }
-        internal DefaultHex(IHexMesh mesh) : this(mesh.CreateParts()) { }
+        public DefaultHex() : this(HexMap.Hardness.Medium, Array.Empty<IHexPart>()) { } // TODO: Test ctr
+        internal DefaultHex(Hardness hardness, IHexMesh mesh) : this(hardness, mesh.Parts()) { }
 
-        private DefaultHex(IEnumerable<IHexPart> parts)
+        private DefaultHex(Hardness hardness, IEnumerable<IHexPart> parts)
         {
+            Hardness = hardness;
             _parts = new List<IHexPart>(parts);
-            _renderedParts = _parts.Count(part => part.NeedRender);
+            _destroyedParts = _parts.Count(part => part.Destroyed);
         }
 
-        public bool HasParts => _renderedParts != 0;
+        public bool HasParts => _parts.Count - _destroyedParts != 0;
         public bool IsObstacle => HasParts;
+        public Hardness Hardness { get; }
         IReadOnlyList<IReadOnlyHexPart> IHex.Parts => _parts;
 
         public Vector3 ClosestPartLocalPositionFor(AxialCoordinate position)
@@ -37,8 +39,8 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (HasParts == false)
                 throw new InvalidOperationException();
 
-            ClosestPartFor(localPosition).Disable();
-            _renderedParts -= 1;
+            ClosestPartFor(localPosition).Destroy();
+            _destroyedParts += 1;
         }
 
         private IHexPart ClosestPartFor(Vector3 position)
@@ -51,7 +53,7 @@ namespace YellowSquad.Anthill.Core.HexMap
 
             foreach (var part in _parts)
             {
-                if (part.NeedRender == false)
+                if (part.Destroyed)
                     continue;
                     
                 float distance = Vector3.Distance(part.LocalPosition, position);

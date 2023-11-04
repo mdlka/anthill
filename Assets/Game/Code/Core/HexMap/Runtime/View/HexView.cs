@@ -7,7 +7,7 @@ namespace YellowSquad.Anthill.Core.HexMap
     {
         private readonly Dictionary<Mesh, List<Matrix4x4>> _partMatrices = new();
 
-        [SerializeField] private Material _hexMaterial;
+        [SerializeField] private Material _targetMaterial;
         [SerializeField] private HexMesh _targetHexMesh;
         
         private RenderParams _renderParams;
@@ -15,7 +15,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         
         private void Awake()
         {
-            _renderParams = new RenderParams(_hexMaterial);
+            _renderParams = new RenderParams(_targetMaterial);
             _meshByPartPosition = _targetHexMesh.MeshByPartLocalPosition;
         }
         
@@ -27,12 +27,12 @@ namespace YellowSquad.Anthill.Core.HexMap
             foreach (var renderPart in _partMatrices)
                 Graphics.RenderMeshInstanced(_renderParams, renderPart.Key, 0, renderPart.Value);
         }
-
+        
         public void Render(IReadOnlyCollection<IReadOnlyHexPart> parts, Matrix4x4 hexMatrix)
         {
             foreach (var part in parts)
             {
-                if (part.NeedRender == false)
+                if (part.Destroyed)
                     continue;
                 
                 var mesh = _meshByPartPosition[part.LocalPosition];
