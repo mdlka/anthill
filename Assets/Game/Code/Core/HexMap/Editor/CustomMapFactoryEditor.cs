@@ -46,8 +46,11 @@ namespace YellowSquad.Anthill.Core.HexMap.Editor
 
         private void OnDuringSceneGUI(SceneView sceneView)
         {
-            foreach (var pair in _customMapFactory.Hexes)
-                DrawHex(pair.Position, Color.green);
+            foreach (var hex in _customMapFactory.Hexes)
+            {
+                DrawHex(hex.Position, Color.green);
+                DrawText($"{hex.Position.ToString()}\n{hex.Hardness}", hex.Position.ToVector3(_customMapFactory.MapScale));
+            }
 
             Tools.hidden = true;
             Event currentEvent = Event.current;
@@ -56,6 +59,9 @@ namespace YellowSquad.Anthill.Core.HexMap.Editor
                 return;
 
             int controlID = GUIUtility.GetControlID(FocusType.Passive);
+
+            if (_currentEditState != EditState.Disable)
+                DrawText(_editorInput.MousePosition.ToAxialCoordinate(_customMapFactory.MapScale).ToString(), _editorInput.MousePosition + new Vector3(0.25f, 0));
             
             if (currentEvent.GetTypeForControl(controlID) == EventType.MouseDown)
             {
@@ -93,7 +99,18 @@ namespace YellowSquad.Anthill.Core.HexMap.Editor
             }
             
             Handles.DrawSolidDisc(position.ToVector3(_customMapFactory.MapScale), Vector3.up, _customMapFactory.MapScale * 0.25f);
+
             Handles.color = oldColor;
+        }
+
+        private void DrawText(string text, Vector3 position, FontStyle fontStyle = FontStyle.Bold)
+        {
+            var labelStyle = new GUIStyle();
+            labelStyle.fontSize = Mathf.Clamp((int)(100 / HandleUtility.GUIPointToWorldRay(Event.current.mousePosition).origin.y 
+                                                    * _customMapFactory.MapScale), 5, 12);
+            labelStyle.fontStyle = fontStyle;
+                
+            Handles.Label(position, text, labelStyle);
         }
 
         private GUIStyle ButtonStyle(EditState state)
