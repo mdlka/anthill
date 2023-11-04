@@ -15,8 +15,8 @@ namespace YellowSquad.Anthill.Application
         
         public bool CanMove(AxialCoordinate axialCoordinate)
         {
-            return _hexMap.HasHexIn(axialCoordinate) && 
-                   _hexMap.HexFrom(axialCoordinate).IsObstacle == false;
+            return _hexMap.HasPosition(axialCoordinate) && 
+                   _hexMap.HasObstacleIn(axialCoordinate) == false;
         }
     }
 }

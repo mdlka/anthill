@@ -6,7 +6,8 @@ namespace YellowSquad.Anthill.Core.HexMap
     {
         float Scale { get; }
         
-        bool HasHexIn(AxialCoordinate position);
+        bool HasPosition(AxialCoordinate position);
+        bool HasObstacleIn(AxialCoordinate position);
         IHex HexFrom(AxialCoordinate position);
         
         void Visualize(IHexMapView view);

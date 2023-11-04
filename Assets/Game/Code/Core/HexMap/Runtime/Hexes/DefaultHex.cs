@@ -21,7 +21,6 @@ namespace YellowSquad.Anthill.Core.HexMap
         }
 
         public bool HasParts => _parts.Count - _destroyedParts != 0;
-        public bool IsObstacle => HasParts;
         public Hardness Hardness { get; }
         IReadOnlyList<IReadOnlyHexPart> IHex.Parts => _parts;
 

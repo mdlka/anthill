@@ -35,7 +35,7 @@ namespace YellowSquad.Anthill.Application
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (_map.HasHexIn(targetAxialPosition) == false)
+                    if (_map.HasPosition(targetAxialPosition) == false)
                         continue;
                 
                     var targetHex = _map.HexFrom(targetAxialPosition);

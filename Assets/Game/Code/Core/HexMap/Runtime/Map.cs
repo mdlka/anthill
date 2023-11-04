@@ -9,7 +9,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         private readonly float _scale;
         private readonly Dictionary<AxialCoordinate, IHex> _hexes;
 
-        public Map(float scale = 1f) : this(scale, new Dictionary<AxialCoordinate, IHex>()) { }
+        public Map(IReadOnlyDictionary<AxialCoordinate, IHex> hexes) : this(1f, hexes) { }
         
         public Map(float scale, IReadOnlyDictionary<AxialCoordinate, IHex> hexes)
         {
@@ -22,15 +22,23 @@ namespace YellowSquad.Anthill.Core.HexMap
 
         public float Scale => _scale;
 
-        public bool HasHexIn(AxialCoordinate position)
+        public bool HasPosition(AxialCoordinate position)
         {
             return _hexes.ContainsKey(position);
         }
 
+        public bool HasObstacleIn(AxialCoordinate position)
+        {
+            if (HasPosition(position) == false)
+                throw new ArgumentOutOfRangeException();
+
+            return _hexes[position].HasParts;
+        }
+
         public IHex HexFrom(AxialCoordinate position)
         {
-            if (HasHexIn(position) == false)
-                throw new InvalidOperationException();
+            if (HasPosition(position) == false)
+                throw new ArgumentOutOfRangeException();
             
             return _hexes[position];
         }
