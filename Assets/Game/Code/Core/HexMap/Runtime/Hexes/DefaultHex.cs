@@ -11,7 +11,6 @@ namespace YellowSquad.Anthill.Core.HexMap
         private readonly List<IHexPart> _parts;
         private int _destroyedParts;
 
-        public DefaultHex() : this(HexMap.Hardness.Medium, Array.Empty<IHexPart>()) { } // TODO: Test ctr
         internal DefaultHex(Hardness hardness, IHexMesh mesh) : this(hardness, mesh.Parts()) { }
 
         private DefaultHex(Hardness hardness, IEnumerable<IHexPart> parts)

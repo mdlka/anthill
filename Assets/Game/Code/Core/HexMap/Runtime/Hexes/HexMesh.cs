@@ -10,22 +10,22 @@ namespace YellowSquad.Anthill.Core.HexMap
         [SerializeField] private string _objectPath;
 
         private Pair[] _cachedMesh;
-        private Dictionary<Vector3, Mesh> _cachedMeshByPartPosition;
+        private Dictionary<Vector3, Mesh> _cachedPartsMeshesByLocalPosition;
 
-        public IReadOnlyDictionary<Vector3, Mesh> MeshByPartLocalPosition
+        public IReadOnlyDictionary<Vector3, Mesh> PartsMeshesByLocalPosition
         {
             get
             {
-                if (_cachedMeshByPartPosition != null)
-                    return _cachedMeshByPartPosition;
+                if (_cachedPartsMeshesByLocalPosition != null)
+                    return _cachedPartsMeshesByLocalPosition;
                 
                 var meshes = LoadMeshes();
-                _cachedMeshByPartPosition = new Dictionary<Vector3, Mesh>();
+                _cachedPartsMeshesByLocalPosition = new Dictionary<Vector3, Mesh>();
 
                 foreach (var pair in meshes)
-                    _cachedMeshByPartPosition.Add(pair.CenterPosition, pair.Mesh);
+                    _cachedPartsMeshesByLocalPosition.Add(pair.CenterPosition, pair.Mesh);
 
-                return _cachedMeshByPartPosition;
+                return _cachedPartsMeshesByLocalPosition;
             } 
         }
 

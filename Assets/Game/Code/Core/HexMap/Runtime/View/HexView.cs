@@ -16,7 +16,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         private void Awake()
         {
             _renderParams = new RenderParams(_targetMaterial);
-            _meshByPartPosition = _targetHexMesh.MeshByPartLocalPosition;
+            _meshByPartPosition = _targetHexMesh.PartsMeshesByLocalPosition;
         }
         
         private void Update()

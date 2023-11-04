@@ -13,99 +13,71 @@ MonoBehaviour:
   m_Name: MainMap
   m_EditorClassIdentifier: 
   _mapScale: 1
-  _hexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+  _currentTargetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+  _currentHexHardness: 1
   _hexes:
-  - _position:
+  - _hardness: 1
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
       <Q>k__BackingField: 0
       <R>k__BackingField: 0
-    _hex:
-      rid: 8789425713332093407
-  - _position:
-      <Q>k__BackingField: 2
-      <R>k__BackingField: 0
-    _hex:
-      rid: 8789425713332093445
-  - _position:
-      <Q>k__BackingField: 1
-      <R>k__BackingField: 1
-    _hex:
-      rid: 8789425713332093446
-  - _position:
-      <Q>k__BackingField: 0
-      <R>k__BackingField: 2
-    _hex:
-      rid: 8789425713332093447
-  - _position:
-      <Q>k__BackingField: -1
-      <R>k__BackingField: 2
-    _hex:
-      rid: 8789425713332093448
-  - _position:
+  - _hardness: 1
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
       <Q>k__BackingField: -2
       <R>k__BackingField: 2
-    _hex:
-      rid: 8789425713332093449
-  - _position:
+  - _hardness: 1
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
       <Q>k__BackingField: -2
       <R>k__BackingField: 1
-    _hex:
-      rid: 8789425713332093450
-  - _position:
+  - _hardness: 1
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
       <Q>k__BackingField: -2
       <R>k__BackingField: 0
-    _hex:
-      rid: 8789425713332093451
-  - _position:
+  - _hardness: 1
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
       <Q>k__BackingField: -1
       <R>k__BackingField: -1
-    _hex:
-      rid: 8789425713332093452
-  - _position:
+  - _hardness: 1
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
       <Q>k__BackingField: 0
       <R>k__BackingField: -2
-    _hex:
-      rid: 8789425713332093453
-  - _position:
+  - _hardness: 1
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
       <Q>k__BackingField: 1
       <R>k__BackingField: -2
-    _hex:
-      rid: 8789425713332093454
-  - _position:
+  - _hardness: 1
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
       <Q>k__BackingField: 2
       <R>k__BackingField: -2
-    _hex:
-      rid: 8789425713332093455
-  - _position:
+  - _hardness: 1
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
       <Q>k__BackingField: 2
       <R>k__BackingField: -1
-    _hex:
-      rid: 8789425713332093456
-  references:
-    version: 2
-    RefIds:
-    - rid: 8789425713332093407
-      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
-    - rid: 8789425713332093445
-      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
-    - rid: 8789425713332093446
-      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
-    - rid: 8789425713332093447
-      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
-    - rid: 8789425713332093448
-      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
-    - rid: 8789425713332093449
-      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
-    - rid: 8789425713332093450
-      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
-    - rid: 8789425713332093451
-      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
-    - rid: 8789425713332093452
-      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
-    - rid: 8789425713332093453
-      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
-    - rid: 8789425713332093454
-      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
-    - rid: 8789425713332093455
-      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
-    - rid: 8789425713332093456
-      type: {class: EmptyHex, ns: YellowSquad.Anthill.Core.HexMap, asm: YellowSquad.Anthill.Core.HexMap}
+  - _hardness: 1
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
+      <Q>k__BackingField: 2
+      <R>k__BackingField: 0
+  - _hardness: 1
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
+      <Q>k__BackingField: 1
+      <R>k__BackingField: 1
+  - _hardness: 1
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
+      <Q>k__BackingField: 0
+      <R>k__BackingField: 2
+  - _hardness: 1
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
+      <Q>k__BackingField: -1
+      <R>k__BackingField: 2

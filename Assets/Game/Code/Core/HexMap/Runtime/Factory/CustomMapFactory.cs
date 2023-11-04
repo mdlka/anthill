@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using YellowSquad.HexMath;
-using Random = UnityEngine.Random;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
@@ -11,16 +10,18 @@ namespace YellowSquad.Anthill.Core.HexMap
     public class CustomMapFactory : BaseMapFactory
     {
         [SerializeField, Min(0.01f)] private float _mapScale;
-        [SerializeField] private HexMesh _hexMesh;
-        [SerializeField, HideInInspector] private List<HexWithPosition> _hexes;
+        
+        [Header("Editor settings")]
+        [SerializeField] private HexMesh _currentTargetHexMesh;
+        [SerializeField] private Hardness _currentHexHardness;
+        [SerializeField] private List<HexWithPosition> _hexes;
         
         internal float MapScale => _mapScale;
         internal IEnumerable<HexWithPosition> Hexes => _hexes;
 
         public override IHexMap Create()
         {
-            // TODO: Need to remove manual create of hex via code
-            var hexes = _hexes.ToDictionary(pair => pair.Position, _ => (IHex)new DefaultHex((Hardness)Random.Range(0, 3), _hexMesh));
+            var hexes = _hexes.ToDictionary(hex => hex.Position, hex => (IHex)new DefaultHex(hex.Hardness, hex.TargetHexMesh));
             
             return new Map(_mapScale, hexes);
         }
@@ -30,12 +31,12 @@ namespace YellowSquad.Anthill.Core.HexMap
             return string.Join(' ', _hexes.Select(pair => $"({pair.Position.ToString()})"));
         }
 
-        internal void AddHex(AxialCoordinate position, IHex hex)
+        internal void AddHex(AxialCoordinate position)
         {
             if (_hexes.Any(pair => pair.Position == position))
                 throw new InvalidOperationException();
             
-            _hexes.Add(new HexWithPosition(position));
+            _hexes.Add(new HexWithPosition(_currentHexHardness, _currentTargetHexMesh, position));
         }
 
         internal void RemoveHex(AxialCoordinate position)
@@ -51,13 +52,19 @@ namespace YellowSquad.Anthill.Core.HexMap
         [Serializable]
         internal class HexWithPosition
         {
+            [SerializeField] private Hardness _hardness;
+            [SerializeField] private HexMesh _targetHexMesh;
             [SerializeField] private SerializedAxialCoordinate _position;
-            
-            public HexWithPosition(AxialCoordinate position)
+
+            public HexWithPosition(Hardness hardness, HexMesh targetHexMesh, AxialCoordinate position)
             {
+                _hardness = hardness;
+                _targetHexMesh = targetHexMesh;
                 _position = position;
             }
 
+            public Hardness Hardness => _hardness;
+            public IHexMesh TargetHexMesh => _targetHexMesh;
             public AxialCoordinate Position => _position;
         }
     }

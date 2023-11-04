@@ -5,7 +5,7 @@ namespace YellowSquad.Anthill.Core.HexMap
 {
     internal interface IHexMesh
     {
-        IReadOnlyDictionary<Vector3, Mesh> MeshByPartLocalPosition { get; }
+        IReadOnlyDictionary<Vector3, Mesh> PartsMeshesByLocalPosition { get; }
 
         IEnumerable<IHexPart> Parts();
     }
