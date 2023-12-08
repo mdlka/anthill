@@ -1,12 +1,10 @@
 {
-    "name": "YellowSquad.Anthill.Application",
-    "rootNamespace": "YellowSquad.Anthill.Application",
+    "name": "YellowSquad.Anthill.Core.AStarPathfinding.Adapters",
+    "rootNamespace": "YellowSquad.Anthill.Core.AStarPathfinding.Adapters",
     "references": [
-        "GUID:23eed6c2401dca1419d1ebd180e58c5a",
         "GUID:c1a201351f2fcb34dad2d362ac290285",
-        "GUID:26b82d191b6890848926b9f960099a47",
         "GUID:89f19c2e241afab489f366f0d08a3c5e",
-        "GUID:4675104b89fb7f54aa1c70bc596d4690"
+        "GUID:26b82d191b6890848926b9f960099a47"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

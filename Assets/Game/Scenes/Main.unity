@@ -401,7 +401,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mapFactory: {fileID: 11400000, guid: 96aaeffa1b8310b4c90c555b02fe8518, type: 2}
-  _hexMapViewObject: {fileID: 2052305926}
+  _hexMapView:
+    mode: 0
+    unityReference: {fileID: 2052305926}
+    rawReference:
+      rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &1846138167
 GameObject:
   m_ObjectHideFlags: 0

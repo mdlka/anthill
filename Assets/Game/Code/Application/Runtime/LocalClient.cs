@@ -1,16 +1,17 @@
 using System.Collections;
+using TNRD;
 using UnityEngine;
-using YellowSquad.Anthill.Core.AStarPathfinding;
-using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.HexMath;
-using Object = UnityEngine.Object;
+using YellowSquad.Anthill.Core.AStarPathfinding;
+using YellowSquad.Anthill.Core.AStarPathfinding.Adapters;
+using YellowSquad.Anthill.Core.HexMap;
 
 namespace YellowSquad.Anthill.Application
 {
-    public class Game : MonoBehaviour
+    public class LocalClient : MonoBehaviour
     {
         [SerializeField] private BaseMapFactory _mapFactory;
-        [SerializeField, InterfaceType(typeof(IHexMapView))] private Object _hexMapViewObject;
+        [SerializeField] private SerializableInterface<IHexMapView> _hexMapView;
 
         private Camera _camera;
         private IHexMap _map;
@@ -18,7 +19,7 @@ namespace YellowSquad.Anthill.Application
         private IEnumerator Start()
         {
             _map = _mapFactory.Create();
-            _map.Visualize(_hexMapViewObject as IHexMapView);
+            _map.Visualize(_hexMapView.Value);
 
             var path = new Path(new MapMovePolicy(_map));
 
@@ -47,7 +48,7 @@ namespace YellowSquad.Anthill.Application
                 if (Input.GetKeyDown(KeyCode.Space))
                     Debug.Log(_map.ToString());
 
-                _map.Visualize(_hexMapViewObject as IHexMapView);
+                _map.Visualize(_hexMapView.Value);
             }
         }
     }
