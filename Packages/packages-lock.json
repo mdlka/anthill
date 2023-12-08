@@ -149,13 +149,6 @@
       "dependencies": {},
       "hash": "2a7a02f4187d7c9c60e3533352cfff0406fda9f6"
     },
-    "net.wraithavengames.unityinterfacesupport": {
-      "version": "https://github.com/TheDudeFromCI/Unity-Interface-Support.git?path=/Packages/net.wraithavengames.unityinterfacesupport",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "898593145b8dfee7d72f3493489ec39dac7cf59b"
-    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
