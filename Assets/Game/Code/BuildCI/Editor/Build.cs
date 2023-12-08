@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace YellowSquad.BuildCI
 {
-    public class Build
+    internal class Build
     {
         private static BuildOptions DevelopmentBuildOptions => 
             BuildOptions.Development | BuildOptions.ConnectWithProfiler | BuildOptions.EnableDeepProfilingSupport;
