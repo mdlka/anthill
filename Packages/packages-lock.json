@@ -142,6 +142,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.yellowsquad.assetpath": {
+      "version": "https://github.com/mdlka/com.yellowsquad.assetpath.git#2.2.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4e63373a25f750961262e5eba8f7a40d58442014"
+    },
     "net.tnrd.serializableinterface": {
       "version": "https://github.com/Thundernerd/Unity3D-SerializableInterface.git",
       "depth": 0,
