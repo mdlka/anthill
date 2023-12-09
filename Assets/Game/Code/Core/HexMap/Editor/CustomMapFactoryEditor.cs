@@ -49,7 +49,7 @@ namespace YellowSquad.Anthill.Core.HexMap.Editor
             foreach (var hex in _customMapFactory.Hexes)
             {
                 DrawHex(hex.Position, Color.green);
-                DrawText($"{hex.Position.ToString()}\n{hex.Hardness}", hex.Position.ToVector3(_customMapFactory.MapScale));
+                DrawText($"{hex.Position.ToString()}\n{hex.Hardness}\n{hex.PointOfInterest.ToString()}", hex.Position.ToVector3(_customMapFactory.MapScale));
             }
 
             Tools.hidden = true;
@@ -72,9 +72,16 @@ namespace YellowSquad.Anthill.Core.HexMap.Editor
                 try
                 {
                     if (_currentEditState == EditState.Add)
+                    {
+                        if (_customMapFactory.HasHexIn(targetPosition))
+                            _customMapFactory.RemoveHex(targetPosition);
+                        
                         _customMapFactory.AddHex(targetPosition);
+                    }
                     else if (_currentEditState == EditState.Remove)
+                    {
                         _customMapFactory.RemoveHex(targetPosition);
+                    }
                         
                 }
                 catch (Exception) { /* ignored */ }

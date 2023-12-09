@@ -14,10 +14,11 @@ namespace YellowSquad.Anthill.Core.HexMap
         [Header("Editor settings")]
         [SerializeField] private HexMesh _currentTargetHexMesh;
         [SerializeField] private Hardness _currentHexHardness;
-        [SerializeField] private List<HexWithPosition> _hexes;
+        [SerializeField] private PointOfInterest _currentPointOfInterest;
+        [SerializeField] private List<MapHex> _hexes;
         
         internal float MapScale => _mapScale;
-        internal IEnumerable<HexWithPosition> Hexes => _hexes;
+        internal IEnumerable<MapHex> Hexes => _hexes;
 
         public override IHexMap Create()
         {
@@ -31,12 +32,17 @@ namespace YellowSquad.Anthill.Core.HexMap
             return string.Join(' ', _hexes.Select(pair => $"({pair.Position.ToString()})"));
         }
 
+        internal bool HasHexIn(AxialCoordinate position)
+        {
+            return _hexes.Any(pair => pair.Position == position);
+        }
+
         internal void AddHex(AxialCoordinate position)
         {
-            if (_hexes.Any(pair => pair.Position == position))
+            if (HasHexIn(position))
                 throw new InvalidOperationException();
             
-            _hexes.Add(new HexWithPosition(_currentHexHardness, _currentTargetHexMesh, position));
+            _hexes.Add(new MapHex(_currentPointOfInterest, _currentHexHardness, _currentTargetHexMesh, position));
         }
 
         internal void RemoveHex(AxialCoordinate position)
@@ -50,19 +56,22 @@ namespace YellowSquad.Anthill.Core.HexMap
         }
 
         [Serializable]
-        internal class HexWithPosition
+        internal class MapHex
         {
+            [SerializeField] private PointOfInterest _pointOfInterest;
             [SerializeField] private Hardness _hardness;
             [SerializeField] private HexMesh _targetHexMesh;
             [SerializeField] private SerializedAxialCoordinate _position;
 
-            public HexWithPosition(Hardness hardness, HexMesh targetHexMesh, AxialCoordinate position)
+            public MapHex(PointOfInterest pointOfInterest, Hardness hardness, HexMesh targetHexMesh, AxialCoordinate position)
             {
+                _pointOfInterest = pointOfInterest;
                 _hardness = hardness;
                 _targetHexMesh = targetHexMesh;
                 _position = position;
             }
 
+            public PointOfInterest PointOfInterest => _pointOfInterest;
             public Hardness Hardness => _hardness;
             public IHexMesh TargetHexMesh => _targetHexMesh;
             public AxialCoordinate Position => _position;
