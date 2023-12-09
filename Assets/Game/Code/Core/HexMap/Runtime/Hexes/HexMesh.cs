@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using YellowSquad.AssetPath;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
     [CreateAssetMenu(menuName = "Anthill/Create HexMesh", fileName = "HexMesh", order = 56)]
     internal class HexMesh : ScriptableObject, IHexMesh
     {
-        [SerializeField] private string _objectPath;
+        [SerializeField] private ResourcesReference<GameObject> _modelObject;
 
         private Pair[] _cachedMesh;
         private Dictionary<Vector3, Mesh> _cachedPartsMeshesByLocalPosition;
@@ -45,7 +46,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (_cachedMesh != null)
                 return _cachedMesh;
             
-            var hexModel = Resources.Load<GameObject>(_objectPath);
+            var hexModel = _modelObject.Load();
 
             if (hexModel == null)
                 throw new InvalidOperationException("Object doesn't exist");
