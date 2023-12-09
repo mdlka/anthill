@@ -10,12 +10,16 @@ namespace YellowSquad.Anthill.Core.HexMap
     {
         [SerializeField, Min(0.01f)] private Vector3 _hexScale;
         [SerializeField] private GroundMapView _groundView;
+        [SerializeField] private PointsOfInterestView _pointsOfInterestView;
         [SerializeField] private HexViewPair[] _hexViews;
 
         public void Render(float mapScale, IReadOnlyDictionary<AxialCoordinate, MapCell> cells)
         {
             if (_groundView.Initialized == false)
                 _groundView.Initialize(mapScale, _hexScale, cells.Keys);
+            
+            if (_pointsOfInterestView.Initialized == false)
+                _pointsOfInterestView.Initialize(mapScale, cells.ToDictionary(pair => pair.Key, pair => pair.Value.PointOfInterest));
             
             foreach (var pair in _hexViews)
                 pair.View.Clear(); // TODO: Need optimization
