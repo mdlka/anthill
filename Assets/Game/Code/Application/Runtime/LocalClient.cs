@@ -2,8 +2,8 @@ using System.Collections;
 using TNRD;
 using UnityEngine;
 using YellowSquad.HexMath;
+using YellowSquad.Anthill.Application.Adapters;
 using YellowSquad.Anthill.Core.AStarPathfinding;
-using YellowSquad.Anthill.Core.AStarPathfinding.Adapters;
 using YellowSquad.Anthill.Core.HexMap;
 
 namespace YellowSquad.Anthill.Application

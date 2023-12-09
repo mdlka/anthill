@@ -1,7 +1,8 @@
 using YellowSquad.HexMath;
 using YellowSquad.Anthill.Core.HexMap;
+using YellowSquad.Anthill.Core.AStarPathfinding;
 
-namespace YellowSquad.Anthill.Core.AStarPathfinding.Adapters
+namespace YellowSquad.Anthill.Application.Adapters
 {
     public class MapMovePolicy : IMovePolicy
     {

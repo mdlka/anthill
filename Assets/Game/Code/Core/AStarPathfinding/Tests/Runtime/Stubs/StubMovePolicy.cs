@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using YellowSquad.HexMath;
 
-namespace YellowSquad.Anthill.Core.AStarPathfinding
+namespace YellowSquad.Anthill.Core.AStarPathfinding.Tests
 {
-    public class AvailableMovePolicy : IMovePolicy
+    public class StubMovePolicy : IMovePolicy
     {
         private readonly HashSet<AxialCoordinate> _availablePositions;
 
-        public AvailableMovePolicy(IEnumerable<AxialCoordinate> availablePositions)
+        public StubMovePolicy(IEnumerable<AxialCoordinate> availablePositions)
         {
             _availablePositions = new HashSet<AxialCoordinate>(availablePositions);
         }

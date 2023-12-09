@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using YellowSquad.HexMath;
@@ -6,7 +5,7 @@ using NUnit.Framework;
 
 namespace YellowSquad.Anthill.Core.AStarPathfinding.Tests
 {
-    public class PathAndMovePoliciesTests
+    public class PathTests
     {
         [TestCaseSource(nameof(WithoutObstaclesMovePolicies))]
         public void Calculate_WithoutObstacles_ReturnNearestPath(IMovePolicy movePolicy)
@@ -89,8 +88,7 @@ namespace YellowSquad.Anthill.Core.AStarPathfinding.Tests
         {
             get
             {
-                yield return new TestCaseData(new ObstacleMovePolicy(Array.Empty<AxialCoordinate>()));
-                yield return new TestCaseData(new AvailableMovePolicy(Map));
+                yield return new TestCaseData(new StubMovePolicy(Map));
             }
         }
         
@@ -106,8 +104,7 @@ namespace YellowSquad.Anthill.Core.AStarPathfinding.Tests
                     new AxialCoordinate(1, 1),
                 };
                 
-                yield return new TestCaseData(new ObstacleMovePolicy(obstacles));
-                yield return new TestCaseData(new AvailableMovePolicy(Map.Except(obstacles)));
+                yield return new TestCaseData(new StubMovePolicy(Map.Except(obstacles)));
             }
         }
         
@@ -130,8 +127,7 @@ namespace YellowSquad.Anthill.Core.AStarPathfinding.Tests
                     new AxialCoordinate(3, -1),
                 };
                 
-                yield return new TestCaseData(new ObstacleMovePolicy(obstacles));
-                yield return new TestCaseData(new AvailableMovePolicy(Map.Except(obstacles)));
+                yield return new TestCaseData(new StubMovePolicy(Map.Except(obstacles)));
             }
         }
     }
