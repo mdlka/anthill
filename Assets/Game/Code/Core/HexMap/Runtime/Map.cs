@@ -7,24 +7,24 @@ namespace YellowSquad.Anthill.Core.HexMap
     internal class Map : IHexMap
     {
         private readonly float _scale;
-        private readonly Dictionary<AxialCoordinate, IHex> _hexes;
+        private readonly Dictionary<AxialCoordinate, MapCell> _cells;
 
-        public Map(IReadOnlyDictionary<AxialCoordinate, IHex> hexes) : this(1f, hexes) { }
+        public Map(IReadOnlyDictionary<AxialCoordinate, MapCell> cells) : this(1f, cells) { }
         
-        public Map(float scale, IReadOnlyDictionary<AxialCoordinate, IHex> hexes)
+        public Map(float scale, IReadOnlyDictionary<AxialCoordinate, MapCell> cells)
         {
             if (scale <= 0)
                 throw new ArgumentOutOfRangeException(nameof(scale));
             
             _scale = scale;
-            _hexes = new Dictionary<AxialCoordinate, IHex>(hexes);
+            _cells = new Dictionary<AxialCoordinate, MapCell>(cells);
         }
 
         public float Scale => _scale;
 
         public bool HasPosition(AxialCoordinate position)
         {
-            return _hexes.ContainsKey(position);
+            return _cells.ContainsKey(position);
         }
 
         public bool HasObstacleIn(AxialCoordinate position)
@@ -32,7 +32,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (HasPosition(position) == false)
                 throw new ArgumentOutOfRangeException();
 
-            return _hexes[position].HasParts;
+            return _cells[position].Hex.HasParts;
         }
 
         public IHex HexFrom(AxialCoordinate position)
@@ -40,17 +40,17 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (HasPosition(position) == false)
                 throw new ArgumentOutOfRangeException();
             
-            return _hexes[position];
+            return _cells[position].Hex;
         }
 
         public void Visualize(IHexMapView view)
         {
-            view.Render(_scale, _hexes);
+            view.Render(_scale, _cells);
         }
 
         public override string ToString()
         {
-            return $"Count: {_hexes.Count}\n{string.Join(' ', _hexes)}";
+            return $"Count: {_cells.Count}\n{string.Join(' ', _cells)}";
         }
     }
 }

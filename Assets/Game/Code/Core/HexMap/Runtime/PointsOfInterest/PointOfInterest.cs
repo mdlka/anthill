@@ -1,6 +1,6 @@
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    internal enum PointOfInterest
+    public enum PointOfInterest
     {
         Empty = 0,
         Queen = 1,

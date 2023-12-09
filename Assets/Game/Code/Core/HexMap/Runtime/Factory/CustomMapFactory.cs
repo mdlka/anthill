@@ -15,14 +15,18 @@ namespace YellowSquad.Anthill.Core.HexMap
         [SerializeField] private HexMesh _currentTargetHexMesh;
         [SerializeField] private Hardness _currentHexHardness;
         [SerializeField] private PointOfInterest _currentPointOfInterest;
-        [SerializeField] private List<MapHex> _hexes;
+        [SerializeField] private List<EditorMapHex> _hexes;
         
         internal float MapScale => _mapScale;
-        internal IEnumerable<MapHex> Hexes => _hexes;
+        internal IEnumerable<EditorMapHex> Hexes => _hexes;
 
         public override IHexMap Create()
         {
-            var hexes = _hexes.ToDictionary(hex => hex.Position, hex => (IHex)new DefaultHex(hex.Hardness, hex.TargetHexMesh));
+            var hexes = _hexes.ToDictionary(
+                hex => hex.Position, 
+                hex => new MapCell(
+                    new DefaultHex(hex.Hardness, hex.TargetHexMesh), 
+                    hex.PointOfInterest));
             
             return new Map(_mapScale, hexes);
         }
@@ -42,7 +46,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (HasHexIn(position))
                 throw new InvalidOperationException();
             
-            _hexes.Add(new MapHex(_currentPointOfInterest, _currentHexHardness, _currentTargetHexMesh, position));
+            _hexes.Add(new EditorMapHex(_currentPointOfInterest, _currentHexHardness, _currentTargetHexMesh, position));
         }
 
         internal void RemoveHex(AxialCoordinate position)
@@ -56,14 +60,14 @@ namespace YellowSquad.Anthill.Core.HexMap
         }
 
         [Serializable]
-        internal class MapHex
+        internal class EditorMapHex
         {
             [SerializeField] private PointOfInterest _pointOfInterest;
             [SerializeField] private Hardness _hardness;
             [SerializeField] private HexMesh _targetHexMesh;
             [SerializeField] private SerializedAxialCoordinate _position;
 
-            public MapHex(PointOfInterest pointOfInterest, Hardness hardness, HexMesh targetHexMesh, AxialCoordinate position)
+            public EditorMapHex(PointOfInterest pointOfInterest, Hardness hardness, HexMesh targetHexMesh, AxialCoordinate position)
             {
                 _pointOfInterest = pointOfInterest;
                 _hardness = hardness;

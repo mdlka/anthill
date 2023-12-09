@@ -10,27 +10,27 @@ namespace YellowSquad.Anthill.Core.HexMap
     {
         [SerializeField, Min(0.01f)] private Vector3 _hexScale;
         [SerializeField] private GroundMapView _groundView;
-        [SerializeField] private Pair[] _hexViews;
+        [SerializeField] private HexViewPair[] _hexViews;
 
-        public void Render(float mapScale, IReadOnlyDictionary<AxialCoordinate, IHex> hexes)
+        public void Render(float mapScale, IReadOnlyDictionary<AxialCoordinate, MapCell> cells)
         {
             if (_groundView.Initialized == false)
-                _groundView.Initialize(mapScale, _hexScale, hexes.Keys);
+                _groundView.Initialize(mapScale, _hexScale, cells.Keys);
             
-            foreach (var hexView in _hexViews)
-                hexView.View.Clear(); // TODO: Need optimization
+            foreach (var pair in _hexViews)
+                pair.View.Clear(); // TODO: Need optimization
             
-            foreach (var pair in hexes)
+            foreach (var pair in cells)
             {
                 var hexMatrix = Matrix4x4.TRS(pair.Key.ToVector3(mapScale), Quaternion.Euler(0f, 30f, 0f), _hexScale);
 
-                var view = _hexViews.First(view => view.Hardness == pair.Value.Hardness).View;
-                view.Render(pair.Value.Parts, hexMatrix);
+                var view = _hexViews.First(view => view.Hardness == pair.Value.Hex.Hardness).View;
+                view.Render(pair.Value.Hex.Parts, hexMatrix);
             }
         }
 
         [Serializable]
-        private class Pair
+        private class HexViewPair
         {
             [field: SerializeField] public Hardness Hardness { get; private set; }
             [field: SerializeField] public HexView View { get; private set; }
