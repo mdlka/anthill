@@ -3,7 +3,7 @@ using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
 {
-    internal class AntHome : IHome
+    public class AntHome : IHome
     {
         private readonly IReadOnlyTaskStorage _taskStorage;
 

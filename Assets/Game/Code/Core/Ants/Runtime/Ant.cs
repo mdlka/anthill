@@ -2,7 +2,7 @@ using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
 {
-    internal class Ant : IAnt
+    public class Ant : IAnt
     {
         private readonly IHome _home;
         private readonly IMovement _movement;
@@ -27,7 +27,13 @@ namespace YellowSquad.Anthill.Core.Ants
                 if (_movement.ReachedTargetPosition)
                 {
                     if (_home.HasTask == false)
+                    {
+                        if (CurrentPosition == _home.Position)
+                            return;
+                        
+                        _movement.MoveTo(_home.Position);
                         return;
+                    }
 
                     _currentTask = _home.FindTask();
                     _movement.MoveTo(_currentTask.TargetPosition);

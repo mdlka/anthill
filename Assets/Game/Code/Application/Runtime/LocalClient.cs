@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using TNRD;
 using UnityEngine;
 using YellowSquad.HexMath;
 using YellowSquad.Anthill.Application.Adapters;
+using YellowSquad.Anthill.Core.Ants;
 using YellowSquad.Anthill.Core.AStarPathfinding;
 using YellowSquad.Anthill.Core.HexMap;
 
@@ -10,6 +13,8 @@ namespace YellowSquad.Anthill.Application
 {
     public class LocalClient : MonoBehaviour
     {
+        private readonly List<IAnt> _ants = new();
+
         [SerializeField] private BaseMapFactory _mapFactory;
         [SerializeField] private SerializableInterface<IHexMapView> _hexMapView;
 
@@ -22,6 +27,9 @@ namespace YellowSquad.Anthill.Application
             _map.Visualize(_hexMapView.Value);
 
             var path = new Path(new MapMovePolicy(_map));
+
+            var taskStorage = new InMemoryStorage();
+            var diggerHome = new AntHome(_map.PointsOfInterestPositions(PointOfInterest.DiggersHome)[0], taskStorage);
 
             _camera = Camera.main;
             
@@ -41,15 +49,35 @@ namespace YellowSquad.Anthill.Application
                 
                     var targetHex = _map.HexFrom(targetAxialPosition);
                     
-                    if (targetHex.HasParts)
+                    while (targetHex.HasParts)
                         targetHex.RemoveClosestPartFor(targetPosition);
                 }
+
+                if (Input.GetKeyDown(KeyCode.C))
+                    _ants.Add(new Ant(diggerHome, new DefaultMovement(0.2f, path, targetAxialPosition)));
+
+                if (Input.GetMouseButtonDown(1))
+                    taskStorage.AddTask(new DefaultTask(targetAxialPosition));
 
                 if (Input.GetKeyDown(KeyCode.Space))
                     Debug.Log(_map.ToString());
 
                 _map.Visualize(_hexMapView.Value);
             }
+        }
+
+        private void Update()
+        {
+            foreach (var ant in _ants)
+                ant.Update(Time.deltaTime);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.black;
+            
+            foreach (var ant in _ants)
+                Gizmos.DrawCube(ant.CurrentPosition.ToVector3(), Vector3.one * 0.5f);
         }
     }
 }

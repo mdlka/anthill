@@ -2,7 +2,7 @@
 
 namespace YellowSquad.Anthill.Core.Ants
 {
-    internal interface IMovement : IGameLoop
+    public interface IMovement : IGameLoop
     {
         AxialCoordinate CurrentPosition { get; }
         bool ReachedTargetPosition { get; }

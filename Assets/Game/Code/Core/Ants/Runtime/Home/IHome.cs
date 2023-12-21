@@ -2,7 +2,7 @@
 
 namespace YellowSquad.Anthill.Core.Ants
 {
-    internal interface IHome : IReadOnlyTaskStorage
+    public interface IHome : IReadOnlyTaskStorage
     {
         AxialCoordinate Position { get; }
     }

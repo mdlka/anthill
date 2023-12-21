@@ -1,6 +1,6 @@
 ﻿namespace YellowSquad.Anthill.Core.Ants
 {
-    internal interface IGameLoop
+    public interface IGameLoop
     {
         void Update(float deltaTime);
     }
