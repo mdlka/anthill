@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.HexMap
@@ -44,12 +43,15 @@ namespace YellowSquad.Anthill.Core.HexMap
             return _cells[position].Hex;
         }
 
-        public AxialCoordinate[] PointsOfInterestPositions(PointOfInterest targetPoint)
+        public IReadOnlyList<AxialCoordinate> PointsOfInterestPositions(PointOfInterest targetPoint)
         {
-            // TODO: Need to remove linq
-            return _cells.Where(cell => cell.Value.PointOfInterest == targetPoint)
-                .Select(cell => cell.Key)
-                .ToArray();
+            var points = new List<AxialCoordinate>();
+
+            foreach (var cell in _cells)
+                if (cell.Value.PointOfInterest == targetPoint) 
+                    points.Add(cell.Key);
+
+            return points;
         }
 
         public void Visualize(IHexMapView view)

@@ -35,7 +35,7 @@ namespace YellowSquad.Anthill.Application.Tests
             throw new NotImplementedException();
         }
 
-        public AxialCoordinate[] PointsOfInterestPositions(PointOfInterest targetPoint)
+        public IReadOnlyList<AxialCoordinate> PointsOfInterestPositions(PointOfInterest targetPoint)
         {
             throw new NotImplementedException();
         }

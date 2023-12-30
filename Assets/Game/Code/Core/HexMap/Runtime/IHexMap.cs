@@ -1,4 +1,5 @@
-﻿using YellowSquad.HexMath;
+﻿using System.Collections.Generic;
+using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
@@ -10,7 +11,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         bool HasObstacleIn(AxialCoordinate position);
         IHex HexFrom(AxialCoordinate position);
 
-        AxialCoordinate[] PointsOfInterestPositions(PointOfInterest targetPoint);
+        IReadOnlyList<AxialCoordinate> PointsOfInterestPositions(PointOfInterest targetPoint);
 
         void Visualize(IHexMapView view);
     }
