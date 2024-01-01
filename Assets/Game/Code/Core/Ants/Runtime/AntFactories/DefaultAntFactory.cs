@@ -16,12 +16,12 @@ namespace YellowSquad.Anthill.Core.Ants
         
         public IAnt CreateDigger(IHome home, AxialCoordinate startPosition)
         {
-            return new Ant(home, new DefaultMovement(_moveDelay, _path, startPosition));
+            return new Ant(home, new RoughMovement(_moveDelay, _path, startPosition));
         }
 
         public IAnt CreateLoader(IHome home, AxialCoordinate startPosition)
         {
-            return new Ant(home, new DefaultMovement(_moveDelay, _path, startPosition));
+            return new Ant(home, new RoughMovement(_moveDelay, _path, startPosition));
         }
     }
 }

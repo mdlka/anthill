@@ -17,6 +17,8 @@ namespace YellowSquad.Anthill.Application
 
         [SerializeField] private BaseMapFactory _mapFactory;
         [SerializeField] private SerializableInterface<IHexMapView> _hexMapView;
+        [SerializeField] private AntView _diggerView;
+        [SerializeField] private AntView _loaderView;
 
         private Camera _camera;
         private IHexMap _map;
@@ -28,7 +30,9 @@ namespace YellowSquad.Anthill.Application
 
             var path = new Path(new MapMovePolicy(_map));
             var taskStorage = new DefaultStorage();
-
+            
+            _diggerView.Initialize(_map.Scale);
+            
             var queen = new Queen(
                 _map.PointsOfInterestPositions(PointOfInterest.Queen)[0],
                 new DefaultAntFactory(path, 0.2f),
@@ -60,8 +64,14 @@ namespace YellowSquad.Anthill.Application
                 }
 
                 if (Input.GetKeyDown(KeyCode.C))
+                {
                     if (queen.CanCreateDigger)
-                        _ants.Add(queen.CreateDigger());
+                    {
+                        var ant = queen.CreateDigger();
+                        _ants.Add(ant);
+                        _diggerView.Add(ant);
+                    }
+                }
 
                 if (Input.GetMouseButtonDown(1))
                     if (_map.HasObstacleIn(targetAxialPosition) == false)
@@ -76,16 +86,10 @@ namespace YellowSquad.Anthill.Application
 
         private void Update()
         {
-            foreach (var ant in _ants)
-                ant.Update(Time.deltaTime);
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.black;
+            _diggerView.UpdateRender();
             
             foreach (var ant in _ants)
-                Gizmos.DrawCube(ant.CurrentPosition.ToVector3(), Vector3.one * 0.5f);
+                ant.Update(Time.deltaTime);
         }
     }
 }

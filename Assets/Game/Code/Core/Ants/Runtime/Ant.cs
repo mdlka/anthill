@@ -19,6 +19,7 @@ namespace YellowSquad.Anthill.Core.Ants
         }
 
         public AxialCoordinate CurrentPosition => _movement.CurrentPosition;
+        public bool Moving => _movement.ReachedTargetPosition == false;
 
         public void Update(float deltaTime)
         {

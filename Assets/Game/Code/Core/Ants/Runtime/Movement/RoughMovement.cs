@@ -5,7 +5,7 @@ using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
 {
-    public class DefaultMovement : IMovement
+    public class RoughMovement : IMovement
     {
         private readonly float _moveDelay;
         private readonly IPath _path;
@@ -14,7 +14,7 @@ namespace YellowSquad.Anthill.Core.Ants
         private float _elapsedTime;
         private IReadOnlyList<AxialCoordinate> _currentPath;
 
-        public DefaultMovement(float moveDelay, IPath path, AxialCoordinate startPosition = default)
+        public RoughMovement(float moveDelay, IPath path, AxialCoordinate startPosition = default)
         {
             _moveDelay = moveDelay;
             _path = path;
