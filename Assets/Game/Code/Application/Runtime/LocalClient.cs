@@ -86,7 +86,7 @@ namespace YellowSquad.Anthill.Application
                 }
 
                 if (Input.GetMouseButtonDown(1))
-                    if (_map.HasObstacleIn(targetAxialPosition) == false)
+                    if (_map.HasPosition(targetAxialPosition) && _map.HasObstacleIn(targetAxialPosition) == false)
                         _taskStorage.AddTask(new DefaultTask(targetAxialPosition));
 
                 if (Input.GetKeyDown(KeyCode.Space))
