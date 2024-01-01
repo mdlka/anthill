@@ -7,21 +7,23 @@ namespace YellowSquad.Anthill.Core.Ants
     {
         private readonly IPath _path;
         private readonly float _moveDelay;
+        private readonly int _stepsToGoal;
 
-        public DefaultAntFactory(IPath path, float moveDelay)
+        public DefaultAntFactory(IPath path, float moveDelay, int stepsToGoal)
         {
             _path = path;
             _moveDelay = moveDelay;
+            _stepsToGoal = stepsToGoal;
         }
         
         public IAnt CreateDigger(IHome home, AxialCoordinate startPosition)
         {
-            return new Ant(home, new RoughMovement(_moveDelay, _path, startPosition));
+            return new Ant(home, new DefaultMovement(_moveDelay, _stepsToGoal, _path, startPosition));
         }
 
         public IAnt CreateLoader(IHome home, AxialCoordinate startPosition)
         {
-            return new Ant(home, new RoughMovement(_moveDelay, _path, startPosition));
+            return new Ant(home, new DefaultMovement(_moveDelay, _stepsToGoal, _path, startPosition));
         }
     }
 }

@@ -33,6 +33,20 @@ namespace YellowSquad.HexMath
             return new Vector3(vector2.x, 0, vector2.y);
         }
         
+        public static Vector2 ToVector2(this FracAxialCoordinate axialCoordinate, float hexGridScale = 1f)
+        {
+            float x = axialCoordinate.Q * 1.5f * hexGridScale;
+            float y = hexGridScale * Sqrt3 * (axialCoordinate.R + axialCoordinate.Q / 2f);
+            
+            return new Vector2(x, y);
+        }
+
+        public static Vector3 ToVector3(this FracAxialCoordinate axialCoordinate, float hexGridScale = 1f)
+        {
+            Vector2 vector2 = axialCoordinate.ToVector2(hexGridScale);
+            return new Vector3(vector2.x, 0, vector2.y);
+        }
+        
         public static Vector3 HexCornerPosition(this AxialCoordinate axialCoordinate, int cornerIndex, float hexGridScale = 1f)
         {
             Vector3 centerPosition = axialCoordinate.ToVector3(hexGridScale);

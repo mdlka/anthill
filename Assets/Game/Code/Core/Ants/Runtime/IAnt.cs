@@ -4,7 +4,7 @@ namespace YellowSquad.Anthill.Core.Ants
 {
     public interface IAnt : IGameLoop
     {
-        AxialCoordinate CurrentPosition { get; }
+        FracAxialCoordinate CurrentPosition { get; }
         bool Moving { get; }
     }
 }

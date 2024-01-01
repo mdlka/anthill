@@ -5,23 +5,27 @@ using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
 {
-    public class RoughMovement : IMovement
+    public class DefaultMovement : IMovement
     {
-        private readonly float _moveDelay;
+        private readonly float _moveToGoalDuration;
+        private readonly int _stepsToGoal;
         private readonly IPath _path;
 
         private int _currentPathIndex;
+        private int _currentStep;
         private float _elapsedTime;
         private IReadOnlyList<AxialCoordinate> _currentPath;
 
-        public RoughMovement(float moveDelay, IPath path, AxialCoordinate startPosition = default)
+        public DefaultMovement(float moveToGoalDuration, int stepsToGoal, IPath path, AxialCoordinate startPosition = default)
         {
-            _moveDelay = moveDelay;
+            _moveToGoalDuration = moveToGoalDuration / stepsToGoal;
+            _stepsToGoal = stepsToGoal;
             _path = path;
             _currentPath = new[] { startPosition };
         }
 
-        public AxialCoordinate CurrentPosition => _currentPath[_currentPathIndex];
+        public FracAxialCoordinate CurrentPosition => _currentPath[_currentPathIndex].Lerp(
+            _currentPath[Math.Clamp(_currentPathIndex - 1, 0, _currentPathIndex)], (float)_currentStep / _stepsToGoal);
         public bool ReachedTargetPosition => _currentPathIndex == 0;
         
         public void MoveTo(AxialCoordinate targetPosition)
@@ -29,7 +33,7 @@ namespace YellowSquad.Anthill.Core.Ants
             if (ReachedTargetPosition == false)
                 throw new InvalidOperationException();
 
-            if (_path.Calculate(CurrentPosition, targetPosition, out IReadOnlyList<AxialCoordinate> path) == false)
+            if (_path.Calculate(CurrentPosition.AxialRound(), targetPosition, out IReadOnlyList<AxialCoordinate> path) == false)
                 throw new InvalidOperationException();
 
             _currentPathIndex = path.Count - 1;
@@ -43,10 +47,16 @@ namespace YellowSquad.Anthill.Core.Ants
 
             _elapsedTime += deltaTime;
 
-            if (_elapsedTime < _moveDelay)
+            if (_elapsedTime < _moveToGoalDuration)
                 return;
 
             _elapsedTime = 0;
+            _currentStep += 1;
+
+            if (_currentStep != _stepsToGoal)
+                return;
+
+            _currentStep = 0;
             _currentPathIndex -= 1;
         }
     }

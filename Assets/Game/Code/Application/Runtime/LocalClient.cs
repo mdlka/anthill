@@ -19,36 +19,48 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private SerializableInterface<IHexMapView> _hexMapView;
         [SerializeField] private AntView _diggerView;
         [SerializeField] private AntView _loaderView;
+        [Header("Ants movement")]
+        [SerializeField] private float _moveToGoalDuration = 0.3f;
+        [SerializeField] private int _stepsToGoal = 5;
 
         private Camera _camera;
         private IHexMap _map;
+        private ITaskStorage _taskStorage;
+        private Queen _queen;
 
         private IEnumerator Start()
         {
             _map = _mapFactory.Create();
             _map.Visualize(_hexMapView.Value);
 
-            var path = new Path(new MapMovePolicy(_map));
-            var taskStorage = new DefaultStorage();
-            
+            _taskStorage = new DefaultStorage();
             _diggerView.Initialize(_map.Scale);
             
-            var queen = new Queen(
+            _queen = new Queen(
                 _map.PointsOfInterestPositions(PointOfInterest.Queen)[0],
-                new DefaultAntFactory(path, 0.2f),
+                new DefaultAntFactory(new Path(new MapMovePolicy(_map)), _moveToGoalDuration, _stepsToGoal),
                 new HomeList(20, _map, _map.PointsOfInterestPositions(PointOfInterest.DiggersHome)
-                    .Select(position => new AntHome(position, taskStorage)).ToArray<IHome>()),
+                    .Select(position => new AntHome(position, _taskStorage)).ToArray<IHome>()),
                 new HomeList(20, _map, _map.PointsOfInterestPositions(PointOfInterest.LoadersHome)
-                    .Select(position => new AntHome(position, taskStorage)).ToArray<IHome>()));
+                    .Select(position => new AntHome(position, _taskStorage)).ToArray<IHome>()));
 
             _camera = Camera.main;
-            
+
+            StartCoroutine(AntLoop());
+            StartCoroutine(InputLoop());
+
+            yield return null;
+        }
+
+        private IEnumerator InputLoop()
+        {
             while (true)
             {
                 yield return null;
                 yield return new WaitUntil(() => Input.anyKey);
 
-                Vector3 mouseClickPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _camera.transform.position.y);
+                Vector3 mouseClickPosition =
+                    new Vector3(Input.mousePosition.x, Input.mousePosition.y, _camera.transform.position.y);
                 var targetPosition = _camera.ScreenToWorldPoint(mouseClickPosition);
                 var targetAxialPosition = targetPosition.ToAxialCoordinate(_map.Scale);
 
@@ -56,18 +68,18 @@ namespace YellowSquad.Anthill.Application
                 {
                     if (_map.HasPosition(targetAxialPosition) == false)
                         continue;
-                
+
                     var targetHex = _map.HexFrom(targetAxialPosition);
-                    
+
                     while (targetHex.HasParts)
                         targetHex.RemoveClosestPartFor(targetPosition);
                 }
 
                 if (Input.GetKeyDown(KeyCode.C))
                 {
-                    if (queen.CanCreateDigger)
+                    if (_queen.CanCreateDigger)
                     {
-                        var ant = queen.CreateDigger();
+                        var ant = _queen.CreateDigger();
                         _ants.Add(ant);
                         _diggerView.Add(ant);
                     }
@@ -75,7 +87,7 @@ namespace YellowSquad.Anthill.Application
 
                 if (Input.GetMouseButtonDown(1))
                     if (_map.HasObstacleIn(targetAxialPosition) == false)
-                        taskStorage.AddTask(new DefaultTask(targetAxialPosition));
+                        _taskStorage.AddTask(new DefaultTask(targetAxialPosition));
 
                 if (Input.GetKeyDown(KeyCode.Space))
                     Debug.Log(_map.ToString());
@@ -84,12 +96,17 @@ namespace YellowSquad.Anthill.Application
             }
         }
 
-        private void Update()
+        private IEnumerator AntLoop()
         {
-            _diggerView.UpdateRender();
+            while (true)
+            {
+                _diggerView.UpdateRender();
             
-            foreach (var ant in _ants)
-                ant.Update(Time.deltaTime);
+                foreach (var ant in _ants)
+                    ant.Update(Time.deltaTime);
+                
+                yield return null;
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ namespace YellowSquad.Anthill.Core.Ants
             _currentTask = startTask;
         }
 
-        public AxialCoordinate CurrentPosition => _movement.CurrentPosition;
+        public FracAxialCoordinate CurrentPosition => _movement.CurrentPosition;
         public bool Moving => _movement.ReachedTargetPosition == false;
 
         public void Update(float deltaTime)
@@ -29,7 +29,7 @@ namespace YellowSquad.Anthill.Core.Ants
                 {
                     if (_home.HasTask == false)
                     {
-                        if (CurrentPosition == _home.Position)
+                        if (CurrentPosition.AxialRound() == _home.Position)
                             return;
                         
                         _movement.MoveTo(_home.Position);

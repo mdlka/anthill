@@ -409,6 +409,8 @@ MonoBehaviour:
       rid: -2
   _diggerView: {fileID: 2047135644}
   _loaderView: {fileID: 0}
+  _moveToGoalDuration: 0.3
+  _stepsToGoal: 7
   references:
     version: 2
     RefIds:
