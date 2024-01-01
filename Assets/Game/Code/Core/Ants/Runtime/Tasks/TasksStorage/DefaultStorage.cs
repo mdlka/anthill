@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace YellowSquad.Anthill.Core.Ants
 {
-    public class InMemoryStorage : ITaskStorage
+    public class DefaultStorage : ITaskStorage
     {
         private readonly Queue<ITask> _tasks = new();
 

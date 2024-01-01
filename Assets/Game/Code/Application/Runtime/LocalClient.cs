@@ -1,6 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TNRD;
 using UnityEngine;
 using YellowSquad.HexMath;
@@ -27,9 +27,15 @@ namespace YellowSquad.Anthill.Application
             _map.Visualize(_hexMapView.Value);
 
             var path = new Path(new MapMovePolicy(_map));
+            var taskStorage = new DefaultStorage();
 
-            var taskStorage = new InMemoryStorage();
-            var diggerHome = new AntHome(_map.PointsOfInterestPositions(PointOfInterest.DiggersHome)[0], taskStorage);
+            var queen = new Queen(
+                _map.PointsOfInterestPositions(PointOfInterest.Queen)[0],
+                new DefaultAntFactory(path, 0.2f),
+                new HomeList(20, _map, _map.PointsOfInterestPositions(PointOfInterest.DiggersHome)
+                    .Select(position => new AntHome(position, taskStorage)).ToArray<IHome>()),
+                new HomeList(20, _map, _map.PointsOfInterestPositions(PointOfInterest.LoadersHome)
+                    .Select(position => new AntHome(position, taskStorage)).ToArray<IHome>()));
 
             _camera = Camera.main;
             
@@ -54,10 +60,12 @@ namespace YellowSquad.Anthill.Application
                 }
 
                 if (Input.GetKeyDown(KeyCode.C))
-                    _ants.Add(new Ant(diggerHome, new DefaultMovement(0.2f, path, targetAxialPosition)));
+                    if (queen.CanCreateDigger)
+                        _ants.Add(queen.CreateDigger());
 
                 if (Input.GetMouseButtonDown(1))
-                    taskStorage.AddTask(new DefaultTask(targetAxialPosition));
+                    if (_map.HasObstacleIn(targetAxialPosition) == false)
+                        taskStorage.AddTask(new DefaultTask(targetAxialPosition));
 
                 if (Input.GetKeyDown(KeyCode.Space))
                     Debug.Log(_map.ToString());

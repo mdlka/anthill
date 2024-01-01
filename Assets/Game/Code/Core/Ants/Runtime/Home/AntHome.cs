@@ -12,7 +12,7 @@ namespace YellowSquad.Anthill.Core.Ants
             Position = position;
             _taskStorage = taskStorage;
         }
-        
+
         public AxialCoordinate Position { get; }
         public bool HasTask => _taskStorage.HasTask;
         
