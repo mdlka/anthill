@@ -322,9 +322,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 30
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -348,7 +348,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: 30, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -407,10 +407,10 @@ MonoBehaviour:
     unityReference: {fileID: 2052305926}
     rawReference:
       rid: -2
+  _movementSettings: {fileID: 11400000, guid: bf38443a5993f32458b3518bc57bc474, type: 2}
   _diggerView: {fileID: 2047135644}
   _loaderView: {fileID: 0}
-  _moveToGoalDuration: 0.3
-  _stepsToGoal: 7
+  _homesCapacity: 100
   references:
     version: 2
     RefIds:

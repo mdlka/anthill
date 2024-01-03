@@ -17,11 +17,10 @@ namespace YellowSquad.Anthill.Application
 
         [SerializeField] private BaseMapFactory _mapFactory;
         [SerializeField] private SerializableInterface<IHexMapView> _hexMapView;
+        [SerializeField] private MovementSettings _movementSettings;
         [SerializeField] private AntView _diggerView;
         [SerializeField] private AntView _loaderView;
-        [Header("Ants movement")]
-        [SerializeField] private float _moveToGoalDuration = 0.3f;
-        [SerializeField] private int _stepsToGoal = 5;
+        [SerializeField, Min(1)] private int _homesCapacity;
 
         private Camera _camera;
         private IHexMap _map;
@@ -36,12 +35,14 @@ namespace YellowSquad.Anthill.Application
             _taskStorage = new DefaultStorage();
             _diggerView.Initialize(_map.Scale);
             
+            _movementSettings.Initialize(_map.Scale);
+            
             _queen = new Queen(
                 _map.PointsOfInterestPositions(PointOfInterest.Queen)[0],
-                new DefaultAntFactory(new Path(new MapMovePolicy(_map)), _moveToGoalDuration, _stepsToGoal),
-                new HomeList(20, _map, _map.PointsOfInterestPositions(PointOfInterest.DiggersHome)
+                new DefaultAntFactory(new Path(new MapMovePolicy(_map)), _movementSettings),
+                new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterest.DiggersHome)
                     .Select(position => new AntHome(position, _taskStorage)).ToArray<IHome>()),
-                new HomeList(20, _map, _map.PointsOfInterestPositions(PointOfInterest.LoadersHome)
+                new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterest.LoadersHome)
                     .Select(position => new AntHome(position, _taskStorage)).ToArray<IHome>()));
 
             _camera = Camera.main;
@@ -85,7 +86,7 @@ namespace YellowSquad.Anthill.Application
                     }
                 }
 
-                if (Input.GetMouseButtonDown(1))
+                if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.V))
                     if (_map.HasPosition(targetAxialPosition) && _map.HasObstacleIn(targetAxialPosition) == false)
                         _taskStorage.AddTask(new DefaultTask(targetAxialPosition));
 

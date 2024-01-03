@@ -5,18 +5,28 @@ namespace YellowSquad.HexMath
     public static class AxialCoordinateExtensions
     {
         private const float Sqrt3 = 1.73205080757f;
-
-        public static AxialCoordinate ToAxialCoordinate(this Vector2 value, float hexGridScale = 1f)
+        
+        public static FracAxialCoordinate ToFracAxialCoordinate(this Vector2 value, float hexGridScale = 1f)
         {
             float q = 2f / 3f * value.x / hexGridScale;
             float r = (-1f / 3f * value.x + Sqrt3 / 3f * value.y) / hexGridScale;
 
-            return new FracAxialCoordinate(q, r).AxialRound();
+            return new FracAxialCoordinate(q, r);
+        }
+        
+        public static FracAxialCoordinate ToFracAxialCoordinate(this Vector3 value, float hexGridScale = 1f)
+        {
+            return new Vector2(value.x, value.z).ToFracAxialCoordinate();
+        }
+
+        public static AxialCoordinate ToAxialCoordinate(this Vector2 value, float hexGridScale = 1f)
+        {
+            return value.ToFracAxialCoordinate(hexGridScale).AxialRound();;
         }
         
         public static AxialCoordinate ToAxialCoordinate(this Vector3 value, float hexGridScale = 1f)
         {
-            return new Vector2(value.x, value.z).ToAxialCoordinate(hexGridScale);
+            return value.ToFracAxialCoordinate(hexGridScale).AxialRound();
         }
 
         public static Vector2 ToVector2(this AxialCoordinate axialCoordinate, float hexGridScale = 1f)

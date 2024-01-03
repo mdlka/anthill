@@ -10,7 +10,7 @@ namespace YellowSquad.HexMath
     {
         private const float Epsilon = 1e-6f;
         private readonly int _hash;
-
+        
         public FracAxialCoordinate(float q, float r)
         {
             Q = q;
