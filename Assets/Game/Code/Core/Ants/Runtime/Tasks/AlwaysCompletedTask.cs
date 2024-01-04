@@ -6,12 +6,17 @@ namespace YellowSquad.Anthill.Core.Ants
     {
         public AlwaysCompletedTask(AxialCoordinate targetPosition = default)
         {
-            TargetPosition = targetPosition;
+            TargetCellPosition = targetPosition;
         }
 
-        public AxialCoordinate TargetPosition { get; }
+        public AxialCoordinate TargetCellPosition { get; }
         public bool Completed => true;
         
         public void Complete() { }
+        
+        public bool Equals(ITask other)
+        {
+            return false;
+        }
     }
 }

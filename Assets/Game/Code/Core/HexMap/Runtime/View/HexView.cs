@@ -28,7 +28,7 @@ namespace YellowSquad.Anthill.Core.HexMap
                 Graphics.RenderMeshInstanced(_renderParams, renderPart.Key, 0, renderPart.Value);
         }
         
-        public void Render(IReadOnlyCollection<IReadOnlyHexPart> parts, Matrix4x4 hexMatrix)
+        public void Render(IEnumerable<IReadOnlyHexPart> parts, Matrix4x4 hexMatrix)
         {
             foreach (var part in parts)
             {

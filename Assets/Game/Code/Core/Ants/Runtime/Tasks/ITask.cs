@@ -1,10 +1,11 @@
-﻿using YellowSquad.HexMath;
+﻿using System;
+using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
 {
-    public interface ITask
+    public interface ITask : IEquatable<ITask>
     {
-        AxialCoordinate TargetPosition { get; }
+        AxialCoordinate TargetCellPosition { get; }
         bool Completed { get; }
         
         void Complete();

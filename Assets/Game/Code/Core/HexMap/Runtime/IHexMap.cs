@@ -11,6 +11,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         bool HasObstacleIn(AxialCoordinate position);
         IHex HexFrom(AxialCoordinate position);
 
+        IReadOnlyList<AxialCoordinate> NeighborHexPosition(AxialCoordinate position);
         IReadOnlyList<AxialCoordinate> PointsOfInterestPositions(PointOfInterest targetPoint);
 
         void Visualize(IHexMapView view);

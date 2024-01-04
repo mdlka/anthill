@@ -35,6 +35,11 @@ namespace YellowSquad.Anthill.Application.Tests
             throw new NotImplementedException();
         }
 
+        public IReadOnlyList<AxialCoordinate> NeighborHexPosition(AxialCoordinate position)
+        {
+            throw new NotImplementedException();
+        }
+
         public IReadOnlyList<AxialCoordinate> PointsOfInterestPositions(PointOfInterest targetPoint)
         {
             throw new NotImplementedException();

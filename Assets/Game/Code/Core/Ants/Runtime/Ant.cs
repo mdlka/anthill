@@ -37,7 +37,7 @@ namespace YellowSquad.Anthill.Core.Ants
                     }
 
                     _currentTask = _home.FindTask();
-                    _movement.MoveTo(_currentTask.TargetPosition);
+                    _movement.MoveTo(_currentTask.TargetCellPosition);
                 }
 
                 _movement.Update(deltaTime);

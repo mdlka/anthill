@@ -2,7 +2,7 @@
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    public interface IHexPart : IReadOnlyHexPart
+    internal interface IHexPart : IReadOnlyHexPart
     {
         void Destroy();
     }

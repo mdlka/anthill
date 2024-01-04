@@ -5,7 +5,11 @@ namespace YellowSquad.HexMath
     public static class AxialCoordinateExtensions
     {
         private const float Sqrt3 = 1.73205080757f;
-        
+
+        private static readonly AxialCoordinate[] Directions = 
+            { new(1, 0), new(1, -1), new(0, -1), new(-1, 0), new(-1, 1), new(0, 1) };
+            
+
         public static FracAxialCoordinate ToFracAxialCoordinate(this Vector2 value, float hexGridScale = 1f)
         {
             float q = 2f / 3f * value.x / hexGridScale;
@@ -68,6 +72,16 @@ namespace YellowSquad.HexMath
                 centerPosition.x + hexGridScale * Mathf.Cos(radians), 
                 0f, 
                 centerPosition.z + hexGridScale * Mathf.Sin(radians));
+        }
+
+        public static AxialCoordinate[] NeighborsPositions(this AxialCoordinate axialCoordinate)
+        {
+            var neighbors = new AxialCoordinate[6];
+
+            for (int i = 0; i < Directions.Length; i++)
+                neighbors[i] = axialCoordinate + Directions[i];
+
+            return neighbors;
         }
     }
 }

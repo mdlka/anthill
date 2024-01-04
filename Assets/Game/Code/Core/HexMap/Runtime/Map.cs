@@ -43,6 +43,18 @@ namespace YellowSquad.Anthill.Core.HexMap
             return _cells[position].Hex;
         }
 
+        public IReadOnlyList<AxialCoordinate> NeighborHexPosition(AxialCoordinate position)
+        {
+            var neighborPositions = position.NeighborsPositions();
+            var neighborMapPositions = new List<AxialCoordinate>(6);
+
+            foreach (var neighborPosition in neighborPositions)
+                if (HasPosition(neighborPosition))
+                    neighborMapPositions.Add(neighborPosition);
+
+            return neighborMapPositions;
+        }
+
         public IReadOnlyList<AxialCoordinate> PointsOfInterestPositions(PointOfInterest targetPoint)
         {
             var points = new List<AxialCoordinate>();

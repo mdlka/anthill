@@ -41,8 +41,8 @@ namespace YellowSquad.HexMath
         
         private float Lerp(float a, float b, float t) => a + (b - a) * t;
 
-        public static AxialCoordinate operator +(AxialCoordinate a, AxialCoordinate b) => new AxialCoordinate(a.Q + b.Q, a.R + b.R);
-        public static AxialCoordinate operator -(AxialCoordinate a, AxialCoordinate b) => new AxialCoordinate(a.Q - b.Q, a.R - b.R);
+        public static AxialCoordinate operator +(AxialCoordinate a, AxialCoordinate b) => new(a.Q + b.Q, a.R + b.R);
+        public static AxialCoordinate operator -(AxialCoordinate a, AxialCoordinate b) => new(a.Q - b.Q, a.R - b.R);
         public static bool operator ==(AxialCoordinate a, AxialCoordinate b) => a.Q == b.Q && a.R == b.R;
         public static bool operator !=(AxialCoordinate a, AxialCoordinate b) => !(a == b);
     }

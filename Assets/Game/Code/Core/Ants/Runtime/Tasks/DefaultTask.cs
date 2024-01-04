@@ -4,17 +4,22 @@ namespace YellowSquad.Anthill.Core.Ants
 {
     public class DefaultTask : ITask
     {
-        public DefaultTask(AxialCoordinate targetPosition)
+        public DefaultTask(AxialCoordinate targetCellPosition)
         {
-            TargetPosition = targetPosition;
+            TargetCellPosition = targetCellPosition;
         }
         
-        public AxialCoordinate TargetPosition { get; }
+        public AxialCoordinate TargetCellPosition { get; }
         public bool Completed { get; private set; }
         
         public void Complete()
         {
             Completed = true;
+        }
+
+        public bool Equals(ITask other)
+        {
+            return false;
         }
     }
 }

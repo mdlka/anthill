@@ -11,6 +11,9 @@ namespace YellowSquad.Anthill.Core.Ants
         
         public void AddTask(ITask task)
         {
+            if (_tasks.Contains(task))
+                throw new InvalidOperationException("This task already added");
+            
             _tasks.Enqueue(task);
         }
         

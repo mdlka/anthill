@@ -22,17 +22,9 @@ namespace YellowSquad.Anthill.Core.HexMap
 
         public bool HasParts => _parts.Count - _destroyedParts != 0;
         public Hardness Hardness { get; }
-        IReadOnlyList<IReadOnlyHexPart> IHex.Parts => _parts;
+        public IEnumerable<IReadOnlyHexPart> Parts => _parts;
 
-        public Vector3 ClosestPartLocalPositionFor(AxialCoordinate position)
-        {
-            if (HasParts == false)
-                throw new InvalidOperationException();
-
-            return ClosestPartFor(position.ToVector3()).LocalPosition;
-        }
-
-        public void RemoveClosestPartFor(Vector3 localPosition)
+        public void DestroyClosestPartFor(Vector3 localPosition)
         {
             if (HasParts == false)
                 throw new InvalidOperationException();

@@ -65,15 +65,24 @@ namespace YellowSquad.Anthill.Application
                 var targetPosition = _camera.ScreenToWorldPoint(mouseClickPosition);
                 var targetAxialPosition = targetPosition.ToAxialCoordinate(_map.Scale);
 
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
                 {
                     if (_map.HasPosition(targetAxialPosition) == false)
                         continue;
 
                     var targetHex = _map.HexFrom(targetAxialPosition);
 
-                    while (targetHex.HasParts)
-                        targetHex.RemoveClosestPartFor(targetPosition);
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        while (targetHex.HasParts)
+                            targetHex.DestroyClosestPartFor(targetPosition);
+                    }
+                    else
+                    {
+                        if (targetHex.HasParts)
+                            foreach (var part in targetHex.Parts)
+                                _taskStorage.AddTask(new TakePartHexTask(targetAxialPosition, targetHex, part));
+                    }
                 }
 
                 if (Input.GetKeyDown(KeyCode.C))
@@ -86,7 +95,7 @@ namespace YellowSquad.Anthill.Application
                     }
                 }
 
-                if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.V))
+                if (Input.GetKeyDown(KeyCode.V))
                     if (_map.HasPosition(targetAxialPosition) && _map.HasObstacleIn(targetAxialPosition) == false)
                         _taskStorage.AddTask(new DefaultTask(targetAxialPosition));
 
