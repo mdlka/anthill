@@ -1,5 +1,4 @@
-﻿using YellowSquad.Anthill.Core.AStarPathfinding;
-using YellowSquad.HexMath;
+﻿using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
 {

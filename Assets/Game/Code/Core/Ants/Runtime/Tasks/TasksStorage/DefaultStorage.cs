@@ -21,7 +21,7 @@ namespace YellowSquad.Anthill.Core.Ants
         {
             if (HasTask == false)
                 throw new InvalidOperationException();
-
+            
             return _tasks.Dequeue();
         }
     }

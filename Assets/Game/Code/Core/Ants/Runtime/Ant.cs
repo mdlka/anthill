@@ -39,8 +39,6 @@ namespace YellowSquad.Anthill.Core.Ants
                     _currentTask = _home.FindTask();
                     _movement.MoveTo(_currentTask.TargetCellPosition);
                 }
-
-                _movement.Update(deltaTime);
             }
             else
             {
@@ -49,9 +47,9 @@ namespace YellowSquad.Anthill.Core.Ants
                     _currentTask.Complete();
                     _movement.MoveTo(_home.Position);
                 }
-
-                _movement.Update(deltaTime);
             }
+            
+            _movement.Update(deltaTime);
         }
     }
 }
