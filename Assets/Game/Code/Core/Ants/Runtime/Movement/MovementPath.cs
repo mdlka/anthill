@@ -42,11 +42,11 @@ namespace YellowSquad.Anthill.Core.Ants
             var targetPath = new List<FracAxialCoordinate>();
 
             if (currentTarget != target)
-                targetPath.Add(AxialCoordinateMath.Lerp(currentTarget, target, 0.5f));
+                targetPath.Add(HMath.Lerp(currentTarget, target, 0.5f));
 
             foreach (var position in path)
                 targetPath.Add(position);
-            
+
             if (roundedStart != start)
                 targetPath.Add(start);
 
