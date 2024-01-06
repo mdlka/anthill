@@ -26,20 +26,11 @@ namespace YellowSquad.HexMath
         public double DistanceEstimate() 
             => Math.Max(Math.Abs(Q + R), Math.Max(Math.Abs(Q), Math.Abs(R)));
 
-        public FracAxialCoordinate Lerp(AxialCoordinate to, float t)
-        {
-            return new FracAxialCoordinate(
-                Lerp(Q, to.Q, t),
-                Lerp(R, to.R, t));
-        }
-        
         public bool Equals(AxialCoordinate other) => Q == other.Q && R == other.R;
         public override bool Equals(object obj) => obj is AxialCoordinate other && Equals(other);
 
         public override int GetHashCode() => _hash;
         public override string ToString() => $"({Q}, {R})";
-        
-        private float Lerp(float a, float b, float t) => a + (b - a) * t;
 
         public static AxialCoordinate operator +(AxialCoordinate a, AxialCoordinate b) => new(a.Q + b.Q, a.R + b.R);
         public static AxialCoordinate operator -(AxialCoordinate a, AxialCoordinate b) => new(a.Q - b.Q, a.R - b.R);

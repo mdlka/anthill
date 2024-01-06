@@ -32,7 +32,10 @@ namespace YellowSquad.HexMath
 
         public override int GetHashCode() => _hash;
         public override string ToString() => $"({Q}, {R})";
-        
+
+        public static implicit operator FracAxialCoordinate(AxialCoordinate axialCoordinate) 
+            => new FracAxialCoordinate(axialCoordinate.Q, axialCoordinate.R);
+
         public static FracAxialCoordinate operator +(FracAxialCoordinate a, FracAxialCoordinate b) => new FracAxialCoordinate(a.Q + b.Q, a.R + b.R);
         public static FracAxialCoordinate operator -(FracAxialCoordinate a, FracAxialCoordinate b) => new FracAxialCoordinate(a.Q - b.Q, a.R - b.R);
         public static bool operator ==(FracAxialCoordinate a, FracAxialCoordinate b) => a.Equals(b);

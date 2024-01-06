@@ -5,10 +5,10 @@ namespace YellowSquad.Anthill.Core.Ants
 {
     public class DefaultAntFactory : IAntFactory
     {
-        private readonly IPath _path;
+        private readonly MovementPath _path;
         private readonly MovementSettings _movementSettings;
 
-        public DefaultAntFactory(IPath path, MovementSettings movementSettings)
+        public DefaultAntFactory(MovementPath path, MovementSettings movementSettings)
         {
             _path = path;
             _movementSettings = movementSettings;
