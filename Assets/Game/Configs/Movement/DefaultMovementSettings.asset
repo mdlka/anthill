@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c42066665814bf4810bdf1a56eda621, type: 3}
   m_Name: DefaultMovementSettings
   m_EditorClassIdentifier: 
-  <StepsToGoal>k__BackingField: 10
-  <MoveToGoalDuration>k__BackingField: 0.3
-  <RandomOffsetRadius>k__BackingField: 0.45
+  _stepsToGoal: 10
+  _moveToGoalDuration: 0.3
+  _randomOffsetRadius: 0.45

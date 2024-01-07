@@ -9,11 +9,9 @@ namespace YellowSquad.Anthill.Core.Ants
         private readonly MovementPath _path;
         private readonly MovementSettings _settings;
 
-        private int _currentPathIndex;
-        private int _currentStep;
         private float _elapsedTime;
+        private int _currentPathIndex;
         private IReadOnlyList<FracAxialCoordinate> _currentPath;
-        private FracAxialCoordinate _randomOffset;
 
         public DefaultMovement(MovementPath path, MovementSettings settings, AxialCoordinate startPosition = default)
         {
@@ -23,12 +21,7 @@ namespace YellowSquad.Anthill.Core.Ants
         }
 
         public bool ReachedTargetPosition => _currentPathIndex == 0;
-        public FracAxialCoordinate CurrentPosition => 
-            AxialCoordinateMath.Lerp(
-                _currentPath[_currentPathIndex], 
-                _currentPath[Math.Clamp(_currentPathIndex - 1, 0, _currentPathIndex)], 
-                (float)_currentStep / _settings.StepsToGoal) 
-            + _randomOffset;
+        public FracAxialCoordinate CurrentPosition => _currentPath[_currentPathIndex];
 
         public void MoveTo(AxialCoordinate targetPosition)
         {
@@ -37,7 +30,6 @@ namespace YellowSquad.Anthill.Core.Ants
 
             _currentPath = _path.Calculate(CurrentPosition, targetPosition);
             _currentPathIndex = _currentPath.Count - 1;
-            _randomOffset = _settings.RandomOffset();
         }
         
         public void Update(float deltaTime)
@@ -47,20 +39,11 @@ namespace YellowSquad.Anthill.Core.Ants
 
             _elapsedTime += deltaTime;
 
-            if (_elapsedTime < _settings.MoveToGoalDuration / _settings.StepsToGoal)
+            if (_elapsedTime < _settings.NormalizedMoveDuration)
                 return;
 
             _elapsedTime = 0;
-            _currentStep += 1;
-
-            if (_currentStep != _settings.StepsToGoal)
-                return;
-
-            _currentStep = 0;
             _currentPathIndex -= 1;
-            
-            if (ReachedTargetPosition)
-                _randomOffset = new FracAxialCoordinate(0, 0);
         }
     }
 }

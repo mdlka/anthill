@@ -58,6 +58,9 @@ namespace YellowSquad.Anthill.Core.AStarPathfinding
             _ignoredPositions.Clear();
             _links.Clear();
 
+            if (_movePolicy.CanMove(start) == false)
+                return false;
+
             _frontier.Enqueue(new PathNode(start, target, 0));
 
             int step = 0;

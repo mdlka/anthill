@@ -36,10 +36,10 @@ namespace YellowSquad.Anthill.Application
             _diggerView.Initialize(_map.Scale);
             
             _movementSettings.Initialize(_map.Scale);
-            
+
             _queen = new Queen(
                 _map.PointsOfInterestPositions(PointOfInterest.Queen)[0],
-                new DefaultAntFactory(new MovementPath(_map, new Path(new MapMovePolicy(_map))), _movementSettings),
+                new DefaultAntFactory(new MovementPath(_map, new Path(new MapMovePolicy(_map)), _movementSettings), _movementSettings),
                 new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterest.DiggersHome)
                     .Select(position => new AntHome(position, _taskStorage)).ToArray<IHome>()),
                 new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterest.LoadersHome)
