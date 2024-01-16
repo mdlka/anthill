@@ -15,7 +15,7 @@ MonoBehaviour:
   _mapScale: 1
   _currentTargetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
   _currentHexHardness: 1
-  _currentPointOfInterest: 0
+  _currentPointOfInterest: 2
   _hexes:
   - _pointOfInterest: 0
     _hardness: 1
@@ -171,12 +171,6 @@ MonoBehaviour:
     _hardness: 1
     _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
     _position:
-      <Q>k__BackingField: -3
-      <R>k__BackingField: 3
-  - _pointOfInterest: 0
-    _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
-    _position:
       <Q>k__BackingField: -2
       <R>k__BackingField: 3
   - _pointOfInterest: 0
@@ -353,3 +347,9 @@ MonoBehaviour:
     _position:
       <Q>k__BackingField: -4
       <R>k__BackingField: 4
+  - _pointOfInterest: 2
+    _hardness: 1
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
+      <Q>k__BackingField: -3
+      <R>k__BackingField: 3

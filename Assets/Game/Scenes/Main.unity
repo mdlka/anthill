@@ -411,6 +411,7 @@ MonoBehaviour:
   _diggerView: {fileID: 2047135644}
   _loaderView: {fileID: 0}
   _homesCapacity: 100
+  _homeDelayBetweenFindTasks: 0.1
   references:
     version: 2
     RefIds:

@@ -21,6 +21,7 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private AntView _diggerView;
         [SerializeField] private AntView _loaderView;
         [SerializeField, Min(1)] private int _homesCapacity;
+        [SerializeField, Min(0)] private float _homeDelayBetweenFindTasks;
 
         private Camera _camera;
         private IHexMap _map;
@@ -41,9 +42,9 @@ namespace YellowSquad.Anthill.Application
                 _map.PointsOfInterestPositions(PointOfInterest.Queen)[0],
                 new DefaultAntFactory(new MovementPath(_map, new Path(new MapMovePolicy(_map)), _movementSettings), _movementSettings),
                 new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterest.DiggersHome)
-                    .Select(position => new AntHome(position, _taskStorage)).ToArray<IHome>()),
+                    .Select(position => new AntHome(position, _taskStorage, _homeDelayBetweenFindTasks)).ToArray<IHome>()),
                 new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterest.LoadersHome)
-                    .Select(position => new AntHome(position, _taskStorage)).ToArray<IHome>()));
+                    .Select(position => new AntHome(position, _taskStorage, _homeDelayBetweenFindTasks)).ToArray<IHome>()));
 
             _camera = Camera.main;
 
@@ -89,7 +90,7 @@ namespace YellowSquad.Anthill.Application
 
                 if (Input.GetKeyDown(KeyCode.C))
                 {
-                    if (_queen.CanCreateDigger)
+                    while (_queen.CanCreateDigger)
                     {
                         var ant = _queen.CreateDigger();
                         _ants.Add(ant);
