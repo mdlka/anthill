@@ -1,13 +1,17 @@
+using UnityEngine;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
 {
     public class Ant : IAnt
     {
+        private const float Delay = 0.5f;
+        
         private readonly IHome _home;
         private readonly IMovement _movement;
 
         private ITask _currentTask;
+        private float _reachedTaskPositionTime = -1f;
 
         public Ant(IHome home, IMovement movement) : this(home, movement, new AlwaysCompletedTask()) { }
 
@@ -44,8 +48,15 @@ namespace YellowSquad.Anthill.Core.Ants
             {
                 if (_movement.ReachedTargetPosition)
                 {
-                    _currentTask.Complete();
-                    _movement.MoveTo(_home.Position);
+                    if (_reachedTaskPositionTime < 0)
+                        _reachedTaskPositionTime = Time.realtimeSinceStartup;
+
+                    if (Time.realtimeSinceStartup - _reachedTaskPositionTime >= Delay)
+                    {
+                        _currentTask.Complete();
+                        _movement.MoveTo(_home.Position);
+                        _reachedTaskPositionTime = -1;
+                    }
                 }
             }
             
