@@ -82,9 +82,9 @@ namespace YellowSquad.Anthill.Application
                     {
                         if (targetHex.HasParts)
                             foreach (var part in targetHex.Parts)
-                                _taskStorage.AddTask(new TaskWithAction(
+                                _taskStorage.AddTask(new TaskWithCallback(
                                     new TakePartHexTask(targetAxialPosition, targetHex, part), 
-                                    () => _map.Visualize(_hexMapView.Value)));
+                                    onComplete: () => _map.Visualize(_hexMapView.Value)));
                     }
                 }
 

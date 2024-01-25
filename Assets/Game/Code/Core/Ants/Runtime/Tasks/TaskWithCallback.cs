@@ -3,15 +3,15 @@ using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
 {
-    public class TaskWithAction : ITask
+    public class TaskWithCallback : ITask
     {
         private readonly ITask _task;
-        private readonly Action _action;
+        private readonly Action _onComplete;
 
-        public TaskWithAction(ITask task, Action action)
+        public TaskWithCallback(ITask task, Action onComplete)
         {
             _task = task;
-            _action = action;
+            _onComplete = onComplete;
         }
 
         public AxialCoordinate TargetCellPosition => _task.TargetCellPosition;
@@ -20,7 +20,7 @@ namespace YellowSquad.Anthill.Core.Ants
         public void Complete()
         {
             _task.Complete();
-            _action?.Invoke();
+            _onComplete?.Invoke();
         }
         
         public bool Equals(ITask other)
