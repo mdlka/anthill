@@ -8,6 +8,8 @@ namespace YellowSquad.HexMath
     /// </summary>
     public readonly struct FracAxialCoordinate : IEquatable<FracAxialCoordinate>
     {
+        public static FracAxialCoordinate Zero { get; } = new(0, 0);
+
         private const float Epsilon = 1e-6f;
         private readonly int _hash;
         
@@ -38,6 +40,10 @@ namespace YellowSquad.HexMath
 
         public static FracAxialCoordinate operator +(FracAxialCoordinate a, FracAxialCoordinate b) => new FracAxialCoordinate(a.Q + b.Q, a.R + b.R);
         public static FracAxialCoordinate operator -(FracAxialCoordinate a, FracAxialCoordinate b) => new FracAxialCoordinate(a.Q - b.Q, a.R - b.R);
+        
+        public static FracAxialCoordinate operator *(FracAxialCoordinate a, float b) => new FracAxialCoordinate(a.Q * b, a.R * b);
+        public static FracAxialCoordinate operator *(float a, FracAxialCoordinate b) => b * a;
+        
         public static bool operator ==(FracAxialCoordinate a, FracAxialCoordinate b) => a.Equals(b);
         public static bool operator !=(FracAxialCoordinate a, FracAxialCoordinate b) => !(a == b);
     }

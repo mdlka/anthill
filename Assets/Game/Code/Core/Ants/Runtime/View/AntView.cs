@@ -49,7 +49,7 @@ namespace YellowSquad.Anthill.Core.Ants
                 Vector3 currentPosition = _ants[i].CurrentPosition.ToVector3(_mapScale);
                 Vector3 lastPosition = _lastPositions[i].ToVector3(_mapScale);
                 
-                _lastRotationY[i] = currentPosition != lastPosition 
+                _lastRotationY[i] = Vector3.Distance(currentPosition, lastPosition) > 0.01f
                     ? Quaternion.LookRotation((lastPosition - currentPosition).normalized).eulerAngles.y
                     : _lastRotationY[i];
                 

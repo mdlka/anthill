@@ -27,6 +27,7 @@ namespace YellowSquad.Anthill.Application
         private IHexMap _map;
         private ITaskStorage _taskStorage;
         private Queen _queen;
+        private MovementPath _movementPath;
 
         private IEnumerator Start()
         {
@@ -37,10 +38,11 @@ namespace YellowSquad.Anthill.Application
             _diggerView.Initialize(_map.Scale);
             
             _movementSettings.Initialize(_map.Scale);
+            _movementPath = new MovementPath(_map, new Path(new MapMovePolicy(_map)), _movementSettings);
 
             _queen = new Queen(
                 _map.PointsOfInterestPositions(PointOfInterest.Queen)[0],
-                new DefaultAntFactory(new MovementPath(_map, new Path(new MapMovePolicy(_map)), _movementSettings), _movementSettings),
+                new DefaultAntFactory(_movementPath, _movementSettings),
                 new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterest.DiggersHome)
                     .Select(position => new AntHome(position, _taskStorage, _homeDelayBetweenFindTasks)).ToArray<IHome>()),
                 new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterest.LoadersHome)
@@ -120,6 +122,11 @@ namespace YellowSquad.Anthill.Application
                 
                 yield return null;
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            _movementPath?.OnDrawGizmos();
         }
     }
 }
