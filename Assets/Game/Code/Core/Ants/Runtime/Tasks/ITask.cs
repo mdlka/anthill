@@ -8,6 +8,6 @@ namespace YellowSquad.Anthill.Core.Ants
         AxialCoordinate TargetCellPosition { get; }
         bool Completed { get; }
         
-        void Complete();
+        void Complete(FracAxialCoordinate currentPosition = default);
     }
 }

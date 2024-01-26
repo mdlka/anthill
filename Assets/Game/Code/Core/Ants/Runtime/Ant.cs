@@ -53,7 +53,7 @@ namespace YellowSquad.Anthill.Core.Ants
 
                     if (Time.realtimeSinceStartup - _reachedTaskPositionTime >= Delay)
                     {
-                        _currentTask.Complete();
+                        _currentTask.Complete(CurrentPosition);
                         _movement.MoveTo(_home.Position);
                         _reachedTaskPositionTime = -1;
                     }

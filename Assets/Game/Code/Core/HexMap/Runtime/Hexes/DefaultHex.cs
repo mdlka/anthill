@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
@@ -33,7 +32,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             _destroyedParts += 1;
         }
 
-        private IHexPart ClosestPartFor(Vector3 position)
+        private IHexPart ClosestPartFor(Vector3 localPosition)
         {
             if (HasParts == false)
                 throw new InvalidOperationException();
@@ -46,7 +45,7 @@ namespace YellowSquad.Anthill.Core.HexMap
                 if (part.Destroyed)
                     continue;
                     
-                float distance = Vector3.Distance(part.LocalPosition, position);
+                float distance = Vector3.Distance(part.LocalPosition, localPosition);
 
                 if (distance >= closestDistance) 
                     continue;

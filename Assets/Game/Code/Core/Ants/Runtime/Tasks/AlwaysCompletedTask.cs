@@ -12,7 +12,7 @@ namespace YellowSquad.Anthill.Core.Ants
         public AxialCoordinate TargetCellPosition { get; }
         public bool Completed => true;
         
-        public void Complete() { }
+        public void Complete(FracAxialCoordinate _) { }
         
         public bool Equals(ITask other)
         {

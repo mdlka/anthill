@@ -17,9 +17,9 @@ namespace YellowSquad.Anthill.Core.Ants
         public AxialCoordinate TargetCellPosition => _task.TargetCellPosition;
         public bool Completed => _task.Completed;
         
-        public void Complete()
+        public void Complete(FracAxialCoordinate currentPosition)
         {
-            _task.Complete();
+            _task.Complete(currentPosition);
             _onComplete?.Invoke();
         }
         
