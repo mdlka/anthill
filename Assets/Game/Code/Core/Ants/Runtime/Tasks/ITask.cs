@@ -6,8 +6,10 @@ namespace YellowSquad.Anthill.Core.Ants
     public interface ITask : IEquatable<ITask>
     {
         AxialCoordinate TargetCellPosition { get; }
-        bool Completed { get; }
-        
-        void Complete(FracAxialCoordinate currentPosition = default);
+        TaskState State { get; }
+        bool CanComplete { get; }
+
+        void Execute(FracAxialCoordinate position = default);
+        void Complete();
     }
 }

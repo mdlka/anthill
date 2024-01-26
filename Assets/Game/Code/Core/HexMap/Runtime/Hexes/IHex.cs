@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {

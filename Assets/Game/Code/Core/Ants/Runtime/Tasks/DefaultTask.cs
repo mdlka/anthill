@@ -10,11 +10,17 @@ namespace YellowSquad.Anthill.Core.Ants
         }
         
         public AxialCoordinate TargetCellPosition { get; }
-        public bool Completed { get; private set; }
-        
-        public void Complete(FracAxialCoordinate _)
+        public TaskState State { get; private set; }
+        public bool CanComplete => true;
+
+        public void Execute(FracAxialCoordinate _)
         {
-            Completed = true;
+            State = TaskState.Executing;
+        }
+
+        public void Complete()
+        {
+            State = TaskState.Complete;
         }
 
         public bool Equals(ITask other)

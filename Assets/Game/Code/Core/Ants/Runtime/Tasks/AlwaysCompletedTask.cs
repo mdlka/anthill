@@ -4,16 +4,13 @@ namespace YellowSquad.Anthill.Core.Ants
 {
     internal class AlwaysCompletedTask : ITask
     {
-        public AlwaysCompletedTask(AxialCoordinate targetPosition = default)
-        {
-            TargetCellPosition = targetPosition;
-        }
+        public AxialCoordinate TargetCellPosition => default;
+        public TaskState State => TaskState.Complete;
+        public bool CanComplete => false;
 
-        public AxialCoordinate TargetCellPosition { get; }
-        public bool Completed => true;
-        
-        public void Complete(FracAxialCoordinate _) { }
-        
+        public void Execute(FracAxialCoordinate _) { }
+        public void Complete() { }
+
         public bool Equals(ITask other)
         {
             return false;
