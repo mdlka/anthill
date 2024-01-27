@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    internal class HexView : MonoBehaviour
+    internal class PartedHexView : MonoBehaviour
     {
         private readonly Dictionary<Mesh, List<Matrix4x4>> _partMatrices = new();
 

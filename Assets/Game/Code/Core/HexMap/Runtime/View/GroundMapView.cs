@@ -14,7 +14,7 @@ namespace YellowSquad.Anthill.Core.HexMap
 
         private RenderParams _groundRenderParams;
         
-        public bool Initialized { get; private set; }
+        public bool Rendered { get; private set; }
         
         private void Awake()
         {
@@ -29,9 +29,9 @@ namespace YellowSquad.Anthill.Core.HexMap
             Graphics.RenderMeshInstanced(_groundRenderParams, _hexMesh, 0, _groundHexMatrices);
         }
 
-        public void Initialize(float mapScale, Vector3 hexScale, IEnumerable<AxialCoordinate> hexPositions)
+        public void Render(float mapScale, Vector3 hexScale, IEnumerable<AxialCoordinate> hexPositions)
         {
-            if (Initialized)
+            if (Rendered)
                 throw new InvalidOperationException("Already initialized");
             
             Vector3 offsetY = Vector3.up * _hexMesh.bounds.size.y;
@@ -40,7 +40,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             foreach (var position in hexPositions)
                 _groundHexMatrices.Add(Matrix4x4.TRS(position.ToVector3(mapScale) - offsetY, Quaternion.Euler(0f, 30f, 0f), groundHexScale));
 
-            Initialized = true;
+            Rendered = true;
         }
     }
 }

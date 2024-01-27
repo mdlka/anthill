@@ -600,6 +600,7 @@ GameObject:
   - component: {fileID: 2052305926}
   - component: {fileID: 2052305928}
   - component: {fileID: 2052305929}
+  - component: {fileID: 2052305930}
   m_Layer: 0
   m_Name: MapView
   m_TagString: Untagged
@@ -622,6 +623,7 @@ MonoBehaviour:
   _hexScale: {x: 1.731602, y: 4, z: 1.731602}
   _groundView: {fileID: 2052305928}
   _pointsOfInterestView: {fileID: 2052305929}
+  _closedHexesView: {fileID: 2052305930}
   _hexViews:
   - <Hardness>k__BackingField: 0
     <View>k__BackingField: {fileID: 2041005410}
@@ -683,6 +685,20 @@ MonoBehaviour:
     <Mesh>k__BackingField: {fileID: 7352743313293951598, guid: fef3b232dcc21644e86b293e72c0b657, type: 3}
     <SizeFactor>k__BackingField: 1.5
     <Rotation>k__BackingField: {x: -90, y: 130, z: 0}
+--- !u!114 &2052305930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052305925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4bf6e1406f14cdb92bc10fd0715e2eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hexMesh: {fileID: 2770389371296501935, guid: 31919b3ed4728e2419689ec37a9ee2ac, type: 3}
+  _hexMaterial: {fileID: 2100000, guid: e08c77a92b7ca274e825215f7e9a68ac, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

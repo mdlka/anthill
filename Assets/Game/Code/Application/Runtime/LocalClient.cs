@@ -82,7 +82,7 @@ namespace YellowSquad.Anthill.Application
                     }
                     else
                     {
-                        if (targetHex.HasParts)
+                        if (_map.IsClosed(targetAxialPosition) == false && targetHex.HasParts)
                             foreach (var _ in targetHex.Parts)
                                 _taskStorage.AddTask(new TaskWithCallback(
                                     new TakeClosestHexPartTask(_map.Scale, targetAxialPosition, targetHex), 

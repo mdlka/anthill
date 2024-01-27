@@ -15,7 +15,7 @@ namespace YellowSquad.Anthill.Core.HexMap
 
         private RenderParams _renderParams;
         
-        public bool Initialized { get; private set; }
+        public bool Rendered { get; private set; }
         
         private void Awake()
         {
@@ -36,9 +36,9 @@ namespace YellowSquad.Anthill.Core.HexMap
             }
         }
 
-        public void Initialize(float mapScale, IDictionary<AxialCoordinate, PointOfInterest> pointsPositions)
+        public void Render(float mapScale, IDictionary<AxialCoordinate, PointOfInterest> pointsPositions)
         {
-            if (Initialized)
+            if (Rendered)
                 throw new InvalidOperationException("Already initialized");
 
             foreach (var pair in pointsPositions)
@@ -54,7 +54,7 @@ namespace YellowSquad.Anthill.Core.HexMap
                     Quaternion.Euler(setting.Rotation), Vector3.one * setting.SizeFactor));
             }
 
-            Initialized = true;
+            Rendered = true;
         }
 
         private PointSetting SettingBy(PointOfInterest pointOfInterest)

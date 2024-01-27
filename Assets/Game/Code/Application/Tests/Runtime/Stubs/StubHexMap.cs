@@ -30,12 +30,17 @@ namespace YellowSquad.Anthill.Application.Tests
             return _mapWithObstacles[position];
         }
 
+        public bool IsClosed(AxialCoordinate position)
+        {
+            throw new NotImplementedException();
+        }
+
         public IHex HexFrom(AxialCoordinate position)
         {
             throw new NotImplementedException();
         }
 
-        public IReadOnlyList<AxialCoordinate> NeighborHexPositions(AxialCoordinate position)
+        public IReadOnlyList<AxialCoordinate> NeighborHexPositions(AxialCoordinate position, Func<AxialCoordinate, bool> where = null)
         {
             throw new NotImplementedException();
         }

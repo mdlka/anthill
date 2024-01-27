@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using YellowSquad.Anthill.Core.AStarPathfinding;
 using YellowSquad.Anthill.Core.HexMap;
@@ -29,13 +28,13 @@ namespace YellowSquad.Anthill.Core.Ants
             
             if (_map.HasObstacleIn(target))
             {
-                var neighborsCellsWithoutObstacle = _map.NeighborHexPositions(target)
-                    .Where(position => _map.HasObstacleIn(position) == false).ToArray();
+                IReadOnlyList<AxialCoordinate> neighborsCellsWithoutObstacle = _map.NeighborHexPositions(target, 
+                        where: position => _map.HasObstacleIn(position) == false);
 
-                if (neighborsCellsWithoutObstacle.Length == 0)
+                if (neighborsCellsWithoutObstacle.Count == 0)
                     throw new InvalidOperationException("Invalid target position");
 
-                currentTarget = neighborsCellsWithoutObstacle[Random.Range(0, neighborsCellsWithoutObstacle.Length)];
+                currentTarget = neighborsCellsWithoutObstacle[Random.Range(0, neighborsCellsWithoutObstacle.Count)];
             }
 
             AxialCoordinate roundedStart = start.AxialRound();
@@ -66,7 +65,7 @@ namespace YellowSquad.Anthill.Core.Ants
                 Gizmos.DrawSphere(position.ToVector3(_map.Scale), 0.2f);
         }
 
-        private IReadOnlyList<FracAxialCoordinate> SmoothPath(List<FracAxialCoordinate> rawTargetPath)
+        private IReadOnlyList<FracAxialCoordinate> SmoothPath(IReadOnlyList<FracAxialCoordinate> rawTargetPath)
         {
             var randomOffset = _settings.RandomOffset();
             

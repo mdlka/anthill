@@ -35,6 +35,14 @@ namespace YellowSquad.Anthill.Core.HexMap
             return _cells[position].Hex.HasParts;
         }
 
+        public bool IsClosed(AxialCoordinate position)
+        {
+            if (HasPosition(position) == false)
+                throw new ArgumentOutOfRangeException();
+
+            return HexFrom(position).HasParts && NeighborHexPositions(position, where: pos => HexFrom(pos).HasParts == false).Count == 0;
+        }
+
         public IHex HexFrom(AxialCoordinate position)
         {
             if (HasPosition(position) == false)
@@ -43,13 +51,13 @@ namespace YellowSquad.Anthill.Core.HexMap
             return _cells[position].Hex;
         }
 
-        public IReadOnlyList<AxialCoordinate> NeighborHexPositions(AxialCoordinate position)
+        public IReadOnlyList<AxialCoordinate> NeighborHexPositions(AxialCoordinate position, Func<AxialCoordinate, bool> where = null)
         {
             var neighborPositions = position.NeighborsPositions();
             var neighborMapPositions = new List<AxialCoordinate>(6);
 
             foreach (var neighborPosition in neighborPositions)
-                if (HasPosition(neighborPosition))
+                if (HasPosition(neighborPosition) && (where?.Invoke(neighborPosition) ?? true))
                     neighborMapPositions.Add(neighborPosition);
 
             return neighborMapPositions;
@@ -68,7 +76,13 @@ namespace YellowSquad.Anthill.Core.HexMap
 
         public void Visualize(IHexMapView view)
         {
-            view.Render(_scale, _cells);
+            var closedPositions = new HashSet<AxialCoordinate>();
+
+            foreach (var cell in _cells)
+                if (IsClosed(cell.Key)) // TODO: Need optimization, because called every frame
+                    closedPositions.Add(cell.Key);
+
+            view.Render(_scale, _cells, closedPositions);
         }
 
         public override string ToString()

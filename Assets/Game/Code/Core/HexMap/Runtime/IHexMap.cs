@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.HexMap
@@ -9,9 +10,10 @@ namespace YellowSquad.Anthill.Core.HexMap
         
         bool HasPosition(AxialCoordinate position);
         bool HasObstacleIn(AxialCoordinate position);
+        bool IsClosed(AxialCoordinate position);
         IHex HexFrom(AxialCoordinate position);
-
-        IReadOnlyList<AxialCoordinate> NeighborHexPositions(AxialCoordinate position);
+        
+        IReadOnlyList<AxialCoordinate> NeighborHexPositions(AxialCoordinate position, Func<AxialCoordinate, bool> where = null);
         IReadOnlyList<AxialCoordinate> PointsOfInterestPositions(PointOfInterest targetPoint);
 
         void Visualize(IHexMapView view);
