@@ -45,6 +45,9 @@ namespace YellowSquad.Anthill.Core.HexMap
         {
             if (_cachedMesh != null)
                 return _cachedMesh;
+
+            if (_modelObject.IsNull)
+                return _cachedMesh = Array.Empty<Pair>();
             
             var hexModel = _modelObject.Load();
 

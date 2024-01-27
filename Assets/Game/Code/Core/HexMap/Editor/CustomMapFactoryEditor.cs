@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using YellowSquad.HexMath;
@@ -49,7 +50,7 @@ namespace YellowSquad.Anthill.Core.HexMap.Editor
             foreach (var hex in _customMapFactory.Hexes)
             {
                 DrawHex(hex.Position, Color.green);
-                DrawText($"{hex.Position.ToString()}\n{hex.Hardness}\n{hex.PointOfInterest.ToString()}", hex.Position.ToVector3(_customMapFactory.MapScale));
+                DrawText($"{hex.Position.ToString()}\n{hex.TargetHexMeshName}\n{hex.Hardness}\n{hex.PointOfInterest.ToString()}", hex.Position.ToVector3(_customMapFactory.MapScale));
             }
 
             Tools.hidden = true;

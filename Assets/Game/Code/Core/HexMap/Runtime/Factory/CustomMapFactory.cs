@@ -79,6 +79,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             public Hardness Hardness => _hardness;
             public IHexMesh TargetHexMesh => _targetHexMesh;
             public AxialCoordinate Position => _position;
+            internal string TargetHexMeshName => _targetHexMesh.name;
         }
     }
 }
