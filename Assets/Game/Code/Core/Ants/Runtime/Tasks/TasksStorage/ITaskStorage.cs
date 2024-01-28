@@ -2,6 +2,6 @@
 {
     public interface ITaskStorage : IReadOnlyTaskStorage
     {
-        void AddTask(ITask task);
+        void AddTaskGroup(ITaskGroup taskGroup);
     }
 }

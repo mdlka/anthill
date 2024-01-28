@@ -26,7 +26,7 @@ namespace YellowSquad.Anthill.Core.Ants
         public bool ReachedTargetPosition => _currentPathIndex == 0;
         public FracAxialCoordinate CurrentPosition => _currentPath[_currentPathIndex];
 
-        public void MoveTo(FracAxialCoordinate targetPosition)
+        public void MoveTo(FracAxialCoordinate targetPosition, Func<AxialCoordinate, FracAxialCoordinate> closestPosition = null)
         {
             if (ReachedTargetPosition == false)
                 throw new InvalidOperationException();
@@ -42,7 +42,7 @@ namespace YellowSquad.Anthill.Core.Ants
             _lastStartPosition = CurrentPosition.AxialRound();
             _lastTargetPosition = targetPosition.AxialRound();
             
-            _currentPath = _path.Calculate(CurrentPosition, targetPosition);
+            _currentPath = _path.Calculate(CurrentPosition, targetPosition, closestPosition);
             _currentPathIndex = _currentPath.Count - 1;
         }
 

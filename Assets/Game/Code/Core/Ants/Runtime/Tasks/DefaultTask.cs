@@ -6,14 +6,14 @@ namespace YellowSquad.Anthill.Core.Ants
     {
         public DefaultTask(AxialCoordinate targetCellPosition)
         {
-            TargetCellPosition = targetCellPosition;
+            TargetPosition = targetCellPosition;
         }
         
-        public AxialCoordinate TargetCellPosition { get; }
+        public FracAxialCoordinate TargetPosition { get; }
         public TaskState State { get; private set; }
         public bool CanComplete => true;
 
-        public void Execute(FracAxialCoordinate _)
+        public void Execute()
         {
             State = TaskState.Executing;
         }
@@ -25,7 +25,7 @@ namespace YellowSquad.Anthill.Core.Ants
 
         public bool Equals(ITask other)
         {
-            return false;
+            return TargetPosition == other.TargetPosition;
         }
     }
 }

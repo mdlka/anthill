@@ -1,4 +1,5 @@
-﻿using YellowSquad.HexMath;
+﻿using System;
+using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
 {
@@ -7,6 +8,6 @@ namespace YellowSquad.Anthill.Core.Ants
         FracAxialCoordinate CurrentPosition { get; }
         bool ReachedTargetPosition { get; }
 
-        void MoveTo(FracAxialCoordinate targetPosition);
+        void MoveTo(FracAxialCoordinate targetPosition, Func<AxialCoordinate, FracAxialCoordinate> closestPosition = null);
     }
 }

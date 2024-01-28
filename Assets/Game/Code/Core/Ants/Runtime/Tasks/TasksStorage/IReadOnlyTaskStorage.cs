@@ -2,7 +2,7 @@
 {
     public interface IReadOnlyTaskStorage
     {
-        bool HasTask { get; }
-        ITask FindTask();
+        bool HasFreeTaskGroup { get; }
+        ITaskGroup FindTaskGroup();
     }
 }

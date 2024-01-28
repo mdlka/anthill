@@ -1,28 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace YellowSquad.Anthill.Core.Ants
 {
     public class DefaultStorage : ITaskStorage
     {
         private readonly Queue<ITask> _tasks = new();
+        private readonly Queue<ITaskGroup> _taskGroups = new();
 
-        public bool HasTask => _tasks.Count > 0;
-        
-        public void AddTask(ITask task)
+        public bool HasFreeTaskGroup => _taskGroups.Any(group => group.HasFreeTask);
+
+        public void AddTaskGroup(ITaskGroup taskGroup)
         {
-            if (_tasks.Contains(task))
-                throw new InvalidOperationException("This task already added");
-            
-            _tasks.Enqueue(task);
-        }
-        
-        public ITask FindTask()
-        {
-            if (HasTask == false)
+            if (_taskGroups.Contains(taskGroup))
                 throw new InvalidOperationException();
             
-            return _tasks.Dequeue();
+            _taskGroups.Enqueue(taskGroup);
+        }
+
+        public ITaskGroup FindTaskGroup()
+        {
+            if (HasFreeTaskGroup == false)
+                throw new InvalidOperationException();
+
+            while (_taskGroups.Count > 0)
+            {
+                if (_taskGroups.Peek().HasFreeTask)
+                    return _taskGroups.Peek();
+
+                _taskGroups.Dequeue();
+            }
+
+            throw new InvalidOperationException();
         }
     }
 }

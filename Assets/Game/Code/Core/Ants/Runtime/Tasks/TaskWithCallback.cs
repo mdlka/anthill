@@ -14,13 +14,13 @@ namespace YellowSquad.Anthill.Core.Ants
             _onComplete = onComplete;
         }
 
-        public AxialCoordinate TargetCellPosition => _task.TargetCellPosition;
+        public FracAxialCoordinate TargetPosition => _task.TargetPosition;
         public TaskState State => _task.State;
         public bool CanComplete => _task.CanComplete;
         
-        public void Execute(FracAxialCoordinate position)
+        public void Execute()
         {
-            _task.Execute(position);
+            _task.Execute();
         }
 
         public void Complete()

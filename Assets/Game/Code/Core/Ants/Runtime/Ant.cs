@@ -1,3 +1,4 @@
+using UnityEngine;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
@@ -27,7 +28,7 @@ namespace YellowSquad.Anthill.Core.Ants
             {
                 if (_movement.ReachedTargetPosition)
                 {
-                    if (_home.HasTask == false)
+                    if (_home.HasFreeTaskGroup == false)
                     {
                         if (CurrentPosition.AxialRound() == _home.Position)
                             return;
@@ -36,8 +37,12 @@ namespace YellowSquad.Anthill.Core.Ants
                         return;
                     }
 
-                    _currentTask = _home.FindTask();
-                    _movement.MoveTo(_currentTask.TargetCellPosition);
+                    var taskGroup = _home.FindTaskGroup();
+                    _movement.MoveTo(taskGroup.TargetCellPosition, position =>
+                    {
+                        _currentTask = taskGroup.ClosestTask(position);
+                        return _currentTask.TargetPosition;
+                    });
                 }
             }
             else
@@ -45,7 +50,7 @@ namespace YellowSquad.Anthill.Core.Ants
                 if (_movement.ReachedTargetPosition)
                 {
                     if (_currentTask.State == TaskState.Idle)
-                        _currentTask.Execute(CurrentPosition);
+                        _currentTask.Execute();
 
                     if (_currentTask.CanComplete)
                     {

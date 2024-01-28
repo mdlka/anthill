@@ -5,31 +5,29 @@ using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
 {
-    public class TakeClosestHexPartTask : ITask
+    public class TakeHexPartTask : ITask
     {
-        private readonly float _mapScale;
         private readonly IHex _targetHex;
+        private readonly IReadOnlyHexPart _targetPart;
         
-        private FracAxialCoordinate _executePosition;
         private float _executeTime;
 
-        public TakeClosestHexPartTask(float mapScale, AxialCoordinate targetCellPosition, IHex targetHex)
+        public TakeHexPartTask(FracAxialCoordinate targetPosition, IHex targetHex, IReadOnlyHexPart targetPart)
         {
-            TargetCellPosition = targetCellPosition;
-            _mapScale = mapScale;
+            TargetPosition = targetPosition;
             _targetHex = targetHex;
+            _targetPart = targetPart;
         }
         
-        public AxialCoordinate TargetCellPosition { get; }
+        public FracAxialCoordinate TargetPosition { get; }
         public TaskState State { get; private set; }
         public bool CanComplete => State == TaskState.Executing && Time.realtimeSinceStartup - _executeTime >= (int)_targetHex.Hardness + 1;
 
-        public void Execute(FracAxialCoordinate position)
+        public void Execute()
         {
             if (State != TaskState.Idle)
                 throw new InvalidOperationException("Already executed");
 
-            _executePosition = position;
             _executeTime = Time.realtimeSinceStartup;
             
             State = TaskState.Executing;
@@ -40,13 +38,13 @@ namespace YellowSquad.Anthill.Core.Ants
             if (CanComplete == false)
                 throw new InvalidOperationException();
             
-            _targetHex.DestroyClosestPartFor((_executePosition - TargetCellPosition).ToVector3(_mapScale));
+            _targetHex.DestroyClosestPartFor(_targetPart.LocalPosition);
             State = TaskState.Complete;
         }
 
         public bool Equals(ITask other)
         {
-            return false;
+            return TargetPosition == other.TargetPosition;
         }
     }
 }

@@ -22,13 +22,15 @@ namespace YellowSquad.Anthill.Core.Ants
             _settings = settings;
         }
 
-        public IReadOnlyList<FracAxialCoordinate> Calculate(FracAxialCoordinate start, AxialCoordinate target)
+        public IReadOnlyList<FracAxialCoordinate> Calculate(FracAxialCoordinate start, FracAxialCoordinate target, 
+            Func<AxialCoordinate, FracAxialCoordinate> closestPosition = null)
         {
-            AxialCoordinate currentTarget = target;
+            AxialCoordinate roundedTarget = target.AxialRound();
+            AxialCoordinate currentTarget = roundedTarget;
             
-            if (_map.HasObstacleIn(target))
+            if (_map.HasObstacleIn(roundedTarget))
             {
-                IReadOnlyList<AxialCoordinate> neighborsCellsWithoutObstacle = _map.NeighborHexPositions(target, 
+                IReadOnlyList<AxialCoordinate> neighborsCellsWithoutObstacle = _map.NeighborHexPositions(roundedTarget, 
                         where: position => _map.HasObstacleIn(position) == false);
 
                 if (neighborsCellsWithoutObstacle.Count == 0)
@@ -44,8 +46,11 @@ namespace YellowSquad.Anthill.Core.Ants
 
             var rawTargetPath = new List<FracAxialCoordinate>();
 
-            if (currentTarget != target)
-                rawTargetPath.Add(HMath.Lerp(currentTarget, target, 0.45f));
+            if (currentTarget != target && closestPosition != null)
+                rawTargetPath.Add(HMath.Lerp(currentTarget, closestPosition(currentTarget), 0.7f));
+
+            // if (currentTarget != target)
+            //     rawTargetPath.Add(HMath.Lerp(currentTarget, target, 0.45f));
 
             foreach (var position in path)
                 rawTargetPath.Add(position);

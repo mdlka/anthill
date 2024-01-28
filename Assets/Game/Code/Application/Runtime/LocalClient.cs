@@ -29,6 +29,8 @@ namespace YellowSquad.Anthill.Application
         private Queen _queen;
         private MovementPath _movementPath;
 
+        private List<FracAxialCoordinate> _test = new();
+
         private IEnumerator Start()
         {
             _map = _mapFactory.Create();
@@ -83,10 +85,22 @@ namespace YellowSquad.Anthill.Application
                     else
                     {
                         if (_map.IsClosed(targetAxialPosition) == false && targetHex.HasParts)
-                            foreach (var _ in targetHex.Parts)
-                                _taskStorage.AddTask(new TaskWithCallback(
-                                    new TakeClosestHexPartTask(_map.Scale, targetAxialPosition, targetHex), 
+                        {
+                            var tasks = new HashSet<ITask>();
+                            
+                            _test.Clear();
+                            
+                            foreach (var part in targetHex.Parts)
+                            {
+                                _test.Add(targetAxialPosition + part.LocalPosition.ToFracAxialCoordinate(_map.Scale));
+
+                                tasks.Add(new TaskWithCallback(
+                                    new TakeHexPartTask(targetAxialPosition + part.LocalPosition.ToFracAxialCoordinate(_map.Scale), targetHex, part), 
                                     onComplete: () => _map.Visualize(_hexMapView.Value)));
+                            }
+
+                            _taskStorage.AddTaskGroup(new TaskGroup(targetAxialPosition, tasks));
+                        }
                     }
                 }
 
@@ -102,7 +116,7 @@ namespace YellowSquad.Anthill.Application
 
                 if (Input.GetKeyDown(KeyCode.V))
                     if (_map.HasPosition(targetAxialPosition) && _map.HasObstacleIn(targetAxialPosition) == false)
-                        _taskStorage.AddTask(new DefaultTask(targetAxialPosition));
+                        _taskStorage.AddTaskGroup(new TaskGroup(targetAxialPosition, new DefaultTask(targetAxialPosition)));
 
                 if (Input.GetKeyDown(KeyCode.Space))
                     Debug.Log(_map.ToString());
@@ -127,6 +141,12 @@ namespace YellowSquad.Anthill.Application
         private void OnDrawGizmos()
         {
             _movementPath?.OnDrawGizmos();
+
+            if (_test == null)
+                return;
+
+            foreach (var position in _test)
+                Gizmos.DrawSphere(position.ToVector3(_map.Scale), 0.2f);
         }
     }
 }
