@@ -20,7 +20,7 @@ namespace YellowSquad.HexMath
         
         public static FracAxialCoordinate ToFracAxialCoordinate(this Vector3 value, float hexGridScale = 1f)
         {
-            return new Vector2(value.x, value.z).ToFracAxialCoordinate();
+            return new Vector2(value.x, value.z).ToFracAxialCoordinate(hexGridScale);
         }
 
         public static AxialCoordinate ToAxialCoordinate(this Vector2 value, float hexGridScale = 1f)
