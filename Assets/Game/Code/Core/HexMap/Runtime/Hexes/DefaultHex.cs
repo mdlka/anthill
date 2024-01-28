@@ -25,9 +25,6 @@ namespace YellowSquad.Anthill.Core.HexMap
 
         public void DestroyClosestPartFor(Vector3 localPosition)
         {
-            if (HasParts == false)
-                throw new InvalidOperationException();
-
             ClosestPartFor(localPosition).Destroy();
             _destroyedParts += 1;
         }
