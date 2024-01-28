@@ -7,6 +7,6 @@ namespace YellowSquad.Anthill.Core.Ants
         FracAxialCoordinate CurrentPosition { get; }
         bool ReachedTargetPosition { get; }
 
-        void MoveTo(AxialCoordinate targetPosition);
+        void MoveTo(FracAxialCoordinate targetPosition);
     }
 }

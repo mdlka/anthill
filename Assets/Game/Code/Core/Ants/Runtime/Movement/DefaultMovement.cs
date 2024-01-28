@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
@@ -12,6 +13,8 @@ namespace YellowSquad.Anthill.Core.Ants
         private float _elapsedTime;
         private int _currentPathIndex;
         private IReadOnlyList<FracAxialCoordinate> _currentPath;
+        private AxialCoordinate _lastStartPosition;
+        private AxialCoordinate _lastTargetPosition;
 
         public DefaultMovement(MovementPath path, MovementSettings settings, AxialCoordinate startPosition = default)
         {
@@ -23,15 +26,26 @@ namespace YellowSquad.Anthill.Core.Ants
         public bool ReachedTargetPosition => _currentPathIndex == 0;
         public FracAxialCoordinate CurrentPosition => _currentPath[_currentPathIndex];
 
-        public void MoveTo(AxialCoordinate targetPosition)
+        public void MoveTo(FracAxialCoordinate targetPosition)
         {
             if (ReachedTargetPosition == false)
                 throw new InvalidOperationException();
 
+            if (PossibleToReverse(targetPosition))
+            {
+                _currentPath = _currentPath.Reverse().ToList();
+                _currentPathIndex = _currentPath.Count - 1;
+
+                return;
+            }
+
+            _lastStartPosition = CurrentPosition.AxialRound();
+            _lastTargetPosition = targetPosition.AxialRound();
+            
             _currentPath = _path.Calculate(CurrentPosition, targetPosition);
             _currentPathIndex = _currentPath.Count - 1;
         }
-        
+
         public void Update(float deltaTime)
         {
             if (ReachedTargetPosition)
@@ -44,6 +58,13 @@ namespace YellowSquad.Anthill.Core.Ants
 
             _elapsedTime = 0;
             _currentPathIndex -= 1;
+        }
+        
+        private bool PossibleToReverse(FracAxialCoordinate targetPosition)
+        {
+            return _lastStartPosition != _lastTargetPosition 
+                   && CurrentPosition.AxialRound() == _lastTargetPosition 
+                   && targetPosition.AxialRound() == _lastStartPosition;
         }
     }
 }
