@@ -112,7 +112,7 @@ namespace YellowSquad.Anthill.Application
                                 _test.Add(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale));
 
                                 tasks.Add(new TaskWithCallback(
-                                    new TakeHexPartTask(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), targetHex, part), 
+                                    new TakePartTask(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), targetHex, part), 
                                     onComplete: () => _map.Visualize(_hexMapView.Value)));
                             }
 
