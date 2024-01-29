@@ -19,14 +19,14 @@ namespace YellowSquad.Anthill.Core.Ants
         }
 
         public AxialCoordinate Position { get; }
-        //public bool HasTask => _taskStorage.HasTask && Time.realtimeSinceStartup - _lastFindTaskTime >= _delayBetweenFindTasks;
-        public bool HasFreeTaskGroup => _taskStorage.HasFreeTaskGroup;
+        public bool HasFreeTaskGroup => _taskStorage.HasFreeTaskGroup && Time.realtimeSinceStartup - _lastFindTaskTime >= _delayBetweenFindTasks;
 
         public ITaskGroup FindTaskGroup()
         {
             if (HasFreeTaskGroup == false)
                 throw new InvalidOperationException();
 
+            _lastFindTaskTime = Time.realtimeSinceStartup;
             return _taskStorage.FindTaskGroup();
         }
     }

@@ -410,7 +410,7 @@ MonoBehaviour:
   _movementSettings: {fileID: 11400000, guid: bf38443a5993f32458b3518bc57bc474, type: 2}
   _diggerView: {fileID: 2047135644}
   _loaderView: {fileID: 0}
-  _homesCapacity: 1
+  _homesCapacity: 10
   _homeDelayBetweenFindTasks: 0.15
   references:
     version: 2
