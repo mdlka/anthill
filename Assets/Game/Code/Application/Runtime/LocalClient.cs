@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TNRD;
 using UnityEngine;
+using UnityEngine.UI;
 using YellowSquad.HexMath;
 using YellowSquad.Anthill.Application.Adapters;
 using YellowSquad.Anthill.Core.Ants;
@@ -24,11 +25,26 @@ namespace YellowSquad.Anthill.Application
         [SerializeField, Min(1)] private int _homesCapacity;
         [SerializeField, Min(0)] private float _homeDelayBetweenFindTasks;
 
+        [Header("Mobile input")] 
+        [SerializeField] private Button _spawnAntsButton;
+
         private Camera _camera;
         private IHexMap _map;
         private ITaskStorage _taskStorage;
         private Queen _queen;
         private MovementPath _movementPath;
+
+        private void Awake()
+        {
+            UnityEngine.Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+            
+            _spawnAntsButton.onClick.AddListener(SpawnAnts);
+        }
+
+        private void OnDestroy()
+        {
+            _spawnAntsButton.onClick.RemoveListener(SpawnAnts);
+        }
 
         private IEnumerator Start()
         {
@@ -76,7 +92,7 @@ namespace YellowSquad.Anthill.Application
 
                     var targetHex = _map.HexFrom(targetAxialPosition);
 
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetMouseButtonDown(1))
                     {
                         while (targetHex.HasParts)
                             targetHex.DestroyClosestPartFor(targetPosition);
@@ -106,21 +122,11 @@ namespace YellowSquad.Anthill.Application
                 }
 
                 if (Input.GetKeyDown(KeyCode.C))
-                {
-                    while (_queen.CanCreateDigger)
-                    {
-                        var ant = _queen.CreateDigger();
-                        _ants.Add(ant);
-                        _diggerView.Add(ant);
-                    }
-                }
+                    SpawnAnts();
 
                 if (Input.GetKeyDown(KeyCode.V))
                     if (_map.HasPosition(targetAxialPosition) && _map.HasObstacleIn(targetAxialPosition) == false)
                         _taskStorage.AddTaskGroup(new UniqueTaskGroup(new TaskGroup(targetAxialPosition, new MoveToCellTask(targetAxialPosition))));
-
-                if (Input.GetKeyDown(KeyCode.Space))
-                    Debug.Log(_map.ToString());
 
                 _map.Visualize(_hexMapView.Value);
             }
@@ -138,7 +144,18 @@ namespace YellowSquad.Anthill.Application
                 yield return null;
             }
         }
+        
+        private void SpawnAnts()
+        {
+            while (_queen.CanCreateDigger)
+            {
+                var ant = _queen.CreateDigger();
+                _ants.Add(ant);
+                _diggerView.Add(ant);
+            }
+        }
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             _movementPath?.OnDrawGizmos();
@@ -149,5 +166,6 @@ namespace YellowSquad.Anthill.Application
             foreach (var position in _test)
                 Gizmos.DrawSphere(position.ToVector3(_map.Scale), 0.2f);
         }
+#endif
     }
 }
