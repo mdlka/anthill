@@ -14,6 +14,7 @@ namespace YellowSquad.Anthill.Application
     public class LocalClient : MonoBehaviour
     {
         private readonly List<IAnt> _ants = new();
+        private readonly List<FracAxialCoordinate> _test = new();
 
         [SerializeField] private BaseMapFactory _mapFactory;
         [SerializeField] private SerializableInterface<IHexMapView> _hexMapView;
@@ -28,8 +29,6 @@ namespace YellowSquad.Anthill.Application
         private ITaskStorage _taskStorage;
         private Queen _queen;
         private MovementPath _movementPath;
-
-        private List<FracAxialCoordinate> _test = new();
 
         private IEnumerator Start()
         {
@@ -92,10 +91,10 @@ namespace YellowSquad.Anthill.Application
                             
                             foreach (var part in targetHex.Parts)
                             {
-                                _test.Add(targetAxialPosition + part.LocalPosition.ToFracAxialCoordinate(_map.Scale));
+                                _test.Add(targetAxialPosition + part.LocalPosition.ToFracAxialCoordinate(_map.Scale * 0.7f));
 
                                 tasks.Add(new TaskWithCallback(
-                                    new TakeHexPartTask(targetAxialPosition + part.LocalPosition.ToFracAxialCoordinate(_map.Scale), targetHex, part), 
+                                    new TakeHexPartTask(targetAxialPosition + part.LocalPosition.ToFracAxialCoordinate(_map.Scale * 0.7f), targetHex, part), 
                                     onComplete: () => _map.Visualize(_hexMapView.Value)));
                             }
 
@@ -116,7 +115,7 @@ namespace YellowSquad.Anthill.Application
 
                 if (Input.GetKeyDown(KeyCode.V))
                     if (_map.HasPosition(targetAxialPosition) && _map.HasObstacleIn(targetAxialPosition) == false)
-                        _taskStorage.AddTaskGroup(new TaskGroup(targetAxialPosition, new DefaultTask(targetAxialPosition)));
+                        _taskStorage.AddTaskGroup(new UniqueTaskGroup(new TaskGroup(targetAxialPosition, new MoveToCellTask(targetAxialPosition))));
 
                 if (Input.GetKeyDown(KeyCode.Space))
                     Debug.Log(_map.ToString());

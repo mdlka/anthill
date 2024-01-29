@@ -2,9 +2,9 @@
 
 namespace YellowSquad.Anthill.Core.Ants
 {
-    public class DefaultTask : ITask
+    public class MoveToCellTask : ITask
     {
-        public DefaultTask(AxialCoordinate targetCellPosition)
+        public MoveToCellTask(AxialCoordinate targetCellPosition)
         {
             TargetPosition = targetCellPosition;
         }

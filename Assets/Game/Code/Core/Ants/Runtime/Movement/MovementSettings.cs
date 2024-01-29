@@ -17,6 +17,7 @@ namespace YellowSquad.Anthill.Core.Ants
 
         public int StepsToGoal => _stepsToGoal;
         public float NormalizedMoveDuration => _moveToGoalDuration / _stepsToGoal;
+        public float MaxRandomOffsetRadius => _randomOffsetRadius;
         
         public void Initialize(float mapScale)
         {

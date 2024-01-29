@@ -6,7 +6,6 @@ namespace YellowSquad.Anthill.Core.Ants
 {
     public class DefaultStorage : ITaskStorage
     {
-        private readonly Queue<ITask> _tasks = new();
         private readonly Queue<ITaskGroup> _taskGroups = new();
 
         public bool HasFreeTaskGroup => _taskGroups.Any(group => group.HasFreeTask);

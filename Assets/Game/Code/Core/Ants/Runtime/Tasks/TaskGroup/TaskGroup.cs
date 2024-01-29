@@ -31,8 +31,14 @@ namespace YellowSquad.Anthill.Core.Ants
                 HMath.Distance(position, task2.TargetPosition)
                     ? task2
                     : task1);
+
+            int count = _tasks.Count;
             
             _tasks.Remove(task);
+            
+            if (count == _tasks.Count)
+                throw new InvalidOperationException();
+            
             return task;
         }
 

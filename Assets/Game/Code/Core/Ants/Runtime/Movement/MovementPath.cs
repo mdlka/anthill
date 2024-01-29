@@ -46,16 +46,15 @@ namespace YellowSquad.Anthill.Core.Ants
 
             var rawTargetPath = new List<FracAxialCoordinate>();
 
-            if (currentTarget != target && closestPosition != null)
-                rawTargetPath.Add(HMath.Lerp(currentTarget, closestPosition(currentTarget), 0.7f));
-
-            // if (currentTarget != target)
-            //     rawTargetPath.Add(HMath.Lerp(currentTarget, target, 0.45f));
+            FracAxialCoordinate? calculatedClosestPosition = closestPosition?.Invoke(currentTarget);
+            
+            if (currentTarget != target && calculatedClosestPosition != null)
+                rawTargetPath.Add(HMath.Lerp(currentTarget, calculatedClosestPosition.Value, 0.8f));
 
             foreach (var position in path)
                 rawTargetPath.Add(position);
 
-            if (roundedStart != start)
+            if (HMath.Distance(roundedStart, start) > _settings.MaxRandomOffsetRadius)
                 rawTargetPath.Add(start);
 
             return _lastCalculatedPath = SmoothPath(rawTargetPath);
@@ -65,7 +64,7 @@ namespace YellowSquad.Anthill.Core.Ants
         {
             if (_lastCalculatedPath == null || _lastCalculatedPath.Count == 0)
                 return;
-
+            
             foreach (var position in _lastCalculatedPath)
                 Gizmos.DrawSphere(position.ToVector3(_map.Scale), 0.2f);
         }
@@ -81,12 +80,34 @@ namespace YellowSquad.Anthill.Core.Ants
             {
                 var position = nextPosition;
                 var auxiliaryPosition = rawTargetPath[i];
-                nextPosition = i != rawTargetPath.Count - 1 ? (rawTargetPath[i] + rawTargetPath[i + 1]) * 0.5f : rawTargetPath[i];
+                nextPosition = rawTargetPath[i];
 
-                for (int j = 0; j < _settings.StepsToGoal; j++)
+                if (i != rawTargetPath.Count - 1)
+                    nextPosition = (rawTargetPath[i] + rawTargetPath[i + 1]) * 0.5f;
+
+                if (i == 0 || i == rawTargetPath.Count - 1)
+                    auxiliaryPosition = HMath.Lerp(position, nextPosition, 0.5f);
+
+                int stepsToGoal = _settings.StepsToGoal;
+
+                if (i == 0 || i == rawTargetPath.Count - 1)
                 {
-                    var currentOffset = i != 0 ? randomOffset : HMath.Lerp(FracAxialCoordinate.Zero, randomOffset, (float)j / _settings.StepsToGoal);
-                    targetPath.Add(HBezier.GetPoint(position, auxiliaryPosition, nextPosition, (float)j / _settings.StepsToGoal) + currentOffset);
+                    float distance = HMath.Distance(position, nextPosition);
+                    
+                    if (distance < 1)
+                        stepsToGoal = Mathf.CeilToInt(stepsToGoal * 0.5f);
+                }
+
+                for (int j = 0; j < stepsToGoal; j++)
+                {
+                    var currentOffset = randomOffset;
+                    
+                    if (i == 0)
+                        currentOffset = HMath.Lerp(FracAxialCoordinate.Zero, randomOffset, (float)j / stepsToGoal);
+                    else if (i == rawTargetPath.Count - 1)
+                        currentOffset = HMath.Lerp(randomOffset, FracAxialCoordinate.Zero, (float)j / stepsToGoal);
+                    
+                    targetPath.Add(HBezier.GetPoint(position, auxiliaryPosition, nextPosition, (float)j / stepsToGoal) + currentOffset);
                 }
             }
 
