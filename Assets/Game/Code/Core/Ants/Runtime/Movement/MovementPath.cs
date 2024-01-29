@@ -79,14 +79,9 @@ namespace YellowSquad.Anthill.Core.Ants
             for (int i = 0; i < rawTargetPath.Count; i++)
             {
                 var position = nextPosition;
-                var auxiliaryPosition = rawTargetPath[i];
-                nextPosition = rawTargetPath[i];
-
-                if (i != rawTargetPath.Count - 1)
-                    nextPosition = (rawTargetPath[i] + rawTargetPath[i + 1]) * 0.5f;
-
-                if (i == 0 || i == rawTargetPath.Count - 1)
-                    auxiliaryPosition = HMath.Lerp(position, nextPosition, 0.5f);
+                nextPosition = i == rawTargetPath.Count - 1 ? rawTargetPath[i] : HMath.Lerp(rawTargetPath[i], rawTargetPath[i + 1], 0.5f);
+                
+                var auxiliaryPosition = i != 0 && i != rawTargetPath.Count - 1 ? rawTargetPath[i] : HMath.Lerp(position, nextPosition, 0.5f);
 
                 int stepsToGoal = _settings.StepsToGoal;
 
