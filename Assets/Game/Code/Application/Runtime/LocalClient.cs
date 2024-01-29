@@ -88,13 +88,15 @@ namespace YellowSquad.Anthill.Application
                             var tasks = new HashSet<ITask>();
                             
                             _test.Clear();
+
+                            var hexMatrix = _hexMapView.Value.HexMatrixBy(_map.Scale, targetAxialPosition);
                             
                             foreach (var part in targetHex.Parts)
                             {
-                                _test.Add(targetAxialPosition + part.LocalPosition.ToFracAxialCoordinate(_map.Scale * 0.7f));
+                                _test.Add(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale));
 
                                 tasks.Add(new TaskWithCallback(
-                                    new TakeHexPartTask(targetAxialPosition + part.LocalPosition.ToFracAxialCoordinate(_map.Scale * 0.7f), targetHex, part), 
+                                    new TakeHexPartTask(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), targetHex, part), 
                                     onComplete: () => _map.Visualize(_hexMapView.Value)));
                             }
 
@@ -141,9 +143,9 @@ namespace YellowSquad.Anthill.Application
         {
             _movementPath?.OnDrawGizmos();
 
-            if (_test == null)
+            if (_test == null) 
                 return;
-
+            
             foreach (var position in _test)
                 Gizmos.DrawSphere(position.ToVector3(_map.Scale), 0.2f);
         }

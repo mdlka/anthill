@@ -32,12 +32,17 @@ namespace YellowSquad.Anthill.Core.HexMap
             {
                 if (closedPosition.Contains(pair.Key))
                     continue;
-                
-                var hexMatrix = Matrix4x4.TRS(pair.Key.ToVector3(mapScale), Quaternion.Euler(0f, 30f, 0f), _hexScale);
+
+                var hexMatrix = HexMatrixBy(mapScale, pair.Key);
                 var view = _hexViews.First(view => view.Hardness == pair.Value.Hex.Hardness).View;
                 
                 view.Render(pair.Value.Hex.Parts, hexMatrix);
             }
+        }
+
+        public Matrix4x4 HexMatrixBy(float mapScale, AxialCoordinate position)
+        {
+            return Matrix4x4.TRS(position.ToVector3(mapScale), Quaternion.Euler(0f, 30f, 0f), _hexScale);
         }
 
         [Serializable]
