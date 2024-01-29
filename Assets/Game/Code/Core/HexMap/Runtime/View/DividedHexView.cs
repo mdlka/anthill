@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    internal class PartedHexView : MonoBehaviour
+    internal class DividedHexView : MonoBehaviour
     {
         private readonly Dictionary<Mesh, List<Matrix4x4>> _partMatrices = new();
 
         [SerializeField] private Material _targetMaterial;
-        [SerializeField] private HexMesh _targetHexMesh;
+        [SerializeField] private DividedObjectMesh _targetHexMesh;
         
         private RenderParams _renderParams;
         private IReadOnlyDictionary<Vector3, Mesh> _meshByPartPosition;
@@ -28,7 +28,7 @@ namespace YellowSquad.Anthill.Core.HexMap
                 Graphics.RenderMeshInstanced(_renderParams, renderPart.Key, 0, renderPart.Value);
         }
         
-        public void Render(IEnumerable<IReadOnlyHexPart> parts, Matrix4x4 hexMatrix)
+        public void Render(IEnumerable<IReadOnlyPart> parts, Matrix4x4 hexMatrix)
         {
             foreach (var part in parts)
             {

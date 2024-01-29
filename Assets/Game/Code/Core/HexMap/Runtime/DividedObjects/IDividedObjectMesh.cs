@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    internal interface IHexMesh
+    internal interface IDividedObjectMesh
     {
         IReadOnlyDictionary<Vector3, Mesh> PartsMeshesByLocalPosition { get; }
 
-        IEnumerable<IHexPart> Parts();
+        IEnumerable<IPart> Parts();
     }
 }

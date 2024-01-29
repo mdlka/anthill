@@ -2,9 +2,9 @@
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    internal class HexPart : IHexPart
+    internal class Part : IPart
     {
-        public HexPart(Vector3 position)
+        public Part(Vector3 position)
         {
             LocalPosition = position;
         }

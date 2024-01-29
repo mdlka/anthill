@@ -5,23 +5,23 @@ using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
 {
-    public class TakeHexPartTask : ITask
+    public class TakePartTask : ITask
     {
-        private readonly IHex _targetHex;
-        private readonly IReadOnlyHexPart _targetPart;
+        private readonly IDividedObject _targetDividedObject;
+        private readonly IReadOnlyPart _targetPart;
         
         private float _executeTime;
 
-        public TakeHexPartTask(FracAxialCoordinate targetPosition, IHex targetHex, IReadOnlyHexPart targetPart)
+        public TakePartTask(FracAxialCoordinate targetPosition, IDividedObject targetDividedObject, IReadOnlyPart targetPart)
         {
             TargetPosition = targetPosition;
-            _targetHex = targetHex;
+            _targetDividedObject = targetDividedObject;
             _targetPart = targetPart;
         }
         
         public FracAxialCoordinate TargetPosition { get; }
         public TaskState State { get; private set; }
-        public bool CanComplete => State == TaskState.Executing && Time.realtimeSinceStartup - _executeTime >= (int)_targetHex.Hardness + 1;
+        public bool CanComplete => State == TaskState.Executing && Time.realtimeSinceStartup - _executeTime >= (int)_targetDividedObject.Hardness + 1;
 
         public void Execute()
         {
@@ -38,7 +38,7 @@ namespace YellowSquad.Anthill.Core.Ants
             if (CanComplete == false)
                 throw new InvalidOperationException();
             
-            _targetHex.DestroyClosestPartFor(_targetPart.LocalPosition);
+            _targetDividedObject.DestroyClosestPartFor(_targetPart.LocalPosition);
             State = TaskState.Complete;
         }
 

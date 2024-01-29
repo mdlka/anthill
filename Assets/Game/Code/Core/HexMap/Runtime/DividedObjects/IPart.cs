@@ -2,12 +2,12 @@
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    internal interface IHexPart : IReadOnlyHexPart
+    internal interface IPart : IReadOnlyPart
     {
         void Destroy();
     }
 
-    public interface IReadOnlyHexPart
+    public interface IReadOnlyPart
     {
         Vector3 LocalPosition { get; }
         bool Destroyed { get; }

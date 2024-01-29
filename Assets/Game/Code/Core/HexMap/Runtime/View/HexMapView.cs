@@ -49,7 +49,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         private class HexViewPair
         {
             [field: SerializeField] public Hardness Hardness { get; private set; }
-            [field: SerializeField] public PartedHexView View { get; private set; }
+            [field: SerializeField] public DividedHexView View { get; private set; }
         }
     }
 }

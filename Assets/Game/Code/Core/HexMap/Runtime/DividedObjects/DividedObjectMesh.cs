@@ -5,8 +5,8 @@ using YellowSquad.AssetPath;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    [CreateAssetMenu(menuName = "Anthill/Create HexMesh", fileName = "HexMesh", order = 56)]
-    internal class HexMesh : ScriptableObject, IHexMesh
+    [CreateAssetMenu(menuName = "Anthill/Create DividedObjectMesh", fileName = "DividedObjectMesh", order = 56)]
+    internal class DividedObjectMesh : ScriptableObject, IDividedObjectMesh
     {
         [SerializeField] private ResourcesReference<GameObject> _modelObject;
 
@@ -30,13 +30,13 @@ namespace YellowSquad.Anthill.Core.HexMap
             } 
         }
 
-        public IEnumerable<IHexPart> Parts()
+        public IEnumerable<IPart> Parts()
         {
             var meshes = LoadMeshes();
-            var parts = new IHexPart[meshes.Length];
+            var parts = new IPart[meshes.Length];
 
             for (int i = 0; i < meshes.Length; i++)
-                parts[i] = new HexPart(meshes[i].CenterPosition);
+                parts[i] = new Part(meshes[i].CenterPosition);
 
             return parts;
         }

@@ -12,7 +12,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         [SerializeField, Min(0.01f)] private float _mapScale;
         
         [Header("Editor settings")]
-        [SerializeField] private HexMesh _currentTargetHexMesh;
+        [SerializeField] private DividedObjectMesh _currentTargetHexMesh;
         [SerializeField] private Hardness _currentHexHardness;
         [SerializeField] private PointOfInterest _currentPointOfInterest;
         [SerializeField] private List<EditorMapHex> _hexes;
@@ -25,7 +25,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             var hexes = _hexes.ToDictionary(
                 hex => hex.Position, 
                 hex => new MapCell(
-                    new DefaultHex(hex.Hardness, hex.TargetHexMesh), 
+                    new Hex(hex.Hardness, hex.TargetHexMesh), 
                     hex.PointOfInterest));
             
             return new Map(_mapScale, hexes);
@@ -64,10 +64,10 @@ namespace YellowSquad.Anthill.Core.HexMap
         {
             [SerializeField] private PointOfInterest _pointOfInterest;
             [SerializeField] private Hardness _hardness;
-            [SerializeField] private HexMesh _targetHexMesh;
+            [SerializeField] private DividedObjectMesh _targetHexMesh;
             [SerializeField] private SerializedAxialCoordinate _position;
 
-            public EditorMapHex(PointOfInterest pointOfInterest, Hardness hardness, HexMesh targetHexMesh, AxialCoordinate position)
+            public EditorMapHex(PointOfInterest pointOfInterest, Hardness hardness, DividedObjectMesh targetHexMesh, AxialCoordinate position)
             {
                 _pointOfInterest = pointOfInterest;
                 _hardness = hardness;
@@ -77,7 +77,7 @@ namespace YellowSquad.Anthill.Core.HexMap
 
             public PointOfInterest PointOfInterest => _pointOfInterest;
             public Hardness Hardness => _hardness;
-            public IHexMesh TargetHexMesh => _targetHexMesh;
+            public IDividedObjectMesh TargetHexMesh => _targetHexMesh;
             public AxialCoordinate Position => _position;
             internal string TargetHexMeshName => _targetHexMesh.name;
         }

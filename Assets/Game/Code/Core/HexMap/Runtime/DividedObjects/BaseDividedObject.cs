@@ -5,23 +5,23 @@ using UnityEngine;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    public class DefaultHex : IHex
+    public class BaseDividedObject : IDividedObject
     {
-        private readonly List<IHexPart> _parts;
+        private readonly List<IPart> _parts;
         private int _destroyedParts;
 
-        internal DefaultHex(Hardness hardness, IHexMesh mesh) : this(hardness, mesh.Parts()) { }
+        internal BaseDividedObject(Hardness hardness, IDividedObjectMesh mesh) : this(hardness, mesh.Parts()) { }
 
-        private DefaultHex(Hardness hardness, IEnumerable<IHexPart> parts)
+        private BaseDividedObject(Hardness hardness, IEnumerable<IPart> parts)
         {
             Hardness = hardness;
-            _parts = new List<IHexPart>(parts);
+            _parts = new List<IPart>(parts);
             _destroyedParts = _parts.Count(part => part.Destroyed);
         }
 
         public bool HasParts => _parts.Count - _destroyedParts != 0;
         public Hardness Hardness { get; }
-        public IEnumerable<IReadOnlyHexPart> Parts => _parts;
+        public IEnumerable<IReadOnlyPart> Parts => _parts;
 
         public void DestroyClosestPartFor(Vector3 localPosition)
         {
@@ -29,12 +29,12 @@ namespace YellowSquad.Anthill.Core.HexMap
             _destroyedParts += 1;
         }
 
-        private IHexPart ClosestPartFor(Vector3 localPosition)
+        private IPart ClosestPartFor(Vector3 localPosition)
         {
             if (HasParts == false)
                 throw new InvalidOperationException();
             
-            IHexPart closestPart = null;
+            IPart closestPart = null;
             float closestDistance = int.MaxValue;
 
             foreach (var part in _parts)

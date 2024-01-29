@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    public interface IHex
+    public interface IDividedObject
     {
         bool HasParts { get; }
         Hardness Hardness { get; }
-        IEnumerable<IReadOnlyHexPart> Parts { get; }
+        IEnumerable<IReadOnlyPart> Parts { get; }
 
         void DestroyClosestPartFor(Vector3 localPosition);
     }
