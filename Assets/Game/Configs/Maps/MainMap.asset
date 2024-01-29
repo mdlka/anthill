@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: MainMap
   m_EditorClassIdentifier: 
   _mapScale: 1
-  _currentTargetHexMesh: {fileID: 11400000, guid: 7076c859c1111fd4780754659792c4e6, type: 2}
-  _currentHexHardness: 1
-  _currentPointOfInterest: 2
+  _currentTargetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+  _currentHexHardness: 0
+  _currentPointOfInterest: 4
   _hexes:
   - _pointOfInterest: 0
     _hardness: 1
@@ -353,3 +353,9 @@ MonoBehaviour:
     _position:
       <Q>k__BackingField: -2
       <R>k__BackingField: 2
+  - _pointOfInterest: 4
+    _hardness: 0
+    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _position:
+      <Q>k__BackingField: 1
+      <R>k__BackingField: 0

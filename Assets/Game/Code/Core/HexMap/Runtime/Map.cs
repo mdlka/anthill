@@ -32,7 +32,8 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (HasPosition(position) == false)
                 throw new ArgumentOutOfRangeException();
 
-            return _cells[position].Hex.HasParts;
+            return _cells[position].Hex.HasParts || 
+                   _cells[position].PointOfInterest == PointOfInterest.Leaf;
         }
 
         public bool IsClosed(AxialCoordinate position)

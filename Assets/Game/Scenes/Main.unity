@@ -700,7 +700,7 @@ MonoBehaviour:
   _movementSettings: {fileID: 11400000, guid: bf38443a5993f32458b3518bc57bc474, type: 2}
   _diggerView: {fileID: 2047135644}
   _loaderView: {fileID: 0}
-  _homesCapacity: 20
+  _homesCapacity: 100
   _homeDelayBetweenFindTasks: 0.15
   _spawnAntsButton: {fileID: 208867260}
   references:
@@ -1157,6 +1157,10 @@ MonoBehaviour:
     <Mesh>k__BackingField: {fileID: 7352743313293951598, guid: fef3b232dcc21644e86b293e72c0b657, type: 3}
     <SizeFactor>k__BackingField: 1.5
     <Rotation>k__BackingField: {x: -90, y: 130, z: 0}
+  - <PointOfInterest>k__BackingField: 4
+    <Mesh>k__BackingField: {fileID: 240824333094594727, guid: 46a1c67439b89d14d8550ed24dd70407, type: 3}
+    <SizeFactor>k__BackingField: 0.92
+    <Rotation>k__BackingField: {x: -90, y: 30, z: 0}
 --- !u!114 &2052305930
 MonoBehaviour:
   m_ObjectHideFlags: 0
