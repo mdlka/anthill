@@ -9,10 +9,14 @@ namespace YellowSquad.Anthill.Core.HexMap
     [CreateAssetMenu(menuName = "Anthill/Maps/Create HexMapFactory", fileName = "HexMapFactory", order = 56)]
     public class CustomMapFactory : BaseMapFactory
     {
+        [Header("Map settings")]
         [SerializeField, Min(0.01f)] private float _mapScale;
-        
+        [Header("Meshes")]
+        [SerializeField] private HexMesh _emptyHexMesh;
+        [SerializeField] private HexMesh _targetHexMesh;
+        [SerializeField] private PointOfInterestMesh _targetLeafMesh;
         [Header("Editor settings")]
-        [SerializeField] private HexMesh _currentTargetHexMesh;
+        [SerializeField] private bool _currentHexEmpty;
         [SerializeField] private Hardness _currentHexHardness;
         [SerializeField] private PointOfInterest _currentPointOfInterest;
         [SerializeField] private List<EditorMapHex> _hexes;
@@ -25,7 +29,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             var hexes = _hexes.ToDictionary(
                 hex => hex.Position, 
                 hex => new MapCell(
-                    new Hex(hex.Hardness, hex.TargetHexMesh), 
+                    new Hex(hex.Hardness, hex.Empty ? _emptyHexMesh : _targetHexMesh), 
                     hex.PointOfInterest));
             
             return new Map(_mapScale, hexes);
@@ -46,7 +50,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (HasHexIn(position))
                 throw new InvalidOperationException();
             
-            _hexes.Add(new EditorMapHex(_currentPointOfInterest, _currentHexHardness, _currentTargetHexMesh, position));
+            _hexes.Add(new EditorMapHex(position, _currentHexHardness, _currentPointOfInterest, _currentHexEmpty));
         }
 
         internal void RemoveHex(AxialCoordinate position)
@@ -58,28 +62,27 @@ namespace YellowSquad.Anthill.Core.HexMap
 
             _hexes.Remove(targetHex);
         }
-
+        
         [Serializable]
         internal class EditorMapHex
         {
-            [SerializeField] private PointOfInterest _pointOfInterest;
+            [SerializeField] private bool _empty;
             [SerializeField] private Hardness _hardness;
-            [SerializeField] private HexMesh _targetHexMesh;
+            [SerializeField] private PointOfInterest _pointOfInterest;
             [SerializeField] private SerializedAxialCoordinate _position;
 
-            public EditorMapHex(PointOfInterest pointOfInterest, Hardness hardness, HexMesh targetHexMesh, AxialCoordinate position)
+            public EditorMapHex(AxialCoordinate position, Hardness hardness, PointOfInterest pointOfInterest, bool empty)
             {
-                _pointOfInterest = pointOfInterest;
-                _hardness = hardness;
-                _targetHexMesh = targetHexMesh;
                 _position = position;
+                _hardness = hardness;
+                _pointOfInterest = pointOfInterest;
+                _empty = empty;
             }
 
-            public PointOfInterest PointOfInterest => _pointOfInterest;
+            public bool Empty => _empty;
             public Hardness Hardness => _hardness;
-            public IDividedObjectMesh TargetHexMesh => _targetHexMesh;
+            public PointOfInterest PointOfInterest => _pointOfInterest;
             public AxialCoordinate Position => _position;
-            internal string TargetHexMeshName => _targetHexMesh.name;
         }
     }
 }

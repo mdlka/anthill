@@ -13,373 +13,376 @@ MonoBehaviour:
   m_Name: MainMap
   m_EditorClassIdentifier: 
   _mapScale: 1
-  _currentTargetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+  _emptyHexMesh: {fileID: 11400000, guid: 0439ea377af6a6f4d93302092f579646, type: 2}
+  _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+  _targetLeafMesh: {fileID: 11400000, guid: 06c2e4d9b9a28c547a46431015c6cbf3, type: 2}
+  _currentHexEmpty: 0
   _currentHexHardness: 2
-  _currentPointOfInterest: 4
+  _currentPointOfInterest: 2
   _hexes:
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 0
       <R>k__BackingField: 1
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -1
       <R>k__BackingField: 1
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -1
       <R>k__BackingField: 0
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 0
       <R>k__BackingField: -1
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 1
       <R>k__BackingField: 0
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -2
       <R>k__BackingField: 1
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -2
       <R>k__BackingField: 0
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -1
       <R>k__BackingField: -1
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 0
       <R>k__BackingField: -2
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 1
       <R>k__BackingField: -2
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -1
       <R>k__BackingField: 3
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -2
       <R>k__BackingField: 3
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -3
       <R>k__BackingField: 3
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -3
       <R>k__BackingField: 1
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -3
       <R>k__BackingField: 0
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -2
       <R>k__BackingField: -1
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -1
       <R>k__BackingField: -2
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 0
       <R>k__BackingField: -3
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 1
       <R>k__BackingField: -3
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 2
       <R>k__BackingField: -3
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 3
       <R>k__BackingField: -3
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 3
       <R>k__BackingField: -2
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 3
       <R>k__BackingField: 0
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 2
       <R>k__BackingField: 1
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 1
       <R>k__BackingField: 2
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 0
       <R>k__BackingField: 3
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -1
       <R>k__BackingField: 4
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -2
       <R>k__BackingField: 4
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -3
       <R>k__BackingField: 4
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -4
       <R>k__BackingField: 4
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -4
       <R>k__BackingField: 3
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -4
       <R>k__BackingField: 2
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -4
       <R>k__BackingField: 1
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -4
       <R>k__BackingField: 0
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -3
       <R>k__BackingField: -1
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -2
       <R>k__BackingField: -2
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: -1
       <R>k__BackingField: -3
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 0
       <R>k__BackingField: -4
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 1
       <R>k__BackingField: -4
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 2
       <R>k__BackingField: -4
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 3
       <R>k__BackingField: -4
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 4
       <R>k__BackingField: -4
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 4
       <R>k__BackingField: -3
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 4
       <R>k__BackingField: -2
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 4
       <R>k__BackingField: -1
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 4
       <R>k__BackingField: 0
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 3
       <R>k__BackingField: 1
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 2
       <R>k__BackingField: 2
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 1
       <R>k__BackingField: 3
-  - _pointOfInterest: 0
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 0
       <R>k__BackingField: 4
-  - _pointOfInterest: 1
+  - _empty: 0
     _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 0439ea377af6a6f4d93302092f579646, type: 2}
-    _position:
-      <Q>k__BackingField: 0
-      <R>k__BackingField: 0
-  - _pointOfInterest: 0
-    _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 0439ea377af6a6f4d93302092f579646, type: 2}
-    _position:
-      <Q>k__BackingField: 1
-      <R>k__BackingField: -1
-  - _pointOfInterest: 0
-    _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 0439ea377af6a6f4d93302092f579646, type: 2}
+    _pointOfInterest: 0
     _position:
       <Q>k__BackingField: 2
       <R>k__BackingField: -2
-  - _pointOfInterest: 0
-    _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 0439ea377af6a6f4d93302092f579646, type: 2}
-    _position:
-      <Q>k__BackingField: 2
-      <R>k__BackingField: -1
-  - _pointOfInterest: 0
-    _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 0439ea377af6a6f4d93302092f579646, type: 2}
-    _position:
-      <Q>k__BackingField: 2
-      <R>k__BackingField: 0
-  - _pointOfInterest: 0
-    _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 0439ea377af6a6f4d93302092f579646, type: 2}
-    _position:
-      <Q>k__BackingField: 1
-      <R>k__BackingField: 1
-  - _pointOfInterest: 0
-    _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 0439ea377af6a6f4d93302092f579646, type: 2}
-    _position:
-      <Q>k__BackingField: 0
-      <R>k__BackingField: 2
-  - _pointOfInterest: 0
-    _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 0439ea377af6a6f4d93302092f579646, type: 2}
-    _position:
-      <Q>k__BackingField: -1
-      <R>k__BackingField: 2
-  - _pointOfInterest: 2
-    _hardness: 1
-    _targetHexMesh: {fileID: 11400000, guid: 0439ea377af6a6f4d93302092f579646, type: 2}
-    _position:
-      <Q>k__BackingField: -2
-      <R>k__BackingField: 2
-  - _pointOfInterest: 2
+  - _empty: 0
     _hardness: 2
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
-    _position:
-      <Q>k__BackingField: -3
-      <R>k__BackingField: 2
-  - _pointOfInterest: 4
-    _hardness: 2
-    _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
+    _pointOfInterest: 4
     _position:
       <Q>k__BackingField: 3
       <R>k__BackingField: -1
+  - _empty: 1
+    _hardness: 1
+    _pointOfInterest: 1
+    _position:
+      <Q>k__BackingField: 0
+      <R>k__BackingField: 0
+  - _empty: 1
+    _hardness: 1
+    _pointOfInterest: 0
+    _position:
+      <Q>k__BackingField: 1
+      <R>k__BackingField: -1
+  - _empty: 1
+    _hardness: 1
+    _pointOfInterest: 0
+    _position:
+      <Q>k__BackingField: 2
+      <R>k__BackingField: -1
+  - _empty: 1
+    _hardness: 1
+    _pointOfInterest: 0
+    _position:
+      <Q>k__BackingField: 2
+      <R>k__BackingField: 0
+  - _empty: 1
+    _hardness: 1
+    _pointOfInterest: 0
+    _position:
+      <Q>k__BackingField: 1
+      <R>k__BackingField: 1
+  - _empty: 1
+    _hardness: 1
+    _pointOfInterest: 0
+    _position:
+      <Q>k__BackingField: 0
+      <R>k__BackingField: 2
+  - _empty: 1
+    _hardness: 1
+    _pointOfInterest: 0
+    _position:
+      <Q>k__BackingField: -1
+      <R>k__BackingField: 2
+  - _empty: 1
+    _hardness: 1
+    _pointOfInterest: 2
+    _position:
+      <Q>k__BackingField: -2
+      <R>k__BackingField: 2
+  - _empty: 0
+    _hardness: 2
+    _pointOfInterest: 2
+    _position:
+      <Q>k__BackingField: -3
+      <R>k__BackingField: 2
