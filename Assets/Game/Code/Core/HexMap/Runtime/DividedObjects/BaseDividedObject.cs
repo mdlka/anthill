@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace YellowSquad.Anthill.Core.HexMap
@@ -16,17 +15,28 @@ namespace YellowSquad.Anthill.Core.HexMap
         {
             Hardness = hardness;
             _parts = new List<IPart>(parts);
-            _destroyedParts = _parts.Count(part => part.Destroyed);
         }
 
         public bool HasParts => _parts.Count - _destroyedParts != 0;
         public Hardness Hardness { get; }
         public IEnumerable<IReadOnlyPart> Parts => _parts;
+        public abstract bool CanRestore { get; }
 
         public void DestroyClosestPartFor(Vector3 localPosition)
         {
             ClosestPartFor(localPosition).Destroy();
             _destroyedParts += 1;
+        }
+
+        public void Restore()
+        {
+            if (CanRestore == false)
+                throw new InvalidOperationException();
+            
+            _destroyedParts = 0;
+            
+            foreach (var part in _parts)
+                part.Restore();
         }
 
         private IPart ClosestPartFor(Vector3 localPosition)

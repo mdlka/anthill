@@ -11,14 +11,16 @@ namespace YellowSquad.Anthill.Core.HexMap
     {
         [Header("Map settings")]
         [SerializeField, Min(0.01f)] private float _mapScale;
-        [Header("Meshes")]
+        [Header("Hexes")]
         [SerializeField] private HexMesh _emptyHexMesh;
         [SerializeField] private HexMesh _targetHexMesh;
+        [Header("Points of interest")]
         [SerializeField] private PointOfInterestMesh _targetLeafMesh;
+        [SerializeField] private Hardness _targetLeafHardness;
         [Header("Editor settings")]
         [SerializeField] private bool _currentHexEmpty;
         [SerializeField] private Hardness _currentHexHardness;
-        [SerializeField] private PointOfInterest _currentPointOfInterest;
+        [SerializeField] private PointOfInterestType _currentPointOfInterest;
         [SerializeField] private List<EditorMapHex> _hexes;
         
         internal float MapScale => _mapScale;
@@ -29,8 +31,9 @@ namespace YellowSquad.Anthill.Core.HexMap
             var hexes = _hexes.ToDictionary(
                 hex => hex.Position, 
                 hex => new MapCell(
-                    new Hex(hex.Hardness, hex.Empty ? _emptyHexMesh : _targetHexMesh), 
-                    hex.PointOfInterest));
+                    new Hex(hex.Hardness, hex.Empty ? _emptyHexMesh : _targetHexMesh),
+                    hex.PointOfInterestType,
+                    DividedPointOfInterestBy(hex.PointOfInterestType)));
             
             return new Map(_mapScale, hexes);
         }
@@ -62,26 +65,35 @@ namespace YellowSquad.Anthill.Core.HexMap
 
             _hexes.Remove(targetHex);
         }
+
+        private IDividedPointOfInterest DividedPointOfInterestBy(PointOfInterestType type)
+        {
+            return type switch
+            {
+                PointOfInterestType.Leaf => new Leaf(_targetLeafHardness, _targetLeafMesh),
+                _ => null
+            };
+        }
         
         [Serializable]
         internal class EditorMapHex
         {
             [SerializeField] private bool _empty;
             [SerializeField] private Hardness _hardness;
-            [SerializeField] private PointOfInterest _pointOfInterest;
+            [SerializeField] private PointOfInterestType _pointOfInterestType;
             [SerializeField] private SerializedAxialCoordinate _position;
 
-            public EditorMapHex(AxialCoordinate position, Hardness hardness, PointOfInterest pointOfInterest, bool empty)
+            public EditorMapHex(AxialCoordinate position, Hardness hardness, PointOfInterestType pointOfInterestType, bool empty)
             {
                 _position = position;
                 _hardness = hardness;
-                _pointOfInterest = pointOfInterest;
+                _pointOfInterestType = pointOfInterestType;
                 _empty = empty;
             }
 
             public bool Empty => _empty;
             public Hardness Hardness => _hardness;
-            public PointOfInterest PointOfInterest => _pointOfInterest;
+            public PointOfInterestType PointOfInterestType => _pointOfInterestType;
             public AxialCoordinate Position => _position;
         }
     }

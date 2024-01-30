@@ -5,6 +5,7 @@ namespace YellowSquad.Anthill.Core.HexMap
     internal interface IPart : IReadOnlyPart
     {
         void Destroy();
+        void Restore();
     }
 
     public interface IReadOnlyPart

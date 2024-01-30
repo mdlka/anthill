@@ -1,14 +1,21 @@
-﻿namespace YellowSquad.Anthill.Core.HexMap
+﻿using System;
+
+namespace YellowSquad.Anthill.Core.HexMap
 {
-    public struct MapCell
+    public readonly struct MapCell
     {
-        internal MapCell(IHex hex, PointOfInterest pointOfInterest)
+        private readonly IDividedPointOfInterest _dividedPointOfInterest;
+        
+        internal MapCell(IHex hex, PointOfInterestType pointOfInterestType, IDividedPointOfInterest dividedPointOfInterest)
         {
             Hex = hex;
-            PointOfInterest = pointOfInterest;
+            PointOfInterestType = pointOfInterestType;
+            _dividedPointOfInterest = dividedPointOfInterest;
         }
 
         public IHex Hex { get; }
-        public PointOfInterest PointOfInterest { get; }
+        public PointOfInterestType PointOfInterestType { get; }
+        public IDividedPointOfInterest DividedPointOfInterest => _dividedPointOfInterest ?? throw new NullReferenceException();
+        public bool HasDividedPointOfInterest => _dividedPointOfInterest != null;
     }
 }

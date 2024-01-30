@@ -16,5 +16,10 @@ namespace YellowSquad.Anthill.Core.HexMap
         {
             Destroyed = true;
         }
+
+        public void Restore()
+        {
+            Destroyed = false;
+        }
     }
 }

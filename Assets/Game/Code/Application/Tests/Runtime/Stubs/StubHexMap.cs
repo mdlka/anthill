@@ -40,12 +40,27 @@ namespace YellowSquad.Anthill.Application.Tests
             throw new NotImplementedException();
         }
 
+        public bool HasDividedPointOfInterestIn(AxialCoordinate position)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDividedPointOfInterest DividedPointOfInterestFrom(AxialCoordinate position)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PointOfInterestType PointOfInterestTypeIn(AxialCoordinate position)
+        {
+            throw new NotImplementedException();
+        }
+
         public IReadOnlyList<AxialCoordinate> NeighborHexPositions(AxialCoordinate position, Func<AxialCoordinate, bool> where = null)
         {
             throw new NotImplementedException();
         }
 
-        public IReadOnlyList<AxialCoordinate> PointsOfInterestPositions(PointOfInterest targetPoint)
+        public IReadOnlyList<AxialCoordinate> PointsOfInterestPositions(PointOfInterestType targetPoint)
         {
             throw new NotImplementedException();
         }

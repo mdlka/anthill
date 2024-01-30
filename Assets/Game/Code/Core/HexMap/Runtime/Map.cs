@@ -33,7 +33,7 @@ namespace YellowSquad.Anthill.Core.HexMap
                 throw new ArgumentOutOfRangeException();
 
             return _cells[position].Hex.HasParts || 
-                   _cells[position].PointOfInterest == PointOfInterest.Leaf;
+                   _cells[position].PointOfInterestType == PointOfInterestType.Leaf;
         }
 
         public bool IsClosed(AxialCoordinate position)
@@ -52,6 +52,30 @@ namespace YellowSquad.Anthill.Core.HexMap
             return _cells[position].Hex;
         }
 
+        public bool HasDividedPointOfInterestIn(AxialCoordinate position)
+        {
+            if (HasPosition(position) == false)
+                throw new InvalidOperationException();
+
+            return _cells[position].HasDividedPointOfInterest;
+        }
+
+        public IDividedPointOfInterest DividedPointOfInterestFrom(AxialCoordinate position)
+        {
+            if (HasDividedPointOfInterestIn(position) == false)
+                throw new InvalidOperationException();
+
+            return _cells[position].DividedPointOfInterest;
+        }
+
+        public PointOfInterestType PointOfInterestTypeIn(AxialCoordinate position)
+        {
+            if (HasPosition(position) == false)
+                throw new InvalidOperationException();
+
+            return _cells[position].PointOfInterestType;
+        }
+
         public IReadOnlyList<AxialCoordinate> NeighborHexPositions(AxialCoordinate position, Func<AxialCoordinate, bool> where = null)
         {
             var neighborPositions = position.NeighborsPositions();
@@ -64,12 +88,12 @@ namespace YellowSquad.Anthill.Core.HexMap
             return neighborMapPositions;
         }
 
-        public IReadOnlyList<AxialCoordinate> PointsOfInterestPositions(PointOfInterest targetPoint)
+        public IReadOnlyList<AxialCoordinate> PointsOfInterestPositions(PointOfInterestType targetPoint)
         {
             var points = new List<AxialCoordinate>();
 
             foreach (var cell in _cells)
-                if (cell.Value.PointOfInterest == targetPoint) 
+                if (cell.Value.PointOfInterestType == targetPoint) 
                     points.Add(cell.Key);
 
             return points;

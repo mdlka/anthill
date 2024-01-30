@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    internal class DividedHexView : MonoBehaviour
+    internal class DividedObjectView : MonoBehaviour
     {
         private readonly Dictionary<Mesh, List<Matrix4x4>> _partMatrices = new();
 
         [SerializeField] private Material _targetMaterial;
-        [SerializeField] private BaseDividedObjectMesh _targetHexMesh;
+        [SerializeField] private BaseDividedObjectMesh _targetMesh;
         
         private RenderParams _renderParams;
         private IReadOnlyDictionary<Vector3, Mesh> _meshByPartPosition;
@@ -16,7 +16,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         private void Awake()
         {
             _renderParams = new RenderParams(_targetMaterial);
-            _meshByPartPosition = _targetHexMesh.PartsMeshesByLocalPosition;
+            _meshByPartPosition = _targetMesh.PartsMeshesByLocalPosition;
         }
         
         private void Update()
@@ -28,7 +28,7 @@ namespace YellowSquad.Anthill.Core.HexMap
                 Graphics.RenderMeshInstanced(_renderParams, renderPart.Key, 0, renderPart.Value);
         }
         
-        public void Render(IEnumerable<IReadOnlyPart> parts, Matrix4x4 hexMatrix)
+        public void Render(IEnumerable<IReadOnlyPart> parts, Matrix4x4 objectMatrix)
         {
             foreach (var part in parts)
             {
@@ -40,7 +40,7 @@ namespace YellowSquad.Anthill.Core.HexMap
                 if (_partMatrices.ContainsKey(mesh) == false)
                     _partMatrices.Add(mesh, new List<Matrix4x4>());
 
-                var partMatrix = hexMatrix * PartMatrixBy(part.LocalPosition);
+                var partMatrix = objectMatrix * PartMatrixBy(part.LocalPosition);
                 
                 _partMatrices[mesh].Add(partMatrix);
             }

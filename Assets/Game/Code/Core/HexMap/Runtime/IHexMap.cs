@@ -12,9 +12,13 @@ namespace YellowSquad.Anthill.Core.HexMap
         bool HasObstacleIn(AxialCoordinate position);
         bool IsClosed(AxialCoordinate position);
         IHex HexFrom(AxialCoordinate position);
-        
+
+        bool HasDividedPointOfInterestIn(AxialCoordinate position);
+        IDividedPointOfInterest DividedPointOfInterestFrom(AxialCoordinate position);
+        PointOfInterestType PointOfInterestTypeIn(AxialCoordinate position);
+
         IReadOnlyList<AxialCoordinate> NeighborHexPositions(AxialCoordinate position, Func<AxialCoordinate, bool> where = null);
-        IReadOnlyList<AxialCoordinate> PointsOfInterestPositions(PointOfInterest targetPoint);
+        IReadOnlyList<AxialCoordinate> PointsOfInterestPositions(PointOfInterestType targetPoint);
 
         void Visualize(IHexMapView view);
     }

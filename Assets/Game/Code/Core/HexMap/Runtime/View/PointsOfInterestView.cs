@@ -8,7 +8,7 @@ namespace YellowSquad.Anthill.Core.HexMap
 {
     internal class PointsOfInterestView : MonoBehaviour
     {
-        private readonly Dictionary<PointOfInterest, List<Matrix4x4>> _pointsMatrices = new();
+        private readonly Dictionary<PointOfInterestType, List<Matrix4x4>> _pointsMatrices = new();
 
         [SerializeField] private Material _material;
         [SerializeField] private List<PointSetting> _meshes;
@@ -36,14 +36,14 @@ namespace YellowSquad.Anthill.Core.HexMap
             }
         }
 
-        public void Render(float mapScale, IDictionary<AxialCoordinate, PointOfInterest> pointsPositions)
+        public void Render(float mapScale, IDictionary<AxialCoordinate, PointOfInterestType> pointsPositions)
         {
             if (Rendered)
                 throw new InvalidOperationException("Already initialized");
 
             foreach (var pair in pointsPositions)
             {
-                if (pair.Value == PointOfInterest.Empty)
+                if (pair.Value == PointOfInterestType.Empty)
                     continue;
 
                 if (_pointsMatrices.ContainsKey(pair.Value) == false)
@@ -57,7 +57,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             Rendered = true;
         }
 
-        private PointSetting SettingBy(PointOfInterest pointOfInterest)
+        private PointSetting SettingBy(PointOfInterestType pointOfInterest)
         {
             return _meshes.First(mesh => mesh.PointOfInterest == pointOfInterest);
         }
@@ -65,7 +65,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         [Serializable]
         private class PointSetting
         {
-            [field: SerializeField] public PointOfInterest PointOfInterest { get; private set; }
+            [field: SerializeField] public PointOfInterestType PointOfInterest { get; private set; }
             [field: SerializeField] public Mesh Mesh { get; private set; }
             [field: SerializeField, Min(0f)] public float SizeFactor { get; private set; }
             [field: SerializeField] public Vector3 Rotation { get; private set; }
