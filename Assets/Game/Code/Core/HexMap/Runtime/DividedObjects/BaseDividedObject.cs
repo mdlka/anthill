@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    public class BaseDividedObject : IDividedObject
+    public abstract class BaseDividedObject : IDividedObject
     {
         private readonly List<IPart> _parts;
         private int _destroyedParts;

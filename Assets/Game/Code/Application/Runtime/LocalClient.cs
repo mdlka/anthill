@@ -37,7 +37,6 @@ namespace YellowSquad.Anthill.Application
         private void Awake()
         {
             UnityEngine.Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
-            
             _spawnAntsButton.onClick.AddListener(SpawnAnts);
         }
 

@@ -12,7 +12,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         [SerializeField, Min(0.01f)] private float _mapScale;
         
         [Header("Editor settings")]
-        [SerializeField] private DividedObjectMesh _currentTargetHexMesh;
+        [SerializeField] private HexMesh _currentTargetHexMesh;
         [SerializeField] private Hardness _currentHexHardness;
         [SerializeField] private PointOfInterest _currentPointOfInterest;
         [SerializeField] private List<EditorMapHex> _hexes;
@@ -64,10 +64,10 @@ namespace YellowSquad.Anthill.Core.HexMap
         {
             [SerializeField] private PointOfInterest _pointOfInterest;
             [SerializeField] private Hardness _hardness;
-            [SerializeField] private DividedObjectMesh _targetHexMesh;
+            [SerializeField] private HexMesh _targetHexMesh;
             [SerializeField] private SerializedAxialCoordinate _position;
 
-            public EditorMapHex(PointOfInterest pointOfInterest, Hardness hardness, DividedObjectMesh targetHexMesh, AxialCoordinate position)
+            public EditorMapHex(PointOfInterest pointOfInterest, Hardness hardness, HexMesh targetHexMesh, AxialCoordinate position)
             {
                 _pointOfInterest = pointOfInterest;
                 _hardness = hardness;

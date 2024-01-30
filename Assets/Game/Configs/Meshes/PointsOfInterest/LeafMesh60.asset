@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 863c6844d3054179809c0e83683474ed, type: 3}
-  m_Name: HexMesh20
+  m_Script: {fileID: 11500000, guid: 18e12a4e92e0477fb12dc8b39b94232b, type: 3}
+  m_Name: LeafMesh60
   m_EditorClassIdentifier: 
   _modelObject:
-    _objectAsset: {fileID: 919132149155446097, guid: d2d8cab79b029294eb211466523365d6, type: 3}
-    _assetName: Hex20
-    _projectPath: Assets/Game/Resources/Hex20.fbx
+    _objectAsset: {fileID: 919132149155446097, guid: 445a129f96a85024bbf7d69d1c636c22, type: 3}
+    _assetName: Leaf60
+    _projectPath: Assets/Game/Resources/PointsOfInterest/Leaf60.fbx

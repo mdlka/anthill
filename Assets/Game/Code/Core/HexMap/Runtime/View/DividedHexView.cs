@@ -8,7 +8,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         private readonly Dictionary<Mesh, List<Matrix4x4>> _partMatrices = new();
 
         [SerializeField] private Material _targetMaterial;
-        [SerializeField] private DividedObjectMesh _targetHexMesh;
+        [SerializeField] private BaseDividedObjectMesh _targetHexMesh;
         
         private RenderParams _renderParams;
         private IReadOnlyDictionary<Vector3, Mesh> _meshByPartPosition;

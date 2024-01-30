@@ -41,7 +41,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (HasPosition(position) == false)
                 throw new ArgumentOutOfRangeException();
 
-            return HexFrom(position).HasParts && NeighborHexPositions(position, where: pos => HexFrom(pos).HasParts == false).Count == 0;
+            return HasObstacleIn(position) && NeighborHexPositions(position, where: pos => HasObstacleIn(pos) == false).Count == 0;
         }
 
         public IHex HexFrom(AxialCoordinate position)

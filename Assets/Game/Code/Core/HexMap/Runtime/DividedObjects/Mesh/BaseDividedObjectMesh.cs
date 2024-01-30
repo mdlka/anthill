@@ -5,8 +5,7 @@ using YellowSquad.AssetPath;
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    [CreateAssetMenu(menuName = "Anthill/Create DividedObjectMesh", fileName = "DividedObjectMesh", order = 56)]
-    internal class DividedObjectMesh : ScriptableObject, IDividedObjectMesh
+    internal abstract class BaseDividedObjectMesh : ScriptableObject, IDividedObjectMesh
     {
         [SerializeField] private ResourcesReference<GameObject> _modelObject;
 
