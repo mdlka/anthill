@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using YellowSquad.Anthill.Core.AStarPathfinding;
 using YellowSquad.Anthill.Core.HexMap;
@@ -29,30 +30,32 @@ namespace YellowSquad.Anthill.Core.Ants
             AxialCoordinate currentTarget = roundedTarget;
             
             if (_map.HasObstacleIn(roundedTarget))
-            {
-                IReadOnlyList<AxialCoordinate> neighborsCellsWithoutObstacle = _map.NeighborHexPositions(roundedTarget, 
-                        where: position => _map.HasObstacleIn(position) == false);
-
-                if (neighborsCellsWithoutObstacle.Count == 0)
-                    throw new InvalidOperationException("Invalid target position");
-
-                currentTarget = neighborsCellsWithoutObstacle[Random.Range(0, neighborsCellsWithoutObstacle.Count)];
-            }
+                currentTarget = NeighborPositionClosestToTarget(roundedTarget, start);
 
             AxialCoordinate roundedStart = start.AxialRound();
+            AxialCoordinate currentStart = roundedStart;
 
-            if (_path.Calculate(roundedStart, currentTarget, out var path) == false)
+            if (_map.HasObstacleIn(roundedStart))
+                currentStart = NeighborPositionClosestToTarget(roundedStart, target);
+            
+            if (_path.Calculate(currentStart, currentTarget, out var path) == false)
                 throw new InvalidOperationException("Can't find path");
-
+            
             var rawTargetPath = new List<FracAxialCoordinate>();
 
             FracAxialCoordinate? calculatedClosestPosition = closestPosition?.Invoke(currentTarget);
             
             if (currentTarget != target && calculatedClosestPosition != null)
                 rawTargetPath.Add(HMath.Lerp(currentTarget, calculatedClosestPosition.Value, 0.8f));
+            
+            if (currentTarget != roundedTarget && calculatedClosestPosition == null)
+                rawTargetPath.Add(roundedTarget);
 
             foreach (var position in path)
                 rawTargetPath.Add(position);
+            
+            if (currentStart != roundedStart)
+                rawTargetPath.Add(roundedStart);
 
             if (HMath.Distance(roundedStart, start) > _settings.MaxRandomOffsetRadius)
                 rawTargetPath.Add(start);
@@ -67,6 +70,19 @@ namespace YellowSquad.Anthill.Core.Ants
             
             foreach (var position in _lastCalculatedPath)
                 Gizmos.DrawSphere(position.ToVector3(_map.Scale), 0.2f);
+        }
+        
+        private AxialCoordinate NeighborPositionClosestToTarget(AxialCoordinate position, FracAxialCoordinate target)
+        {
+            IReadOnlyList<AxialCoordinate> neighborsCellsWithoutObstacle = _map.NeighborHexPositions(position,
+                where: pos => _map.HasObstacleIn(pos) == false);
+
+            if (neighborsCellsWithoutObstacle.Count == 0)
+                throw new InvalidOperationException();
+
+            return neighborsCellsWithoutObstacle.Aggregate((pos1, pos2) =>
+                HMath.Distance(pos1, target) > 
+                HMath.Distance(pos2, target) ? pos2 : pos1);
         }
 
         private IReadOnlyList<FracAxialCoordinate> SmoothPath(IReadOnlyList<FracAxialCoordinate> rawTargetPath)

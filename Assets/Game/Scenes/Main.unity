@@ -953,9 +953,9 @@ MonoBehaviour:
     unityReference: {fileID: 2052305926}
     rawReference:
       rid: -2
-  _movementSettings: {fileID: 11400000, guid: bf38443a5993f32458b3518bc57bc474, type: 2}
   _diggerView: {fileID: 2047135644}
   _loaderView: {fileID: 1781903084}
+  _movementSettings: {fileID: 11400000, guid: bf38443a5993f32458b3518bc57bc474, type: 2}
   _homesCapacity: 100
   _homeDelayBetweenFindTasks: 0.15
   _spawnAntsButton: {fileID: 208867260}
@@ -1089,7 +1089,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mesh: {fileID: 812271037453180174, guid: 28e73c3191ab6d842b63d7598fc1d83a, type: 3}
   _material: {fileID: 2100000, guid: 9807396b2487f174494518f02afe17a8, type: 2}
-  _scale: 1.5
+  _scale: 1.2
 --- !u!1 &1827567667
 GameObject:
   m_ObjectHideFlags: 0

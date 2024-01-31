@@ -1,5 +1,4 @@
-﻿using System;
-using YellowSquad.HexMath;
+﻿using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
 {

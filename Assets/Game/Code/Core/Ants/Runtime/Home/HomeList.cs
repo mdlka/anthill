@@ -58,7 +58,7 @@ namespace YellowSquad.Anthill.Core.Ants
             if (_homeAntsCount.ContainsKey(position) == false)
                 throw new ArgumentException();
 
-            return _homeAntsCount[position] < _homeCapacity && _map.HasObstacleIn(position) == false;
+            return _homeAntsCount[position] < _homeCapacity && _map.HexFrom(position).HasParts == false;
         }
     }
 }
