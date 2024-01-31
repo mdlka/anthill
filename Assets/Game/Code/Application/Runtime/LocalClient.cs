@@ -19,12 +19,11 @@ namespace YellowSquad.Anthill.Application
 
         [SerializeField] private BaseMapFactory _mapFactory;
         [SerializeField] private SerializableInterface<IHexMapView> _hexMapView;
-        [SerializeField] private MovementSettings _movementSettings;
         [SerializeField] private AntView _diggerView;
         [SerializeField] private AntView _loaderView;
+        [SerializeField] private MovementSettings _movementSettings;
         [SerializeField, Min(1)] private int _homesCapacity;
         [SerializeField, Min(0)] private float _homeDelayBetweenFindTasks;
-
         [Header("Mobile input")] 
         [SerializeField] private Button _spawnAntsButton;
 
@@ -55,7 +54,7 @@ namespace YellowSquad.Anthill.Application
             _loaderTaskStorage = new DefaultStorage();
             
             _diggerView.Initialize(_map.Scale);
-            //_loaderView.Initialize(_map.Scale);
+            _loaderView.Initialize(_map.Scale);
             
             _movementSettings.Initialize(_map.Scale);
             _movementPath = new MovementPath(_map, new Path(new MapMovePolicy(_map)), _movementSettings);
@@ -165,8 +164,13 @@ namespace YellowSquad.Anthill.Application
                     SpawnAnts();
 
                 if (Input.GetKeyDown(KeyCode.V))
+                {
                     if (_map.HasPosition(targetAxialPosition) && _map.HasObstacleIn(targetAxialPosition) == false)
+                    {
                         _diggerTaskStorage.AddTaskGroup(new UniqueTaskGroup(new TaskGroup(targetAxialPosition, new MoveToCellTask(targetAxialPosition))));
+                        _loaderTaskStorage.AddTaskGroup(new UniqueTaskGroup(new TaskGroup(targetAxialPosition, new MoveToCellTask(targetAxialPosition))));
+                    }
+                }
 
                 _map.Visualize(_hexMapView.Value);
             }
@@ -177,6 +181,7 @@ namespace YellowSquad.Anthill.Application
             while (true)
             {
                 _diggerView.UpdateRender();
+                _loaderView.UpdateRender();
             
                 foreach (var ant in _ants)
                     ant.Update(Time.deltaTime);
@@ -192,6 +197,13 @@ namespace YellowSquad.Anthill.Application
                 var ant = _queen.CreateDigger();
                 _ants.Add(ant);
                 _diggerView.Add(ant);
+            }
+
+            while (_queen.CanCreateLoader)
+            {
+                var ant = _queen.CreateLoader();
+                _ants.Add(ant);
+                _loaderView.Add(ant);
             }
         }
 
