@@ -32,6 +32,7 @@ namespace YellowSquad.Anthill.Application
         private ITaskStorage _diggerTaskStorage;
         private ITaskStorage _loaderTaskStorage;
         private Queen _queen;
+        private LeafTasksLoop _leafTasksLoop;
         private MovementPath _movementPath;
 
         private void Awake()
@@ -67,6 +68,7 @@ namespace YellowSquad.Anthill.Application
                 new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.LoadersHome)
                     .Select(position => new AntHome(position, _loaderTaskStorage, _homeDelayBetweenFindTasks)).ToArray<IHome>()));
 
+            _leafTasksLoop = new LeafTasksLoop(_map, _hexMapView.Value, _loaderTaskStorage);
             _camera = Camera.main;
 
             StartCoroutine(AntLoop());
@@ -95,14 +97,6 @@ namespace YellowSquad.Anthill.Application
 
                     if (Input.GetMouseButtonDown(1))
                     {
-                        if (targetHex.HasParts == false && _map.HasDividedPointOfInterestIn(targetAxialPosition))
-                        {
-                            var dividedPointOfInterest = _map.DividedPointOfInterestFrom(targetAxialPosition);
-                            
-                            while (dividedPointOfInterest.HasParts)
-                                dividedPointOfInterest.DestroyClosestPartFor(targetPosition);
-                        }
-                        
                         while (targetHex.HasParts)
                             targetHex.DestroyClosestPartFor(targetPosition);
                     }
@@ -134,27 +128,8 @@ namespace YellowSquad.Anthill.Application
                                 var targetDividedPointOfInterest = _map.DividedPointOfInterestFrom(targetAxialPosition);
 
                                 if (targetDividedPointOfInterest.HasParts == false)
-                                {
                                     if (targetDividedPointOfInterest.CanRestore)
                                         targetDividedPointOfInterest.Restore();
-                                }
-                                else
-                                {
-                                    var pointOfInterestMatrix = _hexMapView.Value.PointOfInterestMatrixBy(_map.Scale, 
-                                        targetAxialPosition, _map.PointOfInterestTypeIn(targetAxialPosition));
-                                    
-                                    foreach (var part in targetDividedPointOfInterest.Parts)
-                                    {
-                                        _test.Add(pointOfInterestMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale));
-
-                                        tasks.Add(new TaskWithCallback(
-                                            new TakePartTask(pointOfInterestMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), 
-                                                targetDividedPointOfInterest, part), 
-                                            onComplete: () => _map.Visualize(_hexMapView.Value)));
-                                    }
-                                    
-                                    _loaderTaskStorage.AddTaskGroup(new TaskGroup(targetAxialPosition, tasks));
-                                }
                             }
                         }
                     }
@@ -186,20 +161,22 @@ namespace YellowSquad.Anthill.Application
                 foreach (var ant in _ants)
                     ant.Update(Time.deltaTime);
                 
+                _leafTasksLoop.Update(Time.deltaTime);
+                
                 yield return null;
             }
         }
         
         private void SpawnAnts()
         {
-            while (_queen.CanCreateDigger)
+            if (_queen.CanCreateDigger)
             {
                 var ant = _queen.CreateDigger();
                 _ants.Add(ant);
                 _diggerView.Add(ant);
             }
 
-            while (_queen.CanCreateLoader)
+            if (_queen.CanCreateLoader)
             {
                 var ant = _queen.CreateLoader();
                 _ants.Add(ant);
