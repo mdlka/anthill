@@ -1,0 +1,14 @@
+{
+    "name": "YellowSquad.Anthill.Meta",
+    "rootNamespace": "YellowSquad.Anthill.Meta",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
