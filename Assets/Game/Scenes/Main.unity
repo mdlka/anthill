@@ -170,8 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4bf6e1406f14cdb92bc10fd0715e2eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hexMesh: {fileID: 2770389371296501935, guid: 31919b3ed4728e2419689ec37a9ee2ac, type: 3}
-  _hexMaterial: {fileID: 2100000, guid: e08c77a92b7ca274e825215f7e9a68ac, type: 2}
+  _mesh: {fileID: 2770389371296501935, guid: 31919b3ed4728e2419689ec37a9ee2ac, type: 3}
+  _material: {fileID: 2100000, guid: e08c77a92b7ca274e825215f7e9a68ac, type: 2}
 --- !u!1 &208867258
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,6 +293,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 208867258}
   m_CullTransparentMesh: 1
+--- !u!1 &281740341
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 281740342}
+  - component: {fileID: 281740343}
+  m_Layer: 0
+  m_Name: LoadersHomeView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &281740342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281740341}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 781304334}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &281740343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281740341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4bf6e1406f14cdb92bc10fd0715e2eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mesh: {fileID: 7352743313293951598, guid: fef3b232dcc21644e86b293e72c0b657, type: 3}
+  _material: {fileID: 2100000, guid: 9807396b2487f174494518f02afe17a8, type: 2}
 --- !u!1 &303099589
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,6 +577,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 883993594}
+  - {fileID: 1198841296}
+  - {fileID: 281740342}
   - {fileID: 1532054368}
   m_Father: {fileID: 2052305927}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -546,20 +595,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc799c62660b40da975b1e20ac19a83b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _material: {fileID: 2100000, guid: 9807396b2487f174494518f02afe17a8, type: 2}
-  _meshes:
+  _settings:
   - <PointOfInterest>k__BackingField: 1
-    <Mesh>k__BackingField: {fileID: 6834474451643591641, guid: a0bd483068a08d24b9adbd724f6369ea, type: 3}
+    <SolidObjectView>k__BackingField: {fileID: 883993595}
+    <DividedObjectView>k__BackingField: {fileID: 0}
     <SizeFactor>k__BackingField: 2
     <Rotation>k__BackingField: {x: -90, y: 0, z: 0}
   - <PointOfInterest>k__BackingField: 2
-    <Mesh>k__BackingField: {fileID: 7352743313293951598, guid: fef3b232dcc21644e86b293e72c0b657, type: 3}
+    <SolidObjectView>k__BackingField: {fileID: 1198841297}
+    <DividedObjectView>k__BackingField: {fileID: 0}
+    <SizeFactor>k__BackingField: 1.5
+    <Rotation>k__BackingField: {x: -90, y: 130, z: 0}
+  - <PointOfInterest>k__BackingField: 3
+    <SolidObjectView>k__BackingField: {fileID: 281740343}
+    <DividedObjectView>k__BackingField: {fileID: 0}
     <SizeFactor>k__BackingField: 1.5
     <Rotation>k__BackingField: {x: -90, y: 130, z: 0}
   - <PointOfInterest>k__BackingField: 4
-    <Mesh>k__BackingField: {fileID: 240824333094594727, guid: 46a1c67439b89d14d8550ed24dd70407, type: 3}
+    <SolidObjectView>k__BackingField: {fileID: 0}
+    <DividedObjectView>k__BackingField: {fileID: 1532054369}
     <SizeFactor>k__BackingField: 0.92
-    <Rotation>k__BackingField: {x: -90, y: 30, z: 0}
+    <Rotation>k__BackingField: {x: 0, y: 30, z: 0}
 --- !u!1001 &783423198
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -661,6 +717,52 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
+--- !u!1 &883993593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 883993594}
+  - component: {fileID: 883993595}
+  m_Layer: 0
+  m_Name: QueenView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &883993594
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883993593}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 781304334}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &883993595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883993593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4bf6e1406f14cdb92bc10fd0715e2eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mesh: {fileID: 6834474451643591641, guid: a0bd483068a08d24b9adbd724f6369ea, type: 3}
+  _material: {fileID: 2100000, guid: 9807396b2487f174494518f02afe17a8, type: 2}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -753,6 +855,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &1198841295
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1198841296}
+  - component: {fileID: 1198841297}
+  m_Layer: 0
+  m_Name: DiggersHomeView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1198841296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198841295}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 781304334}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1198841297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198841295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4bf6e1406f14cdb92bc10fd0715e2eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mesh: {fileID: 7352743313293951598, guid: fef3b232dcc21644e86b293e72c0b657, type: 3}
+  _material: {fileID: 2100000, guid: 9807396b2487f174494518f02afe17a8, type: 2}
 --- !u!1 &1286294732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1247,7 +1395,6 @@ MonoBehaviour:
   _hexScale: {x: 1.731602, y: 4, z: 1.731602}
   _groundView: {fileID: 2052305928}
   _pointsOfInterestView: {fileID: 781304335}
-  _leafView: {fileID: 1532054369}
   _closedHexesView: {fileID: 85850697}
   _hexViews:
   - <Hardness>k__BackingField: 0

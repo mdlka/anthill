@@ -96,16 +96,16 @@ namespace YellowSquad.Anthill.Application
 
                     if (Input.GetMouseButtonDown(1))
                     {
-                        while (targetHex.HasParts)
-                            targetHex.DestroyClosestPartFor(targetPosition);
-
-                        if (_map.HasDividedPointOfInterestIn(targetAxialPosition))
+                        if (targetHex.HasParts == false && _map.HasDividedPointOfInterestIn(targetAxialPosition))
                         {
                             var dividedPointOfInterest = _map.DividedPointOfInterestFrom(targetAxialPosition);
                             
                             while (dividedPointOfInterest.HasParts)
                                 dividedPointOfInterest.DestroyClosestPartFor(targetPosition);
                         }
+                        
+                        while (targetHex.HasParts)
+                            targetHex.DestroyClosestPartFor(targetPosition);
                     }
                     else
                     {

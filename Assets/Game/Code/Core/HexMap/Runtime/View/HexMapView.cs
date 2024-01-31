@@ -8,50 +8,45 @@ namespace YellowSquad.Anthill.Core.HexMap
 {
     internal class HexMapView : MonoBehaviour, IHexMapView
     {
+        private readonly Vector3 _hexRotation = new(0f, 30f, 0f);
+        
         [SerializeField, Min(0.01f)] private Vector3 _hexScale;
         [SerializeField] private GroundMapView _groundView;
         [SerializeField] private PointsOfInterestView _pointsOfInterestView;
-        [SerializeField] private DividedObjectView _leafView;
-        [SerializeField] private SolidHexView _closedHexesView;
+        [SerializeField] private SolidObjectView _closedHexesView;
         [SerializeField] private HexViewPair[] _hexViews;
 
-        public void Render(float mapScale, IReadOnlyDictionary<AxialCoordinate, MapCell> cells, HashSet<AxialCoordinate> closedPosition)
+        public void Render(float mapScale, IReadOnlyDictionary<AxialCoordinate, MapCell> cells, HashSet<AxialCoordinate> closedPositions)
         {
             if (_groundView.Rendered == false)
                 _groundView.Render(mapScale, _hexScale, cells.Keys);
             
-            if (_pointsOfInterestView.Rendered == false)
-                _pointsOfInterestView.Render(mapScale, cells.ToDictionary(pair => pair.Key, pair => pair.Value.PointOfInterestType));
+            _pointsOfInterestView.Render(mapScale, cells);
             
             _closedHexesView.Clear();
-            _closedHexesView.Render(mapScale, _hexScale, closedPosition);
+            _closedHexesView.Render(closedPositions, position => HexMatrixBy(mapScale, position));
             
             foreach (var pair in _hexViews)
                 pair.View.Clear(); // TODO: Need optimization
 
             foreach (var pair in cells)
             {
-                if (closedPosition.Contains(pair.Key))
+                if (closedPositions.Contains(pair.Key))
                     continue;
                 
-                var hexMatrix = HexMatrixBy(mapScale, pair.Key);
                 var view = _hexViews.First(view => view.Hardness == pair.Value.Hex.Hardness).View;
-                
-                if (pair.Value.HasDividedPointOfInterest)
-                    _leafView.Render(pair.Value.DividedPointOfInterest.Parts, PointOfInterestMatrixBy(mapScale, pair.Key, pair.Value.PointOfInterestType));
-                
-                view.Render(pair.Value.Hex.Parts, hexMatrix);
+                view.Render(pair.Value.Hex.Parts, HexMatrixBy(mapScale, pair.Key));
             }
         }
 
         public Matrix4x4 HexMatrixBy(float mapScale, AxialCoordinate position)
         {
-            return Matrix4x4.TRS(position.ToVector3(mapScale), Quaternion.Euler(0f, 30f, 0f), _hexScale);
+            return Matrix4x4.TRS(position.ToVector3(mapScale), Quaternion.Euler(_hexRotation), _hexScale);
         }
 
         public Matrix4x4 PointOfInterestMatrixBy(float mapScale, AxialCoordinate position, PointOfInterestType type)
         {
-            return Matrix4x4.TRS(position.ToVector3(mapScale), Quaternion.Euler(0f, 30f, 0f), Vector3.one);
+            return _pointsOfInterestView.PointOfInterestMatrixBy(mapScale, position, type);
         }
 
         [Serializable]
