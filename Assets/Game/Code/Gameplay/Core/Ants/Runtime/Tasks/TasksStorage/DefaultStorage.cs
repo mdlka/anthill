@@ -14,7 +14,7 @@ namespace YellowSquad.Anthill.Core.Ants
 
         public bool HasTaskGroupIn(AxialCoordinate position)
         {
-            if (_taskGroups.Any(taskGroup => taskGroup.TargetCellPosition == position))
+            if (_taskGroups.Any(taskGroup => taskGroup.HasFreeTask && taskGroup.TargetCellPosition == position))
                 return true;
 
             if (_almostCompletedTaskGroups.Count == 0)
