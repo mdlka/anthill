@@ -14,6 +14,7 @@ namespace YellowSquad.Anthill.Core.Ants
             _onComplete = onComplete;
         }
 
+        public int Price => _task.Price;
         public FracAxialCoordinate TargetPosition => _task.TargetPosition;
         public TaskState State => _task.State;
         public bool CanComplete => _task.CanComplete;

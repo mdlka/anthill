@@ -12,12 +12,14 @@ namespace YellowSquad.Anthill.Core.Ants
         private readonly ITaskStorage _targetTaskStorage;
         private readonly IReadOnlyList<AxialCoordinate> _leafPositions;
         private readonly Dictionary<AxialCoordinate, ITaskGroup> _tasks = new();
+        private readonly int _taskPrice;
 
-        public LeafTasksLoop(IHexMap map, IHexMapView mapView, ITaskStorage targetTaskStorage)
+        public LeafTasksLoop(IHexMap map, IHexMapView mapView, ITaskStorage targetTaskStorage, int taskPrice)
         {
             _map = map;
             _mapView = mapView;
             _targetTaskStorage = targetTaskStorage;
+            _taskPrice = taskPrice;
             _leafPositions = map.PointsOfInterestPositions(PointOfInterestType.Leaf);
         }
         
@@ -51,7 +53,7 @@ namespace YellowSquad.Anthill.Core.Ants
                 foreach (var part in leaf.Parts)
                 {
                     tasks.Add(new TaskWithCallback(
-                        new TakePartTask(pointOfInterestMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), leaf, part), 
+                        new TakePartTask(pointOfInterestMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), leaf, part, _taskPrice), 
                         onComplete: () => _map.Visualize(_mapView)));
                 }
 

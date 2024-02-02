@@ -4,6 +4,7 @@ namespace YellowSquad.Anthill.Core.Ants
 {
     internal class AlwaysCompletedTask : ITask
     {
+        public int Price => 0;
         public FracAxialCoordinate TargetPosition => default;
         public TaskState State => TaskState.Complete;
         public bool CanComplete => false;

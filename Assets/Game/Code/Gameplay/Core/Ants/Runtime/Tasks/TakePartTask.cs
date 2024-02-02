@@ -12,13 +12,18 @@ namespace YellowSquad.Anthill.Core.Ants
         
         private float _executeTime;
 
-        public TakePartTask(FracAxialCoordinate targetPosition, IDividedObject targetDividedObject, IReadOnlyPart targetPart)
+        public TakePartTask(FracAxialCoordinate targetPosition, IDividedObject targetDividedObject, IReadOnlyPart targetPart, int price = 0)
         {
+            if (price < 0)
+                throw new ArgumentOutOfRangeException(nameof(price));
+            
+            Price = price;
             TargetPosition = targetPosition;
             _targetDividedObject = targetDividedObject;
             _targetPart = targetPart;
         }
-        
+
+        public int Price { get; }
         public FracAxialCoordinate TargetPosition { get; }
         public TaskState State { get; private set; }
         public bool CanComplete => State == TaskState.Executing && Time.realtimeSinceStartup - _executeTime >= (int)_targetDividedObject.Hardness + 1;

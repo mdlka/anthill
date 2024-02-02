@@ -15,7 +15,6 @@ namespace YellowSquad.Anthill.Application
 {
     public class LocalClient : MonoBehaviour
     {
-        private readonly List<IAnt> _ants = new();
         private readonly List<FracAxialCoordinate> _test = new();
 
         [Header("Core settings")]
@@ -26,6 +25,7 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private MovementSettings _movementSettings;
         [SerializeField, Min(1)] private int _homesCapacity;
         [SerializeField, Min(0)] private float _homeDelayBetweenFindTasks;
+        [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         [Header("Meta settings")] 
         [SerializeField] private Shop _shop;
         [SerializeField] private SerializableInterface<IWalletView> _walletView;
@@ -63,11 +63,14 @@ namespace YellowSquad.Anthill.Application
             
             _movementSettings.Initialize(_map.Scale);
             _movementPath = new MovementPath(_map, new Path(new MapMovePolicy(_map)), _movementSettings);
+            
+            var wallet = new Wallet(_walletView.Value, _startWalletValue);
+            wallet.Spend(0); // initialize view
 
             _session = new Session(
                 new Queen(
                     _map.PointsOfInterestPositions(PointOfInterestType.Queen)[0],
-                    new DefaultAntFactory(_movementPath, _movementSettings),
+                    new DefaultAntFactory(_movementPath, _movementSettings, new TaskStore(wallet)),
                     new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.DiggersHome)
                         .Select(position => new AntHome(position, diggerTaskStorage, _homeDelayBetweenFindTasks))
                         .ToArray<IHome>()),
@@ -76,14 +79,11 @@ namespace YellowSquad.Anthill.Application
                         .ToArray<IHome>())),
                 _diggerView,
                 _loaderView);
-
-            _leafTasksLoop = new LeafTasksLoop(_map, _hexMapView.Value, loaderTaskStorage);
-            _camera = Camera.main;
-
-            var wallet = new Wallet(_walletView.Value, _startWalletValue);
-            wallet.Spend(0); // initialize view
             
             _shop.Initialize(wallet, _session);
+
+            _leafTasksLoop = new LeafTasksLoop(_map, _hexMapView.Value, loaderTaskStorage, _takeLeafTaskPrice);
+            _camera = Camera.main;
 
             StartCoroutine(InputLoop(diggerTaskStorage));
         }

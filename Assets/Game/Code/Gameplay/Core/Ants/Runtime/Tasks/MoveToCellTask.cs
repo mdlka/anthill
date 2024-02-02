@@ -8,7 +8,8 @@ namespace YellowSquad.Anthill.Core.Ants
         {
             TargetPosition = targetCellPosition;
         }
-        
+
+        public int Price => 0;
         public FracAxialCoordinate TargetPosition { get; }
         public TaskState State { get; private set; }
         public bool CanComplete => true;

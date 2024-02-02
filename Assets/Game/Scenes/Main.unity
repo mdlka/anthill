@@ -317,7 +317,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -160, y: -51.1}
+  m_AnchoredPosition: {x: -160, y: -51.100006}
   m_SizeDelta: {x: 293.37, y: 81.32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &176981625
@@ -1603,6 +1603,7 @@ MonoBehaviour:
   _movementSettings: {fileID: 11400000, guid: bf38443a5993f32458b3518bc57bc474, type: 2}
   _homesCapacity: 100
   _homeDelayBetweenFindTasks: 0.15
+  _takeLeafTaskPrice: 3
   _shop: {fileID: 1280016496}
   _walletView:
     mode: 0

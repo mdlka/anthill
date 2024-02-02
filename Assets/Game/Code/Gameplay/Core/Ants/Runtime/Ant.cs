@@ -1,4 +1,3 @@
-using UnityEngine;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
@@ -6,15 +5,18 @@ namespace YellowSquad.Anthill.Core.Ants
     public class Ant : IAnt
     {
         private readonly IHome _home;
+        private readonly ITaskStore _taskStore;
         private readonly IMovement _movement;
 
         private ITask _currentTask;
+        private bool _taskSold;
 
-        public Ant(IHome home, IMovement movement) : this(home, movement, new AlwaysCompletedTask()) { }
+        public Ant(IHome home, IMovement movement, ITaskStore taskStore) : this(home, movement, taskStore, new AlwaysCompletedTask()) { }
 
-        private Ant(IHome home, IMovement movement, ITask startTask)
+        private Ant(IHome home, IMovement movement, ITaskStore taskStore, ITask startTask)
         {
             _home = home;
+            _taskStore = taskStore;
             _movement = movement;
             _currentTask = startTask;
         }
@@ -34,10 +36,18 @@ namespace YellowSquad.Anthill.Core.Ants
                         _movement.MoveTo(_home.Position);
                         return;
                     }
+
+                    if (_taskSold == false)
+                    {
+                        _taskStore.Sell(_currentTask);
+                        _taskSold = true;
+                    }
                     
                     if (_home.HasFreeTaskGroup == false)
                         return;
 
+                    _taskSold = false;
+                    
                     var taskGroup = _home.FindTaskGroup();
                     _movement.MoveTo(taskGroup.TargetCellPosition, position =>
                     {
