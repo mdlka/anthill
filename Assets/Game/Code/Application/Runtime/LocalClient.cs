@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TNRD;
@@ -40,6 +39,7 @@ namespace YellowSquad.Anthill.Application
         private Session _session;
         private LeafTasksLoop _leafTasksLoop;
         private MovementPath _movementPath;
+        private ITaskStorage _diggerTaskStorage;
         private IWallet _wallet;
 
         private void Awake()
@@ -58,8 +58,8 @@ namespace YellowSquad.Anthill.Application
             _map = _mapFactory.Create();
             _map.Visualize(_hexMapView.Value);
 
-            var diggerTaskStorage = new DefaultStorage();
             var loaderTaskStorage = new DefaultStorage();
+            _diggerTaskStorage = new DefaultStorage();
 
             _diggerView.Initialize(_map.Scale);
             _loaderView.Initialize(_map.Scale);
@@ -75,7 +75,7 @@ namespace YellowSquad.Anthill.Application
                     _map.PointsOfInterestPositions(PointOfInterestType.Queen)[0],
                     new DefaultAntFactory(_movementPath, _movementSettings, new TaskStore(_wallet)),
                     new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.DiggersHome)
-                        .Select(position => new AntHome(position, diggerTaskStorage, _homeDelayBetweenFindTasks))
+                        .Select(position => new AntHome(position, _diggerTaskStorage, _homeDelayBetweenFindTasks))
                         .ToArray<IHome>()),
                     new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.LoadersHome)
                         .Select(position => new AntHome(position, loaderTaskStorage, _homeDelayBetweenFindTasks))
@@ -88,58 +88,65 @@ namespace YellowSquad.Anthill.Application
 
             _leafTasksLoop = new LeafTasksLoop(_map, _hexMapView.Value, loaderTaskStorage, _takeLeafTaskPrice);
             _camera = Camera.main;
-
-            StartCoroutine(InputLoop(diggerTaskStorage));
         }
 
-        private IEnumerator InputLoop(ITaskStorage diggerTaskStorage)
+        private void Update()
         {
-            while (true)
-            {
-                yield return null;
-                yield return new WaitUntil(() => Input.anyKey);
+            InputLoop();
+            
+            _session.Update(Time.deltaTime);
+            _leafTasksLoop.Update(Time.deltaTime);
+        }
 
-                var mouseClickPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _camera.transform.position.y);
+        private void InputLoop()
+        {
+            if (Input.anyKey == false)
+                return;
+            
+            var mouseClickPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _camera.transform.position.y);
                 var targetPosition = _camera.ScreenToWorldPoint(mouseClickPosition);
                 var targetAxialPosition = targetPosition.ToAxialCoordinate(_map.Scale);
 
                 if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
                 {
                     if (IsPointerOverUIObject(mouseClickPosition))
-                        continue;
-                    
+                        return;
+
                     if (_map.HasPosition(targetAxialPosition) == false)
-                        continue;
+                        return;
 
                     var targetHex = _map.HexFrom(targetAxialPosition);
 
                     if (Input.GetMouseButtonDown(1))
                     {
-                        while (targetHex.HasParts)
-                            targetHex.DestroyClosestPartFor(targetPosition);
+                        if (_diggerTaskStorage.HasTaskGroupIn(targetAxialPosition) == false)
+                            while (targetHex.HasParts)
+                                targetHex.DestroyClosestPartFor(targetPosition);
                     }
                     else
                     {
                         if (_map.IsClosed(targetAxialPosition) == false)
                         {
-                            var tasks = new HashSet<ITask>();
-                            _test.Clear();
-
                             if (targetHex.HasParts)
                             {
-                                var hexMatrix = _hexMapView.Value.HexMatrixBy(_map.Scale, targetAxialPosition);
-                            
-                                foreach (var part in targetHex.Parts)
+                                if (_diggerTaskStorage.HasTaskGroupIn(targetAxialPosition) == false)
                                 {
-                                    _test.Add(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale));
+                                    _test.Clear();
+                                    
+                                    var tasks = new HashSet<ITask>();
+                                    var hexMatrix = _hexMapView.Value.HexMatrixBy(_map.Scale, targetAxialPosition);
+                            
+                                    foreach (var part in targetHex.Parts)
+                                    {
+                                        _test.Add(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale));
 
-                                    tasks.Add(new TaskWithCallback(
-                                        new TakePartTask(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), targetHex, part), 
-                                        onComplete: () => _map.Visualize(_hexMapView.Value)));
-                                }
+                                        tasks.Add(new TaskWithCallback(
+                                            new TakePartTask(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), targetHex, part), 
+                                            onComplete: () => _map.Visualize(_hexMapView.Value)));
+                                    }
                                 
-                                diggerTaskStorage.AddTaskGroup(new TaskGroup(targetAxialPosition, tasks));
-
+                                    _diggerTaskStorage.AddTaskGroup(new TaskGroup(targetAxialPosition, tasks));
+                                }
                             }
                             else if (_map.HasDividedPointOfInterestIn(targetAxialPosition))
                             {
@@ -162,13 +169,6 @@ namespace YellowSquad.Anthill.Application
                     SpawnAnts();
 
                 _map.Visualize(_hexMapView.Value);
-            }
-        }
-
-        private void Update()
-        {
-            _session.Update(Time.deltaTime);
-            _leafTasksLoop.Update(Time.deltaTime);
         }
         
         private void SpawnAnts()

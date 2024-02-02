@@ -8,6 +8,8 @@ namespace YellowSquad.Anthill.Core.Ants
     public class TaskGroup : ITaskGroup
     {
         private readonly HashSet<ITask> _tasks;
+        private readonly HashSet<ITask> _tookTasks = new();
+        private readonly int _tasksCount;
 
         public TaskGroup(AxialCoordinate targetCellPosition, params ITask[] tasks) 
             : this(targetCellPosition, new HashSet<ITask>(tasks)) { }
@@ -16,9 +18,11 @@ namespace YellowSquad.Anthill.Core.Ants
         {
             TargetCellPosition = targetCellPosition;
             _tasks = tasks;
+            _tasksCount = _tasks.Count;
         }
         
         public AxialCoordinate TargetCellPosition { get; }
+        public bool AllTaskCompleted => _tookTasks.Count == _tasksCount && _tookTasks.All(task => task.State == TaskState.Complete);
         public bool HasFreeTask => _tasks.Count > 0;
         
         public ITask ClosestTask(FracAxialCoordinate position)
@@ -39,12 +43,9 @@ namespace YellowSquad.Anthill.Core.Ants
             if (count == _tasks.Count)
                 throw new InvalidOperationException();
             
+            _tookTasks.Add(task);
+            
             return task;
-        }
-
-        public bool Equals(ITaskGroup other)
-        {
-            return other.TargetCellPosition == TargetCellPosition && HasFreeTask == other.HasFreeTask;
         }
     }
 }

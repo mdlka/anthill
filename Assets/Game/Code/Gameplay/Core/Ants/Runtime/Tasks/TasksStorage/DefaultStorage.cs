@@ -1,18 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
 {
     public class DefaultStorage : ITaskStorage
     {
         private readonly Queue<ITaskGroup> _taskGroups = new();
+        private readonly HashSet<ITaskGroup> _almostCompletedTaskGroups = new();
 
         public bool HasFreeTaskGroup => _taskGroups.Any(group => group.HasFreeTask);
 
+        public bool HasTaskGroupIn(AxialCoordinate position)
+        {
+            if (_taskGroups.Any(taskGroup => taskGroup.TargetCellPosition == position))
+                return true;
+
+            if (_almostCompletedTaskGroups.Count == 0)
+                return false;
+            
+            _almostCompletedTaskGroups.RemoveWhere(group => group.AllTaskCompleted);
+            return _almostCompletedTaskGroups.Any(taskGroup => taskGroup.TargetCellPosition == position);
+        }
+
         public void AddTaskGroup(ITaskGroup taskGroup)
         {
-            if (_taskGroups.Contains(taskGroup))
+            if (HasTaskGroupIn(taskGroup.TargetCellPosition))
                 throw new InvalidOperationException();
             
             _taskGroups.Enqueue(taskGroup);
@@ -27,8 +41,8 @@ namespace YellowSquad.Anthill.Core.Ants
             {
                 if (_taskGroups.Peek().HasFreeTask)
                     return _taskGroups.Peek();
-
-                _taskGroups.Dequeue();
+                
+                _almostCompletedTaskGroups.Add(_taskGroups.Dequeue());
             }
 
             throw new InvalidOperationException();

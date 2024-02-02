@@ -36,6 +36,7 @@ namespace YellowSquad.Anthill.Core.Ants
                 _currentPath = _currentPath.Reverse().ToList();
                 _currentPathIndex = _currentPath.Count - 1;
 
+                closestPosition?.Invoke(targetPosition.AxialRound());
                 return;
             }
 
