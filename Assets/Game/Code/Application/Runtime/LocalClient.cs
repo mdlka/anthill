@@ -9,6 +9,7 @@ using YellowSquad.Anthill.Application.Adapters;
 using YellowSquad.Anthill.Core.Ants;
 using YellowSquad.Anthill.Core.AStarPathfinding;
 using YellowSquad.Anthill.Core.HexMap;
+using YellowSquad.Anthill.Meta;
 
 namespace YellowSquad.Anthill.Application
 {
@@ -17,6 +18,7 @@ namespace YellowSquad.Anthill.Application
         private readonly List<IAnt> _ants = new();
         private readonly List<FracAxialCoordinate> _test = new();
 
+        [Header("Core settings")]
         [SerializeField] private BaseMapFactory _mapFactory;
         [SerializeField] private SerializableInterface<IHexMapView> _hexMapView;
         [SerializeField] private AntView _diggerView;
@@ -24,6 +26,8 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private MovementSettings _movementSettings;
         [SerializeField, Min(1)] private int _homesCapacity;
         [SerializeField, Min(0)] private float _homeDelayBetweenFindTasks;
+        [Header("Meta settings")] 
+        [SerializeField] private Shop _shop; 
         [Header("Mobile input")] 
         [SerializeField] private Button _spawnAntsButton;
 
@@ -31,7 +35,7 @@ namespace YellowSquad.Anthill.Application
         private IHexMap _map;
         private ITaskStorage _diggerTaskStorage;
         private ITaskStorage _loaderTaskStorage;
-        private Queen _queen;
+        private Session _session;
         private LeafTasksLoop _leafTasksLoop;
         private MovementPath _movementPath;
 
@@ -46,7 +50,7 @@ namespace YellowSquad.Anthill.Application
             _spawnAntsButton.onClick.RemoveListener(SpawnAnts);
         }
 
-        private IEnumerator Start()
+        private void Start()
         {
             _map = _mapFactory.Create();
             _map.Visualize(_hexMapView.Value);
@@ -60,21 +64,25 @@ namespace YellowSquad.Anthill.Application
             _movementSettings.Initialize(_map.Scale);
             _movementPath = new MovementPath(_map, new Path(new MapMovePolicy(_map)), _movementSettings);
 
-            _queen = new Queen(
-                _map.PointsOfInterestPositions(PointOfInterestType.Queen)[0],
-                new DefaultAntFactory(_movementPath, _movementSettings),
-                new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.DiggersHome)
-                    .Select(position => new AntHome(position, _diggerTaskStorage, _homeDelayBetweenFindTasks)).ToArray<IHome>()),
-                new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.LoadersHome)
-                    .Select(position => new AntHome(position, _loaderTaskStorage, _homeDelayBetweenFindTasks)).ToArray<IHome>()));
+            _session = new Session(
+                new Queen(
+                    _map.PointsOfInterestPositions(PointOfInterestType.Queen)[0],
+                    new DefaultAntFactory(_movementPath, _movementSettings),
+                    new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.DiggersHome)
+                        .Select(position => new AntHome(position, _diggerTaskStorage, _homeDelayBetweenFindTasks))
+                        .ToArray<IHome>()),
+                    new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.LoadersHome)
+                        .Select(position => new AntHome(position, _loaderTaskStorage, _homeDelayBetweenFindTasks))
+                        .ToArray<IHome>())),
+                _diggerView,
+                _loaderView);
 
             _leafTasksLoop = new LeafTasksLoop(_map, _hexMapView.Value, _loaderTaskStorage);
             _camera = Camera.main;
+            
+            _shop.Initialize(new Wallet(999999), _session);
 
-            StartCoroutine(AntLoop());
             StartCoroutine(InputLoop());
-
-            yield return null;
         }
 
         private IEnumerator InputLoop()
@@ -151,37 +159,19 @@ namespace YellowSquad.Anthill.Application
             }
         }
 
-        private IEnumerator AntLoop()
+        private void Update()
         {
-            while (true)
-            {
-                _diggerView.UpdateRender();
-                _loaderView.UpdateRender();
-            
-                foreach (var ant in _ants)
-                    ant.Update(Time.deltaTime);
-                
-                _leafTasksLoop.Update(Time.deltaTime);
-                
-                yield return null;
-            }
+            _session.Update(Time.deltaTime);
+            _leafTasksLoop.Update(Time.deltaTime);
         }
         
         private void SpawnAnts()
         {
-            if (_queen.CanCreateDigger)
-            {
-                var ant = _queen.CreateDigger();
-                _ants.Add(ant);
-                _diggerView.Add(ant);
-            }
+            if (_session.CanAddDigger)
+                _session.AddDigger();
 
-            if (_queen.CanCreateLoader)
-            {
-                var ant = _queen.CreateLoader();
-                _ants.Add(ant);
-                _loaderView.Add(ant);
-            }
+            if (_session.CanAddLoader)
+                _session.AddLoader();
         }
 
 #if UNITY_EDITOR
