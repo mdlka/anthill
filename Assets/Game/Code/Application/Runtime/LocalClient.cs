@@ -25,11 +25,12 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private MovementSettings _movementSettings;
         [SerializeField, Min(1)] private int _homesCapacity;
         [SerializeField, Min(0)] private float _homeDelayBetweenFindTasks;
-        [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         [Header("Meta settings")] 
         [SerializeField] private Shop _shop;
         [SerializeField] private SerializableInterface<IWalletView> _walletView;
         [SerializeField, Min(0)] private int _startWalletValue;
+        [SerializeField, Min(0)] private int _takeLeafTaskPrice;
+        [SerializeField, Min(0)] private int _restoreLeafReward;
         [Header("Mobile input")] 
         [SerializeField] private Button _spawnAntsButton;
 
@@ -38,6 +39,7 @@ namespace YellowSquad.Anthill.Application
         private Session _session;
         private LeafTasksLoop _leafTasksLoop;
         private MovementPath _movementPath;
+        private IWallet _wallet;
 
         private void Awake()
         {
@@ -64,13 +66,13 @@ namespace YellowSquad.Anthill.Application
             _movementSettings.Initialize(_map.Scale);
             _movementPath = new MovementPath(_map, new Path(new MapMovePolicy(_map)), _movementSettings);
             
-            var wallet = new Wallet(_walletView.Value, _startWalletValue);
-            wallet.Spend(0); // initialize view
+            _wallet = new Wallet(_walletView.Value, _startWalletValue);
+            _wallet.Spend(0); // initialize view
 
             _session = new Session(
                 new Queen(
                     _map.PointsOfInterestPositions(PointOfInterestType.Queen)[0],
-                    new DefaultAntFactory(_movementPath, _movementSettings, new TaskStore(wallet)),
+                    new DefaultAntFactory(_movementPath, _movementSettings, new TaskStore(_wallet)),
                     new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.DiggersHome)
                         .Select(position => new AntHome(position, diggerTaskStorage, _homeDelayBetweenFindTasks))
                         .ToArray<IHome>()),
@@ -80,7 +82,7 @@ namespace YellowSquad.Anthill.Application
                 _diggerView,
                 _loaderView);
             
-            _shop.Initialize(wallet, _session);
+            _shop.Initialize(_wallet, _session);
 
             _leafTasksLoop = new LeafTasksLoop(_map, _hexMapView.Value, loaderTaskStorage, _takeLeafTaskPrice);
             _camera = Camera.main;
@@ -139,8 +141,13 @@ namespace YellowSquad.Anthill.Application
                                 var targetDividedPointOfInterest = _map.DividedPointOfInterestFrom(targetAxialPosition);
 
                                 if (targetDividedPointOfInterest.HasParts == false)
+                                {
                                     if (targetDividedPointOfInterest.CanRestore)
+                                    {
                                         targetDividedPointOfInterest.Restore();
+                                        _wallet.Add(_restoreLeafReward);
+                                    }
+                                }
                             }
                         }
                     }

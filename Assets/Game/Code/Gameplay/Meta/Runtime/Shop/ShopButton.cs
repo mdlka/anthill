@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace YellowSquad.Anthill.Meta
@@ -6,6 +7,7 @@ namespace YellowSquad.Anthill.Meta
     internal class ShopButton : MonoBehaviour
     {
         [SerializeField] private Button _button;
+        [SerializeField] private TMP_Text _priceText;
 
         private IButtonCommand _command;
         private IPriceList _priceList;
@@ -25,6 +27,7 @@ namespace YellowSquad.Anthill.Meta
         private void Update()
         {
             _button.interactable = CanClick;
+            _priceText.text = $"Price: {_priceList.CurrentPrice}";
         }
 
         private void OnButtonClick()
