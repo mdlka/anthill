@@ -1,4 +1,4 @@
-﻿namespace YellowSquad.Anthill.Core.Ants
+﻿namespace YellowSquad.GameLoop
 {
     public interface IGameLoop
     {

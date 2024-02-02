@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using YellowSquad.Anthill.Core.HexMap;
+using YellowSquad.GameLoop;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants
