@@ -14,10 +14,12 @@ namespace YellowSquad.Anthill.Core.Ants
 
         [NonSerialized] private bool _initialized;
         private float _mapScale;
+        private float _currentMoveDuration;
 
         public int StepsToGoal => _stepsToGoal;
-        public float NormalizedMoveDuration => _moveToGoalDuration / _stepsToGoal;
+        public float NormalizedMoveDuration => _currentMoveDuration / _stepsToGoal;
         public float MaxRandomOffsetRadius => _randomOffsetRadius;
+        public float MaxMoveDuration => _moveToGoalDuration;
         
         public void Initialize(float mapScale)
         {
@@ -25,7 +27,16 @@ namespace YellowSquad.Anthill.Core.Ants
                 throw new InvalidOperationException();
             
             _mapScale = mapScale;
+            _currentMoveDuration = _moveToGoalDuration;
             _initialized = true;
+        }
+
+        public void ChangeMoveDuration(float value)
+        {
+            if (value < 0)
+                throw new ArgumentOutOfRangeException(nameof(value));
+
+            _currentMoveDuration = value;
         }
 
         internal FracAxialCoordinate RandomOffset()

@@ -12,19 +12,20 @@ namespace YellowSquad.Anthill.Application
         private readonly Queen _queen;
         private readonly AntView _diggersView;
         private readonly AntView _loadersView;
+        private readonly MovementSettings _movementSettings;
         private readonly List<IAnt> _ants = new();
 
-        public Session(Queen queen, AntView diggersView, AntView loadersView)
+        public Session(Queen queen, AntView diggersView, AntView loadersView, MovementSettings movementSettings)
         {
             _queen = queen;
             _diggersView = diggersView;
             _loadersView = loadersView;
+            _movementSettings = movementSettings;
         }
 
         public bool CanAddDigger => _queen.CanCreateDigger;
         public bool CanAddLoader => _queen.CanCreateLoader;
-        public bool CanIncreaseSpeed => false;
-        
+
         public void Update(float deltaTime)
         {
             _diggersView.UpdateRender();
@@ -54,10 +55,9 @@ namespace YellowSquad.Anthill.Application
             _loadersView.Add(ant);
         }
 
-        public void IncreaseSpeed()
+        public void ChangeAntsMoveDuration(float value)
         {
-            if (CanIncreaseSpeed == false)
-                throw new InvalidOperationException();
+            _movementSettings.ChangeMoveDuration(value);
         }
     }
 }

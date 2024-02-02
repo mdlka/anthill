@@ -2,14 +2,6 @@
 
 namespace YellowSquad.Anthill.Meta
 {
-    internal interface IPriceList
-    {
-        int CurrentPriceNumber { get; }
-        int CurrentPrice{ get; }
-        
-        void Next();
-    }
-    
     internal class AlgebraicProgressionPriceList : IPriceList
     {
         private readonly int _addValue;
@@ -28,7 +20,8 @@ namespace YellowSquad.Anthill.Meta
 
         public int CurrentPriceNumber { get; private set; } = 1;
         public int CurrentPrice { get; private set; }
-        
+        public bool HasNext => true;
+
         public void Next()
         {
             CurrentPriceNumber += 1;

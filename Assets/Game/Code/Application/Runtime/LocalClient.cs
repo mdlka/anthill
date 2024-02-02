@@ -80,9 +80,10 @@ namespace YellowSquad.Anthill.Application
                         .Select(position => new AntHome(position, loaderTaskStorage, _homeDelayBetweenFindTasks))
                         .ToArray<IHome>())),
                 _diggerView,
-                _loaderView);
+                _loaderView, 
+                _movementSettings);
             
-            _shop.Initialize(_wallet, _session);
+            _shop.Initialize(_wallet, _session, _movementSettings.MaxMoveDuration);
 
             _leafTasksLoop = new LeafTasksLoop(_map, _hexMapView.Value, loaderTaskStorage, _takeLeafTaskPrice);
             _camera = Camera.main;

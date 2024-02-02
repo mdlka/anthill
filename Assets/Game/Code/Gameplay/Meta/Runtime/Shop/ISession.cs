@@ -4,10 +4,9 @@
     {
         bool CanAddDigger { get; }
         bool CanAddLoader { get; }
-        bool CanIncreaseSpeed { get; }
 
         void AddDigger();
         void AddLoader();
-        void IncreaseSpeed();
+        void ChangeAntsMoveDuration(float value);
     }
 }

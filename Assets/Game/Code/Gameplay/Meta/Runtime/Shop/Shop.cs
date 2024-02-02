@@ -9,25 +9,37 @@ namespace YellowSquad.Anthill.Meta
         [SerializeField] private EditorShopButton _addLoaderButton;
         [SerializeField] private EditorShopButton _increaseSpeedButton;
         
-        public void Initialize(IWallet wallet, ISession session)
+        public void Initialize(IWallet wallet, ISession session, float maxAntMoveDuration)
         {
-            _addDiggerButton.Button.Initialize(new AddDiggerCommand(session), 
+            _addDiggerButton.Button.Initialize(
+                new AddDiggerCommand(session), 
                 new AlgebraicProgressionPriceList(_addDiggerButton.StartPrice, _addDiggerButton.AddingPriceValue), 
                 wallet);
-            _addLoaderButton.Button.Initialize(new AddLoaderCommand(session), 
+            
+            _addLoaderButton.Button.Initialize(
+                new AddLoaderCommand(session), 
                 new AlgebraicProgressionPriceList(_addLoaderButton.StartPrice, _addLoaderButton.AddingPriceValue), 
                 wallet);
-            _increaseSpeedButton.Button.Initialize(new IncreaseSpeedCommand(session), 
-                new AlgebraicProgressionPriceList(_increaseSpeedButton.StartPrice, _increaseSpeedButton.AddingPriceValue), 
+            
+            _increaseSpeedButton.Button.Initialize(
+                new IncreaseSpeedCommand(session, 
+                    new UpgradeAntMoveDurationList(_increaseSpeedButton.PricesCount, 0.2f, maxAntMoveDuration)), 
+                new LinearPriceList(_increaseSpeedButton.PricesCount, _increaseSpeedButton.StartPrice, _increaseSpeedButton.MaxPrice), 
                 wallet);
         }
 
         [Serializable]
         private class EditorShopButton
         {
-            [field: SerializeField] public int StartPrice { get; private set; }
-            [field: SerializeField] public int AddingPriceValue { get; private set; }
             [field: SerializeField] public ShopButton Button { get; private set; }
+            [field: SerializeField, Min(0)] public int StartPrice { get; private set; }
+            
+            [field: Header("If endless prices")]
+            [field: SerializeField, Min(0)] public int AddingPriceValue { get; private set; }
+            
+            [field: Header("Else")]
+            [field: SerializeField, Min(0)] public int PricesCount { get; private set; }
+            [field: SerializeField, Min(0)] public int MaxPrice { get; private set; }
         }
     }
 }

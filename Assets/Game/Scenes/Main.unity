@@ -1921,17 +1921,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _addDiggerButton:
-    <StartPrice>k__BackingField: 0
-    <AddingPriceValue>k__BackingField: 1
     <Button>k__BackingField: {fileID: 1796329973}
+    <StartPrice>k__BackingField: 0
+    <AddingPriceValue>k__BackingField: 1
+    <MaxPrice>k__BackingField: 0
+    <PricesCount>k__BackingField: 0
   _addLoaderButton:
-    <StartPrice>k__BackingField: 0
-    <AddingPriceValue>k__BackingField: 1
     <Button>k__BackingField: {fileID: 681036685}
-  _increaseSpeedButton:
     <StartPrice>k__BackingField: 0
     <AddingPriceValue>k__BackingField: 1
+    <MaxPrice>k__BackingField: 0
+    <PricesCount>k__BackingField: 0
+  _increaseSpeedButton:
     <Button>k__BackingField: {fileID: 443083682}
+    <StartPrice>k__BackingField: 10
+    <AddingPriceValue>k__BackingField: 1
+    <MaxPrice>k__BackingField: 100
+    <PricesCount>k__BackingField: 10
 --- !u!224 &1280016497
 RectTransform:
   m_ObjectHideFlags: 0
