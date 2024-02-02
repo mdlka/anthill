@@ -31,8 +31,6 @@ namespace YellowSquad.Anthill.Application
         [SerializeField, Min(0)] private int _startWalletValue;
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         [SerializeField, Min(0)] private int _restoreLeafReward;
-        [Header("Mobile input")] 
-        [SerializeField] private Button _spawnAntsButton;
 
         private IHexMap _map;
         private Camera _camera;
@@ -44,13 +42,9 @@ namespace YellowSquad.Anthill.Application
 
         private void Awake()
         {
+#if !UNITY_EDITOR
             UnityEngine.Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
-            _spawnAntsButton.onClick.AddListener(SpawnAnts);
-        }
-
-        private void OnDestroy()
-        {
-            _spawnAntsButton.onClick.RemoveListener(SpawnAnts);
+#endif
         }
 
         private void Start()
@@ -104,80 +98,68 @@ namespace YellowSquad.Anthill.Application
                 return;
             
             var mouseClickPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _camera.transform.position.y);
-                var targetPosition = _camera.ScreenToWorldPoint(mouseClickPosition);
-                var targetAxialPosition = targetPosition.ToAxialCoordinate(_map.Scale);
+            var targetPosition = _camera.ScreenToWorldPoint(mouseClickPosition);
+            var targetAxialPosition = targetPosition.ToAxialCoordinate(_map.Scale);
 
-                if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+            {
+                if (IsPointerOverUIObject(mouseClickPosition))
+                    return;
+
+                if (_map.HasPosition(targetAxialPosition) == false)
+                    return;
+
+                var targetHex = _map.HexFrom(targetAxialPosition);
+
+                if (Input.GetMouseButtonDown(1))
                 {
-                    if (IsPointerOverUIObject(mouseClickPosition))
-                        return;
-
-                    if (_map.HasPosition(targetAxialPosition) == false)
-                        return;
-
-                    var targetHex = _map.HexFrom(targetAxialPosition);
-
-                    if (Input.GetMouseButtonDown(1))
+                    if (_diggerTaskStorage.HasTaskGroupIn(targetAxialPosition) == false)
+                        while (targetHex.HasParts)
+                            targetHex.DestroyClosestPartFor(targetPosition);
+                }
+                else
+                {
+                    if (_map.IsClosed(targetAxialPosition) == false)
                     {
-                        if (_diggerTaskStorage.HasTaskGroupIn(targetAxialPosition) == false)
-                            while (targetHex.HasParts)
-                                targetHex.DestroyClosestPartFor(targetPosition);
-                    }
-                    else
-                    {
-                        if (_map.IsClosed(targetAxialPosition) == false)
+                        if (targetHex.HasParts)
                         {
-                            if (targetHex.HasParts)
+                            if (_diggerTaskStorage.HasTaskGroupIn(targetAxialPosition) == false)
                             {
-                                if (_diggerTaskStorage.HasTaskGroupIn(targetAxialPosition) == false)
-                                {
-                                    _test.Clear();
-                                    
-                                    var tasks = new HashSet<ITask>();
-                                    var hexMatrix = _hexMapView.Value.HexMatrixBy(_map.Scale, targetAxialPosition);
-                            
-                                    foreach (var part in targetHex.Parts)
-                                    {
-                                        _test.Add(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale));
-
-                                        tasks.Add(new TaskWithCallback(
-                                            new TakePartTask(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), targetHex, part), 
-                                            onComplete: () => _map.Visualize(_hexMapView.Value)));
-                                    }
+                                _test.Clear();
                                 
-                                    _diggerTaskStorage.AddTaskGroup(new TaskGroup(targetAxialPosition, tasks));
-                                }
-                            }
-                            else if (_map.HasDividedPointOfInterestIn(targetAxialPosition))
-                            {
-                                var targetDividedPointOfInterest = _map.DividedPointOfInterestFrom(targetAxialPosition);
-
-                                if (targetDividedPointOfInterest.HasParts == false)
+                                var tasks = new HashSet<ITask>();
+                                var hexMatrix = _hexMapView.Value.HexMatrixBy(_map.Scale, targetAxialPosition);
+                        
+                                foreach (var part in targetHex.Parts)
                                 {
-                                    if (targetDividedPointOfInterest.CanRestore)
-                                    {
-                                        targetDividedPointOfInterest.Restore();
-                                        _wallet.Add(_restoreLeafReward);
-                                    }
+                                    _test.Add(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale));
+
+                                    tasks.Add(new TaskWithCallback(
+                                        new TakePartTask(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), targetHex, part), 
+                                        onComplete: () => _map.Visualize(_hexMapView.Value)));
+                                }
+                            
+                                _diggerTaskStorage.AddTaskGroup(new TaskGroup(targetAxialPosition, tasks));
+                            }
+                        }
+                        else if (_map.HasDividedPointOfInterestIn(targetAxialPosition))
+                        {
+                            var targetDividedPointOfInterest = _map.DividedPointOfInterestFrom(targetAxialPosition);
+
+                            if (targetDividedPointOfInterest.HasParts == false)
+                            {
+                                if (targetDividedPointOfInterest.CanRestore)
+                                {
+                                    targetDividedPointOfInterest.Restore();
+                                    _wallet.Add(_restoreLeafReward);
                                 }
                             }
                         }
                     }
                 }
+            }
 
-                if (Input.GetKeyDown(KeyCode.C))
-                    SpawnAnts();
-
-                _map.Visualize(_hexMapView.Value);
-        }
-        
-        private void SpawnAnts()
-        {
-            if (_session.CanAddDigger)
-                _session.AddDigger();
-
-            if (_session.CanAddLoader)
-                _session.AddLoader();
+            _map.Visualize(_hexMapView.Value);
         }
 
 #if UNITY_EDITOR
