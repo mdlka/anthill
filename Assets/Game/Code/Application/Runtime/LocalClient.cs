@@ -27,14 +27,14 @@ namespace YellowSquad.Anthill.Application
         [SerializeField, Min(1)] private int _homesCapacity;
         [SerializeField, Min(0)] private float _homeDelayBetweenFindTasks;
         [Header("Meta settings")] 
-        [SerializeField] private Shop _shop; 
+        [SerializeField] private Shop _shop;
+        [SerializeField] private SerializableInterface<IWalletView> _walletView;
+        [SerializeField, Min(0)] private int _startWalletValue;
         [Header("Mobile input")] 
         [SerializeField] private Button _spawnAntsButton;
 
-        private Camera _camera;
         private IHexMap _map;
-        private ITaskStorage _diggerTaskStorage;
-        private ITaskStorage _loaderTaskStorage;
+        private Camera _camera;
         private Session _session;
         private LeafTasksLoop _leafTasksLoop;
         private MovementPath _movementPath;
@@ -55,9 +55,9 @@ namespace YellowSquad.Anthill.Application
             _map = _mapFactory.Create();
             _map.Visualize(_hexMapView.Value);
 
-            _diggerTaskStorage = new DefaultStorage();
-            _loaderTaskStorage = new DefaultStorage();
-            
+            var diggerTaskStorage = new DefaultStorage();
+            var loaderTaskStorage = new DefaultStorage();
+
             _diggerView.Initialize(_map.Scale);
             _loaderView.Initialize(_map.Scale);
             
@@ -69,23 +69,26 @@ namespace YellowSquad.Anthill.Application
                     _map.PointsOfInterestPositions(PointOfInterestType.Queen)[0],
                     new DefaultAntFactory(_movementPath, _movementSettings),
                     new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.DiggersHome)
-                        .Select(position => new AntHome(position, _diggerTaskStorage, _homeDelayBetweenFindTasks))
+                        .Select(position => new AntHome(position, diggerTaskStorage, _homeDelayBetweenFindTasks))
                         .ToArray<IHome>()),
                     new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.LoadersHome)
-                        .Select(position => new AntHome(position, _loaderTaskStorage, _homeDelayBetweenFindTasks))
+                        .Select(position => new AntHome(position, loaderTaskStorage, _homeDelayBetweenFindTasks))
                         .ToArray<IHome>())),
                 _diggerView,
                 _loaderView);
 
-            _leafTasksLoop = new LeafTasksLoop(_map, _hexMapView.Value, _loaderTaskStorage);
+            _leafTasksLoop = new LeafTasksLoop(_map, _hexMapView.Value, loaderTaskStorage);
             _camera = Camera.main;
-            
-            _shop.Initialize(new Wallet(999999), _session);
 
-            StartCoroutine(InputLoop());
+            var wallet = new Wallet(_walletView.Value, _startWalletValue);
+            wallet.Spend(0); // initialize view
+            
+            _shop.Initialize(wallet, _session);
+
+            StartCoroutine(InputLoop(diggerTaskStorage));
         }
 
-        private IEnumerator InputLoop()
+        private IEnumerator InputLoop(ITaskStorage diggerTaskStorage)
         {
             while (true)
             {
@@ -128,7 +131,7 @@ namespace YellowSquad.Anthill.Application
                                         onComplete: () => _map.Visualize(_hexMapView.Value)));
                                 }
                                 
-                                _diggerTaskStorage.AddTaskGroup(new TaskGroup(targetAxialPosition, tasks));
+                                diggerTaskStorage.AddTaskGroup(new TaskGroup(targetAxialPosition, tasks));
 
                             }
                             else if (_map.HasDividedPointOfInterestIn(targetAxialPosition))
@@ -145,15 +148,6 @@ namespace YellowSquad.Anthill.Application
 
                 if (Input.GetKeyDown(KeyCode.C))
                     SpawnAnts();
-
-                if (Input.GetKeyDown(KeyCode.V))
-                {
-                    if (_map.HasPosition(targetAxialPosition) && _map.HasObstacleIn(targetAxialPosition) == false)
-                    {
-                        _diggerTaskStorage.AddTaskGroup(new UniqueTaskGroup(new TaskGroup(targetAxialPosition, new MoveToCellTask(targetAxialPosition))));
-                        _loaderTaskStorage.AddTaskGroup(new UniqueTaskGroup(new TaskGroup(targetAxialPosition, new MoveToCellTask(targetAxialPosition))));
-                    }
-                }
 
                 _map.Visualize(_hexMapView.Value);
             }

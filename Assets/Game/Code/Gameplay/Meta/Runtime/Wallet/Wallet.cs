@@ -4,11 +4,14 @@ namespace YellowSquad.Anthill.Meta
 {
     public class Wallet : IWallet
     {
-        public Wallet(int startValue = 0)
+        private readonly IWalletView _view;
+
+        public Wallet(IWalletView view, int startValue = 0)
         {
             if (startValue < 0)
                 throw new ArgumentOutOfRangeException(nameof(startValue));
-
+            
+            _view = view;
             CurrentValue = startValue;
         }
         
@@ -20,6 +23,7 @@ namespace YellowSquad.Anthill.Meta
                 throw new ArgumentOutOfRangeException(nameof(value));
 
             CurrentValue += value;
+            _view.Render(CurrentValue);
         }
 
         public void Spend(int value)
@@ -28,6 +32,7 @@ namespace YellowSquad.Anthill.Meta
                 throw new InvalidOperationException();
 
             CurrentValue -= value;
+            _view.Render(CurrentValue);
         }
 
         public bool CanSpend(int value)

@@ -24,7 +24,7 @@ namespace YellowSquad.Anthill.Meta
 
         private void Update()
         {
-            _button.enabled = CanClick;
+            _button.interactable = CanClick;
         }
 
         private void OnButtonClick()
