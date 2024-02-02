@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 53479548}
   - component: {fileID: 53479550}
   - component: {fileID: 53479549}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PriceText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 156643196}
   - component: {fileID: 156643198}
   - component: {fileID: 156643197}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: WalletText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -712,7 +712,7 @@ GameObject:
   - component: {fileID: 443083682}
   - component: {fileID: 443083684}
   - component: {fileID: 443083683}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: IncreaseSpeedButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -847,7 +847,7 @@ GameObject:
   - component: {fileID: 468252289}
   - component: {fileID: 468252291}
   - component: {fileID: 468252290}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PriceText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1051,7 +1051,7 @@ GameObject:
   - component: {fileID: 681036685}
   - component: {fileID: 681036683}
   - component: {fileID: 681036682}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: AddLoaderButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1496,7 +1496,7 @@ GameObject:
   - component: {fileID: 935174513}
   - component: {fileID: 935174515}
   - component: {fileID: 935174514}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PriceText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1722,7 +1722,7 @@ GameObject:
   - component: {fileID: 1107257681}
   - component: {fileID: 1107257683}
   - component: {fileID: 1107257682}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1901,7 +1901,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1280016497}
   - component: {fileID: 1280016496}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Shop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1924,20 +1924,20 @@ MonoBehaviour:
     <Button>k__BackingField: {fileID: 1796329973}
     <StartPrice>k__BackingField: 0
     <AddingPriceValue>k__BackingField: 1
-    <MaxPrice>k__BackingField: 0
     <PricesCount>k__BackingField: 0
+    <MaxPrice>k__BackingField: 0
   _addLoaderButton:
     <Button>k__BackingField: {fileID: 681036685}
     <StartPrice>k__BackingField: 0
     <AddingPriceValue>k__BackingField: 1
-    <MaxPrice>k__BackingField: 0
     <PricesCount>k__BackingField: 0
+    <MaxPrice>k__BackingField: 0
   _increaseSpeedButton:
     <Button>k__BackingField: {fileID: 443083682}
     <StartPrice>k__BackingField: 10
     <AddingPriceValue>k__BackingField: 1
-    <MaxPrice>k__BackingField: 100
     <PricesCount>k__BackingField: 10
+    <MaxPrice>k__BackingField: 100
 --- !u!224 &1280016497
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2021,7 +2021,7 @@ MonoBehaviour:
     unityReference: {fileID: 156643196}
     rawReference:
       rid: -2
-  _startWalletValue: 100
+  _startWalletValue: 5000
   _takeLeafTaskPrice: 3
   _restoreLeafReward: 300
   _spawnAntsButton: {fileID: 208867260}
@@ -2073,7 +2073,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1470247848}
   - component: {fileID: 1470247849}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2267,7 +2267,7 @@ GameObject:
   - component: {fileID: 1796329973}
   - component: {fileID: 1796329971}
   - component: {fileID: 1796329970}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: AddDiggerButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2629,7 +2629,7 @@ GameObject:
   - component: {fileID: 1979652313}
   - component: {fileID: 1979652315}
   - component: {fileID: 1979652314}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2763,7 +2763,7 @@ GameObject:
   - component: {fileID: 1984514262}
   - component: {fileID: 1984514264}
   - component: {fileID: 1984514263}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2898,7 +2898,7 @@ GameObject:
   - component: {fileID: 2001549220}
   - component: {fileID: 2001549219}
   - component: {fileID: 2001549218}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MetaCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

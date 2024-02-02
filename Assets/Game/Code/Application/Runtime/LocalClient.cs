@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TNRD;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using YellowSquad.HexMath;
 using YellowSquad.Anthill.Application.Adapters;
@@ -104,6 +105,9 @@ namespace YellowSquad.Anthill.Application
 
                 if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
                 {
+                    if (IsPointerOverUIObject(mouseClickPosition))
+                        continue;
+                    
                     if (_map.HasPosition(targetAxialPosition) == false)
                         continue;
 
@@ -188,5 +192,19 @@ namespace YellowSquad.Anthill.Application
                 Gizmos.DrawSphere(position.ToVector3(_map.Scale), 0.2f);
         }
 #endif
+        
+        private bool IsPointerOverUIObject(Vector2 inputPosition)
+        {
+            var eventDataCurrentPosition = new PointerEventData(EventSystem.current) { position = inputPosition };
+            var results = new List<RaycastResult>();
+            
+            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+            foreach (var result in results)
+                if (result.gameObject.layer == LayerMask.NameToLayer("UI"))
+                    return true;
+
+            return false;
+        }
     }
 }
