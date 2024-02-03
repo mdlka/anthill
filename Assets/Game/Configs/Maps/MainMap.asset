@@ -17,9 +17,9 @@ MonoBehaviour:
   _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
   _targetLeafMesh: {fileID: 11400000, guid: 06c2e4d9b9a28c547a46431015c6cbf3, type: 2}
   _targetLeafHardness: 0
-  _currentHexEmpty: 1
+  _currentHexEmpty: 0
   _currentHexHardness: 2
-  _currentPointOfInterest: 4
+  _currentPointOfInterest: 3
   _hexes:
   - _empty: 0
     _hardness: 1
@@ -73,19 +73,7 @@ MonoBehaviour:
     _hardness: 1
     _pointOfInterestType: 0
     _position:
-      <Q>k__BackingField: 0
-      <R>k__BackingField: -2
-  - _empty: 0
-    _hardness: 1
-    _pointOfInterestType: 0
-    _position:
       <Q>k__BackingField: -1
-      <R>k__BackingField: 3
-  - _empty: 0
-    _hardness: 1
-    _pointOfInterestType: 0
-    _position:
-      <Q>k__BackingField: -2
       <R>k__BackingField: 3
   - _empty: 0
     _hardness: 1
@@ -159,12 +147,6 @@ MonoBehaviour:
     _position:
       <Q>k__BackingField: 2
       <R>k__BackingField: 1
-  - _empty: 0
-    _hardness: 1
-    _pointOfInterestType: 0
-    _position:
-      <Q>k__BackingField: 1
-      <R>k__BackingField: 2
   - _empty: 0
     _hardness: 1
     _pointOfInterestType: 0
@@ -387,3 +369,21 @@ MonoBehaviour:
     _position:
       <Q>k__BackingField: 3
       <R>k__BackingField: -1
+  - _empty: 0
+    _hardness: 2
+    _pointOfInterestType: 4
+    _position:
+      <Q>k__BackingField: 0
+      <R>k__BackingField: -2
+  - _empty: 0
+    _hardness: 2
+    _pointOfInterestType: 4
+    _position:
+      <Q>k__BackingField: -2
+      <R>k__BackingField: 3
+  - _empty: 0
+    _hardness: 2
+    _pointOfInterestType: 3
+    _position:
+      <Q>k__BackingField: 1
+      <R>k__BackingField: 2
