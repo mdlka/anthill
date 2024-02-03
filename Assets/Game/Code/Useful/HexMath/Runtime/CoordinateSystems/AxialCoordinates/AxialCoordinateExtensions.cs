@@ -9,7 +9,6 @@ namespace YellowSquad.HexMath
         private static readonly AxialCoordinate[] Directions = 
             { new(1, 0), new(1, -1), new(0, -1), new(-1, 0), new(-1, 1), new(0, 1) };
             
-
         public static FracAxialCoordinate ToFracAxialCoordinate(this Vector2 value, float hexGridScale = 1f)
         {
             float q = 2f / 3f * value.x / hexGridScale;
