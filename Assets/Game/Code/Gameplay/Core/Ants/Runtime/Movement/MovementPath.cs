@@ -99,26 +99,26 @@ namespace YellowSquad.Anthill.Core.Ants
                 
                 var auxiliaryPosition = i != 0 && i != rawTargetPath.Count - 1 ? rawTargetPath[i] : HMath.Lerp(position, nextPosition, 0.5f);
 
-                int stepsToGoal = _settings.StepsToGoal;
+                int stepsToNextPosition = _settings.StepsBetweenCells;
 
                 if (i == 0 || i == rawTargetPath.Count - 1)
                 {
                     float distance = HMath.Distance(position, nextPosition);
                     
                     if (distance < 1)
-                        stepsToGoal = Mathf.CeilToInt(stepsToGoal * 0.5f);
+                        stepsToNextPosition = Mathf.CeilToInt(stepsToNextPosition * 0.5f);
                 }
 
-                for (int j = 0; j < stepsToGoal; j++)
+                for (int j = 0; j < stepsToNextPosition; j++)
                 {
                     var currentOffset = randomOffset;
                     
                     if (i == 0)
-                        currentOffset = HMath.Lerp(FracAxialCoordinate.Zero, randomOffset, (float)j / stepsToGoal);
+                        currentOffset = HMath.Lerp(FracAxialCoordinate.Zero, randomOffset, (float)j / stepsToNextPosition);
                     else if (i == rawTargetPath.Count - 1)
-                        currentOffset = HMath.Lerp(randomOffset, FracAxialCoordinate.Zero, (float)j / stepsToGoal);
+                        currentOffset = HMath.Lerp(randomOffset, FracAxialCoordinate.Zero, (float)j / stepsToNextPosition);
                     
-                    targetPath.Add(HBezier.GetPoint(position, auxiliaryPosition, nextPosition, (float)j / stepsToGoal) + currentOffset);
+                    targetPath.Add(HBezier.GetPoint(position, auxiliaryPosition, nextPosition, (float)j / stepsToNextPosition) + currentOffset);
                 }
             }
 

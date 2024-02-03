@@ -8,18 +8,20 @@ namespace YellowSquad.Anthill.Core.Ants
         private readonly AxialCoordinate _position;
         private readonly IAntFactory _antFactory;
         private readonly IHomeList _diggersHomes;
-        private readonly IHomeList _loaderHomes;
+        private readonly IHomeList _loadersHomes;
 
-        public Queen(AxialCoordinate position, IAntFactory antFactory, IHomeList diggersHomes, IHomeList loaderHomes)
+        public Queen(AxialCoordinate position, IAntFactory antFactory, IHomeList diggersHomes, IHomeList loadersHomes)
         {
             _position = position;
             _antFactory = antFactory;
             _diggersHomes = diggersHomes;
-            _loaderHomes = loaderHomes;
+            _loadersHomes = loadersHomes;
         }
 
+        public IReadOnlyHomeList DiggersHomes => _diggersHomes;
+        public IReadOnlyHomeList LoadersHomes => _loadersHomes;
         public bool CanCreateDigger => _diggersHomes.HasFreeHome;
-        public bool CanCreateLoader => _loaderHomes.HasFreeHome;
+        public bool CanCreateLoader => _loadersHomes.HasFreeHome;
 
         public IAnt CreateDigger()
         {
@@ -37,9 +39,9 @@ namespace YellowSquad.Anthill.Core.Ants
             if (CanCreateLoader == false)
                 throw new InvalidOperationException();
 
-            var freeHome = _loaderHomes.FindFreeHome();
+            var freeHome = _loadersHomes.FindFreeHome();
 
-            _loaderHomes.AddAntTo(freeHome.Position);
+            _loadersHomes.AddAntTo(freeHome.Position);
             return _antFactory.CreateLoader(freeHome, _position);
         }
     }

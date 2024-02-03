@@ -27,8 +27,7 @@ namespace YellowSquad.Anthill.Meta
         private void Update()
         {
             _button.interactable = CanClick;
-
-            _priceText.text = _priceList.HasNext ? $"Price: {_priceList.CurrentPrice}" : "Max";
+            _priceText.text = (_priceList.HasNext && _command.CanExecute) ? $"Price: {_priceList.CurrentPrice}" : "Max";
         }
 
         private void OnButtonClick()

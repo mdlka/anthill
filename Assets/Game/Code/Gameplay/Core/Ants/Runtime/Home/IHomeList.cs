@@ -2,12 +2,17 @@
 
 namespace YellowSquad.Anthill.Core.Ants
 {
-    public interface IHomeList
+    public interface IHomeList : IReadOnlyHomeList
     {
         bool HasFreeHome { get; }
         IHome FindFreeHome();
         
         void AddAntTo(AxialCoordinate position);
-        void RemoveAntFrom(AxialCoordinate position);
+    }
+
+    public interface IReadOnlyHomeList
+    {
+        int BusyPlaces { get; }
+        int OpenPlaces { get; }
     }
 }

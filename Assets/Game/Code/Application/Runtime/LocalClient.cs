@@ -3,7 +3,6 @@ using System.Linq;
 using TNRD;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using YellowSquad.HexMath;
 using YellowSquad.Anthill.Application.Adapters;
 using YellowSquad.Anthill.Core.Ants;
@@ -20,17 +19,20 @@ namespace YellowSquad.Anthill.Application
         [Header("Core settings")]
         [SerializeField] private BaseMapFactory _mapFactory;
         [SerializeField] private SerializableInterface<IHexMapView> _hexMapView;
+        [SerializeField] private SerializableInterface<ISessionView> _sessionView;
         [SerializeField] private AntView _diggerView;
         [SerializeField] private AntView _loaderView;
         [SerializeField] private MovementSettings _movementSettings;
         [SerializeField, Min(1)] private int _homesCapacity;
         [SerializeField, Min(0)] private float _homeDelayBetweenFindTasks;
+
         [Header("Meta settings")] 
         [SerializeField] private Shop _shop;
         [SerializeField] private SerializableInterface<IWalletView> _walletView;
         [SerializeField, Min(0)] private int _startWalletValue;
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         [SerializeField, Min(0)] private int _restoreLeafReward;
+        [SerializeField, Min(0)] private float _minUpgradeAntsMoveDuration;
 
         private IHexMap _map;
         private Camera _camera;
@@ -74,11 +76,11 @@ namespace YellowSquad.Anthill.Application
                     new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.LoadersHome)
                         .Select(position => new AntHome(position, loaderTaskStorage, _homeDelayBetweenFindTasks))
                         .ToArray<IHome>())),
-                _diggerView,
-                _loaderView, 
-                _movementSettings);
+                _movementSettings,
+                _diggerView, 
+                _loaderView);
             
-            _shop.Initialize(_wallet, _session, _movementSettings.MaxMoveDuration);
+            _shop.Initialize(_wallet, _session, _minUpgradeAntsMoveDuration);
 
             _leafTasksLoop = new LeafTasksLoop(_map, _hexMapView.Value, loaderTaskStorage, _takeLeafTaskPrice);
             _camera = Camera.main;
@@ -89,6 +91,8 @@ namespace YellowSquad.Anthill.Application
             InputLoop();
             
             _session.Update(Time.deltaTime);
+            _session.Visualize(_sessionView.Value);
+            
             _leafTasksLoop.Update(Time.deltaTime);
         }
 

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using YellowSquad.Anthill.Core.Ants;
-using YellowSquad.Anthill.Meta;
 using YellowSquad.GameLoop;
 
-namespace YellowSquad.Anthill.Application
+namespace YellowSquad.Anthill.Core.Ants
 {
     public class Session : ISession, IGameLoop
     {
@@ -15,7 +13,7 @@ namespace YellowSquad.Anthill.Application
         private readonly MovementSettings _movementSettings;
         private readonly List<IAnt> _ants = new();
 
-        public Session(Queen queen, AntView diggersView, AntView loadersView, MovementSettings movementSettings)
+        public Session(Queen queen, MovementSettings movementSettings, AntView diggersView, AntView loadersView)
         {
             _queen = queen;
             _diggersView = diggersView;
@@ -23,6 +21,7 @@ namespace YellowSquad.Anthill.Application
             _movementSettings = movementSettings;
         }
 
+        public float MaxAntMoveDuration => _movementSettings.MaxMoveDuration;
         public bool CanAddDigger => _queen.CanCreateDigger;
         public bool CanAddLoader => _queen.CanCreateLoader;
 
@@ -58,6 +57,13 @@ namespace YellowSquad.Anthill.Application
         public void ChangeAntsMoveDuration(float value)
         {
             _movementSettings.ChangeMoveDuration(value);
+        }
+
+        public void Visualize(ISessionView view)
+        {
+            view.RenderAntMoveDuration(_movementSettings.CurrentMoveDuration, _movementSettings.MaxMoveDuration);
+            view.RenderDiggersCount(_queen.DiggersHomes.BusyPlaces, _queen.DiggersHomes.OpenPlaces);
+            view.RenderLoadersCount(_queen.LoadersHomes.BusyPlaces, _queen.LoadersHomes.OpenPlaces);
         }
     }
 }

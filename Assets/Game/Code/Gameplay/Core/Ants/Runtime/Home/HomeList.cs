@@ -9,11 +9,11 @@ namespace YellowSquad.Anthill.Core.Ants
     public class HomeList : IHomeList
     {
         private readonly Dictionary<AxialCoordinate, int> _homeAntsCount = new();
-        private readonly float _homeCapacity;
+        private readonly int _homeCapacity;
         private readonly IHexMap _map;
         private readonly IHome[] _homes;
 
-        public HomeList(float homeCapacity, IHexMap map, params IHome[] homes)
+        public HomeList(int homeCapacity, IHexMap map, params IHome[] homes)
         {
             _homeCapacity = homeCapacity;
             _map = map;
@@ -24,7 +24,9 @@ namespace YellowSquad.Anthill.Core.Ants
         }
 
         public bool HasFreeHome => _homeAntsCount.Any(pair => IsAvailableHome(pair.Key));
-        
+        public int BusyPlaces => _homeAntsCount.Sum(pair => pair.Value);
+        public int OpenPlaces => _homeAntsCount.Count(pair => _map.HexFrom(pair.Key).HasParts == false) * _homeCapacity;
+
         public IHome FindFreeHome()
         {
             foreach (var pair in _homeAntsCount)
@@ -41,18 +43,7 @@ namespace YellowSquad.Anthill.Core.Ants
 
             _homeAntsCount[position] += 1;
         }
-
-        public void RemoveAntFrom(AxialCoordinate position)
-        {
-            if (_homeAntsCount.ContainsKey(position) == false)
-                throw new ArgumentException();
-
-            if (_homeAntsCount[position] == 0)
-                throw new InvalidOperationException();
-
-            _homeAntsCount[position] -= 1;
-        }
-
+        
         private bool IsAvailableHome(AxialCoordinate position)
         {
             if (_homeAntsCount.ContainsKey(position) == false)

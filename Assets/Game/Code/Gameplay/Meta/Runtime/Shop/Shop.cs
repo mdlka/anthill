@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using YellowSquad.Anthill.Core.Ants;
 
 namespace YellowSquad.Anthill.Meta
 {
@@ -9,7 +10,7 @@ namespace YellowSquad.Anthill.Meta
         [SerializeField] private EditorShopButton _addLoaderButton;
         [SerializeField] private EditorShopButton _increaseSpeedButton;
         
-        public void Initialize(IWallet wallet, ISession session, float maxAntMoveDuration)
+        public void Initialize(IWallet wallet, ISession session, float minAntMoveDuration)
         {
             _addDiggerButton.Button.Initialize(
                 new AddDiggerCommand(session), 
@@ -23,7 +24,7 @@ namespace YellowSquad.Anthill.Meta
             
             _increaseSpeedButton.Button.Initialize(
                 new IncreaseSpeedCommand(session, 
-                    new UpgradeAntMoveDurationList(_increaseSpeedButton.PricesCount, 0.2f, maxAntMoveDuration)), 
+                    new UpgradeAntMoveDurationList(_increaseSpeedButton.PricesCount, minAntMoveDuration, session.MaxAntMoveDuration)), 
                 new LinearPriceList(_increaseSpeedButton.PricesCount, _increaseSpeedButton.StartPrice, _increaseSpeedButton.MaxPrice), 
                 wallet);
         }
