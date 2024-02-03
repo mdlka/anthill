@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using YellowSquad.Anthill.Core.Ants;
+using YellowSquad.Anthill.Meta;
 using YellowSquad.GameLoop;
 
-namespace YellowSquad.Anthill.Core.Ants
+namespace YellowSquad.Anthill.Application
 {
     public class Session : ISession, IGameLoop
     {

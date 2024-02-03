@@ -2194,7 +2194,7 @@ MonoBehaviour:
   _startWalletValue: 9999999
   _takeLeafTaskPrice: 3
   _restoreLeafReward: 300
-  _minUpgradeAntsMoveDuration: 0.1
+  _minUpgradeAntsMoveDuration: 0.2
   references:
     version: 2
     RefIds:
@@ -3124,7 +3124,7 @@ GameObject:
   - component: {fileID: 2001549219}
   - component: {fileID: 2001549218}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: MetaCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

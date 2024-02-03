@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using YellowSquad.Anthill.Core.Ants;
 
 namespace YellowSquad.Anthill.Meta
 {
@@ -10,21 +9,22 @@ namespace YellowSquad.Anthill.Meta
         [SerializeField] private EditorShopButton _addLoaderButton;
         [SerializeField] private EditorShopButton _increaseSpeedButton;
         
-        public void Initialize(IWallet wallet, ISession session, float minAntMoveDuration)
+        public void Initialize(IWallet wallet, ISession session, ISessionView sessionView, float minAntMoveDuration)
         {
             _addDiggerButton.Button.Initialize(
-                new AddDiggerCommand(session), 
+                new UpdateSessionViewCommand(new AddDiggerCommand(session), session, sessionView), 
                 new AlgebraicProgressionPriceList(_addDiggerButton.StartPrice, _addDiggerButton.AddingPriceValue), 
                 wallet);
             
             _addLoaderButton.Button.Initialize(
-                new AddLoaderCommand(session), 
+                new UpdateSessionViewCommand(new AddLoaderCommand(session), session, sessionView), 
                 new AlgebraicProgressionPriceList(_addLoaderButton.StartPrice, _addLoaderButton.AddingPriceValue), 
                 wallet);
             
             _increaseSpeedButton.Button.Initialize(
-                new IncreaseSpeedCommand(session, 
-                    new UpgradeAntMoveDurationList(_increaseSpeedButton.PricesCount, minAntMoveDuration, session.MaxAntMoveDuration)), 
+                new UpdateSessionViewCommand(
+                    new IncreaseSpeedCommand(session, new UpgradeAntMoveDurationList(_increaseSpeedButton.PricesCount, 
+                        minAntMoveDuration, session.MaxAntMoveDuration)), session, sessionView), 
                 new LinearPriceList(_increaseSpeedButton.PricesCount, _increaseSpeedButton.StartPrice, _increaseSpeedButton.MaxPrice), 
                 wallet);
         }

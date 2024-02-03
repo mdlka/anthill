@@ -1,5 +1,4 @@
 ﻿using System;
-using YellowSquad.Anthill.Core.Ants;
 
 namespace YellowSquad.Anthill.Meta
 {

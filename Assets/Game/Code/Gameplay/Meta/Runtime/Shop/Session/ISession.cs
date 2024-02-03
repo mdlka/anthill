@@ -1,4 +1,4 @@
-﻿namespace YellowSquad.Anthill.Core.Ants
+﻿namespace YellowSquad.Anthill.Meta
 {
     public interface ISession
     {

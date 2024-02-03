@@ -80,7 +80,8 @@ namespace YellowSquad.Anthill.Application
                 _diggerView, 
                 _loaderView);
             
-            _shop.Initialize(_wallet, _session, _minUpgradeAntsMoveDuration);
+            _session.Visualize(_sessionView.Value);
+            _shop.Initialize(_wallet, _session, _sessionView.Value, _minUpgradeAntsMoveDuration);
 
             _leafTasksLoop = new LeafTasksLoop(_map, _hexMapView.Value, loaderTaskStorage, _takeLeafTaskPrice);
             _camera = Camera.main;
@@ -91,8 +92,6 @@ namespace YellowSquad.Anthill.Application
             InputLoop();
             
             _session.Update(Time.deltaTime);
-            _session.Visualize(_sessionView.Value);
-            
             _leafTasksLoop.Update(Time.deltaTime);
         }
 
@@ -120,6 +119,7 @@ namespace YellowSquad.Anthill.Application
                         targetHex.DestroyClosestPartFor(targetPosition);
                     
                 _map.Visualize(_hexMapView.Value);
+                _session.Visualize(_sessionView.Value);
             }
             else
             {
@@ -142,7 +142,11 @@ namespace YellowSquad.Anthill.Application
 
                         tasks.Add(new TaskWithCallback(
                             new TakePartTask(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), targetHex, part), 
-                            onComplete: () => _map.Visualize(_hexMapView.Value)));
+                            onComplete: () => 
+                            { 
+                                _map.Visualize(_hexMapView.Value); 
+                                _session.Visualize(_sessionView.Value);
+                            }));
                     }
                             
                     _diggerTaskStorage.AddTaskGroup(new TaskGroup(targetAxialPosition, tasks));
