@@ -41,6 +41,8 @@ namespace YellowSquad.Anthill.Application
         private ITaskStorage _diggerTaskStorage;
         private IWallet _wallet;
 
+        private ITaskGroupFactory _collectHexTaskGroupFactory;
+
         private void Awake()
         {
 #if !UNITY_EDITOR
@@ -58,6 +60,8 @@ namespace YellowSquad.Anthill.Application
 
             _diggerView.Initialize(_map.Scale);
             _loaderView.Initialize(_map.Scale);
+
+            _collectHexTaskGroupFactory = new CollectHexTaskGroupFactory(_map, _hexMapView.Value);
             
             _movementSettings.Initialize(_map.Scale);
             _movementPath = new MovementPath(_map, new Path(new MapMovePolicy(_map)), _movementSettings);
@@ -82,7 +86,7 @@ namespace YellowSquad.Anthill.Application
             _session.Visualize(_sessionView.Value);
             _shop.Initialize(_wallet, _session, _sessionView.Value, _minUpgradeAntsMoveDuration);
 
-            _leafTasksLoop = new LeafTasksLoop(_map, _hexMapView.Value, loaderTaskStorage, _takeLeafTaskPrice);
+            _leafTasksLoop = new LeafTasksLoop(_map, loaderTaskStorage, new CollectPointOfInterestTaskGroupFactory(_map, _hexMapView.Value, _takeLeafTaskPrice));
             _camera = Camera.main;
         }
 
@@ -129,22 +133,12 @@ namespace YellowSquad.Anthill.Application
                 {
                     if (_diggerTaskStorage.HasTaskGroupIn(targetAxialPosition)) 
                         return;
-                        
-                    var tasks = new HashSet<ITask>();
-                    var hexMatrix = _hexMapView.Value.HexMatrixBy(_map.Scale, targetAxialPosition);
-                        
-                    foreach (var part in targetHex.Parts)
-                    {
-                        tasks.Add(new TaskWithCallback(
-                            new TakePartTask(hexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), targetHex, part), 
-                            onComplete: () => 
-                            { 
-                                _map.Visualize(_hexMapView.Value); 
-                                _session.Visualize(_sessionView.Value);
-                            }));
-                    }
-                            
-                    _diggerTaskStorage.AddTaskGroup(new TaskGroup(targetAxialPosition, tasks));
+
+                    if (_collectHexTaskGroupFactory.CanCreate(targetAxialPosition) == false)
+                        return;
+
+                    _diggerTaskStorage.AddTaskGroup(_collectHexTaskGroupFactory.Create(targetAxialPosition,
+                        onComplete: () => _session.Visualize(_sessionView.Value)));
                 }
                 else if (_map.HasDividedPointOfInterestIn(targetAxialPosition))
                 {
