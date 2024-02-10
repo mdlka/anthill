@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using YellowSquad.Anthill.Core.Tasks;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Ants

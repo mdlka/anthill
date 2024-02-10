@@ -1,8 +1,8 @@
 ﻿using YellowSquad.HexMath;
 
-namespace YellowSquad.Anthill.Core.Ants
+namespace YellowSquad.Anthill.Core.Tasks
 {
-    internal class AlwaysCompletedTask : ITask
+    public class AlwaysCompletedTask : ITask
     {
         public int Price => 0;
         public FracAxialCoordinate TargetPosition => default;

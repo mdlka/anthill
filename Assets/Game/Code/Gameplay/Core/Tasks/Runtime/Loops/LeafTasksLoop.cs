@@ -3,7 +3,7 @@ using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.GameLoop;
 using YellowSquad.HexMath;
 
-namespace YellowSquad.Anthill.Core.Ants
+namespace YellowSquad.Anthill.Core.Tasks
 {
     public class LeafTasksLoop : IGameLoop
     {

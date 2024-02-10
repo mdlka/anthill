@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using YellowSquad.HexMath;
 
-namespace YellowSquad.Anthill.Core.Ants
+namespace YellowSquad.Anthill.Core.Tasks
 {
     public class DefaultStorage : ITaskStorage
     {

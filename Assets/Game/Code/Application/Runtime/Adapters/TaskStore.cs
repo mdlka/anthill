@@ -1,4 +1,4 @@
-﻿using YellowSquad.Anthill.Core.Ants;
+﻿using YellowSquad.Anthill.Core.Tasks;
 using YellowSquad.Anthill.Meta;
 
 namespace YellowSquad.Anthill.Application.Adapters

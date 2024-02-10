@@ -1,4 +1,4 @@
-﻿namespace YellowSquad.Anthill.Core.Ants
+﻿namespace YellowSquad.Anthill.Core.Tasks
 {
     public interface IReadOnlyTaskStorage
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using YellowSquad.HexMath;
 
-namespace YellowSquad.Anthill.Core.Ants
+namespace YellowSquad.Anthill.Core.Tasks
 {
     public class TaskWithCallback : ITask
     {

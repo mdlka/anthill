@@ -1,12 +1,10 @@
 {
-    "name": "YellowSquad.Anthill.Core.Ants",
-    "rootNamespace": "YellowSquad.Anthill.Core.Ants",
+    "name": "YellowSquad.Anthill.Core.Tasks",
+    "rootNamespace": "YellowSquad.Anthill.Core.Tasks",
     "references": [
-        "GUID:c1a201351f2fcb34dad2d362ac290285",
-        "GUID:b2efb227a90ce5f4ca63f18af85e7bcc",
         "GUID:26b82d191b6890848926b9f960099a47",
-        "GUID:89f19c2e241afab489f366f0d08a3c5e",
-        "GUID:ed404ffb09e110041864ec63c72c670d"
+        "GUID:c1a201351f2fcb34dad2d362ac290285",
+        "GUID:b2efb227a90ce5f4ca63f18af85e7bcc"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

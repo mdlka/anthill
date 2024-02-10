@@ -8,6 +8,7 @@ using YellowSquad.Anthill.Application.Adapters;
 using YellowSquad.Anthill.Core.Ants;
 using YellowSquad.Anthill.Core.AStarPathfinding;
 using YellowSquad.Anthill.Core.HexMap;
+using YellowSquad.Anthill.Core.Tasks;
 using YellowSquad.Anthill.Meta;
 
 namespace YellowSquad.Anthill.Application
