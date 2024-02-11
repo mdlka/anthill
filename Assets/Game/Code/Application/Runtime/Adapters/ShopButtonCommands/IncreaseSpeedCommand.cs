@@ -1,5 +1,6 @@
 ﻿using System;
 using YellowSquad.Anthill.Meta;
+using YellowSquad.Anthill.Session;
 
 namespace YellowSquad.Anthill.Application
 {

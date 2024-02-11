@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace YellowSquad.Anthill.Application
+namespace YellowSquad.Anthill.Session
 {
     internal class SessionView : MonoBehaviour, ISessionView
     {

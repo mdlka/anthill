@@ -1,25 +1,26 @@
 ﻿using System;
 using YellowSquad.Anthill.Meta;
+using YellowSquad.Anthill.Session;
 
 namespace YellowSquad.Anthill.Application
 {
-    internal class AddLoaderCommand : IButtonCommand
+    internal class AddDiggerCommand : IButtonCommand
     {
         private readonly ISession _session;
 
-        public AddLoaderCommand(ISession session)
+        public AddDiggerCommand(ISession session)
         {
             _session = session;
         }
 
-        public bool CanExecute => _session.CanAddLoader;
+        public bool CanExecute => _session.CanAddDigger;
         
         public void Execute()
         {
             if (CanExecute == false)
                 throw new InvalidOperationException();
             
-            _session.AddLoader();
+            _session.AddDigger();
         }
     }
 }

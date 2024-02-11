@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using YellowSquad.Anthill.Core.Ants;
-using YellowSquad.Anthill.Meta;
-using YellowSquad.GameLoop;
 
-namespace YellowSquad.Anthill.Application
+namespace YellowSquad.Anthill.Session
 {
-    public class Session : ISession, IGameLoop
+    public class Session : ISession
     {
         private readonly Queen _queen;
         private readonly AntView _diggersView;

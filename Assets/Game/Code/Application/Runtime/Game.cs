@@ -10,6 +10,7 @@ using YellowSquad.Anthill.Core.AStarPathfinding;
 using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.Anthill.Core.Tasks;
 using YellowSquad.Anthill.Meta;
+using YellowSquad.Anthill.Session;
 
 namespace YellowSquad.Anthill.Application
 {
@@ -35,7 +36,7 @@ namespace YellowSquad.Anthill.Application
 
         private IHexMap _map;
         private Camera _camera;
-        private Session _session;
+        private ISession _session;
         private LeafTasksLoop _leafTasksLoop;
         private MovementPath _movementPath;
         private ITaskStorage _diggerTaskStorage;
@@ -69,7 +70,7 @@ namespace YellowSquad.Anthill.Application
             _wallet = new Wallet(_walletView.Value, _startWalletValue);
             _wallet.Spend(0); // initialize view
 
-            _session = new Session(
+            _session = new Session.Session(
                 new Queen(
                     _map.PointsOfInterestPositions(PointOfInterestType.Queen)[0],
                     new DefaultAntFactory(_movementPath, _movementSettings, new TaskStore(_wallet)),

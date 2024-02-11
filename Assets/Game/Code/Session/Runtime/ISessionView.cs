@@ -1,4 +1,4 @@
-﻿namespace YellowSquad.Anthill.Application
+﻿namespace YellowSquad.Anthill.Session
 {
     public interface ISessionView
     {

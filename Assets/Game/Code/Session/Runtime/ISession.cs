@@ -1,6 +1,8 @@
-﻿namespace YellowSquad.Anthill.Application
+﻿using YellowSquad.GameLoop;
+
+namespace YellowSquad.Anthill.Session
 {
-    public interface ISession
+    public interface ISession : IGameLoop
     {
         float MaxAntMoveDuration { get; }
         
