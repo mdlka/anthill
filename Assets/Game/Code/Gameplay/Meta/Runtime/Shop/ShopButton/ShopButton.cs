@@ -8,6 +8,7 @@ namespace YellowSquad.Anthill.Meta
     {
         [SerializeField] private Button _button;
         [SerializeField] private TMP_Text _priceText;
+        [SerializeField] private TMP_Text _nameText;
 
         private IButtonCommand _command;
         private IPriceList _priceList;
@@ -15,11 +16,13 @@ namespace YellowSquad.Anthill.Meta
 
         private bool CanClick => _command.CanExecute && _wallet.CanSpend(_priceList.CurrentPrice);
 
-        public void Initialize(IButtonCommand command, IPriceList priceList, IWallet wallet)
+        public void Initialize(string productName, IButtonCommand command, IPriceList priceList, IWallet wallet)
         {
             _command = command;
             _priceList = priceList;
             _wallet = wallet;
+
+            _nameText.text = productName;
             
             _button.onClick.AddListener(OnButtonClick);
         }

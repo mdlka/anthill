@@ -1,6 +1,6 @@
 ﻿namespace YellowSquad.Anthill.Meta
 {
-    internal interface IButtonCommand
+    public interface IButtonCommand
     {
         bool CanExecute { get; }
         void Execute();

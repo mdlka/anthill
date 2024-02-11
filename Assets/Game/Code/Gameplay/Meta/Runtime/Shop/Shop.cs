@@ -1,46 +1,19 @@
-using System;
 using UnityEngine;
 
 namespace YellowSquad.Anthill.Meta
 {
     public class Shop : MonoBehaviour
     {
-        [SerializeField] private EditorShopButton _addDiggerButton;
-        [SerializeField] private EditorShopButton _addLoaderButton;
-        [SerializeField] private EditorShopButton _increaseSpeedButton;
+        [SerializeField] private ShopButton _shopButtonTemplate;
+        [SerializeField] private Transform _buttonsContent;
         
-        public void Initialize(IWallet wallet, ISession session, ISessionView sessionView, float minAntMoveDuration)
+        public void Initialize(IWallet wallet, ShopButtonDTO[] buttons)
         {
-            _addDiggerButton.Button.Initialize(
-                new UpdateSessionViewCommand(new AddDiggerCommand(session), session, sessionView), 
-                new AlgebraicProgressionPriceList(_addDiggerButton.StartPrice, _addDiggerButton.AddingPriceValue), 
-                wallet);
-            
-            _addLoaderButton.Button.Initialize(
-                new UpdateSessionViewCommand(new AddLoaderCommand(session), session, sessionView), 
-                new AlgebraicProgressionPriceList(_addLoaderButton.StartPrice, _addLoaderButton.AddingPriceValue), 
-                wallet);
-            
-            _increaseSpeedButton.Button.Initialize(
-                new UpdateSessionViewCommand(
-                    new IncreaseSpeedCommand(session, new UpgradeAntMoveDurationList(_increaseSpeedButton.PricesCount, 
-                        minAntMoveDuration, session.MaxAntMoveDuration)), session, sessionView), 
-                new LinearPriceList(_increaseSpeedButton.PricesCount, _increaseSpeedButton.StartPrice, _increaseSpeedButton.MaxPrice), 
-                wallet);
-        }
-
-        [Serializable]
-        private class EditorShopButton
-        {
-            [field: SerializeField] public ShopButton Button { get; private set; }
-            [field: SerializeField, Min(0)] public int StartPrice { get; private set; }
-            
-            [field: Header("If endless prices")]
-            [field: SerializeField, Min(0)] public int AddingPriceValue { get; private set; }
-            
-            [field: Header("Else")]
-            [field: SerializeField, Min(0)] public int PricesCount { get; private set; }
-            [field: SerializeField, Min(0)] public int MaxPrice { get; private set; }
+            foreach (var button in buttons)
+            {
+                var buttonInstance = Instantiate(_shopButtonTemplate, _buttonsContent);
+                buttonInstance.Initialize(button.ButtonName, button.ButtonCommand, button.PriceList, wallet);
+            }
         }
     }
 }

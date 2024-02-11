@@ -1,6 +1,6 @@
 ﻿namespace YellowSquad.Anthill.Meta
 {
-    internal interface IPriceList
+    public interface IPriceList
     {
         int CurrentPriceNumber { get; }
         int CurrentPrice{ get; }

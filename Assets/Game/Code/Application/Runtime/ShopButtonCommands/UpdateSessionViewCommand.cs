@@ -1,4 +1,6 @@
-﻿namespace YellowSquad.Anthill.Meta
+﻿using YellowSquad.Anthill.Meta;
+
+namespace YellowSquad.Anthill.Application
 {
     internal class UpdateSessionViewCommand : IButtonCommand
     {

@@ -13,7 +13,7 @@ using YellowSquad.Anthill.Meta;
 
 namespace YellowSquad.Anthill.Application
 {
-    public class LocalClient : MonoBehaviour
+    public class Game : MonoBehaviour
     {
         [Header("Core settings")]
         [SerializeField] private BaseMapFactory _mapFactory;
@@ -84,7 +84,29 @@ namespace YellowSquad.Anthill.Application
                 _loaderView);
             
             _session.Visualize(_sessionView.Value);
-            _shop.Initialize(_wallet, _session, _sessionView.Value, _minUpgradeAntsMoveDuration);
+            _shop.Initialize(_wallet, new ShopButtonDTO[]
+            {
+                new ShopButtonDTO()
+                {
+                    ButtonName = "Add digger",
+                    ButtonCommand = new UpdateSessionViewCommand(new AddDiggerCommand(_session), _session, _sessionView.Value),
+                    PriceList = new AlgebraicProgressionPriceList(0, 1)
+                },
+                new ShopButtonDTO()
+                {
+                    ButtonName = "Add loader",
+                    ButtonCommand = new UpdateSessionViewCommand(new AddLoaderCommand(_session), _session, _sessionView.Value),
+                    PriceList = new AlgebraicProgressionPriceList(0, 1)
+                },
+                new ShopButtonDTO()
+                {
+                    ButtonName = "Increase speed",
+                    ButtonCommand = new UpdateSessionViewCommand(new IncreaseSpeedCommand(_session, 
+                        new UpgradeAntMoveDurationList(20, _minUpgradeAntsMoveDuration, _session.MaxAntMoveDuration)),
+                        _session, _sessionView.Value),
+                    PriceList = new AlgebraicProgressionPriceList(0, 1)
+                }
+            });
 
             _leafTasksLoop = new LeafTasksLoop(_map, loaderTaskStorage, new CollectPointOfInterestTaskGroupFactory(_map, _hexMapView.Value, _takeLeafTaskPrice));
             _camera = Camera.main;

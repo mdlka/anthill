@@ -2,7 +2,7 @@
 
 namespace YellowSquad.Anthill.Meta
 {
-    internal class AlgebraicProgressionPriceList : IPriceList
+    public class AlgebraicProgressionPriceList : IPriceList
     {
         private readonly int _addValue;
 

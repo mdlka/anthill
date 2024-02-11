@@ -1,6 +1,7 @@
 ﻿using System;
+using YellowSquad.Anthill.Meta;
 
-namespace YellowSquad.Anthill.Meta
+namespace YellowSquad.Anthill.Application
 {
     internal class AddDiggerCommand : IButtonCommand
     {

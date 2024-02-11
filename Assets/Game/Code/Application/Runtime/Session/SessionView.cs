@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace YellowSquad.Anthill.Meta
+namespace YellowSquad.Anthill.Application
 {
     internal class SessionView : MonoBehaviour, ISessionView
     {
@@ -11,17 +11,17 @@ namespace YellowSquad.Anthill.Meta
         
         public void RenderLoadersCount(int currentValue, int maxValue)
         {
-            _loadersCountText.text = $"{currentValue}/{maxValue}";
+            //_loadersCountText.text = $"{currentValue}/{maxValue}";
         }
 
         public void RenderDiggersCount(int currentValue, int maxValue)
         {
-            _diggersCountText.text = $"{currentValue}/{maxValue}";
+            //_diggersCountText.text = $"{currentValue}/{maxValue}";
         }
 
         public void RenderAntMoveDuration(float value, float maxMoveDuration)
         {
-            _antSpeedText.text = $"{1f / (value / maxMoveDuration):0.00}";
+            //_antSpeedText.text = $"{1f / (value / maxMoveDuration):0.00}";
         }
     }
 }

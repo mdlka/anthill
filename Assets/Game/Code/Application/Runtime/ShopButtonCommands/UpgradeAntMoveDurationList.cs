@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace YellowSquad.Anthill.Meta
+namespace YellowSquad.Anthill.Application
 {
     internal class UpgradeAntMoveDurationList
     {
