@@ -10,7 +10,6 @@ using YellowSquad.Anthill.Core.AStarPathfinding;
 using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.Anthill.Core.Tasks;
 using YellowSquad.Anthill.Meta;
-using YellowSquad.Anthill.Session;
 
 namespace YellowSquad.Anthill.Application
 {
@@ -34,7 +33,7 @@ namespace YellowSquad.Anthill.Application
 
         private IHexMap _map;
         private Camera _camera;
-        private ISession _session;
+        private IAnthill _anthill;
         private LeafTasksLoop _leafTasksLoop;
         private MovementPath _movementPath;
         private ITaskStorage _diggerTaskStorage;
@@ -68,7 +67,7 @@ namespace YellowSquad.Anthill.Application
             _wallet = new Wallet(_walletView.Value, _startWalletValue);
             _wallet.Spend(0); // initialize view
 
-            _session = new Session.Session(
+            _anthill = new DefaultAnthill(
                 new Queen(
                     _map.PointsOfInterestPositions(PointOfInterestType.Queen)[0],
                     new DefaultAntFactory(_movementPath, _movementSettings, new TaskStore(_wallet)),
@@ -78,7 +77,6 @@ namespace YellowSquad.Anthill.Application
                     new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.LoadersHome)
                         .Select(position => new AntHome(position, loaderTaskStorage, _homeDelayBetweenFindTasks))
                         .ToArray<IHome>())),
-                _movementSettings,
                 _diggerView, 
                 _loaderView);
             
@@ -87,12 +85,12 @@ namespace YellowSquad.Anthill.Application
                 new UpgradeButtonDTO()
                 {
                     ButtonName = "Add digger",
-                    Upgrade = new DiggersCountUpgrade(_session, new AlgebraicProgressionPriceList(0, 1), _wallet),
+                    Upgrade = new DiggersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 1), _wallet),
                 },
                 new UpgradeButtonDTO()
                 {
                     ButtonName = "Add loader",
-                    Upgrade = new LoadersCountUpgrade(_session, new AlgebraicProgressionPriceList(0, 1), _wallet),
+                    Upgrade = new LoadersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 1), _wallet),
                 },
             });
 
@@ -104,7 +102,7 @@ namespace YellowSquad.Anthill.Application
         {
             InputLoop();
             
-            _session.Update(Time.deltaTime);
+            _anthill.Update(Time.deltaTime);
             _leafTasksLoop.Update(Time.deltaTime);
         }
 

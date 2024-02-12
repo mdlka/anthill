@@ -1074,7 +1074,7 @@ MonoBehaviour:
     unityReference: {fileID: 156643196}
     rawReference:
       rid: -2
-  _startWalletValue: 100
+  _startWalletValue: 999999
   _takeLeafTaskPrice: 3
   _restoreLeafReward: 300
   references:

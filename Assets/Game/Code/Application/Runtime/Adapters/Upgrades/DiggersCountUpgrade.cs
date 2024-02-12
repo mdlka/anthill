@@ -1,28 +1,28 @@
 ﻿using System;
+using YellowSquad.Anthill.Core.Ants;
 using YellowSquad.Anthill.Meta;
-using YellowSquad.Anthill.Session;
 
 namespace YellowSquad.Anthill.Application
 {
     internal class DiggersCountUpgrade : BaseUpgrade
     {
-        private readonly ISession _session;
+        private readonly IAnthill _anthill;
 
-        public DiggersCountUpgrade(ISession session, IPriceList priceList, IWallet wallet) : base(priceList, wallet)
+        public DiggersCountUpgrade(IAnthill anthill, IPriceList priceList, IWallet wallet) : base(priceList, wallet)
         {
-            _session = session;
+            _anthill = anthill;
         }
 
-        public override int MaxValue => _session.MaxDiggers;
-        public override int CurrentValue => _session.CurrentDiggers;
-        protected override bool CanOnPerform => _session.CanAddDigger;
+        public override int MaxValue => _anthill.Diggers.MaxCount;
+        public override int CurrentValue => _anthill.Diggers.CurrentCount;
+        protected override bool CanOnPerform => _anthill.CanAddDigger;
 
         protected override void OnPerform()
         {
             if (CanOnPerform == false)
                 throw new InvalidOperationException();
             
-            _session.AddDigger();
+            _anthill.AddDigger();
         }
     }
 }
