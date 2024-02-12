@@ -4,22 +4,22 @@ using YellowSquad.Anthill.Session;
 
 namespace YellowSquad.Anthill.Application
 {
-    internal class DiggersCountUpgrade : IUpgrade
+    internal class DiggersCountUpgrade : BaseUpgrade
     {
         private readonly ISession _session;
 
-        public DiggersCountUpgrade(ISession session)
+        public DiggersCountUpgrade(ISession session, IPriceList priceList, IWallet wallet) : base(priceList, wallet)
         {
             _session = session;
         }
 
-        public int MaxValue => _session.MaxDiggers;
-        public int CurrentValue => _session.CurrentDiggers;
-        public bool CanPerform => _session.CanAddDigger;
+        public override int MaxValue => _session.MaxDiggers;
+        public override int CurrentValue => _session.CurrentDiggers;
+        protected override bool CanOnPerform => _session.CanAddDigger;
 
-        public void Perform()
+        protected override void OnPerform()
         {
-            if (CanPerform == false)
+            if (CanOnPerform == false)
                 throw new InvalidOperationException();
             
             _session.AddDigger();

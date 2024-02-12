@@ -13,39 +13,30 @@ namespace YellowSquad.Anthill.Meta
         [SerializeField] private TMP_Text _upgradeInfoText;
 
         private IUpgrade _upgrade;
-        private IPriceList _priceList;
-        private IWallet _wallet;
 
-        private bool CanClick => _upgrade.CanPerform && _wallet.CanSpend(_priceList.CurrentPrice);
-
-        public void Initialize(UpgradeButtonDTO upgradeButtonDTO, IWallet wallet)
+        public void Initialize(IUpgrade upgrade, string upgradeName, Sprite icon)
         {
-            _upgrade = upgradeButtonDTO.Upgrade;
-            _priceList = upgradeButtonDTO.PriceList;
-            _wallet = wallet;
-
-            _icon.sprite = upgradeButtonDTO.Icon;
-            _nameText.text = upgradeButtonDTO.ButtonName;
+            _upgrade = upgrade;
+            _icon.sprite = icon;
+            _nameText.text = upgradeName;
+            
             RenderUpgradeInfo();
-                
             _button.onClick.AddListener(OnButtonClick);
         }
 
         private void Update()
         {
-            _button.interactable = CanClick;
-            _priceText.text = _priceList.HasNext && _upgrade.CanPerform ? $"Price: {_priceList.CurrentPrice}" : "Max";
+            _button.interactable = _upgrade.CanPerform;
+            _priceText.text = _upgrade.IsMax ? "Max" : $"Price: {_upgrade.CurrentPrice}";
+            RenderUpgradeInfo();
         }
 
         private void OnButtonClick()
         {
-            if (CanClick == false)
+            if (_upgrade.CanPerform == false)
                 return;
             
-            _wallet.Spend(_priceList.CurrentPrice);
             _upgrade.Perform();
-            _priceList.Next();
-
             RenderUpgradeInfo();
         }
 

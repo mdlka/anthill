@@ -82,19 +82,17 @@ namespace YellowSquad.Anthill.Application
                 _diggerView, 
                 _loaderView);
             
-            _shop.Initialize(_wallet, new UpgradeButtonDTO[]
+            _shop.Initialize(new UpgradeButtonDTO[]
             {
                 new UpgradeButtonDTO()
                 {
                     ButtonName = "Add digger",
-                    Upgrade = new DiggersCountUpgrade(_session),
-                    PriceList = new AlgebraicProgressionPriceList(0, 1)
+                    Upgrade = new DiggersCountUpgrade(_session, new AlgebraicProgressionPriceList(0, 1), _wallet),
                 },
                 new UpgradeButtonDTO()
                 {
                     ButtonName = "Add loader",
-                    Upgrade = new LoadersCountUpgrade(_session),
-                    PriceList = new AlgebraicProgressionPriceList(0, 1)
+                    Upgrade = new LoadersCountUpgrade(_session, new AlgebraicProgressionPriceList(0, 1), _wallet),
                 },
             });
 

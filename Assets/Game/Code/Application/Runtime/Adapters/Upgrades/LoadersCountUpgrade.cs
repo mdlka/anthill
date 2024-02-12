@@ -4,27 +4,25 @@ using YellowSquad.Anthill.Session;
 
 namespace YellowSquad.Anthill.Application
 {
-    internal class LoadersCountUpgrade : IUpgrade
+    internal class LoadersCountUpgrade : BaseUpgrade
     {
         private readonly ISession _session;
 
-        public LoadersCountUpgrade(ISession session)
+        public LoadersCountUpgrade(ISession session, IPriceList priceList, IWallet wallet) : base(priceList, wallet)
         {
             _session = session;
         }
 
-        public int MaxValue => _session.MaxLoaders;
-        public int CurrentValue => _session.CurrentLoaders;
-        public bool CanPerform => _session.CanAddLoader;
-        public int CurrentLevel { get; private set; }
+        public override int MaxValue => _session.MaxLoaders;
+        public override int CurrentValue => _session.CurrentLoaders;
+        protected override bool CanOnPerform => _session.CanAddLoader;
 
-        public void Perform()
+        protected override void OnPerform()
         {
-            if (CanPerform == false)
+            if (CanOnPerform == false)
                 throw new InvalidOperationException();
             
             _session.AddLoader();
-            CurrentLevel += 1;
         }
     }
 }

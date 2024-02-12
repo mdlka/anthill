@@ -7,12 +7,12 @@ namespace YellowSquad.Anthill.Meta
         [SerializeField] private UpgradeButton _upgradeButtonTemplate;
         [SerializeField] private Transform _buttonsContent;
         
-        public void Initialize(IWallet wallet, UpgradeButtonDTO[] buttons)
+        public void Initialize(UpgradeButtonDTO[] buttons)
         {
             foreach (var dto in buttons)
             {
                 var buttonInstance = Instantiate(_upgradeButtonTemplate, _buttonsContent);
-                buttonInstance.Initialize(dto, wallet);
+                buttonInstance.Initialize(dto.Upgrade, dto.ButtonName, dto.Icon);
             }
         }
     }
