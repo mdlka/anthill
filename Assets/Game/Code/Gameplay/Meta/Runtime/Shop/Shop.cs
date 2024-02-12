@@ -4,15 +4,15 @@ namespace YellowSquad.Anthill.Meta
 {
     public class Shop : MonoBehaviour
     {
-        [SerializeField] private ShopButton _shopButtonTemplate;
+        [SerializeField] private UpgradeButton _upgradeButtonTemplate;
         [SerializeField] private Transform _buttonsContent;
         
-        public void Initialize(IWallet wallet, ShopButtonDTO[] buttons)
+        public void Initialize(IWallet wallet, UpgradeButtonDTO[] buttons)
         {
-            foreach (var button in buttons)
+            foreach (var dto in buttons)
             {
-                var buttonInstance = Instantiate(_shopButtonTemplate, _buttonsContent);
-                buttonInstance.Initialize(button.ButtonName, button.ButtonCommand, button.PriceList, wallet);
+                var buttonInstance = Instantiate(_upgradeButtonTemplate, _buttonsContent);
+                buttonInstance.Initialize(dto, wallet);
             }
         }
     }

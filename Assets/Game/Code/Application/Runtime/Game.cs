@@ -19,7 +19,6 @@ namespace YellowSquad.Anthill.Application
         [Header("Core settings")]
         [SerializeField] private BaseMapFactory _mapFactory;
         [SerializeField] private SerializableInterface<IHexMapView> _hexMapView;
-        [SerializeField] private SerializableInterface<ISessionView> _sessionView;
         [SerializeField] private AntView _diggerView;
         [SerializeField] private AntView _loaderView;
         [SerializeField] private MovementSettings _movementSettings;
@@ -32,7 +31,6 @@ namespace YellowSquad.Anthill.Application
         [SerializeField, Min(0)] private int _startWalletValue;
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         [SerializeField, Min(0)] private int _restoreLeafReward;
-        [SerializeField, Min(0)] private float _minUpgradeAntsMoveDuration;
 
         private IHexMap _map;
         private Camera _camera;
@@ -84,29 +82,20 @@ namespace YellowSquad.Anthill.Application
                 _diggerView, 
                 _loaderView);
             
-            _session.Visualize(_sessionView.Value);
-            _shop.Initialize(_wallet, new ShopButtonDTO[]
+            _shop.Initialize(_wallet, new UpgradeButtonDTO[]
             {
-                new ShopButtonDTO()
+                new UpgradeButtonDTO()
                 {
                     ButtonName = "Add digger",
-                    ButtonCommand = new UpdateSessionViewCommand(new AddDiggerCommand(_session), _session, _sessionView.Value),
+                    Upgrade = new DiggersCountUpgrade(_session),
                     PriceList = new AlgebraicProgressionPriceList(0, 1)
                 },
-                new ShopButtonDTO()
+                new UpgradeButtonDTO()
                 {
                     ButtonName = "Add loader",
-                    ButtonCommand = new UpdateSessionViewCommand(new AddLoaderCommand(_session), _session, _sessionView.Value),
+                    Upgrade = new LoadersCountUpgrade(_session),
                     PriceList = new AlgebraicProgressionPriceList(0, 1)
                 },
-                new ShopButtonDTO()
-                {
-                    ButtonName = "Increase speed",
-                    ButtonCommand = new UpdateSessionViewCommand(new IncreaseSpeedCommand(_session, 
-                        new UpgradeAntMoveDurationList(20, _minUpgradeAntsMoveDuration, _session.MaxAntMoveDuration)),
-                        _session, _sessionView.Value),
-                    PriceList = new AlgebraicProgressionPriceList(0, 1)
-                }
             });
 
             _leafTasksLoop = new LeafTasksLoop(_map, loaderTaskStorage, new CollectPointOfInterestTaskGroupFactory(_map, _hexMapView.Value, _takeLeafTaskPrice));
@@ -145,7 +134,6 @@ namespace YellowSquad.Anthill.Application
                         targetHex.DestroyClosestPartFor(targetPosition);
                     
                 _map.Visualize(_hexMapView.Value);
-                _session.Visualize(_sessionView.Value);
             }
             else
             {
@@ -160,8 +148,7 @@ namespace YellowSquad.Anthill.Application
                     if (_collectHexTaskGroupFactory.CanCreate(targetAxialPosition) == false)
                         return;
 
-                    _diggerTaskStorage.AddTaskGroup(_collectHexTaskGroupFactory.Create(targetAxialPosition,
-                        onComplete: () => _session.Visualize(_sessionView.Value)));
+                    _diggerTaskStorage.AddTaskGroup(_collectHexTaskGroupFactory.Create(targetAxialPosition));
                 }
                 else if (_map.HasDividedPointOfInterestIn(targetAxialPosition))
                 {

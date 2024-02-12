@@ -4,7 +4,10 @@ namespace YellowSquad.Anthill.Session
 {
     public interface ISession : IGameLoop
     {
-        float MaxAntMoveDuration { get; }
+        int MaxDiggers { get; }
+        int MaxLoaders { get; }
+        int CurrentDiggers { get; }
+        int CurrentLoaders { get; }
         
         bool CanAddDigger { get; }
         bool CanAddLoader { get; }
@@ -12,7 +15,5 @@ namespace YellowSquad.Anthill.Session
         void AddDigger();
         void AddLoader();
         void ChangeAntsMoveDuration(float value);
-
-        void Visualize(ISessionView view);
     }
 }

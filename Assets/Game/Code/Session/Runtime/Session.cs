@@ -21,7 +21,10 @@ namespace YellowSquad.Anthill.Session
             _movementSettings = movementSettings;
         }
 
-        public float MaxAntMoveDuration => _movementSettings.MaxMoveDuration;
+        public int MaxDiggers => _queen.DiggersHomes.OpenPlaces;
+        public int MaxLoaders => _queen.LoadersHomes.OpenPlaces;
+        public int CurrentDiggers => _queen.DiggersHomes.BusyPlaces;
+        public int CurrentLoaders => _queen.LoadersHomes.BusyPlaces;
         public bool CanAddDigger => _queen.CanCreateDigger;
         public bool CanAddLoader => _queen.CanCreateLoader;
 
@@ -57,13 +60,6 @@ namespace YellowSquad.Anthill.Session
         public void ChangeAntsMoveDuration(float value)
         {
             _movementSettings.ChangeMoveDuration(value);
-        }
-
-        public void Visualize(ISessionView view)
-        {
-            view.RenderAntMoveDuration(_movementSettings.CurrentMoveDuration, _movementSettings.MaxMoveDuration);
-            view.RenderDiggersCount(_queen.DiggersHomes.BusyPlaces, _queen.DiggersHomes.OpenPlaces);
-            view.RenderLoadersCount(_queen.LoadersHomes.BusyPlaces, _queen.LoadersHomes.OpenPlaces);
         }
     }
 }

@@ -970,7 +970,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1280016497}
   - component: {fileID: 1280016496}
-  - component: {fileID: 1280016498}
   m_Layer: 5
   m_Name: Shop
   m_TagString: Untagged
@@ -990,7 +989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b685fc967a6be47a3e9649c39ec235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shopButtonTemplate: {fileID: 358374304989542936, guid: bfdc8b3aa9293f947974b65f544dc9ce, type: 3}
+  _upgradeButtonTemplate: {fileID: 358374304989542936, guid: bfdc8b3aa9293f947974b65f544dc9ce, type: 3}
   _buttonsContent: {fileID: 1470247848}
 --- !u!224 &1280016497
 RectTransform:
@@ -1012,21 +1011,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1280016498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1280016495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c925459af8d94f679cd5408d58cc9409, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _diggersCountText: {fileID: 0}
-  _loadersCountText: {fileID: 0}
-  _antSpeedText: {fileID: 0}
 --- !u!1 &1286294732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1077,11 +1061,6 @@ MonoBehaviour:
   _hexMapView:
     mode: 0
     unityReference: {fileID: 2052305926}
-    rawReference:
-      rid: -2
-  _sessionView:
-    mode: 0
-    unityReference: {fileID: 1280016498}
     rawReference:
       rid: -2
   _diggerView: {fileID: 2047135644}
