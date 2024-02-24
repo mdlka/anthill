@@ -1,14 +1,12 @@
-using System.Collections.Generic;
 using System.Linq;
 using TNRD;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using YellowSquad.HexMath;
 using YellowSquad.Anthill.Application.Adapters;
 using YellowSquad.Anthill.Core.Ants;
 using YellowSquad.Anthill.Core.AStarPathfinding;
 using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.Anthill.Core.Tasks;
+using YellowSquad.Anthill.Input;
 using YellowSquad.Anthill.Meta;
 
 namespace YellowSquad.Anthill.Application
@@ -32,15 +30,10 @@ namespace YellowSquad.Anthill.Application
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         [SerializeField, Min(0)] private int _restoreLeafReward;
 
-        private IHexMap _map;
-        private Camera _camera;
         private IAnthill _anthill;
+        private InputRoot _inputRoot;
         private LeafTasksLoop _leafTasksLoop;
         private MovementPath _movementPath;
-        private ITaskStorage _diggerTaskStorage;
-        private IWallet _wallet;
-
-        private ITaskGroupFactory _collectHexTaskGroupFactory;
 
         private void Awake()
         {
@@ -51,117 +44,63 @@ namespace YellowSquad.Anthill.Application
 
         private void Start()
         {
-            _map = _mapFactory.Create();
-            _map.Visualize(_hexMapView.Value);
+            var map = _mapFactory.Create();
+            map.Visualize(_hexMapView.Value);
 
             var loaderTaskStorage = new DefaultStorage();
-            _diggerTaskStorage = new DefaultStorage();
+            var diggerTaskStorage = new DefaultStorage();
 
-            _diggerView.Initialize(_map.Scale);
-            _loaderView.Initialize(_map.Scale);
+            _diggerView.Initialize(map.Scale);
+            _loaderView.Initialize(map.Scale);
 
-            _collectHexTaskGroupFactory = new CollectHexTaskGroupFactory(_map, _hexMapView.Value, _delayBetweenTasks);
+            _movementSettings.Initialize(map.Scale);
+            _movementPath = new MovementPath(map, new Path(new MapMovePolicy(map)), _movementSettings);
             
-            _movementSettings.Initialize(_map.Scale);
-            _movementPath = new MovementPath(_map, new Path(new MapMovePolicy(_map)), _movementSettings);
-            
-            _wallet = new Wallet(_walletView.Value, _startWalletValue);
-            _wallet.Spend(0); // initialize view
+            var wallet = new Wallet(_walletView.Value, _startWalletValue);
+            wallet.Spend(0); // initialize view
 
             _anthill = new DefaultAnthill(
                 new Queen(
-                    _map.PointsOfInterestPositions(PointOfInterestType.Queen)[0],
-                    new DefaultAntFactory(_movementPath, _movementSettings, new TaskStore(_wallet)),
-                    new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.DiggersHome)
-                        .Select(position => new AntHome(position, _diggerTaskStorage, _delayBetweenHomeFindTask))
+                    map.PointsOfInterestPositions(PointOfInterestType.Queen)[0],
+                    new DefaultAntFactory(_movementPath, _movementSettings, new TaskStore(wallet)),
+                    new HomeList(_homesCapacity, map, map.PointsOfInterestPositions(PointOfInterestType.DiggersHome)
+                        .Select(position => new AntHome(position, diggerTaskStorage, _delayBetweenHomeFindTask))
                         .ToArray<IHome>()),
-                    new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.LoadersHome)
+                    new HomeList(_homesCapacity, map, map.PointsOfInterestPositions(PointOfInterestType.LoadersHome)
                         .Select(position => new AntHome(position, loaderTaskStorage, _delayBetweenHomeFindTask))
                         .ToArray<IHome>())),
                 _diggerView, 
                 _loaderView);
-            
-            _shop.Initialize(new UpgradeButtonDTO[]
+
+            _inputRoot = new InputRoot(new MouseInput(map), new IClickCommand[]
             {
-                new UpgradeButtonDTO()
-                {
-                    ButtonName = "Add digger",
-                    Upgrade = new DiggersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 1), _wallet),
-                },
-                new UpgradeButtonDTO()
-                {
-                    ButtonName = "Add loader",
-                    Upgrade = new LoadersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 1), _wallet),
-                },
+                new AddDiggerTaskCommand(diggerTaskStorage, new CollectHexTaskGroupFactory(map, _hexMapView.Value, _delayBetweenTasks)),
+                new RestoreLeafCommand(map, _hexMapView.Value, wallet, _restoreLeafReward)
             });
 
-            _leafTasksLoop = new LeafTasksLoop(_map, loaderTaskStorage, new CollectPointOfInterestTaskGroupFactory(_map, _hexMapView.Value, _delayBetweenTasks, _takeLeafTaskPrice));
-            _camera = Camera.main;
+            _leafTasksLoop = new LeafTasksLoop(map, loaderTaskStorage, 
+                new CollectPointOfInterestTaskGroupFactory(map, _hexMapView.Value, _delayBetweenTasks, _takeLeafTaskPrice));
+            
+            _shop.Initialize(new[]
+            {
+                new UpgradeButtonDTO
+                {
+                    ButtonName = "Add digger",
+                    Upgrade = new DiggersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 1), wallet),
+                },
+                new UpgradeButtonDTO
+                {
+                    ButtonName = "Add loader",
+                    Upgrade = new LoadersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 1), wallet),
+                },
+            });
         }
 
         private void Update()
         {
-            InputLoop();
-            
             _anthill.Update(Time.deltaTime);
+            _inputRoot.Update(Time.deltaTime);
             _leafTasksLoop.Update(Time.deltaTime);
-        }
-
-        private void InputLoop()
-        {
-            if (!Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1)) 
-                return;
-            
-            var mouseClickPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _camera.transform.position.y);
-            var targetPosition = _camera.ScreenToWorldPoint(mouseClickPosition);
-            var targetAxialPosition = targetPosition.ToAxialCoordinate(_map.Scale);
-
-            if (IsPointerOverUIObject(mouseClickPosition))
-                return;
-
-            if (_map.HasPosition(targetAxialPosition) == false)
-                return;
-
-            var targetHex = _map.HexFrom(targetAxialPosition);
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                if (_diggerTaskStorage.HasTaskGroupIn(targetAxialPosition) == false)
-                    while (targetHex.HasParts)
-                        targetHex.DestroyClosestPartFor(targetPosition);
-                    
-                _map.Visualize(_hexMapView.Value);
-            }
-            else
-            {
-                if (_map.IsClosed(targetAxialPosition)) 
-                    return;
-                    
-                if (targetHex.HasParts)
-                {
-                    if (_diggerTaskStorage.HasTaskGroupIn(targetAxialPosition)) 
-                        return;
-
-                    if (_collectHexTaskGroupFactory.CanCreate(targetAxialPosition) == false)
-                        return;
-
-                    _diggerTaskStorage.AddTaskGroup(_collectHexTaskGroupFactory.Create(targetAxialPosition));
-                }
-                else if (_map.HasDividedPointOfInterestIn(targetAxialPosition))
-                {
-                    var targetDividedPointOfInterest = _map.DividedPointOfInterestFrom(targetAxialPosition);
-
-                    if (targetDividedPointOfInterest.HasParts) 
-                        return;
-                        
-                    if (targetDividedPointOfInterest.CanRestore == false) 
-                        return;
-                            
-                    targetDividedPointOfInterest.Restore();
-                    _wallet.Add(_restoreLeafReward);
-                    _map.Visualize(_hexMapView.Value);
-                }
-            }
         }
 
 #if UNITY_EDITOR
@@ -170,19 +109,5 @@ namespace YellowSquad.Anthill.Application
             _movementPath?.OnDrawGizmos();
         }
 #endif
-        
-        private bool IsPointerOverUIObject(Vector2 inputPosition)
-        {
-            var eventDataCurrentPosition = new PointerEventData(EventSystem.current) { position = inputPosition };
-            var results = new List<RaycastResult>();
-            
-            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-
-            foreach (var result in results)
-                if (result.gameObject.layer == LayerMask.NameToLayer("UI"))
-                    return true;
-
-            return false;
-        }
     }
 }
