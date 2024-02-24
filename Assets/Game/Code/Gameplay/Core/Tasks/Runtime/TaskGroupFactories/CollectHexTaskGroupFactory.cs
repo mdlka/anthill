@@ -9,11 +9,13 @@ namespace YellowSquad.Anthill.Core.Tasks
     {
         private readonly IHexMap _map;
         private readonly IHexMapView _mapView;
+        private readonly float _delayBetweenTasks;
 
-        public CollectHexTaskGroupFactory(IHexMap map, IHexMapView mapView)
+        public CollectHexTaskGroupFactory(IHexMap map, IHexMapView mapView, float delayBetweenTasks)
         {
             _map = map;
             _mapView = mapView;
+            _delayBetweenTasks = delayBetweenTasks;
         }
 
         public bool CanCreate(AxialCoordinate targetPosition)
@@ -43,7 +45,7 @@ namespace YellowSquad.Anthill.Core.Tasks
                     }));
             }
 
-            return new TaskGroup(targetPosition, tasks);
+            return new TaskGroup(targetPosition, tasks, _delayBetweenTasks);
         }
     }
 }

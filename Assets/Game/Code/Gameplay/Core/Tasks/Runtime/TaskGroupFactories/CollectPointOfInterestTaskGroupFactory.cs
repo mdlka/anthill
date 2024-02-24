@@ -9,12 +9,14 @@ namespace YellowSquad.Anthill.Core.Tasks
     {
         private readonly IHexMap _map;
         private readonly IHexMapView _mapView;
+        private readonly float _delayBetweenTasks;
         private readonly int _taskPrice;
 
-        public CollectPointOfInterestTaskGroupFactory(IHexMap map, IHexMapView mapView, int taskPrice)
+        public CollectPointOfInterestTaskGroupFactory(IHexMap map, IHexMapView mapView, float delayBetweenTasks, int taskPrice)
         {
             _map = map;
             _mapView = mapView;
+            _delayBetweenTasks = delayBetweenTasks;
             _taskPrice = taskPrice;
         }
 
@@ -46,7 +48,7 @@ namespace YellowSquad.Anthill.Core.Tasks
                     }));
             }
 
-            return new TaskGroup(targetPosition, tasks);
+            return new TaskGroup(targetPosition, tasks, _delayBetweenTasks);
         }
     }
 }

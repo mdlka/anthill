@@ -22,7 +22,8 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private AntView _loaderView;
         [SerializeField] private MovementSettings _movementSettings;
         [SerializeField, Min(1)] private int _homesCapacity;
-        [SerializeField, Min(0)] private float _homeDelayBetweenFindTasks;
+        [SerializeField, Min(0)] private float _delayBetweenHomeFindTask;
+        [SerializeField, Min(0)] private float _delayBetweenTasks;
 
         [Header("Meta settings")] 
         [SerializeField] private Shop _shop;
@@ -59,7 +60,7 @@ namespace YellowSquad.Anthill.Application
             _diggerView.Initialize(_map.Scale);
             _loaderView.Initialize(_map.Scale);
 
-            _collectHexTaskGroupFactory = new CollectHexTaskGroupFactory(_map, _hexMapView.Value);
+            _collectHexTaskGroupFactory = new CollectHexTaskGroupFactory(_map, _hexMapView.Value, _delayBetweenTasks);
             
             _movementSettings.Initialize(_map.Scale);
             _movementPath = new MovementPath(_map, new Path(new MapMovePolicy(_map)), _movementSettings);
@@ -72,10 +73,10 @@ namespace YellowSquad.Anthill.Application
                     _map.PointsOfInterestPositions(PointOfInterestType.Queen)[0],
                     new DefaultAntFactory(_movementPath, _movementSettings, new TaskStore(_wallet)),
                     new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.DiggersHome)
-                        .Select(position => new AntHome(position, _diggerTaskStorage, _homeDelayBetweenFindTasks))
+                        .Select(position => new AntHome(position, _diggerTaskStorage, _delayBetweenHomeFindTask))
                         .ToArray<IHome>()),
                     new HomeList(_homesCapacity, _map, _map.PointsOfInterestPositions(PointOfInterestType.LoadersHome)
-                        .Select(position => new AntHome(position, loaderTaskStorage, _homeDelayBetweenFindTasks))
+                        .Select(position => new AntHome(position, loaderTaskStorage, _delayBetweenHomeFindTask))
                         .ToArray<IHome>())),
                 _diggerView, 
                 _loaderView);
@@ -94,7 +95,7 @@ namespace YellowSquad.Anthill.Application
                 },
             });
 
-            _leafTasksLoop = new LeafTasksLoop(_map, loaderTaskStorage, new CollectPointOfInterestTaskGroupFactory(_map, _hexMapView.Value, _takeLeafTaskPrice));
+            _leafTasksLoop = new LeafTasksLoop(_map, loaderTaskStorage, new CollectPointOfInterestTaskGroupFactory(_map, _hexMapView.Value, _delayBetweenTasks, _takeLeafTaskPrice));
             _camera = Camera.main;
         }
 
