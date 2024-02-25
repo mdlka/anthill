@@ -20,6 +20,7 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private AntView _diggerView;
         [SerializeField] private AntView _loaderView;
         [SerializeField] private MovementSettings _movementSettings;
+        [SerializeField] private TasksProgressView _diggerTasksProgressView;
         [SerializeField, Min(1)] private int _homesCapacity;
         [SerializeField, Min(0)] private float _delayBetweenHomeFindTask;
         [SerializeField, Min(0)] private float _delayBetweenTasks;
@@ -37,6 +38,7 @@ namespace YellowSquad.Anthill.Application
         private LeafTasksLoop _leafTasksLoop;
         private MovementPath _movementPath;
         private MapCellShop _mapCellShop;
+        private ITaskStorage _diggerTaskStorage;
 
         private void Awake()
         {
@@ -51,7 +53,9 @@ namespace YellowSquad.Anthill.Application
             map.Visualize(_hexMapView.Value);
 
             var loaderTaskStorage = new DefaultStorage();
-            var diggerTaskStorage = new DefaultStorage();
+            _diggerTaskStorage = new DefaultStorage();
+            
+            _diggerTasksProgressView.Initialize(map);
 
             _diggerView.Initialize(map.Scale);
             _loaderView.Initialize(map.Scale);
@@ -67,20 +71,20 @@ namespace YellowSquad.Anthill.Application
                     map.PointsOfInterestPositions(PointOfInterestType.Queen)[0],
                     new DefaultAntFactory(_movementPath, _movementSettings, new TaskStore(wallet)),
                     new HomeList(_homesCapacity, map, map.PointsOfInterestPositions(PointOfInterestType.DiggersHome)
-                        .Select(position => new AntHome(position, diggerTaskStorage, _delayBetweenHomeFindTask))
+                        .Select(position => new AntHome(position, _diggerTaskStorage, _delayBetweenHomeFindTask))
                         .ToArray<IHome>()),
                     new HomeList(_homesCapacity, map, map.PointsOfInterestPositions(PointOfInterestType.LoadersHome)
                         .Select(position => new AntHome(position, loaderTaskStorage, _delayBetweenHomeFindTask))
                         .ToArray<IHome>())),
                 _diggerView, 
                 _loaderView);
-
+            
             _mapCellShop = new MapCellShop(wallet, new AlgebraicProgressionPriceList(1, 1));
-            _mapCellCellShopView.Initialize(map, diggerTaskStorage);
+            _mapCellCellShopView.Initialize(map, _diggerTaskStorage);
 
             _inputRoot = new InputRoot(new MouseInput(map), new IClickCommand[]
             {
-                new AddDiggerTaskCommand(diggerTaskStorage, new CollectHexTaskGroupFactory(map, _hexMapView.Value, _delayBetweenTasks), _mapCellShop),
+                new AddDiggerTaskCommand(_diggerTaskStorage, new CollectHexTaskGroupFactory(map, _hexMapView.Value, _delayBetweenTasks), _mapCellShop),
                 new RestoreLeafCommand(map, _hexMapView.Value, wallet, _restoreLeafReward)
             });
 
@@ -107,7 +111,9 @@ namespace YellowSquad.Anthill.Application
             _anthill.Update(Time.deltaTime);
             _inputRoot.Update(Time.deltaTime);
             _leafTasksLoop.Update(Time.deltaTime);
+            
             _mapCellShop.Visualize(_mapCellCellShopView);
+            _diggerTaskStorage.Visualize(_diggerTasksProgressView);
         }
 
 #if UNITY_EDITOR
