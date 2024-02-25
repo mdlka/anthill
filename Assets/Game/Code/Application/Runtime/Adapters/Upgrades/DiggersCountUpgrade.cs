@@ -3,7 +3,7 @@ using YellowSquad.Anthill.Core.Ants;
 using YellowSquad.Anthill.Meta.Shop;
 using YellowSquad.Anthill.Meta.Wallet;
 
-namespace YellowSquad.Anthill.Application
+namespace YellowSquad.Anthill.Application.Adapters
 {
     internal class DiggersCountUpgrade : BaseUpgrade
     {

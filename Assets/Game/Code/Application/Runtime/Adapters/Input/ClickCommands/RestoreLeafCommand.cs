@@ -1,9 +1,10 @@
 ﻿using System;
 using YellowSquad.Anthill.Core.HexMap;
+using YellowSquad.Anthill.Input;
 using YellowSquad.Anthill.Meta.Wallet;
 using YellowSquad.HexMath;
 
-namespace YellowSquad.Anthill.Input
+namespace YellowSquad.Anthill.Application.Adapters
 {
     public class RestoreLeafCommand : IClickCommand
     {
