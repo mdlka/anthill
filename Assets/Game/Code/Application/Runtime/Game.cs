@@ -7,7 +7,8 @@ using YellowSquad.Anthill.Core.AStarPathfinding;
 using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.Anthill.Core.Tasks;
 using YellowSquad.Anthill.Input;
-using YellowSquad.Anthill.Meta;
+using YellowSquad.Anthill.Meta.Shop;
+using YellowSquad.Anthill.Meta.Wallet;
 
 namespace YellowSquad.Anthill.Application
 {
@@ -56,7 +57,7 @@ namespace YellowSquad.Anthill.Application
             _movementSettings.Initialize(map.Scale);
             _movementPath = new MovementPath(map, new Path(new MapMovePolicy(map)), _movementSettings);
             
-            var wallet = new Wallet(_walletView.Value, _startWalletValue);
+            var wallet = new DefaultWallet(_walletView.Value, _startWalletValue);
             wallet.Spend(0); // initialize view
 
             _anthill = new DefaultAnthill(

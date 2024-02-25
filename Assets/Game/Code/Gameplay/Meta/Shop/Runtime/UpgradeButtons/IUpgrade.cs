@@ -1,4 +1,4 @@
-﻿namespace YellowSquad.Anthill.Meta
+﻿namespace YellowSquad.Anthill.Meta.Shop
 {
     public interface IUpgrade
     {

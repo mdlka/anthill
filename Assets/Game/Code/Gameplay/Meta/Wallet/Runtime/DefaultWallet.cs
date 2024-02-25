@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace YellowSquad.Anthill.Meta
+namespace YellowSquad.Anthill.Meta.Wallet
 {
-    public class Wallet : IWallet
+    public class DefaultWallet : IWallet
     {
         private readonly IWalletView _view;
 
-        public Wallet(IWalletView view, int startValue = 0)
+        public DefaultWallet(IWalletView view, int startValue = 0)
         {
             if (startValue < 0)
                 throw new ArgumentOutOfRangeException(nameof(startValue));

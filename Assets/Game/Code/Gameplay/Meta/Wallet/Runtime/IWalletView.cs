@@ -1,4 +1,4 @@
-﻿namespace YellowSquad.Anthill.Meta
+﻿namespace YellowSquad.Anthill.Meta.Wallet
 {
     public interface IWalletView
     {

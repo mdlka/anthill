@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace YellowSquad.Anthill.Meta
+namespace YellowSquad.Anthill.Meta.Shop
 {
     public class Shop : MonoBehaviour
     {

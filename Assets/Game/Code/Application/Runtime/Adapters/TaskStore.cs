@@ -1,5 +1,5 @@
 ﻿using YellowSquad.Anthill.Core.Tasks;
-using YellowSquad.Anthill.Meta;
+using YellowSquad.Anthill.Meta.Wallet;
 
 namespace YellowSquad.Anthill.Application.Adapters
 {

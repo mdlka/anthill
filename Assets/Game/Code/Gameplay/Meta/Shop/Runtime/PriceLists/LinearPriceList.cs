@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace YellowSquad.Anthill.Meta
+namespace YellowSquad.Anthill.Meta.Shop
 {
     internal class LinearPriceList : IPriceList
     {

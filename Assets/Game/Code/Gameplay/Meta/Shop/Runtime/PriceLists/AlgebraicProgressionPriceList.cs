@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace YellowSquad.Anthill.Meta
+namespace YellowSquad.Anthill.Meta.Shop
 {
     public class AlgebraicProgressionPriceList : IPriceList
     {
