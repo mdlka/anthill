@@ -27,7 +27,7 @@ namespace YellowSquad.Anthill.Application
         [Header("Meta settings")] 
         [SerializeField] private UpgradeShop _upgradeShop;
         [SerializeField] private SerializableInterface<IWalletView> _walletView;
-        [SerializeField] private MapShopView _mapShopView;
+        [SerializeField] private MapCellCellShopView _mapCellCellShopView;
         [SerializeField, Min(0)] private int _startWalletValue;
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         [SerializeField, Min(0)] private int _restoreLeafReward;
@@ -75,8 +75,8 @@ namespace YellowSquad.Anthill.Application
                 _diggerView, 
                 _loaderView);
 
-            _mapCellShop = new MapCellShop(wallet);
-            _mapShopView.Initialize(map, diggerTaskStorage);
+            _mapCellShop = new MapCellShop(wallet, new AlgebraicProgressionPriceList(1, 1));
+            _mapCellCellShopView.Initialize(map, diggerTaskStorage);
 
             _inputRoot = new InputRoot(new MouseInput(map), new IClickCommand[]
             {
@@ -107,7 +107,7 @@ namespace YellowSquad.Anthill.Application
             _anthill.Update(Time.deltaTime);
             _inputRoot.Update(Time.deltaTime);
             _leafTasksLoop.Update(Time.deltaTime);
-            _mapCellShop.Visualize(_mapShopView);
+            _mapCellShop.Visualize(_mapCellCellShopView);
         }
 
 #if UNITY_EDITOR

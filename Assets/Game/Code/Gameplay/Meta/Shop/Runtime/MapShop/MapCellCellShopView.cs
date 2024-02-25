@@ -6,7 +6,7 @@ using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Meta.Shop
 {
-    public class MapShopView : MonoBehaviour, IMapShopView
+    public class MapCellCellShopView : MonoBehaviour, IMapCellShopView
     {
         private readonly Dictionary<AxialCoordinate, MapCellPriceView> _views = new();
 

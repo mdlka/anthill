@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 84440730}
   - component: {fileID: 84440729}
   m_Layer: 0
-  m_Name: MapShop
+  m_Name: MapCellShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1155,7 +1155,7 @@ MonoBehaviour:
     unityReference: {fileID: 156643196}
     rawReference:
       rid: -2
-  _mapShopView: {fileID: 84440729}
+  _mapCellCellShopView: {fileID: 84440729}
   _startWalletValue: 999999
   _takeLeafTaskPrice: 3
   _restoreLeafReward: 300

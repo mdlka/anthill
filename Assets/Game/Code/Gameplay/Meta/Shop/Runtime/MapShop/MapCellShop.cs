@@ -6,27 +6,30 @@ namespace YellowSquad.Anthill.Meta.Shop
     public class MapCellShop
     {
         private readonly IWallet _wallet;
-        private int _currentCellPrice;
+        private readonly IPriceList _priceList;
 
-        public MapCellShop(IWallet wallet)
+        public MapCellShop(IWallet wallet, IPriceList priceList)
         {
             _wallet = wallet;
+            _priceList = priceList;
         }
 
-        public bool CanBuyCell => _wallet.CanSpend(_currentCellPrice);
+        public bool CanBuyCell => _wallet.CanSpend(_priceList.CurrentPrice);
 
         public void Buy()
         {
             if (CanBuyCell == false)
                 throw new InvalidOperationException();
             
-            _wallet.Spend(_currentCellPrice);
-            _currentCellPrice += 1;
+            _wallet.Spend(_priceList.CurrentPrice);
+            
+            if (_priceList.HasNext)
+                _priceList.Next();
         }
 
-        public void Visualize(IMapShopView view)
+        public void Visualize(IMapCellShopView view)
         {
-            view.Render(CanBuyCell, _currentCellPrice);
+            view.Render(CanBuyCell, _priceList.CurrentPrice);
         }
     }
 }
