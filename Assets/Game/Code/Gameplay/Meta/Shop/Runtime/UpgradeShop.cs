@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace YellowSquad.Anthill.Meta.Shop
 {
-    public class Shop : MonoBehaviour
+    public class UpgradeShop : MonoBehaviour
     {
         [SerializeField] private UpgradeButton _upgradeButtonTemplate;
         [SerializeField] private Transform _buttonsContent;

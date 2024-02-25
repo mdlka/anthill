@@ -26,9 +26,9 @@ namespace YellowSquad.Anthill.Application
         [SerializeField, Min(0)] private float _delayBetweenTasks;
 
         [Header("Meta settings")] 
-        [SerializeField] private Shop _shop;
+        [SerializeField] private UpgradeShop _upgradeShop;
         [SerializeField] private SerializableInterface<IWalletView> _walletView;
-        [SerializeField] private MapPriceView _mapPriceView;
+        [SerializeField] private MapShopView _mapShopView;
         [SerializeField, Min(0)] private int _startWalletValue;
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         [SerializeField, Min(0)] private int _restoreLeafReward;
@@ -37,7 +37,7 @@ namespace YellowSquad.Anthill.Application
         private InputRoot _inputRoot;
         private LeafTasksLoop _leafTasksLoop;
         private MovementPath _movementPath;
-        private MapPrice _mapPrice;
+        private MapCellShop _mapCellShop;
 
         private void Awake()
         {
@@ -76,19 +76,19 @@ namespace YellowSquad.Anthill.Application
                 _diggerView, 
                 _loaderView);
 
-            _mapPrice = new MapPrice(wallet);
-            _mapPriceView.Initialize(map);
+            _mapCellShop = new MapCellShop(wallet);
+            _mapShopView.Initialize(map, diggerTaskStorage);
 
             _inputRoot = new InputRoot(new MouseInput(map), new IClickCommand[]
             {
-                new AddDiggerTaskCommand(diggerTaskStorage, new CollectHexTaskGroupFactory(map, _hexMapView.Value, _delayBetweenTasks)),
+                new AddDiggerTaskCommand(diggerTaskStorage, new CollectHexTaskGroupFactory(map, _hexMapView.Value, _delayBetweenTasks), _mapCellShop),
                 new RestoreLeafCommand(map, _hexMapView.Value, wallet, _restoreLeafReward)
             });
 
             _leafTasksLoop = new LeafTasksLoop(map, loaderTaskStorage, 
                 new CollectPointOfInterestTaskGroupFactory(map, _hexMapView.Value, _delayBetweenTasks, _takeLeafTaskPrice));
             
-            _shop.Initialize(new[]
+            _upgradeShop.Initialize(new[]
             {
                 new UpgradeButtonDTO
                 {
@@ -108,7 +108,7 @@ namespace YellowSquad.Anthill.Application
             _anthill.Update(Time.deltaTime);
             _inputRoot.Update(Time.deltaTime);
             _leafTasksLoop.Update(Time.deltaTime);
-            _mapPrice.Visualize(_mapPriceView);
+            _mapCellShop.Visualize(_mapShopView);
         }
 
 #if UNITY_EDITOR

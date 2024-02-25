@@ -1,6 +1,7 @@
 ﻿using System;
 using YellowSquad.Anthill.Core.Tasks;
 using YellowSquad.Anthill.Input;
+using YellowSquad.Anthill.Meta.Map;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Application.Adapters
@@ -9,16 +10,19 @@ namespace YellowSquad.Anthill.Application.Adapters
     {
         private readonly ITaskStorage _diggerTaskStorage;
         private readonly ITaskGroupFactory _collectHexTaskGroupFactory;
+        private readonly MapCellShop _mapCellShop;
 
-        public AddDiggerTaskCommand(ITaskStorage diggerTaskStorage, ITaskGroupFactory collectHexTaskGroupFactory)
+        public AddDiggerTaskCommand(ITaskStorage diggerTaskStorage, ITaskGroupFactory collectHexTaskGroupFactory, MapCellShop mapCellShop)
         {
             _diggerTaskStorage = diggerTaskStorage;
             _collectHexTaskGroupFactory = collectHexTaskGroupFactory;
+            _mapCellShop = mapCellShop;
         }
 
         public bool CanExecute(AxialCoordinate position)
         {
-            return _diggerTaskStorage.HasTaskGroupIn(position) == false &&
+            return _mapCellShop.CanBuyCell &&
+                   _diggerTaskStorage.HasTaskGroupIn(position) == false &&
                    _collectHexTaskGroupFactory.CanCreate(position);
         }
 
@@ -28,6 +32,7 @@ namespace YellowSquad.Anthill.Application.Adapters
                 throw new InvalidOperationException();
             
             _diggerTaskStorage.AddTaskGroup(_collectHexTaskGroupFactory.Create(position));
+            _mapCellShop.Buy();
         }
     }
 }

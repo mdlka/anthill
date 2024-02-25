@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using YellowSquad.Anthill.Core.HexMap;
+using YellowSquad.Anthill.Core.Tasks;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Meta.Map
 {
-    public class MapPriceView : MonoBehaviour, IMapPriceView
+    public class MapShopView : MonoBehaviour, IMapShopView
     {
         private readonly Dictionary<AxialCoordinate, MapCellPriceView> _views = new();
 
@@ -14,17 +15,19 @@ namespace YellowSquad.Anthill.Meta.Map
         [SerializeField] private Vector3 _cellPriceViewOffset;
 
         private IHexMap _map;
+        private ITaskStorage _taskStorage;
         
-        public void Initialize(IHexMap map)
+        public void Initialize(IHexMap map, ITaskStorage taskStorage)
         {
             _map = map;
+            _taskStorage = taskStorage;
         }
         
         public void Render(bool canBuyCell, int currentPrice)
         {
             foreach (var position in _map.Positions)
             {
-                if (_map.HexFrom(position).HasParts && _map.IsClosed(position) == false)
+                if (_taskStorage.HasTaskGroupIn(position) == false && _map.HexFrom(position).HasParts && _map.IsClosed(position) == false)
                 {
                     if (_views.ContainsKey(position) == false)
                         _views.Add(position, Instantiate(_cellPriceViewTemplate, position.ToVector3(_map.Scale) + _cellPriceViewOffset, 

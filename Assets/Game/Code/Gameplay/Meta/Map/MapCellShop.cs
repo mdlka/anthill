@@ -1,25 +1,30 @@
+using System;
 using YellowSquad.Anthill.Meta.Wallet;
 
 namespace YellowSquad.Anthill.Meta.Map
 {
-    public class MapPrice
+    public class MapCellShop
     {
         private readonly IWallet _wallet;
         private int _currentCellPrice;
 
-        public MapPrice(IWallet wallet)
+        public MapCellShop(IWallet wallet)
         {
             _wallet = wallet;
         }
 
         public bool CanBuyCell => _wallet.CanSpend(_currentCellPrice);
 
-        public void Next()
+        public void Buy()
         {
+            if (CanBuyCell == false)
+                throw new InvalidOperationException();
+            
+            _wallet.Spend(_currentCellPrice);
             _currentCellPrice += 1;
         }
 
-        public void Visualize(IMapPriceView view)
+        public void Visualize(IMapShopView view)
         {
             view.Render(CanBuyCell, _currentCellPrice);
         }

@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 84440730}
   - component: {fileID: 84440729}
   m_Layer: 0
-  m_Name: MapPrice
+  m_Name: MapShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1051,7 +1051,7 @@ GameObject:
   - component: {fileID: 1280016497}
   - component: {fileID: 1280016496}
   m_Layer: 5
-  m_Name: Shop
+  m_Name: UpgradeShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1149,13 +1149,13 @@ MonoBehaviour:
   _homesCapacity: 100
   _delayBetweenHomeFindTask: 0.05
   _delayBetweenTasks: 0.15
-  _shop: {fileID: 1280016496}
+  _upgradeShop: {fileID: 1280016496}
   _walletView:
     mode: 0
     unityReference: {fileID: 156643196}
     rawReference:
       rid: -2
-  _mapPriceView: {fileID: 84440729}
+  _mapShopView: {fileID: 84440729}
   _startWalletValue: 999999
   _takeLeafTaskPrice: 3
   _restoreLeafReward: 300
