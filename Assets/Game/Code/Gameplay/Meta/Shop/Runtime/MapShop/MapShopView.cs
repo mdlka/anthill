@@ -4,7 +4,7 @@ using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.Anthill.Core.Tasks;
 using YellowSquad.HexMath;
 
-namespace YellowSquad.Anthill.Meta.Map
+namespace YellowSquad.Anthill.Meta.Shop
 {
     public class MapShopView : MonoBehaviour, IMapShopView
     {

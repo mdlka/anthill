@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace YellowSquad.Anthill.Meta.Map
+namespace YellowSquad.Anthill.Meta.Shop
 {
     internal class MapCellPriceView : MonoBehaviour
     {

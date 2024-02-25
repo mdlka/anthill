@@ -1,7 +1,7 @@
 using System;
 using YellowSquad.Anthill.Meta.Wallet;
 
-namespace YellowSquad.Anthill.Meta.Map
+namespace YellowSquad.Anthill.Meta.Shop
 {
     public class MapCellShop
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using YellowSquad.Anthill.Core.Tasks;
 using YellowSquad.Anthill.Input;
-using YellowSquad.Anthill.Meta.Map;
+using YellowSquad.Anthill.Meta.Shop;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Application.Adapters

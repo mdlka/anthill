@@ -1,4 +1,4 @@
-﻿namespace YellowSquad.Anthill.Meta.Map
+﻿namespace YellowSquad.Anthill.Meta.Shop
 {
     public interface IMapShopView
     {
