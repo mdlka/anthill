@@ -8,9 +8,9 @@ namespace YellowSquad.Anthill.Meta.Shop
         [SerializeField] private TMP_Text _priceText;
         [SerializeField] private string _prefix;
         
-        public void Render(bool canBuyCell, int currentPrice)
+        public void Render(int currentPrice, Color color)
         {
-            _priceText.color = canBuyCell ? Color.green : Color.red;
+            _priceText.color = color;
             _priceText.text = $"{_prefix}{currentPrice.ToString()}";
         }
     }

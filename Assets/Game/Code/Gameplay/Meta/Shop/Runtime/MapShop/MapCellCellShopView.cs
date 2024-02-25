@@ -33,7 +33,7 @@ namespace YellowSquad.Anthill.Meta.Shop
                         _views.Add(position, Instantiate(_cellPriceViewTemplate, position.ToVector3(_map.Scale) + _cellPriceViewOffset, 
                             _cellPriceViewTemplate.transform.rotation, _cellPriceViewContent));
                     
-                    _views[position].Render(canBuyCell, currentPrice);
+                    _views[position].Render(currentPrice, canBuyCell ? Color.green : Color.gray);
                 }
                 else
                 {
