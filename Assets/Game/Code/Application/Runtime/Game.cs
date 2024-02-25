@@ -7,6 +7,7 @@ using YellowSquad.Anthill.Core.AStarPathfinding;
 using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.Anthill.Core.Tasks;
 using YellowSquad.Anthill.Input;
+using YellowSquad.Anthill.Meta.Map;
 using YellowSquad.Anthill.Meta.Shop;
 using YellowSquad.Anthill.Meta.Wallet;
 
@@ -27,6 +28,7 @@ namespace YellowSquad.Anthill.Application
         [Header("Meta settings")] 
         [SerializeField] private Shop _shop;
         [SerializeField] private SerializableInterface<IWalletView> _walletView;
+        [SerializeField] private MapPriceView _mapPriceView;
         [SerializeField, Min(0)] private int _startWalletValue;
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         [SerializeField, Min(0)] private int _restoreLeafReward;
@@ -35,6 +37,7 @@ namespace YellowSquad.Anthill.Application
         private InputRoot _inputRoot;
         private LeafTasksLoop _leafTasksLoop;
         private MovementPath _movementPath;
+        private MapPrice _mapPrice;
 
         private void Awake()
         {
@@ -73,6 +76,9 @@ namespace YellowSquad.Anthill.Application
                 _diggerView, 
                 _loaderView);
 
+            _mapPrice = new MapPrice(wallet);
+            _mapPriceView.Initialize(map);
+
             _inputRoot = new InputRoot(new MouseInput(map), new IClickCommand[]
             {
                 new AddDiggerTaskCommand(diggerTaskStorage, new CollectHexTaskGroupFactory(map, _hexMapView.Value, _delayBetweenTasks)),
@@ -102,6 +108,7 @@ namespace YellowSquad.Anthill.Application
             _anthill.Update(Time.deltaTime);
             _inputRoot.Update(Time.deltaTime);
             _leafTasksLoop.Update(Time.deltaTime);
+            _mapPrice.Visualize(_mapPriceView);
         }
 
 #if UNITY_EDITOR

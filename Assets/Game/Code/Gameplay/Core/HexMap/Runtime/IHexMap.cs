@@ -8,6 +8,8 @@ namespace YellowSquad.Anthill.Core.HexMap
     {
         float Scale { get; }
         
+        IEnumerable<AxialCoordinate> Positions { get; }
+
         bool HasPosition(AxialCoordinate position);
         bool HasObstacleIn(AxialCoordinate position);
         bool IsClosed(AxialCoordinate position);

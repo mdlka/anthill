@@ -21,6 +21,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         }
 
         public float Scale => _scale;
+        public IEnumerable<AxialCoordinate> Positions => _cells.Keys;
 
         public bool HasPosition(AxialCoordinate position)
         {

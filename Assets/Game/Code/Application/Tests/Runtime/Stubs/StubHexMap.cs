@@ -16,7 +16,8 @@ namespace YellowSquad.Anthill.Application.Tests
         }
 
         public float Scale => 1f;
-        
+        public IEnumerable<AxialCoordinate> Positions { get; }
+
         public bool HasPosition(AxialCoordinate position)
         {
             return _mapWithObstacles.ContainsKey(position);
