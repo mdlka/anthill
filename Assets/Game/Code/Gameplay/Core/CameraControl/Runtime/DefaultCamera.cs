@@ -25,12 +25,8 @@ namespace YellowSquad.Anthill.Core.CameraControl
         
         public void Move(Vector2 delta)
         {
-            Vector3 newCameraPosition = _camera.transform.position + new Vector3(delta.x, 0, delta.y);
-
-            newCameraPosition.x = Mathf.Clamp(newCameraPosition.x, _cameraBounds.min.x, _cameraBounds.max.x);
-            newCameraPosition.z = Mathf.Clamp(newCameraPosition.z, _cameraBounds.min.z, _cameraBounds.max.z);
-            
-            _camera.transform.position = newCameraPosition;
+            var newCameraPosition = _camera.transform.position + new Vector3(delta.x, 0, delta.y);
+            _camera.transform.position = ClampCameraPosition(newCameraPosition);
         }
 
         public void Zoom(float delta, Func<Vector2> cursorPosition)
@@ -39,14 +35,18 @@ namespace YellowSquad.Anthill.Core.CameraControl
             
             _currentZoom = Mathf.Clamp01(_currentZoom + delta * _zoomSpeed);
             _camera.orthographicSize = Mathf.Lerp(_zoomLimits.Min, _zoomLimits.Max, _currentZoom);
-
+            
             var cursorWorldPositionAfterZoom = _camera.ScreenToWorldPoint(cursorPosition.Invoke());
-            var positionDiff = cursorWorldPositionBeforeZoom - cursorWorldPositionAfterZoom;
+            
+            _camera.transform.position = ClampCameraPosition(_camera.transform.position + cursorWorldPositionBeforeZoom - cursorWorldPositionAfterZoom);
+        }
 
-            var cameraPosition = _camera.transform.position;
-            var targetPosition = new Vector3(cameraPosition.x + positionDiff.x, cameraPosition.y + positionDiff.y, cameraPosition.z);
+        private Vector3 ClampCameraPosition(Vector3 position)
+        {
+            position.x = Mathf.Clamp(position.x, _cameraBounds.min.x, _cameraBounds.max.x);
+            position.z = Mathf.Clamp(position.z, _cameraBounds.min.z, _cameraBounds.max.z);
 
-            _camera.transform.position = targetPosition;
+            return position;
         }
     }
 }
