@@ -13,12 +13,14 @@ namespace YellowSquad.Anthill.Input
         private readonly Camera _camera;
         private readonly List<RaycastResult> _raycastResults = new();
         
-        public MouseInput(IHexMap map)
+        public MouseInput(IHexMap map, Camera camera)
         {
             _map = map;
-            _camera = Camera.main;
+            _camera = camera;
         }
-        
+
+        public Vector2 CursorPosition => UnityEngine.Input.mousePosition;
+
         public bool ClickedOnOpenMapPosition(out AxialCoordinate position)
         {
             position = default;
@@ -36,7 +38,18 @@ namespace YellowSquad.Anthill.Input
 
             return _map.HasPosition(position) && _map.IsClosed(position) == false;
         }
-        
+
+        public bool Zoomed(out float delta)
+        {
+            delta = 0f;
+            
+            if (UnityEngine.Input.mouseScrollDelta.y == 0)
+                return false;
+
+            delta = UnityEngine.Input.mouseScrollDelta.y;
+            return true;
+        }
+
         private bool IsPointerOverUIObject(Vector2 inputPosition)
         {
             var eventDataCurrentPosition = new PointerEventData(EventSystem.current) { position = inputPosition };

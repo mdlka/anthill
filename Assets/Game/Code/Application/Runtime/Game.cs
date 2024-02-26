@@ -4,6 +4,7 @@ using UnityEngine;
 using YellowSquad.Anthill.Application.Adapters;
 using YellowSquad.Anthill.Core.Ants;
 using YellowSquad.Anthill.Core.AStarPathfinding;
+using YellowSquad.Anthill.Core.CameraControl;
 using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.Anthill.Core.Tasks;
 using YellowSquad.Anthill.Input;
@@ -32,7 +33,7 @@ namespace YellowSquad.Anthill.Application
         [SerializeField, Min(0)] private int _startWalletValue;
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         [SerializeField, Min(0)] private int _restoreLeafReward;
-
+        
         private IAnthill _anthill;
         private InputRoot _inputRoot;
         private LeafTasksLoop _leafTasksLoop;
@@ -82,11 +83,14 @@ namespace YellowSquad.Anthill.Application
             _mapCellShop = new MapCellShop(wallet, new AlgebraicProgressionPriceList(1, 1));
             _mapCellCellShopView.Initialize(map, _diggerTaskStorage);
 
-            _inputRoot = new InputRoot(new MouseInput(map), new IClickCommand[]
-            {
-                new AddDiggerTaskCommand(_diggerTaskStorage, new CollectHexTaskGroupFactory(map, _hexMapView.Value, _delayBetweenTasks), _mapCellShop),
-                new RestoreLeafCommand(map, _hexMapView.Value, wallet, _restoreLeafReward)
-            });
+            _inputRoot = new InputRoot(new MouseInput(map, Camera.main), 
+                new DefaultCamera(Camera.main, new Bounds(Vector3.zero, Vector3.one * 100f), new MinMaxFloat(1f, 10f), 10f), 
+                new IClickCommand[]
+                {
+                    new AddDiggerTaskCommand(_diggerTaskStorage, new CollectHexTaskGroupFactory(map, _hexMapView.Value, 
+                        _delayBetweenTasks), _mapCellShop),
+                    new RestoreLeafCommand(map, _hexMapView.Value, wallet, _restoreLeafReward)
+                });
 
             _leafTasksLoop = new LeafTasksLoop(map, loaderTaskStorage, 
                 new CollectPointOfInterestTaskGroupFactory(map, _hexMapView.Value, _delayBetweenTasks, _takeLeafTaskPrice));
