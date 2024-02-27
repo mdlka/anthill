@@ -84,7 +84,7 @@ namespace YellowSquad.Anthill.Application
             _mapCellCellShopView.Initialize(map, _diggerTaskStorage);
 
             _inputRoot = new InputRoot(new MouseInput(map, Camera.main), 
-                new DefaultCamera(Camera.main, new Bounds(Vector3.zero, Vector3.one * 100f), new MinMaxFloat(1f, 10f), 10f), 
+                new DefaultCamera(Camera.main, new Bounds(Vector3.zero, Vector3.one * 20f), new MinMaxFloat(1f, 10f), 10f), 
                 new IClickCommand[]
                 {
                     new AddDiggerTaskCommand(_diggerTaskStorage, new CollectHexTaskGroupFactory(map, _hexMapView.Value, 

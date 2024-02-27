@@ -1,4 +1,5 @@
-﻿using YellowSquad.Anthill.Core.CameraControl;
+﻿using UnityEngine;
+using YellowSquad.Anthill.Core.CameraControl;
 using YellowSquad.GameLoop;
 using YellowSquad.HexMath;
 
@@ -19,8 +20,13 @@ namespace YellowSquad.Anthill.Input
 
         public void Update(float deltaTime)
         {
-            if (_input.Zoomed(out float delta))
-                _camera.Zoom(-delta * deltaTime, () => _input.CursorPosition);
+            _input.Update(deltaTime);
+            
+            if (_input.Zoomed(out float zoomDelta))
+                _camera.Zoom(-zoomDelta * deltaTime, () => _input.CursorPosition);
+            
+            if (_input.Moved(out Vector2 moveDelta))
+                _camera.Move(moveDelta);
             
             if (_input.ClickedOnOpenMapPosition(out AxialCoordinate clickPosition) == false)
                 return;

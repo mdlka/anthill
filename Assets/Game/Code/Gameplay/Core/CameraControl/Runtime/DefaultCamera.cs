@@ -5,6 +5,8 @@ namespace YellowSquad.Anthill.Core.CameraControl
 {
     public class DefaultCamera : ICamera
     {
+        private const float SizeFactor = 0.1f * 0.2f;
+        
         private readonly Camera _camera;
         private readonly Bounds _cameraBounds;
         private readonly MinMaxFloat _zoomLimits;
@@ -25,8 +27,8 @@ namespace YellowSquad.Anthill.Core.CameraControl
         
         public void Move(Vector2 delta)
         {
-            var newCameraPosition = _camera.transform.position + new Vector3(delta.x, 0, delta.y);
-            _camera.transform.position = ClampCameraPosition(newCameraPosition);
+            var modifiedDelta = new Vector3(delta.x, 0, delta.y) * (_camera.aspect * _camera.orthographicSize * SizeFactor);
+            _camera.transform.position = ClampCameraPosition(_camera.transform.position + modifiedDelta);
         }
 
         public void Zoom(float delta, Func<Vector2> cursorPosition)
