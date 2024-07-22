@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using YellowSquad.Utils;
 
 namespace YellowSquad.Anthill.Core.CameraControl
 {

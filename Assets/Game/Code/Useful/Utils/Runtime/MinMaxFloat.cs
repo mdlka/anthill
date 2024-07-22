@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace YellowSquad.Anthill.Core.CameraControl
+namespace YellowSquad.Utils
 {
     [Serializable]
     public struct MinMaxFloat

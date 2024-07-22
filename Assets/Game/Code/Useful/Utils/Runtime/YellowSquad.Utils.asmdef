@@ -1,9 +1,7 @@
 {
-    "name": "YellowSquad.Anthill.Core.CameraControl",
-    "rootNamespace": "YellowSquad.Anthill.Core.CameraControl",
-    "references": [
-        "GUID:4c8c451c440a8f84bb108515d2960a35"
-    ],
+    "name": "YellowSquad.Utils",
+    "rootNamespace": "YellowSquad.Utils",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
