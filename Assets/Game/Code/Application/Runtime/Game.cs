@@ -21,6 +21,7 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private AntView _diggerView;
         [SerializeField] private AntView _loaderView;
         [SerializeField] private MovementSettings _movementSettings;
+        [SerializeField] private CameraSettings _cameraSettings;
         [SerializeField] private TasksProgressView _diggerTasksProgressView;
         [SerializeField, Min(1)] private int _homesCapacity;
         [SerializeField, Min(0)] private float _delayBetweenHomeFindTask;
@@ -84,7 +85,7 @@ namespace YellowSquad.Anthill.Application
             _mapCellCellShopView.Initialize(map, _diggerTaskStorage);
 
             _inputRoot = new InputRoot(new MouseInput(map, Camera.main), 
-                new DefaultCamera(Camera.main, new Bounds(Vector3.zero, Vector3.one * 20f), new MinMaxFloat(1f, 10f), 10f), 
+                new DefaultCamera(Camera.main, _cameraSettings), 
                 new IClickCommand[]
                 {
                     new AddDiggerTaskCommand(_diggerTaskStorage, new CollectHexTaskGroupFactory(map, _hexMapView.Value, 
@@ -124,6 +125,7 @@ namespace YellowSquad.Anthill.Application
         private void OnDrawGizmos()
         {
             _movementPath?.OnDrawGizmos();
+            _cameraSettings?.OnDrawGizmos();
         }
 #endif
     }

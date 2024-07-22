@@ -18,8 +18,8 @@ MonoBehaviour:
   _targetLeafMesh: {fileID: 11400000, guid: 06c2e4d9b9a28c547a46431015c6cbf3, type: 2}
   _targetLeafHardness: 0
   _currentHexEmpty: 0
-  _currentHexHardness: 2
-  _currentPointOfInterest: 3
+  _currentHexHardness: 1
+  _currentPointOfInterest: 0
   _hexes:
   - _empty: 0
     _hardness: 1
@@ -260,12 +260,6 @@ MonoBehaviour:
     _pointOfInterestType: 0
     _position:
       <Q>k__BackingField: 4
-      <R>k__BackingField: -2
-  - _empty: 0
-    _hardness: 1
-    _pointOfInterestType: 0
-    _position:
-      <Q>k__BackingField: 4
       <R>k__BackingField: -1
   - _empty: 0
     _hardness: 1
@@ -387,3 +381,9 @@ MonoBehaviour:
     _position:
       <Q>k__BackingField: 1
       <R>k__BackingField: 2
+  - _empty: 0
+    _hardness: 1
+    _pointOfInterestType: 0
+    _position:
+      <Q>k__BackingField: 4
+      <R>k__BackingField: -2

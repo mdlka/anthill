@@ -115,7 +115,7 @@ namespace YellowSquad.Anthill.Core.HexMap.Editor
         {
             var labelStyle = new GUIStyle();
             labelStyle.fontSize = Mathf.Clamp((int)(100 / HandleUtility.GUIPointToWorldRay(Event.current.mousePosition).origin.y 
-                                                    * _customMapFactory.MapScale), 5, 12);
+                                                    * _customMapFactory.MapScale), 8, 16);
             labelStyle.fontStyle = fontStyle;
                 
             Handles.Label(position, text, labelStyle);

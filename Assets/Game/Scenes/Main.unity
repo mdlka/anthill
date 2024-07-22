@@ -1114,6 +1114,7 @@ MonoBehaviour:
   _diggerView: {fileID: 2047135644}
   _loaderView: {fileID: 1781903084}
   _movementSettings: {fileID: 11400000, guid: bf38443a5993f32458b3518bc57bc474, type: 2}
+  _cameraSettings: {fileID: 11400000, guid: 101bcffc143aa6245ac82e1971dd5b19, type: 2}
   _diggerTasksProgressView: {fileID: 1616363467}
   _homesCapacity: 100
   _delayBetweenHomeFindTask: 0.05

@@ -8,21 +8,17 @@ namespace YellowSquad.Anthill.Core.CameraControl
         private const float SizeFactor = 0.1f * 0.2f;
         
         private readonly Camera _camera;
-        private readonly Bounds _cameraBounds;
-        private readonly MinMaxFloat _zoomLimits;
-        private readonly float _zoomSpeed;
+        private readonly CameraSettings _settings;
 
         private float _currentZoom;
 
-        public DefaultCamera(Camera camera, Bounds cameraBounds, MinMaxFloat zoomLimits, float zoomSpeed)
+        public DefaultCamera(Camera camera, CameraSettings settings)
         {
             _camera = camera;
-            _cameraBounds = cameraBounds;
-            _zoomLimits = zoomLimits;
-            _zoomSpeed = zoomSpeed;
+            _settings = settings;
 
-            _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, _zoomLimits.Min, _zoomLimits.Max);
-            _currentZoom = _camera.orthographicSize / _zoomLimits.Max;
+            _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, _settings.ZoomLimits.Min, _settings.ZoomLimits.Max);
+            _currentZoom = _camera.orthographicSize / _settings.ZoomLimits.Max;
         }
         
         public void Move(Vector2 delta)
@@ -35,8 +31,8 @@ namespace YellowSquad.Anthill.Core.CameraControl
         {
             var cursorWorldPositionBeforeZoom = _camera.ScreenToWorldPoint(cursorPosition.Invoke());
             
-            _currentZoom = Mathf.Clamp01(_currentZoom + delta * _zoomSpeed);
-            _camera.orthographicSize = Mathf.Lerp(_zoomLimits.Min, _zoomLimits.Max, _currentZoom);
+            _currentZoom = Mathf.Clamp01(_currentZoom + delta * _settings.ZoomSpeed);
+            _camera.orthographicSize = Mathf.Lerp(_settings.ZoomLimits.Min, _settings.ZoomLimits.Max, _currentZoom);
             
             var cursorWorldPositionAfterZoom = _camera.ScreenToWorldPoint(cursorPosition.Invoke());
             
@@ -45,8 +41,8 @@ namespace YellowSquad.Anthill.Core.CameraControl
 
         private Vector3 ClampCameraPosition(Vector3 position)
         {
-            position.x = Mathf.Clamp(position.x, _cameraBounds.min.x, _cameraBounds.max.x);
-            position.z = Mathf.Clamp(position.z, _cameraBounds.min.z, _cameraBounds.max.z);
+            position.x = Mathf.Clamp(position.x, _settings.Bounds.min.x, _settings.Bounds.max.x);
+            position.z = Mathf.Clamp(position.z, _settings.Bounds.min.z, _settings.Bounds.max.z);
 
             return position;
         }
