@@ -17,6 +17,7 @@ MonoBehaviour:
   _targetHexMesh: {fileID: 11400000, guid: 7efc4a6fdc1f8a44d86911f66544d147, type: 2}
   _targetLeafMesh: {fileID: 11400000, guid: 06c2e4d9b9a28c547a46431015c6cbf3, type: 2}
   _targetLeafHardness: 0
+  _textScaleFactor: 1
   _currentHexEmpty: 0
   _currentHexHardness: 1
   _currentPointOfInterest: 0

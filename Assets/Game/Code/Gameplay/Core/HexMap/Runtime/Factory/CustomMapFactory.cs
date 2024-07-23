@@ -17,13 +17,15 @@ namespace YellowSquad.Anthill.Core.HexMap
         [Header("Points of interest")]
         [SerializeField] private PointOfInterestMesh _targetLeafMesh;
         [SerializeField] private Hardness _targetLeafHardness;
-        [Header("Editor settings")]
+        [Header("Editor settings")] 
+        [SerializeField, Min(0.0001f)] private float _textScaleFactor;
         [SerializeField] private bool _currentHexEmpty;
         [SerializeField] private Hardness _currentHexHardness;
         [SerializeField] private PointOfInterestType _currentPointOfInterest;
         [SerializeField] private List<EditorMapHex> _hexes;
         
         internal float MapScale => _mapScale;
+        internal float TextScaleFactor => _textScaleFactor;
         internal IEnumerable<EditorMapHex> Hexes => _hexes;
 
         public override IHexMap Create()

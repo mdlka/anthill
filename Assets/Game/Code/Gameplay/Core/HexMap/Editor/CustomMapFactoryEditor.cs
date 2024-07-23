@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using YellowSquad.HexMath;
@@ -114,8 +113,7 @@ namespace YellowSquad.Anthill.Core.HexMap.Editor
         private void DrawText(string text, Vector3 position, FontStyle fontStyle = FontStyle.Bold)
         {
             var labelStyle = new GUIStyle();
-            labelStyle.fontSize = Mathf.Clamp((int)(100 / HandleUtility.GUIPointToWorldRay(Event.current.mousePosition).origin.y 
-                                                    * _customMapFactory.MapScale), 8, 16);
+            labelStyle.fontSize = CalculateFontSize();
             labelStyle.fontStyle = fontStyle;
                 
             Handles.Label(position, text, labelStyle);
@@ -128,6 +126,16 @@ namespace YellowSquad.Anthill.Core.HexMap.Editor
                 { normal = { background = Texture2D.grayTexture } };
 
             return _currentEditState == state ? selectedButtonStyle : normalButtonStyle;
+        }
+
+        private int CalculateFontSize()
+        {
+            const int minSize = 6;
+            const int maxSize = 12;
+            
+            return Mathf.Clamp((int)(100 / HandleUtility.GUIPointToWorldRay(Event.current.mousePosition).origin.y * _customMapFactory.MapScale), 
+                (int)(minSize * _customMapFactory.TextScaleFactor), 
+                (int)(maxSize * _customMapFactory.TextScaleFactor));
         }
 
         private enum EditState
