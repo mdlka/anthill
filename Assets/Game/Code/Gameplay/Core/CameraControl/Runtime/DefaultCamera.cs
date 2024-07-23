@@ -8,9 +8,9 @@ namespace YellowSquad.Anthill.Core.CameraControl
     {
         private readonly Camera _camera;
         private readonly CameraSettings _settings;
+        private readonly float _defaultPositionY;
 
         private Vector3 _startMovePosition;
-        private float _defaultPositionY;
         private float _currentZoom;
 
         public DefaultCamera(Camera camera, CameraSettings settings)
