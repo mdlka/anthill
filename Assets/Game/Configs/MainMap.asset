@@ -19,8 +19,8 @@ MonoBehaviour:
   _targetLeafHardness: 0
   _textScaleFactor: 1
   _currentHexEmpty: 0
-  _currentHexHardness: 1
-  _currentPointOfInterest: 0
+  _currentHexHardness: 2
+  _currentPointOfInterest: 4
   _hexes:
   - _empty: 0
     _hardness: 1
@@ -388,3 +388,27 @@ MonoBehaviour:
     _position:
       <Q>k__BackingField: 4
       <R>k__BackingField: -2
+  - _empty: 0
+    _hardness: 1
+    _pointOfInterestType: 0
+    _position:
+      <Q>k__BackingField: 5
+      <R>k__BackingField: -2
+  - _empty: 0
+    _hardness: 1
+    _pointOfInterestType: 0
+    _position:
+      <Q>k__BackingField: 6
+      <R>k__BackingField: -3
+  - _empty: 0
+    _hardness: 1
+    _pointOfInterestType: 0
+    _position:
+      <Q>k__BackingField: 7
+      <R>k__BackingField: -3
+  - _empty: 0
+    _hardness: 2
+    _pointOfInterestType: 4
+    _position:
+      <Q>k__BackingField: 8
+      <R>k__BackingField: -4
