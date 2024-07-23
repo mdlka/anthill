@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using YellowSquad.Utils;
 
 namespace YellowSquad.Anthill.Core.CameraControl
 {
@@ -16,7 +17,7 @@ namespace YellowSquad.Anthill.Core.CameraControl
             _camera = camera;
             _settings = settings;
 
-            _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, _settings.ZoomLimits.Min, _settings.ZoomLimits.Max);
+            _camera.orthographicSize = _settings.ZoomLimits.Clamp(_camera.orthographicSize);
             _currentZoom = _camera.orthographicSize / _settings.ZoomLimits.Max;
         }
 
