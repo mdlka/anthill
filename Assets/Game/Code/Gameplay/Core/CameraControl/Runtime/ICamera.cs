@@ -6,9 +6,11 @@ namespace YellowSquad.Anthill.Core.CameraControl
     public interface ICamera
     {
         Vector3 Position { get; }
+
+        void StartMove(Vector2 pointerPosition);
+        void Move(Vector2 pointerPosition);
         
-        void Move(Vector2 delta);
-        void Zoom(float delta, Func<Vector2> cursorPosition);
+        void Zoom(float delta, Func<Vector2> pointerPosition);
 
         Vector3 ScreenToWorldPoint(Vector3 position);
     }

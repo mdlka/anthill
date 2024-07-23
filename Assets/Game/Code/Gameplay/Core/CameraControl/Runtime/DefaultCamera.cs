@@ -5,11 +5,10 @@ namespace YellowSquad.Anthill.Core.CameraControl
 {
     public class DefaultCamera : ICamera
     {
-        private const float SizeFactor = 0.1f * 0.2f;
-        
         private readonly Camera _camera;
         private readonly CameraSettings _settings;
 
+        private Vector3 _startMovePosition;
         private float _currentZoom;
 
         public DefaultCamera(Camera camera, CameraSettings settings)
@@ -23,20 +22,25 @@ namespace YellowSquad.Anthill.Core.CameraControl
 
         public Vector3 Position => _camera.transform.position;
 
-        public void Move(Vector2 delta)
+        public void StartMove(Vector2 pointerPosition)
         {
-            var modifiedDelta = new Vector3(delta.x, 0, delta.y) * (_camera.aspect * _camera.orthographicSize * SizeFactor);
-            _camera.transform.position = ClampCameraPosition(_camera.transform.position + modifiedDelta);
+            _startMovePosition = ScreenToWorldPoint(pointerPosition);
         }
 
-        public void Zoom(float delta, Func<Vector2> cursorPosition)
+        public void Move(Vector2 pointerPosition)
         {
-            var cursorWorldPositionBeforeZoom = _camera.ScreenToWorldPoint(cursorPosition.Invoke());
+            var moveOffset = _startMovePosition - ScreenToWorldPoint(pointerPosition);
+            _camera.transform.position = ClampCameraPosition(_camera.transform.position + moveOffset);
+        }
+
+        public void Zoom(float delta, Func<Vector2> pointerPosition)
+        {
+            var cursorWorldPositionBeforeZoom = ScreenToWorldPoint(pointerPosition.Invoke());
             
             _currentZoom = Mathf.Clamp01(_currentZoom + delta * _settings.ZoomSpeed);
             _camera.orthographicSize = Mathf.Lerp(_settings.ZoomLimits.Min, _settings.ZoomLimits.Max, _currentZoom);
             
-            var cursorWorldPositionAfterZoom = _camera.ScreenToWorldPoint(cursorPosition.Invoke());
+            var cursorWorldPositionAfterZoom = ScreenToWorldPoint(pointerPosition.Invoke());
             
             _camera.transform.position = ClampCameraPosition(_camera.transform.position + cursorWorldPositionBeforeZoom - cursorWorldPositionAfterZoom);
         }

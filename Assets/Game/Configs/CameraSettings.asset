@@ -18,4 +18,4 @@ MonoBehaviour:
   _zoomLimits:
     <Min>k__BackingField: 1
     <Max>k__BackingField: 10
-  _zoomSpeed: 10
+  _zoomSpeed: 0.1

@@ -21,6 +21,7 @@ namespace YellowSquad.Anthill.UserInput
         
         private float _lastPointerDownTime;
         private float _lastPointerUpTime;
+        private bool _cameraMoving;
 
         public InputRoot(IHexMap map, IInput input, ICamera camera, IClickCommand[] commands)
         {
@@ -33,7 +34,7 @@ namespace YellowSquad.Anthill.UserInput
         public void Update(float deltaTime)
         {
             if (_input.ZoomDelta != 0)
-                _camera.Zoom(-_input.ZoomDelta * deltaTime, () => _input.PointerPosition);
+                _camera.Zoom(-_input.ZoomDelta, () => _input.PointerPosition);
             
             if (_input.PointerDown)
                 OnPointerDown();
@@ -54,7 +55,11 @@ namespace YellowSquad.Anthill.UserInput
             if (_lastPointerDownTime - _lastPointerUpTime < MoveThreshold)
                 return;
             
-            _camera.Move(_input.MoveDelta);
+            if (_cameraMoving == false)
+                _camera.StartMove(_input.PointerPosition);
+
+            _camera.Move(_input.PointerPosition);
+            _cameraMoving = true;
         }
 
         private void OnPointerUp()
@@ -63,6 +68,8 @@ namespace YellowSquad.Anthill.UserInput
 
             if (_lastPointerUpTime - _lastPointerDownTime < MoveThreshold) 
                 OnPointerClick();
+
+            _cameraMoving = false;
         }
 
         private void OnPointerClick()
