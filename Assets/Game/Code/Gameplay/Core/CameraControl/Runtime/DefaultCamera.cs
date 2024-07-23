@@ -10,6 +10,7 @@ namespace YellowSquad.Anthill.Core.CameraControl
         private readonly CameraSettings _settings;
 
         private Vector3 _startMovePosition;
+        private float _defaultPositionY;
         private float _currentZoom;
 
         public DefaultCamera(Camera camera, CameraSettings settings)
@@ -19,6 +20,7 @@ namespace YellowSquad.Anthill.Core.CameraControl
 
             _camera.orthographicSize = _settings.ZoomLimits.Clamp(_camera.orthographicSize);
             _currentZoom = _camera.orthographicSize / _settings.ZoomLimits.Max;
+            _defaultPositionY = _camera.transform.position.y;
         }
 
         public Vector3 Position => _camera.transform.position;
@@ -55,6 +57,7 @@ namespace YellowSquad.Anthill.Core.CameraControl
         {
             position.x = Mathf.Clamp(position.x, _settings.Bounds.min.x, _settings.Bounds.max.x);
             position.z = Mathf.Clamp(position.z, _settings.Bounds.min.z, _settings.Bounds.max.z);
+            position.y = _defaultPositionY;
 
             return position;
         }

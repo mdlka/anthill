@@ -18,7 +18,7 @@ namespace YellowSquad.Anthill.Core.CameraControl
         public void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(_bounds.center, _bounds.extents);
+            Gizmos.DrawWireCube(_bounds.center, _bounds.extents * 2f);
         }
 #endif
     }
