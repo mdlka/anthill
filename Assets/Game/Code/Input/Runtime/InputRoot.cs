@@ -3,7 +3,7 @@ using YellowSquad.Anthill.Core.CameraControl;
 using YellowSquad.GameLoop;
 using YellowSquad.HexMath;
 
-namespace YellowSquad.Anthill.Input
+namespace YellowSquad.Anthill.UserInput
 {
     public class InputRoot : IGameLoop
     {

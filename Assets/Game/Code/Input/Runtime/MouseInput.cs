@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.HexMath;
 
-namespace YellowSquad.Anthill.Input
+namespace YellowSquad.Anthill.UserInput
 {
     public class MouseInput : IInput
     {
@@ -25,16 +25,16 @@ namespace YellowSquad.Anthill.Input
             _camera = camera;
         }
 
-        public Vector2 CursorPosition => UnityEngine.Input.mousePosition;
+        public Vector2 CursorPosition => Input.mousePosition;
         
         public void Update(float deltaTime)
         {
             _lastAction = MouseAction.Idle;
             
-            if (UnityEngine.Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
                 _lastLeftMouseButtonDownTime = Time.realtimeSinceStartup;
 
-            if (UnityEngine.Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0))
             {
                 _lastLeftMouseButtonUpTime = Time.realtimeSinceStartup;
 
@@ -53,7 +53,7 @@ namespace YellowSquad.Anthill.Input
             if (_lastAction != MouseAction.Click)
                 return false;
 
-            var mouseClickPosition = new Vector3(UnityEngine.Input.mousePosition.x, UnityEngine.Input.mousePosition.y, _camera.transform.position.y);
+            var mouseClickPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _camera.transform.position.y);
             
             if (IsPointerOverUIObject(mouseClickPosition))
                 return false;
@@ -71,7 +71,7 @@ namespace YellowSquad.Anthill.Input
             if (_lastAction != MouseAction.Move)
                 return false;
             
-            delta = -new Vector2(UnityEngine.Input.GetAxisRaw("Mouse X"), UnityEngine.Input.GetAxisRaw("Mouse Y"));
+            delta = -new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
             return true;
         }
 
@@ -79,10 +79,10 @@ namespace YellowSquad.Anthill.Input
         {
             delta = 0f;
             
-            if (UnityEngine.Input.mouseScrollDelta.y == 0)
+            if (Input.mouseScrollDelta.y == 0)
                 return false;
 
-            delta = UnityEngine.Input.mouseScrollDelta.y;
+            delta = Input.mouseScrollDelta.y;
             return true;
         }
 

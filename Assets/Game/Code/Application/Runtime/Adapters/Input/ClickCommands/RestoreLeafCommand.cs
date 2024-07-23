@@ -1,6 +1,6 @@
 ﻿using System;
 using YellowSquad.Anthill.Core.HexMap;
-using YellowSquad.Anthill.Input;
+using YellowSquad.Anthill.UserInput;
 using YellowSquad.Anthill.Meta.Wallet;
 using YellowSquad.HexMath;
 

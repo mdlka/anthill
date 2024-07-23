@@ -1,6 +1,6 @@
 {
-    "name": "YellowSquad.Anthill.Input",
-    "rootNamespace": "YellowSquad.Anthill.Input",
+    "name": "YellowSquad.Anthill.UserInput",
+    "rootNamespace": "YellowSquad.Anthill.UserInput",
     "references": [
         "GUID:c1a201351f2fcb34dad2d362ac290285",
         "GUID:b2efb227a90ce5f4ca63f18af85e7bcc",

@@ -1,6 +1,6 @@
 ﻿using System;
 using YellowSquad.Anthill.Core.Tasks;
-using YellowSquad.Anthill.Input;
+using YellowSquad.Anthill.UserInput;
 using YellowSquad.Anthill.Meta.Shop;
 using YellowSquad.HexMath;
 
