@@ -20,7 +20,9 @@ namespace YellowSquad.Anthill.Core.CameraControl
             _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, _settings.ZoomLimits.Min, _settings.ZoomLimits.Max);
             _currentZoom = _camera.orthographicSize / _settings.ZoomLimits.Max;
         }
-        
+
+        public Vector3 Position => _camera.transform.position;
+
         public void Move(Vector2 delta)
         {
             var modifiedDelta = new Vector3(delta.x, 0, delta.y) * (_camera.aspect * _camera.orthographicSize * SizeFactor);
@@ -37,6 +39,11 @@ namespace YellowSquad.Anthill.Core.CameraControl
             var cursorWorldPositionAfterZoom = _camera.ScreenToWorldPoint(cursorPosition.Invoke());
             
             _camera.transform.position = ClampCameraPosition(_camera.transform.position + cursorWorldPositionBeforeZoom - cursorWorldPositionAfterZoom);
+        }
+
+        public Vector3 ScreenToWorldPoint(Vector3 position)
+        {
+            return _camera.ScreenToWorldPoint(position);
         }
 
         private Vector3 ClampCameraPosition(Vector3 position)

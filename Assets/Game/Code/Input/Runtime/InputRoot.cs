@@ -1,5 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using YellowSquad.Anthill.Core.CameraControl;
+using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.GameLoop;
 using YellowSquad.HexMath;
 
@@ -7,12 +11,20 @@ namespace YellowSquad.Anthill.UserInput
 {
     public class InputRoot : IGameLoop
     {
+        private const float MoveThreshold = 0.1f;
+
+        private readonly IHexMap _map;
         private readonly IInput _input;
         private readonly ICamera _camera;
         private readonly IClickCommand[] _clickCommands;
+        private readonly List<RaycastResult> _raycastResults = new();
+        
+        private float _lastPointerDownTime;
+        private float _lastPointerUpTime;
 
-        public InputRoot(IInput input, ICamera camera, params IClickCommand[] commands)
+        public InputRoot(IHexMap map, IInput input, ICamera camera, IClickCommand[] commands)
         {
+            _map = map;
             _input = input;
             _camera = camera;
             _clickCommands = commands;
@@ -20,20 +32,63 @@ namespace YellowSquad.Anthill.UserInput
 
         public void Update(float deltaTime)
         {
-            _input.Update(deltaTime);
+            if (_input.ZoomDelta != 0)
+                _camera.Zoom(-_input.ZoomDelta * deltaTime, () => _input.PointerPosition);
             
-            if (_input.Zoomed(out float zoomDelta))
-                _camera.Zoom(-zoomDelta * deltaTime, () => _input.CursorPosition);
+            if (_input.PointerDown)
+                OnPointerDown();
             
-            if (_input.Moved(out Vector2 moveDelta))
-                _camera.Move(moveDelta);
+            OnPointerMove();
             
-            if (_input.ClickedOnOpenMapPosition(out AxialCoordinate clickPosition) == false)
-                return;
+            if (_input.PointerUp)
+                OnPointerUp();
+        }
 
+        private void OnPointerDown()
+        {
+            _lastPointerDownTime = Time.realtimeSinceStartup;
+        }
+
+        private void OnPointerMove()
+        {
+            if (_lastPointerDownTime - _lastPointerUpTime < MoveThreshold)
+                return;
+            
+            _camera.Move(_input.MoveDelta);
+        }
+
+        private void OnPointerUp()
+        {
+            _lastPointerUpTime = Time.realtimeSinceStartup;
+
+            if (_lastPointerUpTime - _lastPointerDownTime < MoveThreshold) 
+                OnPointerClick();
+        }
+
+        private void OnPointerClick()
+        {
+            var clickPosition = new Vector3(_input.PointerPosition.x, _input.PointerPosition.y, _camera.Position.y);
+            
+            if (IsPointerOverUIObject(clickPosition))
+                return;
+            
+            var targetPosition = _camera.ScreenToWorldPoint(clickPosition);
+            var mapClickPosition = targetPosition.ToAxialCoordinate(_map.Scale);
+
+            if (_map.HasPosition(mapClickPosition) == false || _map.IsClosed(mapClickPosition))
+                return;
+            
             foreach (var clickCommand in _clickCommands)
-                if (clickCommand.CanExecute(clickPosition))
-                    clickCommand.Execute(clickPosition);
+                if (clickCommand.CanExecute(mapClickPosition))
+                    clickCommand.Execute(mapClickPosition);
+        }
+
+        private bool IsPointerOverUIObject(Vector2 inputPosition)
+        {
+            var eventDataCurrentPosition = new PointerEventData(EventSystem.current) { position = inputPosition };
+            EventSystem.current.RaycastAll(eventDataCurrentPosition, _raycastResults);
+
+            return _raycastResults.Any(result => result.gameObject.layer == LayerMask.NameToLayer("UI"));
         }
     }
 }

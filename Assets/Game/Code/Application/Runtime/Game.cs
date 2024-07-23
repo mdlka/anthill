@@ -84,7 +84,7 @@ namespace YellowSquad.Anthill.Application
             _mapCellShop = new MapCellShop(wallet, new AlgebraicProgressionPriceList(1, 1));
             _mapCellCellShopView.Initialize(map, _diggerTaskStorage);
 
-            _inputRoot = new InputRoot(new MouseInput(map, Camera.main), 
+            _inputRoot = new InputRoot(map, new MouseInput(), 
                 new DefaultCamera(Camera.main, _cameraSettings), 
                 new IClickCommand[]
                 {
