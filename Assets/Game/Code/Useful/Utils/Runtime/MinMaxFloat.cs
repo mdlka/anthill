@@ -6,13 +6,16 @@ namespace YellowSquad.Utils
     [Serializable]
     public struct MinMaxFloat
     {
+        [SerializeField] private float _min;
+        [SerializeField] private float _max;
+        
         public MinMaxFloat(float min, float max)
         {
-            Min = min;
-            Max = max;
-        }        
-        
-        [field: SerializeField] public float Min { get; private set; }
-        [field: SerializeField] public float Max { get; private set; }
+            _min = min;
+            _max = max;
+        }
+
+        public float Min => _min;
+        public float Max => _max;
     }
 }

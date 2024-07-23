@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af585016aa04195b44d1b30e9532909, type: 3}
   m_Name: CameraSettings
   m_EditorClassIdentifier: 
+  _zoomSpeed: 0.1
+  _zoomLimits:
+    _min: 1
+    _max: 10
   _bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 20, y: 20, z: 20}
-  _zoomLimits:
-    <Min>k__BackingField: 1
-    <Max>k__BackingField: 10
-  _zoomSpeed: 0.1
