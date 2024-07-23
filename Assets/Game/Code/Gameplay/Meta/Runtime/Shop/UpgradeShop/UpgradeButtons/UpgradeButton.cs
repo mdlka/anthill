@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace YellowSquad.Anthill.Meta.Shop
+namespace YellowSquad.Anthill.Meta
 {
     internal class UpgradeButton : MonoBehaviour
     {

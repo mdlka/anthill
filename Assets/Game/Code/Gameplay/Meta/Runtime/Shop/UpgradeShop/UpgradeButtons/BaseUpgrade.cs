@@ -1,7 +1,6 @@
 ﻿using System;
-using YellowSquad.Anthill.Meta.Wallet;
 
-namespace YellowSquad.Anthill.Meta.Shop
+namespace YellowSquad.Anthill.Meta
 {
     public abstract class BaseUpgrade : IUpgrade
     {

@@ -1,7 +1,6 @@
 ﻿using System;
 using YellowSquad.Anthill.Core.Ants;
-using YellowSquad.Anthill.Meta.Shop;
-using YellowSquad.Anthill.Meta.Wallet;
+using YellowSquad.Anthill.Meta;
 
 namespace YellowSquad.Anthill.Application.Adapters
 {

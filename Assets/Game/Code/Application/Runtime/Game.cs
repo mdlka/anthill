@@ -8,8 +8,7 @@ using YellowSquad.Anthill.Core.CameraControl;
 using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.Anthill.Core.Tasks;
 using YellowSquad.Anthill.UserInput;
-using YellowSquad.Anthill.Meta.Shop;
-using YellowSquad.Anthill.Meta.Wallet;
+using YellowSquad.Anthill.Meta;
 
 namespace YellowSquad.Anthill.Application
 {

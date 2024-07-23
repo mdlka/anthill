@@ -1,7 +1,7 @@
 ﻿using System;
 using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.Anthill.UserInput;
-using YellowSquad.Anthill.Meta.Wallet;
+using YellowSquad.Anthill.Meta;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Application.Adapters

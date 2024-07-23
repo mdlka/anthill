@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace YellowSquad.Anthill.Meta.Shop
+namespace YellowSquad.Anthill.Meta
 {
     public struct UpgradeButtonDTO
     {

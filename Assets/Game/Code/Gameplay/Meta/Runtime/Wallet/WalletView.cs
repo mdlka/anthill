@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace YellowSquad.Anthill.Meta.Wallet
+namespace YellowSquad.Anthill.Meta
 {
     public class WalletView : MonoBehaviour, IWalletView
     {

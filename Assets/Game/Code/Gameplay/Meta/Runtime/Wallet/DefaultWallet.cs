@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace YellowSquad.Anthill.Meta.Wallet
+namespace YellowSquad.Anthill.Meta
 {
     public class DefaultWallet : IWallet
     {
