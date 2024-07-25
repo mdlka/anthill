@@ -1239,6 +1239,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1532054368}
   - component: {fileID: 1532054369}
+  - component: {fileID: 1532054370}
   m_Layer: 0
   m_Name: LeafView
   m_TagString: Untagged
@@ -1275,6 +1276,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetMaterial: {fileID: 2100000, guid: 9807396b2487f174494518f02afe17a8, type: 2}
   _targetMesh: {fileID: 11400000, guid: 06c2e4d9b9a28c547a46431015c6cbf3, type: 2}
+--- !u!114 &1532054370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532054367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8e012879944c50bf78bc76c5f382f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rendererTemplate: {fileID: 6296677056517852150, guid: 4e88517251a55f543a9fb2d703096fcf, type: 3}
+  _offset: {x: 0, y: 1, z: 0}
 --- !u!1 &1616363465
 GameObject:
   m_ObjectHideFlags: 0
@@ -1678,6 +1693,7 @@ MonoBehaviour:
   _hexScale: {x: 1.731602, y: 4, z: 1.731602}
   _groundView: {fileID: 2052305928}
   _pointsOfInterestView: {fileID: 781304335}
+  _updateLeafView: {fileID: 1532054370}
   _closedHexesView: {fileID: 85850697}
   _hexViews:
   - <Hardness>k__BackingField: 0

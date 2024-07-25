@@ -12,13 +12,15 @@ namespace YellowSquad.Anthill.UserInput
     public class InputRoot : IGameLoop
     {
         private const float MoveThreshold = 0.1f;
+        private const float PointerClickMaxDelta = 0.1f;
 
         private readonly IHexMap _map;
         private readonly IInput _input;
         private readonly ICamera _camera;
         private readonly IClickCommand[] _clickCommands;
         private readonly List<RaycastResult> _raycastResults = new();
-        
+
+        private Vector2 _lastPointerDownPosition;
         private float _lastPointerDownTime;
         private float _lastPointerUpTime;
         private bool _cameraMoving;
@@ -48,6 +50,7 @@ namespace YellowSquad.Anthill.UserInput
         private void OnPointerDown()
         {
             _lastPointerDownTime = Time.realtimeSinceStartup;
+            _lastPointerDownPosition = _input.PointerPosition;
         }
 
         private void OnPointerMove()
@@ -65,8 +68,9 @@ namespace YellowSquad.Anthill.UserInput
         private void OnPointerUp()
         {
             _lastPointerUpTime = Time.realtimeSinceStartup;
-
-            if (_lastPointerUpTime - _lastPointerDownTime < MoveThreshold) 
+            
+            if (_lastPointerUpTime - _lastPointerDownTime < MoveThreshold
+                || Vector2.Distance(_lastPointerDownPosition, _input.PointerPosition) <= PointerClickMaxDelta) 
                 OnPointerClick();
 
             _cameraMoving = false;
@@ -81,7 +85,7 @@ namespace YellowSquad.Anthill.UserInput
             
             var targetPosition = _camera.ScreenToWorldPoint(clickPosition);
             var mapClickPosition = targetPosition.ToAxialCoordinate(_map.Scale);
-
+            
             if (_map.HasPosition(mapClickPosition) == false || _map.IsClosed(mapClickPosition))
                 return;
             

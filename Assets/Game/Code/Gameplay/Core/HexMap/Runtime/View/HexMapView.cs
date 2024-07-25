@@ -13,6 +13,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         [SerializeField, Min(0.01f)] private Vector3 _hexScale;
         [SerializeField] private GroundMapView _groundView;
         [SerializeField] private PointsOfInterestView _pointsOfInterestView;
+        [SerializeField] private UpdateLeafView _updateLeafView;
         [SerializeField] private SolidObjectView _closedHexesView;
         [SerializeField] private HexViewPair[] _hexViews;
 
@@ -22,6 +23,7 @@ namespace YellowSquad.Anthill.Core.HexMap
                 _groundView.Render(mapScale, _hexScale, cells.Keys);
             
             _pointsOfInterestView.Render(mapScale, cells);
+            _updateLeafView.Render(mapScale, cells);
             
             _closedHexesView.Clear();
             _closedHexesView.Render(closedPositions, position => HexMatrixBy(mapScale, position));
