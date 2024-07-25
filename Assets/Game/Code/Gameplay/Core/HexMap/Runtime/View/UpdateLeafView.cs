@@ -18,7 +18,7 @@ namespace YellowSquad.Anthill.Core.HexMap
                 if (cell.Value.PointOfInterestType != PointOfInterestType.Leaf)
                     continue;
 
-                if (cell.Value.DividedPointOfInterest.HasParts == false)
+                if (cell.Value.DividedPointOfInterest.CanRestore)
                 {
                     if (_instances.ContainsKey(cell.Key)) 
                         continue;
