@@ -1119,7 +1119,7 @@ MonoBehaviour:
   _diggerTasksProgressView: {fileID: 1616363467}
   _homesCapacity: 100
   _delayBetweenHomeFindTask: 0.05
-  _delayBetweenTasks: 0.15
+  _delayBetweenTasks: 0.3
   _upgradeShop: {fileID: 1280016496}
   _walletView:
     mode: 0

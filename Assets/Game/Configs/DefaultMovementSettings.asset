@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c42066665814bf4810bdf1a56eda621, type: 3}
   m_Name: DefaultMovementSettings
   m_EditorClassIdentifier: 
-  _stepsToGoal: 15
-  _moveToGoalDuration: 0.4
+  _stepsBetweenCells: 25
+  _moveDurationBetweenCells: 1
   _randomOffsetRadius: 0.15

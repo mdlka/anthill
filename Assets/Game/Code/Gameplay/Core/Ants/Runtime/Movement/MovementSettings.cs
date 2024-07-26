@@ -9,17 +9,14 @@ namespace YellowSquad.Anthill.Core.Ants
     public class MovementSettings : ScriptableObject
     {
         [SerializeField, Min(1)] private int _stepsBetweenCells = 15;
-        [SerializeField, Min(0f)] private float _moveDuration = 0.4f;
-        [SerializeField, Range(0f, 1f)] private float _randomOffsetRadius = 0.45f;
+        [SerializeField, Min(0f)] private float _moveDurationBetweenCells = 0.4f;
+        [SerializeField, Range(0f, 1f)] private float _randomOffsetRadius = 0.15f;
 
         [NonSerialized] private bool _initialized;
         private float _mapScale;
-        private float _currentMoveDuration;
 
         public int StepsBetweenCells => _stepsBetweenCells;
-        public float MaxMoveDuration => _moveDuration;
-        public float CurrentMoveDuration => _currentMoveDuration;
-        public float NormalizedMoveDuration => _currentMoveDuration / _stepsBetweenCells;
+        public float NormalizedMoveDuration => _moveDurationBetweenCells / _stepsBetweenCells;
         public float MaxRandomOffsetRadius => _randomOffsetRadius;
 
         public void Initialize(float mapScale)
@@ -28,16 +25,7 @@ namespace YellowSquad.Anthill.Core.Ants
                 throw new InvalidOperationException();
             
             _mapScale = mapScale;
-            _currentMoveDuration = _moveDuration;
             _initialized = true;
-        }
-
-        public void ChangeMoveDuration(float value)
-        {
-            if (value < 0)
-                throw new ArgumentOutOfRangeException(nameof(value));
-
-            _currentMoveDuration = value;
         }
 
         internal FracAxialCoordinate RandomOffset()
