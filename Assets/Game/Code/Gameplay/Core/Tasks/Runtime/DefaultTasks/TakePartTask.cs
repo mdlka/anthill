@@ -5,36 +5,50 @@ using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Tasks
 {
-    public class TakePartTask : BaseTask
+    public class TakePartTask : ITask
     {
         private readonly IDividedObject _targetDividedObject;
         private readonly IReadOnlyPart _targetPart;
-        
-        private float _executeTime;
-        private float _elapsedTime;
 
-        public TakePartTask(FracAxialCoordinate targetPosition, IDividedObject targetDividedObject, IReadOnlyPart targetPart, int price = 0) 
-            : base(price, targetPosition)
+        private float _elapsedTime;
+        private bool _onCompletedInvoked;
+
+        public TakePartTask(FracAxialCoordinate targetPosition, IDividedObject targetDividedObject, IReadOnlyPart targetPart, int price = 0)
         {
+            if (price < 0)
+                throw new ArgumentOutOfRangeException(nameof(price));
+            
+            Price = price;
+            TargetPosition = targetPosition;
             _targetDividedObject = targetDividedObject;
             _targetPart = targetPart;
         }
 
-        protected override bool CanComplete => _elapsedTime >= (int)_targetDividedObject.Hardness + 1;
+        public int Price { get; }
+        public FracAxialCoordinate TargetPosition { get; }
+        public bool Completed => CanComplete && _onCompletedInvoked;
+        private bool CanComplete => _elapsedTime >= (int)_targetDividedObject.Hardness + 1;
+        
+        public void UpdateProgress(float speed = 1f)
+        {
+            if (Completed)
+                throw new InvalidOperationException("Task is complete");
+            
+            if (speed <= 0)
+                throw new ArgumentOutOfRangeException(nameof(speed));
 
-        public override bool Equals(ITask other)
+            _elapsedTime += Time.unscaledDeltaTime * speed;
+
+            if (CanComplete == false || _onCompletedInvoked) 
+                return;
+            
+            _targetDividedObject.DestroyClosestPartFor(_targetPart.LocalPosition);
+            _onCompletedInvoked = true;
+        }
+
+        public bool Equals(ITask other)
         {
             return TargetPosition == other.TargetPosition;
-        }
-
-        protected override void OnUpdateProgress(float speed)
-        {
-            _elapsedTime += Time.unscaledDeltaTime * speed;
-        }
-
-        protected override void OnCompleted()
-        {
-            _targetDividedObject.DestroyClosestPartFor(_targetPart.LocalPosition);
         }
     }
 }
