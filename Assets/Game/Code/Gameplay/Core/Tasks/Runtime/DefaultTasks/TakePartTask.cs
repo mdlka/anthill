@@ -5,51 +5,36 @@ using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Tasks
 {
-    public class TakePartTask : ITask
+    public class TakePartTask : BaseTask
     {
         private readonly IDividedObject _targetDividedObject;
         private readonly IReadOnlyPart _targetPart;
         
         private float _executeTime;
+        private float _elapsedTime;
 
-        public TakePartTask(FracAxialCoordinate targetPosition, IDividedObject targetDividedObject, IReadOnlyPart targetPart, int price = 0)
+        public TakePartTask(FracAxialCoordinate targetPosition, IDividedObject targetDividedObject, IReadOnlyPart targetPart, int price = 0) 
+            : base(price, targetPosition)
         {
-            if (price < 0)
-                throw new ArgumentOutOfRangeException(nameof(price));
-            
-            Price = price;
-            TargetPosition = targetPosition;
             _targetDividedObject = targetDividedObject;
             _targetPart = targetPart;
         }
 
-        public int Price { get; }
-        public FracAxialCoordinate TargetPosition { get; }
-        public TaskState State { get; private set; }
-        public bool CanComplete => State == TaskState.Executing && Time.realtimeSinceStartup - _executeTime >= (int)_targetDividedObject.Hardness + 1;
+        protected override bool CanComplete => _elapsedTime >= (int)_targetDividedObject.Hardness + 1;
 
-        public void Execute()
-        {
-            if (State != TaskState.Idle)
-                throw new InvalidOperationException("Already executed");
-
-            _executeTime = Time.realtimeSinceStartup;
-            
-            State = TaskState.Executing;
-        }
-
-        public void Complete()
-        {
-            if (CanComplete == false)
-                throw new InvalidOperationException();
-            
-            _targetDividedObject.DestroyClosestPartFor(_targetPart.LocalPosition);
-            State = TaskState.Complete;
-        }
-
-        public bool Equals(ITask other)
+        public override bool Equals(ITask other)
         {
             return TargetPosition == other.TargetPosition;
+        }
+
+        protected override void OnUpdateProgress(float speed)
+        {
+            _elapsedTime += Time.unscaledDeltaTime * speed;
+        }
+
+        protected override void OnCompleted()
+        {
+            _targetDividedObject.DestroyClosestPartFor(_targetPart.LocalPosition);
         }
     }
 }

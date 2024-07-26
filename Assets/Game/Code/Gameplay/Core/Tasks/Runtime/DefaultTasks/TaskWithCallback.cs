@@ -8,6 +8,8 @@ namespace YellowSquad.Anthill.Core.Tasks
         private readonly ITask _task;
         private readonly Action _onComplete;
 
+        private bool _invoked;
+
         public TaskWithCallback(ITask task, Action onComplete)
         {
             _task = task;
@@ -16,18 +18,17 @@ namespace YellowSquad.Anthill.Core.Tasks
 
         public int Price => _task.Price;
         public FracAxialCoordinate TargetPosition => _task.TargetPosition;
-        public TaskState State => _task.State;
-        public bool CanComplete => _task.CanComplete;
+        public bool Completed => _task.Completed;
         
-        public void Execute()
+        public void UpdateProgress(float speed)
         {
-            _task.Execute();
-        }
+            _task.UpdateProgress(speed);
+            
+            if (Completed == false || _invoked)
+                return;
 
-        public void Complete()
-        {
-            _task.Complete();
             _onComplete?.Invoke();
+            _invoked = true;
         }
 
         public bool Equals(ITask other)

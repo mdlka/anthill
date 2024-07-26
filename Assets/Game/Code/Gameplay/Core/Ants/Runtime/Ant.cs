@@ -28,7 +28,7 @@ namespace YellowSquad.Anthill.Core.Ants
 
         public void Update(float deltaTime)
         {
-            if (_currentTask.State == TaskState.Complete)
+            if (_currentTask.Completed)
             {
                 if (_movement.ReachedTargetPosition)
                 {
@@ -61,14 +61,10 @@ namespace YellowSquad.Anthill.Core.Ants
             {
                 if (_movement.ReachedTargetPosition)
                 {
-                    if (_currentTask.State == TaskState.Idle)
-                        _currentTask.Execute();
-
-                    if (_currentTask.CanComplete)
-                    {
-                        _currentTask.Complete();
+                    if (_currentTask.Completed)
                         _movement.MoveTo(_home.Position);
-                    }
+                    else
+                        _currentTask.UpdateProgress();
                 }
             }
             

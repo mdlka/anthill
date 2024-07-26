@@ -7,10 +7,8 @@ namespace YellowSquad.Anthill.Core.Tasks
     {
         int Price { get; }
         FracAxialCoordinate TargetPosition { get; }
-        TaskState State { get; }
-        bool CanComplete { get; }
+        bool Completed { get; }
 
-        void Execute();
-        void Complete();
+        void UpdateProgress(float speed = 1f);
     }
 }

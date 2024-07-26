@@ -24,7 +24,7 @@ namespace YellowSquad.Anthill.Core.Tasks
         }
         
         public AxialCoordinate TargetCellPosition { get; }
-        public bool AllTaskCompleted => _tookTasks.Count == _tasksCount && _tookTasks.All(task => task.State == TaskState.Complete);
+        public bool AllTaskCompleted => _tookTasks.Count == _tasksCount && _tookTasks.All(task => task.Completed);
         public bool HasFreeTask => _tasks.Count > 0 && Time.realtimeSinceStartup - _lastFindTaskTime >= _delayBetweenTasks;
 
         public ITask ClosestTask(FracAxialCoordinate position)
