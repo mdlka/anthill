@@ -21,6 +21,7 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private AntView _loaderView;
         [SerializeField] private MovementSettings _movementSettings;
         [SerializeField] private CameraSettings _cameraSettings;
+        [SerializeField] private TimeScale _timeScale;
         [SerializeField] private TasksProgressView _diggerTasksProgressView;
         [SerializeField, Min(1)] private int _homesCapacity;
         [SerializeField, Min(0)] private float _delayBetweenHomeFindTask;
@@ -112,7 +113,14 @@ namespace YellowSquad.Anthill.Application
 
         private void Update()
         {
-            _anthill.Update(Time.deltaTime);
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+                _timeScale.ChangeValue(1);
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+                _timeScale.ChangeValue(4);
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+                _timeScale.ChangeValue(8);
+            
+            _anthill.Update(Time.deltaTime * _timeScale.Value);
             _inputRoot.Update(Time.deltaTime);
             _leafTasksLoop.Update(Time.deltaTime);
             
