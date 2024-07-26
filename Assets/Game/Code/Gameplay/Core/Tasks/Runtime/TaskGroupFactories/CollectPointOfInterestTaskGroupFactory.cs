@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using YellowSquad.Anthill.Core.GameTime;
 using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.HexMath;
 
@@ -9,13 +10,15 @@ namespace YellowSquad.Anthill.Core.Tasks
     {
         private readonly IHexMap _map;
         private readonly IHexMapView _mapView;
+        private readonly IStopwatch _stopwatch;
         private readonly float _delayBetweenTasks;
         private readonly int _taskPrice;
 
-        public CollectPointOfInterestTaskGroupFactory(IHexMap map, IHexMapView mapView, float delayBetweenTasks, int taskPrice)
+        public CollectPointOfInterestTaskGroupFactory(IHexMap map, IHexMapView mapView, IStopwatch stopwatch, float delayBetweenTasks, int taskPrice)
         {
             _map = map;
             _mapView = mapView;
+            _stopwatch = stopwatch;
             _delayBetweenTasks = delayBetweenTasks;
             _taskPrice = taskPrice;
         }
@@ -48,7 +51,7 @@ namespace YellowSquad.Anthill.Core.Tasks
                     }));
             }
 
-            return new TaskGroup(targetPosition, tasks, _delayBetweenTasks);
+            return new TaskGroup(targetPosition, tasks, _stopwatch, _delayBetweenTasks);
         }
     }
 }

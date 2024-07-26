@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using YellowSquad.Anthill.Core.GameTime;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Tasks
@@ -12,20 +13,26 @@ namespace YellowSquad.Anthill.Core.Tasks
         private readonly HashSet<ITask> _tookTasks = new();
         private readonly float _delayBetweenTasks;
         private readonly int _tasksCount;
-        
+
+        private readonly IStopwatch _stopwatch;
+        private readonly int _stopwatchIndex;
+
         private float _lastFindTaskTime;
 
-        public TaskGroup(AxialCoordinate targetCellPosition, HashSet<ITask> tasks, float delayBetweenTasks)
+        public TaskGroup(AxialCoordinate targetCellPosition, HashSet<ITask> tasks, IStopwatch stopwatch, float delayBetweenTasks)
         {
             TargetCellPosition = targetCellPosition;
             _tasks = tasks;
             _delayBetweenTasks = delayBetweenTasks;
             _tasksCount = _tasks.Count;
+
+            _stopwatch = stopwatch;
+            _stopwatchIndex = _stopwatch.Create();
         }
         
         public AxialCoordinate TargetCellPosition { get; }
         public bool AllTaskCompleted => _tookTasks.Count == _tasksCount && _tookTasks.All(task => task.Completed);
-        public bool HasFreeTask => _tasks.Count > 0 && Time.realtimeSinceStartup - _lastFindTaskTime >= _delayBetweenTasks;
+        public bool HasFreeTask => _tasks.Count > 0 && _stopwatch.ElapsedTime(_stopwatchIndex) >= _delayBetweenTasks;
 
         public ITask ClosestTask(FracAxialCoordinate position)
         {
@@ -46,7 +53,7 @@ namespace YellowSquad.Anthill.Core.Tasks
                 throw new InvalidOperationException();
             
             _tookTasks.Add(task);
-            _lastFindTaskTime = Time.realtimeSinceStartup;
+            _stopwatch.Restart(_stopwatchIndex);
             
             return task;
         }

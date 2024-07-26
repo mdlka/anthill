@@ -15,6 +15,8 @@ namespace YellowSquad.Anthill.Application
 {
     public class Game : MonoBehaviour
     {
+        private readonly Stopwatch _stopwatch = new();
+        
         [Header("Core settings")]
         [SerializeField] private BaseMapFactory _mapFactory;
         [SerializeField] private SerializableInterface<IHexMapView> _hexMapView;
@@ -42,7 +44,6 @@ namespace YellowSquad.Anthill.Application
         private MovementPath _movementPath;
         private MapCellShop _mapCellShop;
         private ITaskStorage _diggerTaskStorage;
-        private Stopwatch _stopwatch;
 
         private void Awake()
         {
@@ -75,10 +76,10 @@ namespace YellowSquad.Anthill.Application
                     map.PointsOfInterestPositions(PointOfInterestType.Queen)[0],
                     new DefaultAntFactory(_movementPath, _movementSettings, new TaskStore(wallet)),
                     new HomeList(_homesCapacity, map, map.PointsOfInterestPositions(PointOfInterestType.DiggersHome)
-                        .Select(position => new AntHome(position, _diggerTaskStorage, _delayBetweenHomeFindTask))
+                        .Select(position => new AntHome(position, _diggerTaskStorage, _stopwatch, _delayBetweenHomeFindTask))
                         .ToArray<IHome>()),
                     new HomeList(_homesCapacity, map, map.PointsOfInterestPositions(PointOfInterestType.LoadersHome)
-                        .Select(position => new AntHome(position, loaderTaskStorage, _delayBetweenHomeFindTask))
+                        .Select(position => new AntHome(position, loaderTaskStorage, _stopwatch, _delayBetweenHomeFindTask))
                         .ToArray<IHome>())),
                 _diggerView, 
                 _loaderView);
@@ -91,12 +92,12 @@ namespace YellowSquad.Anthill.Application
                 new IClickCommand[]
                 {
                     new AddDiggerTaskCommand(_diggerTaskStorage, new CollectHexTaskGroupFactory(map, _hexMapView.Value, 
-                        _delayBetweenTasks), _mapCellShop),
+                        _stopwatch, _delayBetweenTasks), _mapCellShop),
                     new RestoreLeafCommand(map, _hexMapView.Value, wallet, _restoreLeafReward)
                 });
 
             _leafTasksLoop = new LeafTasksLoop(map, loaderTaskStorage, 
-                new CollectPointOfInterestTaskGroupFactory(map, _hexMapView.Value, _delayBetweenTasks, _takeLeafTaskPrice));
+                new CollectPointOfInterestTaskGroupFactory(map, _hexMapView.Value, _stopwatch, _delayBetweenTasks, _takeLeafTaskPrice));
             
             _upgradeShop.Initialize(new[]
             {
