@@ -36,7 +36,6 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private MapCellCellShopView _mapCellCellShopView;
         [SerializeField, Min(0)] private int _startWalletValue;
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
-        [SerializeField, Min(0)] private int _restoreLeafReward;
         
         private IAnthill _anthill;
         private InputRoot _inputRoot;
@@ -83,8 +82,9 @@ namespace YellowSquad.Anthill.Application
                         .ToArray<IHome>())),
                 _diggerView, 
                 _loaderView);
-            
-            _mapCellShop = new MapCellShop(wallet, new AlgebraicProgressionPriceList(1, 1));
+
+            var mapCellPriceList = new AlgebraicProgressionPriceList(1, 1);
+            _mapCellShop = new MapCellShop(wallet, mapCellPriceList);
             _mapCellCellShopView.Initialize(map, _diggerTaskStorage);
 
             _inputRoot = new InputRoot(map, new MouseInput(), 
@@ -93,7 +93,7 @@ namespace YellowSquad.Anthill.Application
                 {
                     new AddDiggerTaskCommand(_diggerTaskStorage, new CollectHexTaskGroupFactory(map, _hexMapView.Value, 
                         _stopwatch, _delayBetweenTasks), _mapCellShop),
-                    new RestoreLeafCommand(map, _hexMapView.Value, wallet, _restoreLeafReward)
+                    new RestoreLeafCommand(map, _hexMapView.Value, wallet, mapCellPriceList)
                 });
 
             _leafTasksLoop = new LeafTasksLoop(map, loaderTaskStorage, 

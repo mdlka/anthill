@@ -1128,8 +1128,7 @@ MonoBehaviour:
       rid: -2
   _mapCellCellShopView: {fileID: 84440729}
   _startWalletValue: 999999
-  _takeLeafTaskPrice: 3
-  _restoreLeafReward: 300
+  _takeLeafTaskPrice: 5
   references:
     version: 2
     RefIds:

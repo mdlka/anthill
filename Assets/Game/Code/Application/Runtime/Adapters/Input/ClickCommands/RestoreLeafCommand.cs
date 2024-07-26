@@ -8,17 +8,19 @@ namespace YellowSquad.Anthill.Application.Adapters
 {
     public class RestoreLeafCommand : IClickCommand
     {
+        private const float RestoreLeafRewardFactor = 0.4f;
+        
         private readonly IHexMap _map;
         private readonly IHexMapView _mapView;
         private readonly IWallet _wallet;
-        private readonly int _restoreLeafReward;
+        private readonly IPriceList _mapCellPriceList;
 
-        public RestoreLeafCommand(IHexMap map, IHexMapView mapView, IWallet wallet, int restoreLeafReward)
+        public RestoreLeafCommand(IHexMap map, IHexMapView mapView, IWallet wallet, IPriceList mapCellPriceList)
         {
             _map = map;
             _mapView = mapView;
             _wallet = wallet;
-            _restoreLeafReward = restoreLeafReward;
+            _mapCellPriceList = mapCellPriceList;
         }
 
         public bool CanExecute(AxialCoordinate position)
@@ -35,7 +37,7 @@ namespace YellowSquad.Anthill.Application.Adapters
             if (CanExecute(position) == false)
                 throw new InvalidOperationException();
 
-            _wallet.Add(_restoreLeafReward);
+            _wallet.Add((int)(_mapCellPriceList.CurrentPrice * RestoreLeafRewardFactor));
             _map.DividedPointOfInterestFrom(position).Restore();
             _map.Visualize(_mapView);
         }
