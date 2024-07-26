@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace YellowSquad.Anthill.Core.Ants
+namespace YellowSquad.Anthill.Core.GameTime
 {
     [CreateAssetMenu(menuName = "Anthill/Time/Create TimeScale", fileName = "TimeScale", order = 56)]
     public class TimeScale : ScriptableObject

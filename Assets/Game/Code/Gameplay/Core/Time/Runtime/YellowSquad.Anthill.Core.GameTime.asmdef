@@ -1,0 +1,14 @@
+{
+    "name": "YellowSquad.Anthill.Core.GameTime",
+    "rootNamespace": "YellowSquad.Anthill.Core.GameTime",
+    "references": ["GUID:b2efb227a90ce5f4ca63f18af85e7bcc"],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

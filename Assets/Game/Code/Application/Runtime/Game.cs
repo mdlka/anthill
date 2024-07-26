@@ -7,6 +7,7 @@ using YellowSquad.Anthill.Core.AStarPathfinding;
 using YellowSquad.Anthill.Core.CameraControl;
 using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.Anthill.Core.Tasks;
+using YellowSquad.Anthill.Core.GameTime;
 using YellowSquad.Anthill.UserInput;
 using YellowSquad.Anthill.Meta;
 
@@ -41,6 +42,7 @@ namespace YellowSquad.Anthill.Application
         private MovementPath _movementPath;
         private MapCellShop _mapCellShop;
         private ITaskStorage _diggerTaskStorage;
+        private Stopwatch _stopwatch;
 
         private void Awake()
         {
@@ -120,6 +122,7 @@ namespace YellowSquad.Anthill.Application
             else if (Input.GetKeyDown(KeyCode.Alpha3))
                 _timeScale.ChangeValue(8);
             
+            _stopwatch.Update(Time.deltaTime * _timeScale.Value);
             _anthill.Update(Time.deltaTime * _timeScale.Value);
             _inputRoot.Update(Time.deltaTime);
             _leafTasksLoop.Update(Time.deltaTime);
