@@ -13,6 +13,6 @@ namespace YellowSquad.Anthill.Core.Tasks
             return false;
         }
         
-        public void UpdateProgress(float speed = 1f) { }
+        public void UpdateProgress(float deltaTime) { }
     }
 }

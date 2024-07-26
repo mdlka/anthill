@@ -29,15 +29,15 @@ namespace YellowSquad.Anthill.Core.Tasks
         public bool Completed => CanComplete && _onCompletedInvoked;
         private bool CanComplete => _elapsedTime >= (int)_targetDividedObject.Hardness + 1;
         
-        public void UpdateProgress(float speed = 1f)
+        public void UpdateProgress(float deltaTime)
         {
             if (Completed)
                 throw new InvalidOperationException("Task is complete");
             
-            if (speed <= 0)
-                throw new ArgumentOutOfRangeException(nameof(speed));
+            if (deltaTime < 0)
+                throw new ArgumentOutOfRangeException(nameof(deltaTime));
 
-            _elapsedTime += Time.unscaledDeltaTime * speed;
+            _elapsedTime += deltaTime;
 
             if (CanComplete == false || _onCompletedInvoked) 
                 return;

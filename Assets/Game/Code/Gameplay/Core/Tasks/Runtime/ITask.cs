@@ -9,6 +9,6 @@ namespace YellowSquad.Anthill.Core.Tasks
         FracAxialCoordinate TargetPosition { get; }
         bool Completed { get; }
 
-        void UpdateProgress(float speed = 1f);
+        void UpdateProgress(float deltaTime);
     }
 }

@@ -20,9 +20,9 @@ namespace YellowSquad.Anthill.Core.Tasks
         public FracAxialCoordinate TargetPosition => _task.TargetPosition;
         public bool Completed => _task.Completed;
         
-        public void UpdateProgress(float speed)
+        public void UpdateProgress(float deltaTime)
         {
-            _task.UpdateProgress(speed);
+            _task.UpdateProgress(deltaTime);
             
             if (Completed == false || _invoked)
                 return;

@@ -64,7 +64,7 @@ namespace YellowSquad.Anthill.Core.Ants
                     if (_currentTask.Completed)
                         _movement.MoveTo(_home.Position);
                     else
-                        _currentTask.UpdateProgress();
+                        _currentTask.UpdateProgress(deltaTime);
                 }
             }
             
