@@ -7,6 +7,7 @@ namespace YellowSquad.Anthill.Core.HexMap
     public interface IHexMap
     {
         float Scale { get; }
+        int TotalCells { get; }
         
         IEnumerable<AxialCoordinate> Positions { get; }
 

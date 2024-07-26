@@ -1118,8 +1118,8 @@ MonoBehaviour:
   _timeScale: {fileID: 11400000, guid: 9f1a443acede2ce4892358210c3ad8e4, type: 2}
   _diggerTasksProgressView: {fileID: 1616363467}
   _homesCapacity: 100
-  _delayBetweenHomeFindTask: 0.05
-  _delayBetweenTasks: 0.3
+  _delayBetweenHomeFindTask: 0.1
+  _delayBetweenTasks: 0.45
   _upgradeShop: {fileID: 1280016496}
   _walletView:
     mode: 0
@@ -1201,7 +1201,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -53.299988, y: -250}
+  m_AnchoredPosition: {x: -53.30005, y: -250}
   m_SizeDelta: {x: 80, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1460116390

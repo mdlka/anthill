@@ -83,7 +83,7 @@ namespace YellowSquad.Anthill.Application
                 _diggerView, 
                 _loaderView);
 
-            var mapCellPriceList = new AlgebraicProgressionPriceList(1, 1);
+            var mapCellPriceList = new CellsPriceList(map, 10, 25);
             _mapCellShop = new MapCellShop(wallet, mapCellPriceList);
             _mapCellCellShopView.Initialize(map, _diggerTaskStorage);
 
@@ -104,12 +104,12 @@ namespace YellowSquad.Anthill.Application
                 new UpgradeButtonDTO
                 {
                     ButtonName = "Add digger",
-                    Upgrade = new DiggersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 1), wallet),
+                    Upgrade = new DiggersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 10), wallet),
                 },
                 new UpgradeButtonDTO
                 {
                     ButtonName = "Add loader",
-                    Upgrade = new LoadersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 1), wallet),
+                    Upgrade = new LoadersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 10), wallet),
                 },
             });
         }

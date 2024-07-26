@@ -16,6 +16,7 @@ namespace YellowSquad.Anthill.Application.Tests
         }
 
         public float Scale => 1f;
+        public int TotalCells => _mapWithObstacles.Count;
         public IEnumerable<AxialCoordinate> Positions { get; }
 
         public bool HasPosition(AxialCoordinate position)
