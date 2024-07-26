@@ -27,7 +27,7 @@ namespace YellowSquad.Anthill.Core.Tasks
         public int Price { get; }
         public FracAxialCoordinate TargetPosition { get; }
         public bool Completed => CanComplete && _onCompletedInvoked;
-        private bool CanComplete => _elapsedTime >= (int)_targetDividedObject.Hardness + 1;
+        private bool CanComplete => _elapsedTime >= ((int)_targetDividedObject.Hardness + 1) * 2f;
         
         public void UpdateProgress(float deltaTime)
         {
