@@ -34,6 +34,8 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private UpgradeShop _upgradeShop;
         [SerializeField] private SerializableInterface<IWalletView> _walletView;
         [SerializeField] private MapCellCellShopView _mapCellCellShopView;
+        [SerializeField] private MapGoalView _mapGoalView;
+        [SerializeField, Min(0)] private int _mapTargetAnts;
         [SerializeField, Min(0)] private int _startWalletValue;
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         
@@ -87,6 +89,8 @@ namespace YellowSquad.Anthill.Application
             _mapCellShop = new MapCellShop(wallet, mapCellPriceList);
             _mapCellCellShopView.Initialize(map, _diggerTaskStorage);
 
+            var mapGoal = new MapGoal(_mapTargetAnts, _mapGoalView);
+
             _inputRoot = new InputRoot(map, new MouseInput(), 
                 new DefaultCamera(Camera.main, _cameraSettings), 
                 new IClickCommand[]
@@ -104,25 +108,20 @@ namespace YellowSquad.Anthill.Application
                 new UpgradeButtonDTO
                 {
                     ButtonName = "Add digger",
-                    Upgrade = new DiggersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 10), wallet),
+                    Upgrade = new CallbackUpgrade(new DiggersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 10), wallet), 
+                        () => mapGoal.AddProgress()),
                 },
                 new UpgradeButtonDTO
                 {
                     ButtonName = "Add loader",
-                    Upgrade = new LoadersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 10), wallet),
+                    Upgrade = new CallbackUpgrade(new LoadersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 10), wallet),
+                        () => mapGoal.AddProgress()),
                 },
             });
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-                _timeScale.ChangeValue(1);
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-                _timeScale.ChangeValue(4);
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-                _timeScale.ChangeValue(8);
-            
             _stopwatch.Update(Time.deltaTime * _timeScale.Value);
             _anthill.Update(Time.deltaTime * _timeScale.Value);
             _inputRoot.Update(Time.deltaTime);
