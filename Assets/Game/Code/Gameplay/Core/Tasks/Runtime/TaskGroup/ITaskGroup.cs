@@ -7,7 +7,9 @@ namespace YellowSquad.Anthill.Core.Tasks
         AxialCoordinate TargetCellPosition { get; }
         bool AllTaskCompleted { get;  }
         bool HasFreeTask { get; }
+        bool Removed { get; }
 
-        ITask ClosestTask(FracAxialCoordinate position);
+        ITask TakeClosestTask(FracAxialCoordinate position);
+        void Remove();
     }
 }

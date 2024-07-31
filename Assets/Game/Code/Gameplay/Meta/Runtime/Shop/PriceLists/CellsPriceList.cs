@@ -18,13 +18,20 @@ namespace YellowSquad.Anthill.Meta
         public int CurrentPriceNumber { get; private set; } = 1;
         public int CurrentPrice { get; private set; }
         public bool HasNext => CurrentPriceNumber < _map.TotalCells;
-        
+        public bool HasPrevious => CurrentPriceNumber > 1;
+
         public void Next()
         {
             CurrentPrice += CalculateAddedValue();
             CurrentPriceNumber += 1;
         }
-        
+
+        public void Previous()
+        {
+            CurrentPriceNumber -= 1;
+            CurrentPrice -= CalculateAddedValue();
+        }
+
         private int CalculateAddedValue()
         {
             float addedValue = _addValue - CurrentPriceNumber * _addValue / _map.TotalCells;

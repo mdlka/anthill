@@ -21,11 +21,24 @@ namespace YellowSquad.Anthill.Meta
         public int CurrentPriceNumber { get; private set; } = 1;
         public int CurrentPrice { get; private set; }
         public bool HasNext => true;
+        public bool HasPrevious => CurrentPriceNumber > 1;
 
         public void Next()
         {
+            if (HasNext == false)
+                throw new InvalidOperationException();
+            
             CurrentPriceNumber += 1;
             CurrentPrice += _addValue;
+        }
+
+        public void Previous()
+        {
+            if (HasPrevious == false)
+                throw new InvalidOperationException();
+            
+            CurrentPriceNumber -= 1;
+            CurrentPrice -= _addValue;
         }
     }
 }

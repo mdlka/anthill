@@ -28,6 +28,7 @@ namespace YellowSquad.Anthill.Meta
         }
 
         public bool HasNext => CurrentPriceNumber < _pricesCount;
+        public bool HasPrevious => CurrentPriceNumber > 1;
         public int CurrentPriceNumber { get; private set; } = 1;
         public int CurrentPrice { get; private set; }
 
@@ -37,6 +38,20 @@ namespace YellowSquad.Anthill.Meta
                 throw new InvalidOperationException();
             
             CurrentPriceNumber += 1;
+            UpdatePrice();
+        }
+
+        public void Previous()
+        {
+            if (HasPrevious == false)
+                throw new InvalidOperationException();
+            
+            CurrentPriceNumber -= 1;
+            UpdatePrice();
+        }
+
+        private void UpdatePrice()
+        {
             CurrentPrice = (int)Mathf.Lerp(_startPrice, _maxPrice, (float)(CurrentPriceNumber - 1) / (_pricesCount - 1));
         }
     }

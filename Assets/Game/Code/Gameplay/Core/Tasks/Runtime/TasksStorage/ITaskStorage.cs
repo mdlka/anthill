@@ -6,6 +6,7 @@ namespace YellowSquad.Anthill.Core.Tasks
     {
         bool HasTaskGroupIn(AxialCoordinate position);
         void AddTaskGroup(ITaskGroup taskGroup);
+        void RemoveTaskGroup(AxialCoordinate position);
 
         void Visualize(ITasksProgressView view);
     }

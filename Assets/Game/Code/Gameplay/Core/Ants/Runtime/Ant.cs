@@ -52,7 +52,7 @@ namespace YellowSquad.Anthill.Core.Ants
                     var taskGroup = _home.FindTaskGroup();
                     _movement.MoveTo(taskGroup.TargetCellPosition, position =>
                     {
-                        _currentTask = taskGroup.ClosestTask(position);
+                        _currentTask = taskGroup.TakeClosestTask(position);
                         return _currentTask.TargetPosition;
                     });
                 }
@@ -61,6 +61,9 @@ namespace YellowSquad.Anthill.Core.Ants
             {
                 if (_movement.ReachedTargetPosition)
                 {
+                    if (_currentTask.Removed)
+                        _currentTask = new AlwaysCompletedTask();
+                    
                     if (_currentTask.Completed)
                         _movement.MoveTo(_home.Position);
                     else

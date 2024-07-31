@@ -23,19 +23,10 @@ namespace YellowSquad.Anthill.Application.Adapters
             _mapCellPriceList = mapCellPriceList;
         }
 
-        public bool CanExecute(AxialCoordinate position)
-        {
-            if (_map.HasDividedPointOfInterestIn(position) == false)
-                return false;
-            
-            var targetDividedPointOfInterest = _map.DividedPointOfInterestFrom(position);
-            return targetDividedPointOfInterest.HasParts == false && targetDividedPointOfInterest.CanRestore;
-        }
-
-        public void Execute(AxialCoordinate position)
+        public bool TryExecute(AxialCoordinate position)
         {
             if (CanExecute(position) == false)
-                throw new InvalidOperationException();
+                return false;
 
             _wallet.Add((int)(_mapCellPriceList.CurrentPrice * RestoreLeafRewardFactor));
             _map.DividedPointOfInterestFrom(position).Restore();
@@ -47,6 +38,17 @@ namespace YellowSquad.Anthill.Application.Adapters
                 MapCell = _map.MapCell(position),
                 ChangeType = ChangeType.PointOfInterest
             });
+
+            return true;
+        }
+        
+        private bool CanExecute(AxialCoordinate position)
+        {
+            if (_map.HasDividedPointOfInterestIn(position) == false)
+                return false;
+            
+            var targetDividedPointOfInterest = _map.DividedPointOfInterestFrom(position);
+            return targetDividedPointOfInterest.HasParts == false && targetDividedPointOfInterest.CanRestore;
         }
     }
 }

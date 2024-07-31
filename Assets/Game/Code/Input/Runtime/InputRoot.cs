@@ -88,10 +88,9 @@ namespace YellowSquad.Anthill.UserInput
             
             if (_map.HasPosition(mapClickPosition) == false || _map.IsClosed(mapClickPosition))
                 return;
-            
+
             foreach (var clickCommand in _clickCommands)
-                if (clickCommand.CanExecute(mapClickPosition))
-                    clickCommand.Execute(mapClickPosition);
+                clickCommand.TryExecute(mapClickPosition);
         }
 
         private bool IsPointerOverUIObject(Vector2 inputPosition)

@@ -14,6 +14,7 @@ namespace YellowSquad.Anthill.Meta
         }
 
         public bool CanBuyCell => _wallet.CanSpend(_priceList.CurrentPrice);
+        public bool CanSellCell => _priceList.HasPrevious;
 
         public void Buy()
         {
@@ -24,6 +25,15 @@ namespace YellowSquad.Anthill.Meta
             
             if (_priceList.HasNext)
                 _priceList.Next();
+        }
+
+        public void Sell()
+        {
+            if (CanSellCell == false)
+                throw new InvalidOperationException();
+                
+            _priceList.Previous();
+            _wallet.Add(_priceList.CurrentPrice);
         }
 
         public void Visualize(IMapCellShopView view)

@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.HexMath;
 
@@ -27,10 +26,14 @@ namespace YellowSquad.Anthill.Core.Tasks
         public int Price { get; }
         public FracAxialCoordinate TargetPosition { get; }
         public bool Completed => CanComplete && _onCompletedInvoked;
+        public bool Removed { get; private set; }
         private bool CanComplete => _elapsedTime >= ((int)_targetDividedObject.Hardness + 1) * 2f;
         
         public void UpdateProgress(float deltaTime)
         {
+            if (Removed)
+                throw new InvalidOperationException("Task is removed");
+            
             if (Completed)
                 throw new InvalidOperationException("Task is complete");
             
@@ -44,6 +47,14 @@ namespace YellowSquad.Anthill.Core.Tasks
             
             _targetDividedObject.DestroyClosestPartFor(_targetPart.LocalPosition);
             _onCompletedInvoked = true;
+        }
+
+        public void Remove()
+        {
+            if (Removed)
+                throw new InvalidOperationException();
+            
+            Removed = true;
         }
 
         public bool Equals(ITask other)

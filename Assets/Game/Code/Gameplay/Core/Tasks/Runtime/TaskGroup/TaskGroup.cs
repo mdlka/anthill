@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using YellowSquad.Anthill.Core.GameTime;
 using YellowSquad.HexMath;
 
@@ -33,10 +32,11 @@ namespace YellowSquad.Anthill.Core.Tasks
         public AxialCoordinate TargetCellPosition { get; }
         public bool AllTaskCompleted => _tookTasks.Count == _tasksCount && _tookTasks.All(task => task.Completed);
         public bool HasFreeTask => _tasks.Count > 0 && _stopwatch.ElapsedTime(_stopwatchIndex) >= _delayBetweenTasks;
+        public bool Removed { get; private set; }
 
-        public ITask ClosestTask(FracAxialCoordinate position)
+        public ITask TakeClosestTask(FracAxialCoordinate position)
         {
-            if (HasFreeTask == false)
+            if (Removed || HasFreeTask == false)
                 throw new InvalidOperationException();
 
             var task = _tasks.Aggregate((task1, task2) =>
@@ -56,6 +56,20 @@ namespace YellowSquad.Anthill.Core.Tasks
             _stopwatch.Restart(_stopwatchIndex);
             
             return task;
+        }
+
+        public void Remove()
+        {
+            if (Removed)
+                throw new InvalidOperationException();
+
+            foreach (var task in _tasks.Where(task => task.Removed == false))
+                task.Remove();
+
+            foreach (var task in _tookTasks.Where(task => task.Removed == false))
+                task.Remove();
+            
+            Removed = true;
         }
     }
 }

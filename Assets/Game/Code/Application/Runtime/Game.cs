@@ -91,13 +91,15 @@ namespace YellowSquad.Anthill.Application
             _mapCellCellShopView.Initialize(map, _diggerTaskStorage);
 
             var mapGoal = new MapGoal(_mapTargetAnts, _mapGoalView);
+            var collectHexTaskGroupFactory = new CollectHexTaskGroupFactory(map, _hexMapView.Value, _stopwatch, _delayBetweenTasks);
 
             _inputRoot = new InputRoot(map, new MouseInput(), 
                 new DefaultCamera(Camera.main, _cameraSettings), 
                 new IClickCommand[]
                 {
-                    new AddDiggerTaskCommand(_diggerTaskStorage, new CollectHexTaskGroupFactory(map, _hexMapView.Value, 
-                        _stopwatch, _delayBetweenTasks), _mapCellShop),
+                    new FirstTrueCommand(
+                        new AddDiggerTaskCommand(_diggerTaskStorage, collectHexTaskGroupFactory, _mapCellShop), 
+                        new RemoveDiggerTaskCommand(_diggerTaskStorage, _mapCellShop)),
                     new RestoreLeafCommand(map, _hexMapView.Value, wallet, mapCellPriceList)
                 });
 
