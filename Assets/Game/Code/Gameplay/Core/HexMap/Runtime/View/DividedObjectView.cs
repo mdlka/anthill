@@ -25,7 +25,8 @@ namespace YellowSquad.Anthill.Core.HexMap
                 return;
 
             foreach (var renderPart in _partMatrices)
-                Graphics.RenderMeshInstanced(_renderParams, renderPart.Key, 0, renderPart.Value);
+                if (renderPart.Value.Count > 0)
+                    Graphics.RenderMeshInstanced(_renderParams, renderPart.Key, 0, renderPart.Value);
         }
         
         public void Render(IEnumerable<IReadOnlyPart> addedParts, IEnumerable<IReadOnlyPart> removedParts, Matrix4x4 objectMatrix)
@@ -44,7 +45,7 @@ namespace YellowSquad.Anthill.Core.HexMap
                 
                 if (_partMatrices.ContainsKey(mesh) == false)
                     _partMatrices.Add(mesh, new List<Matrix4x4>());
-
+                
                 _partMatrices[mesh].Add(objectMatrix * PartMatrixBy(part.LocalPosition));
             }
         }
