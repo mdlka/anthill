@@ -8,9 +8,9 @@ namespace YellowSquad.Anthill.Core.Tasks
         int Price { get; }
         FracAxialCoordinate TargetPosition { get; }
         bool Completed { get; }
-        bool Removed { get; }
+        bool Cancelled { get; }
 
         void UpdateProgress(float deltaTime);
-        void Remove();
+        void Cancel();
     }
 }

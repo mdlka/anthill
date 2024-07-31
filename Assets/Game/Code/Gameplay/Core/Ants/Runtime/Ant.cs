@@ -5,6 +5,7 @@ namespace YellowSquad.Anthill.Core.Ants
 {
     public class Ant : IAnt
     {
+        private readonly AlwaysCompletedTask _alwaysCompletedTask = new();
         private readonly IHome _home;
         private readonly ITaskStore _taskStore;
         private readonly IMovement _movement;
@@ -61,8 +62,8 @@ namespace YellowSquad.Anthill.Core.Ants
             {
                 if (_movement.ReachedTargetPosition)
                 {
-                    if (_currentTask.Removed)
-                        _currentTask = new AlwaysCompletedTask();
+                    if (_currentTask.Cancelled)
+                        _currentTask = _alwaysCompletedTask;
                     
                     if (_currentTask.Completed)
                         _movement.MoveTo(_home.Position);

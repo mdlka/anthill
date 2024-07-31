@@ -26,7 +26,7 @@ namespace YellowSquad.Anthill.Core.Tasks
             _activeTaskGroupsPositions.Add(taskGroup.TargetCellPosition);
         }
 
-        public void RemoveTaskGroup(AxialCoordinate position)
+        public void CancelTaskGroup(AxialCoordinate position)
         {
             if (HasTaskGroupIn(position) == false)
                 throw new InvalidOperationException();
@@ -34,7 +34,7 @@ namespace YellowSquad.Anthill.Core.Tasks
             RemoveCompletedTasks();
 
             var targetTaskGroup = _taskGroups.First(taskGroup => taskGroup.TargetCellPosition == position);
-            targetTaskGroup.Remove();
+            targetTaskGroup.Cancel();
             
             _taskGroups.Remove(targetTaskGroup);
             _activeTaskGroupsPositions.Remove(position);

@@ -32,11 +32,11 @@ namespace YellowSquad.Anthill.Core.Tasks
         public AxialCoordinate TargetCellPosition { get; }
         public bool AllTaskCompleted => _tookTasks.Count == _tasksCount && _tookTasks.All(task => task.Completed);
         public bool HasFreeTask => _tasks.Count > 0 && _stopwatch.ElapsedTime(_stopwatchIndex) >= _delayBetweenTasks;
-        public bool Removed { get; private set; }
+        public bool Cancelled { get; private set; }
 
         public ITask TakeClosestTask(FracAxialCoordinate position)
         {
-            if (Removed || HasFreeTask == false)
+            if (Cancelled || HasFreeTask == false)
                 throw new InvalidOperationException();
 
             var task = _tasks.Aggregate((task1, task2) =>
@@ -58,18 +58,18 @@ namespace YellowSquad.Anthill.Core.Tasks
             return task;
         }
 
-        public void Remove()
+        public void Cancel()
         {
-            if (Removed)
+            if (Cancelled)
                 throw new InvalidOperationException();
 
-            foreach (var task in _tasks.Where(task => task.Removed == false))
-                task.Remove();
+            foreach (var task in _tasks.Where(task => task.Cancelled == false))
+                task.Cancel();
 
-            foreach (var task in _tookTasks.Where(task => task.Removed == false))
-                task.Remove();
+            foreach (var task in _tookTasks.Where(task => task.Cancelled == false))
+                task.Cancel();
             
-            Removed = true;
+            Cancelled = true;
         }
     }
 }

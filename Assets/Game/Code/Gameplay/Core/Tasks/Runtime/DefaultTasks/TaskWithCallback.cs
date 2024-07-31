@@ -19,7 +19,7 @@ namespace YellowSquad.Anthill.Core.Tasks
         public int Price => _task.Price;
         public FracAxialCoordinate TargetPosition => _task.TargetPosition;
         public bool Completed => _task.Completed;
-        public bool Removed => _task.Removed;
+        public bool Cancelled => _task.Cancelled;
 
         public void UpdateProgress(float deltaTime)
         {
@@ -32,9 +32,9 @@ namespace YellowSquad.Anthill.Core.Tasks
             _invoked = true;
         }
 
-        public void Remove()
+        public void Cancel()
         {
-            _task.Remove();
+            _task.Cancel();
         }
 
         public bool Equals(ITask other)

@@ -21,7 +21,7 @@ namespace YellowSquad.Anthill.Application.Adapters
             if (CanExecute(position) == false)
                 return false;
             
-            _diggerTaskStorage.RemoveTaskGroup(position);
+            _diggerTaskStorage.CancelTaskGroup(position);
             _mapCellShop.Sell();
             return true;
         }

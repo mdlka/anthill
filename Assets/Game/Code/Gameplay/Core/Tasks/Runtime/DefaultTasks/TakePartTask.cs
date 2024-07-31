@@ -26,13 +26,13 @@ namespace YellowSquad.Anthill.Core.Tasks
         public int Price { get; }
         public FracAxialCoordinate TargetPosition { get; }
         public bool Completed => CanComplete && _onCompletedInvoked;
-        public bool Removed { get; private set; }
+        public bool Cancelled { get; private set; }
         private bool CanComplete => _elapsedTime >= ((int)_targetDividedObject.Hardness + 1) * 2f;
         
         public void UpdateProgress(float deltaTime)
         {
-            if (Removed)
-                throw new InvalidOperationException("Task is removed");
+            if (Cancelled)
+                throw new InvalidOperationException("Task is cancelled");
             
             if (Completed)
                 throw new InvalidOperationException("Task is complete");
@@ -49,12 +49,12 @@ namespace YellowSquad.Anthill.Core.Tasks
             _onCompletedInvoked = true;
         }
 
-        public void Remove()
+        public void Cancel()
         {
-            if (Removed)
+            if (Cancelled)
                 throw new InvalidOperationException();
             
-            Removed = true;
+            Cancelled = true;
         }
 
         public bool Equals(ITask other)
