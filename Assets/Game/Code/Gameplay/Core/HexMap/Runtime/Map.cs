@@ -42,11 +42,11 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (_closedPositions.Contains(position) && CalculateClosed(position) == false)
                 _closedPositions.Remove(position);
             
-            var neighborPositions = NeighborHexPositions(position);
+            var openedNeighborPositions = NeighborHexPositions(position, 
+                where: pos => _closedPositions.Contains(pos) && CalculateClosed(pos) == false);
             
-            foreach (var neighborPosition in neighborPositions)
-                if (_closedPositions.Contains(neighborPosition) && CalculateClosed(position) == false)
-                    _closedPositions.Remove(neighborPosition);
+            foreach (var neighborPosition in openedNeighborPositions)
+                _closedPositions.Remove(neighborPosition);
         }
 
         public bool HasPosition(AxialCoordinate position)
@@ -133,16 +133,10 @@ namespace YellowSquad.Anthill.Core.HexMap
         
         public void Visualize(IHexMapView view, params MapCellChange[] changes)
         {
-            var closedPositions = new HashSet<AxialCoordinate>();
-
-            foreach (var cell in _cells)
-                if (IsClosed(cell.Key)) // TODO: Need optimization, because called every frame
-                    closedPositions.Add(cell.Key);
-
             if (view.Initialized == false)
-                view.InitializeRender(_scale, _cells, closedPositions);
+                view.InitializeRender(_scale, _cells, _closedPositions);
             else
-                view.Render(_scale, closedPositions, changes);
+                view.Render(_scale, _closedPositions, changes);
         }
 
         public override string ToString()

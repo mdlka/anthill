@@ -78,7 +78,7 @@ namespace YellowSquad.Anthill.Core.Ants
                 where: pos => _map.HasObstacleIn(pos) == false);
 
             if (neighborsCellsWithoutObstacle.Count == 0)
-                throw new InvalidOperationException();
+                throw new InvalidOperationException(position.ToString());
 
             return neighborsCellsWithoutObstacle.Aggregate((pos1, pos2) =>
                 HMath.Distance(pos1, target) > 
