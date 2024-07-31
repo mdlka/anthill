@@ -39,7 +39,14 @@ namespace YellowSquad.Anthill.Application.Adapters
 
             _wallet.Add((int)(_mapCellPriceList.CurrentPrice * RestoreLeafRewardFactor));
             _map.DividedPointOfInterestFrom(position).Restore();
-            _map.Visualize(_mapView);
+            _map.Visualize(_mapView, new MapCellChange
+            {
+                Position = position,
+                AddedParts = _map.DividedPointOfInterestFrom(position).Parts,
+                RemovedParts = Array.Empty<IReadOnlyPart>(),
+                MapCell = _map.MapCell(position),
+                ChangeType = ChangeType.PointOfInterest
+            });
         }
     }
 }

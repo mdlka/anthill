@@ -46,7 +46,14 @@ namespace YellowSquad.Anthill.Core.Tasks
                     new TakePartTask(targetMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), targetPointOfInterest, part, _taskPrice), 
                     onComplete: () => 
                     { 
-                        _map.Visualize(_mapView);
+                        _map.Visualize(_mapView, new MapCellChange
+                        {
+                            Position = targetPosition,
+                            AddedParts = Array.Empty<IReadOnlyPart>(),
+                            RemovedParts = new[] {part},
+                            MapCell = _map.MapCell(targetPosition),
+                            ChangeType = ChangeType.PointOfInterest
+                        });
                         onComplete?.Invoke();
                     }));
             }

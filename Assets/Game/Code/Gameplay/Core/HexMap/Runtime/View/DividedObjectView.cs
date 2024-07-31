@@ -28,29 +28,27 @@ namespace YellowSquad.Anthill.Core.HexMap
                 Graphics.RenderMeshInstanced(_renderParams, renderPart.Key, 0, renderPart.Value);
         }
         
-        public void Render(IEnumerable<IReadOnlyPart> parts, Matrix4x4 objectMatrix)
+        public void Render(IEnumerable<IReadOnlyPart> addedParts, IEnumerable<IReadOnlyPart> removedParts, Matrix4x4 objectMatrix)
         {
-            foreach (var part in parts)
+            foreach (var part in removedParts)
             {
-                if (part.Destroyed)
-                    continue;
-                
+                var mesh = _meshByPartPosition[part.LocalPosition];
+
+                if (_partMatrices.ContainsKey(mesh))
+                    _partMatrices[mesh].Remove(objectMatrix * PartMatrixBy(part.LocalPosition));
+            }
+            
+            foreach (var part in addedParts)
+            {
                 var mesh = _meshByPartPosition[part.LocalPosition];
                 
                 if (_partMatrices.ContainsKey(mesh) == false)
                     _partMatrices.Add(mesh, new List<Matrix4x4>());
 
-                var partMatrix = objectMatrix * PartMatrixBy(part.LocalPosition);
-                
-                _partMatrices[mesh].Add(partMatrix);
+                _partMatrices[mesh].Add(objectMatrix * PartMatrixBy(part.LocalPosition));
             }
         }
 
-        public void Clear()
-        {
-            _partMatrices.Clear();
-        }
-        
         private Matrix4x4 PartMatrixBy(Vector3 worldPosition)
         {
             return Matrix4x4.TRS(worldPosition, Quaternion.Euler(-90f, 0f, 0f), Vector3.one);

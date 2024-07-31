@@ -11,29 +11,29 @@ namespace YellowSquad.Anthill.Core.HexMap
         [SerializeField] private SpriteRenderer _rendererTemplate;
         [SerializeField] private Vector3 _offset;
 
-        public void Render(float mapScale, IReadOnlyDictionary<AxialCoordinate, MapCell> cells)
+        public void Render(float mapScale, params MapCellChange[] changes)
         {
-            foreach (var cell in cells)
+            foreach (var change in changes)
             {
-                if (cell.Value.PointOfInterestType != PointOfInterestType.Leaf)
+                if (change.MapCell.PointOfInterestType != PointOfInterestType.Leaf)
                     continue;
 
-                if (cell.Value.DividedPointOfInterest.CanRestore)
+                if (change.MapCell.DividedPointOfInterest.CanRestore)
                 {
-                    if (_instances.ContainsKey(cell.Key)) 
+                    if (_instances.ContainsKey(change.Position)) 
                         continue;
                     
-                    _instances.Add(cell.Key, Instantiate(_rendererTemplate, 
-                        cell.Key.ToVector3(mapScale) + _offset, 
+                    _instances.Add(change.Position, Instantiate(_rendererTemplate, 
+                        change.Position.ToVector3(mapScale) + _offset, 
                         _rendererTemplate.transform.rotation, transform));
                 }
                 else
                 {
-                    if (_instances.ContainsKey(cell.Key) == false)
+                    if (_instances.ContainsKey(change.Position) == false)
                         continue;
                     
-                    Destroy(_instances[cell.Key].gameObject);
-                    _instances.Remove(cell.Key);
+                    Destroy(_instances[change.Position].gameObject);
+                    _instances.Remove(change.Position);
                 }       
             }
         }

@@ -10,10 +10,12 @@ namespace YellowSquad.Anthill.Core.HexMap
     {
         [SerializeField] private List<PointSetting> _settings;
 
-        public void Render(float mapScale, IReadOnlyDictionary<AxialCoordinate, MapCell> cells)
+        private bool _initialized;
+        
+        public void InitializeRender(float mapScale, IReadOnlyDictionary<AxialCoordinate, MapCell> cells)
         {
-            foreach (var setting in _settings)
-                setting.DividedObjectView?.Clear(); // TODO: Need optimization
+            if (_initialized)
+                throw new InvalidOperationException();
             
             foreach (var cell in cells)
             {
@@ -24,7 +26,7 @@ namespace YellowSquad.Anthill.Core.HexMap
                     continue;
 
                 var setting = SettingBy(cell.Value.PointOfInterestType);
-                setting.DividedObjectView.Render(cell.Value.DividedPointOfInterest.Parts, 
+                setting.DividedObjectView.Render(cell.Value.DividedPointOfInterest.Parts, Array.Empty<IReadOnlyPart>(), 
                     PointOfInterestMatrixBy(mapScale, cell.Key, cell.Value.PointOfInterestType));
             }
 
@@ -47,6 +49,22 @@ namespace YellowSquad.Anthill.Core.HexMap
                 
                 setting.SolidObjectView.Render(positions, position =>
                     PointOfInterestMatrixBy(mapScale, position, setting.PointOfInterest));
+            }
+        }
+
+        public void Render(float mapScale, params MapCellChange[] changes)
+        {
+            foreach (var change in changes)
+            {
+                if (change.ChangeType != ChangeType.PointOfInterest)
+                    continue;
+                
+                if (change.MapCell.PointOfInterestType != PointOfInterestType.Leaf)
+                    continue;
+                
+                var setting = SettingBy(change.MapCell.PointOfInterestType);
+                setting.DividedObjectView.Render(change.AddedParts, change.RemovedParts, 
+                    PointOfInterestMatrixBy(mapScale, change.Position, change.MapCell.PointOfInterestType));
             }
         }
         

@@ -56,6 +56,7 @@ namespace YellowSquad.Anthill.Application
         private void Start()
         {
             var map = _mapFactory.Create();
+            map.UpdateAllClosedPositions();
             map.Visualize(_hexMapView.Value);
 
             var loaderTaskStorage = new DefaultStorage();

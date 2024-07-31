@@ -43,7 +43,40 @@ namespace YellowSquad.Anthill.Core.Tasks
                     new TakePartTask(targetHexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), targetHex, part), 
                     onComplete: () => 
                     { 
-                        _map.Visualize(_mapView);
+                        _map.Visualize(_mapView, new MapCellChange
+                        {
+                            Position = targetPosition,
+                            AddedParts = Array.Empty<IReadOnlyPart>(),
+                            RemovedParts = new[] {part},
+                            MapCell = _map.MapCell(targetPosition),
+                            ChangeType = ChangeType.Hex
+                        });
+
+                        if (_map.HexFrom(targetPosition).HasParts == false)
+                        {
+                            var neighborsCellChanges = new List<MapCellChange>(6);
+                            var closedNeighborPositions = _map.NeighborHexPositions(targetPosition, pos => _map.IsClosed(pos));
+                            
+                            _map.UpdateClosedPositionNeighbor(targetPosition);
+
+                            foreach (var neighborPosition in closedNeighborPositions)
+                            {
+                                if (_map.IsClosed(neighborPosition))
+                                    continue;
+                                
+                                neighborsCellChanges.Add(new MapCellChange
+                                {
+                                    Position = neighborPosition,
+                                    AddedParts = _map.HexFrom(neighborPosition).Parts,
+                                    RemovedParts = Array.Empty<IReadOnlyPart>(),
+                                    MapCell = _map.MapCell(neighborPosition),
+                                    ChangeType = ChangeType.Hex
+                                });
+                            }
+                            
+                            _map.Visualize(_mapView, neighborsCellChanges.ToArray());
+                        }
+
                         onComplete?.Invoke();
                     }));
             }

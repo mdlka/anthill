@@ -11,10 +11,15 @@ namespace YellowSquad.Anthill.Core.HexMap
         
         IEnumerable<AxialCoordinate> Positions { get; }
 
+        void UpdateAllClosedPositions();
+        void UpdateClosedPositionNeighbor(AxialCoordinate position);
+
         bool HasPosition(AxialCoordinate position);
         bool HasObstacleIn(AxialCoordinate position);
         bool IsClosed(AxialCoordinate position);
         IHex HexFrom(AxialCoordinate position);
+
+        MapCell MapCell(AxialCoordinate position);
 
         bool HasDividedPointOfInterestIn(AxialCoordinate position);
         IDividedPointOfInterest DividedPointOfInterestFrom(AxialCoordinate position);
@@ -23,6 +28,6 @@ namespace YellowSquad.Anthill.Core.HexMap
         IReadOnlyList<AxialCoordinate> NeighborHexPositions(AxialCoordinate position, Func<AxialCoordinate, bool> where = null);
         IReadOnlyList<AxialCoordinate> PointsOfInterestPositions(PointOfInterestType targetPoint);
 
-        void Visualize(IHexMapView view);
+        void Visualize(IHexMapView view, params MapCellChange[] changes);
     }
 }

@@ -18,6 +18,16 @@ namespace YellowSquad.Anthill.Application.Tests
         public float Scale => 1f;
         public int TotalCells => _mapWithObstacles.Count;
         public IEnumerable<AxialCoordinate> Positions { get; }
+        
+        public void UpdateAllClosedPositions()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateClosedPositionNeighbor(AxialCoordinate position)
+        {
+            throw new NotImplementedException();
+        }
 
         public bool HasPosition(AxialCoordinate position)
         {
@@ -38,6 +48,11 @@ namespace YellowSquad.Anthill.Application.Tests
         }
 
         public IHex HexFrom(AxialCoordinate position)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MapCell MapCell(AxialCoordinate position)
         {
             throw new NotImplementedException();
         }
@@ -67,7 +82,7 @@ namespace YellowSquad.Anthill.Application.Tests
             throw new NotImplementedException();
         }
 
-        public void Visualize(IHexMapView view)
+        public void Visualize(IHexMapView view, params MapCellChange[] changes)
         {
             throw new NotImplementedException();
         }

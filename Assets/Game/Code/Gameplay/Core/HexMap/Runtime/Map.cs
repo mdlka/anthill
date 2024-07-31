@@ -8,6 +8,7 @@ namespace YellowSquad.Anthill.Core.HexMap
     {
         private readonly float _scale;
         private readonly Dictionary<AxialCoordinate, MapCell> _cells;
+        private readonly HashSet<AxialCoordinate> _closedPositions = new();
 
         public Map(IReadOnlyDictionary<AxialCoordinate, MapCell> cells) : this(1f, cells) { }
         
@@ -23,6 +24,30 @@ namespace YellowSquad.Anthill.Core.HexMap
         public float Scale => _scale;
         public int TotalCells => _cells.Count;
         public IEnumerable<AxialCoordinate> Positions => _cells.Keys;
+        
+        public void UpdateAllClosedPositions()
+        {
+            _closedPositions.Clear();
+            
+            foreach (var pair in _cells)
+                if (CalculateClosed(pair.Key))
+                    _closedPositions.Add(pair.Key);
+        }
+
+        public void UpdateClosedPositionNeighbor(AxialCoordinate position)
+        {
+            if (HasPosition(position) == false)
+                throw new ArgumentOutOfRangeException();
+
+            if (_closedPositions.Contains(position) && CalculateClosed(position) == false)
+                _closedPositions.Remove(position);
+            
+            var neighborPositions = NeighborHexPositions(position);
+            
+            foreach (var neighborPosition in neighborPositions)
+                if (_closedPositions.Contains(neighborPosition) && CalculateClosed(position) == false)
+                    _closedPositions.Remove(neighborPosition);
+        }
 
         public bool HasPosition(AxialCoordinate position)
         {
@@ -43,7 +68,7 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (HasPosition(position) == false)
                 throw new ArgumentOutOfRangeException();
 
-            return HasObstacleIn(position) && NeighborHexPositions(position, where: pos => HasObstacleIn(pos) == false).Count == 0;
+            return _closedPositions.Contains(position);
         }
 
         public IHex HexFrom(AxialCoordinate position)
@@ -52,6 +77,11 @@ namespace YellowSquad.Anthill.Core.HexMap
                 throw new ArgumentOutOfRangeException();
             
             return _cells[position].Hex;
+        }
+
+        public MapCell MapCell(AxialCoordinate position)
+        {
+            return _cells[position];
         }
 
         public bool HasDividedPointOfInterestIn(AxialCoordinate position)
@@ -100,8 +130,8 @@ namespace YellowSquad.Anthill.Core.HexMap
 
             return points;
         }
-
-        public void Visualize(IHexMapView view)
+        
+        public void Visualize(IHexMapView view, params MapCellChange[] changes)
         {
             var closedPositions = new HashSet<AxialCoordinate>();
 
@@ -109,12 +139,21 @@ namespace YellowSquad.Anthill.Core.HexMap
                 if (IsClosed(cell.Key)) // TODO: Need optimization, because called every frame
                     closedPositions.Add(cell.Key);
 
-            view.Render(_scale, _cells, closedPositions);
+            if (view.Initialized == false)
+                view.InitializeRender(_scale, _cells, closedPositions);
+            else
+                view.Render(_scale, closedPositions, changes);
         }
 
         public override string ToString()
         {
             return $"Count: {_cells.Count}\n{string.Join(' ', _cells)}";
+        }
+
+        private bool CalculateClosed(AxialCoordinate position)
+        {
+            return HasObstacleIn(position) &&
+                   NeighborHexPositions(position, where: pos => HasObstacleIn(pos) == false).Count == 0;
         }
     }
 }

@@ -17,27 +17,49 @@ namespace YellowSquad.Anthill.Core.HexMap
         [SerializeField] private SolidObjectView _closedHexesView;
         [SerializeField] private HexViewPair[] _hexViews;
 
-        public void Render(float mapScale, IReadOnlyDictionary<AxialCoordinate, MapCell> cells, HashSet<AxialCoordinate> closedPositions)
+        public bool Initialized { get; private set; }
+
+        public void InitializeRender(float mapScale, IReadOnlyDictionary<AxialCoordinate, MapCell> cells, HashSet<AxialCoordinate> closedPositions)
         {
-            if (_groundView.Rendered == false)
-                _groundView.Render(mapScale, _hexScale, cells.Keys);
+            if (Initialized)
+                throw new InvalidOperationException();
             
-            _pointsOfInterestView.Render(mapScale, cells);
-            _updateLeafView.Render(mapScale, cells);
+            _groundView.Render(mapScale, _hexScale, cells.Keys);
+            _pointsOfInterestView.InitializeRender(mapScale, cells);
             
             _closedHexesView.Clear();
             _closedHexesView.Render(closedPositions, position => HexMatrixBy(mapScale, position));
             
-            foreach (var pair in _hexViews)
-                pair.View.Clear(); // TODO: Need optimization
-
             foreach (var pair in cells)
             {
                 if (closedPositions.Contains(pair.Key))
                     continue;
                 
                 var view = _hexViews.First(view => view.Hardness == pair.Value.Hex.Hardness).View;
-                view.Render(pair.Value.Hex.Parts, HexMatrixBy(mapScale, pair.Key));
+                view.Render(pair.Value.Hex.Parts, Array.Empty<IReadOnlyPart>(), HexMatrixBy(mapScale, pair.Key));
+            }
+
+            Initialized = true;
+        }
+
+        public void Render(float mapScale, HashSet<AxialCoordinate> closedPositions, params MapCellChange[] changes)
+        {
+            if (Initialized == false)
+                throw new InvalidOperationException("Need initialize");
+            
+            _pointsOfInterestView.Render(mapScale, changes);
+            _updateLeafView.Render(mapScale, changes);
+            
+            _closedHexesView.Clear();
+            _closedHexesView.Render(closedPositions, position => HexMatrixBy(mapScale, position));
+            
+            foreach (var change in changes)
+            {
+                if (change.ChangeType != ChangeType.Hex)
+                    continue;
+
+                var view = _hexViews.First(view => view.Hardness == change.MapCell.Hex.Hardness).View;
+                view.Render(change.AddedParts, change.RemovedParts, HexMatrixBy(mapScale, change.Position));
             }
         }
 
