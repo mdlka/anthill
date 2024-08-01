@@ -49,7 +49,7 @@ namespace YellowSquad.Anthill.Application
         private void Awake()
         {
 #if !UNITY_EDITOR
-            UnityEngine.Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+            UnityEngine.Application.targetFrameRate = -1;//(int)Screen.currentResolution.refreshRateRatio.value;
 #endif
         }
 
