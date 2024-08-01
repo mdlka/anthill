@@ -940,7 +940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 177638, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22451668, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
       propertyPath: m_Pivot.x
@@ -1323,7 +1323,7 @@ MonoBehaviour:
   _diggerTasksProgressView: {fileID: 1616363467}
   _homesCapacity: 100
   _delayBetweenHomeFindTask: 0.1
-  _delayBetweenTasks: 0.45
+  _delayBetweenTasks: 0.25
   _upgradeShop: {fileID: 1280016496}
   _walletView:
     mode: 0
