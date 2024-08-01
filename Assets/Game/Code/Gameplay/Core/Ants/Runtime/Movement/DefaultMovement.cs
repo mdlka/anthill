@@ -57,8 +57,8 @@ namespace YellowSquad.Anthill.Core.Ants
             if (_elapsedTime < _settings.NormalizedMoveDuration)
                 return;
 
+            _currentPathIndex = Math.Max(0, (int)(_currentPathIndex - _elapsedTime / _settings.NormalizedMoveDuration));
             _elapsedTime = 0;
-            _currentPathIndex -= 1;
         }
         
         private bool PossibleToReverse(FracAxialCoordinate targetPosition)
