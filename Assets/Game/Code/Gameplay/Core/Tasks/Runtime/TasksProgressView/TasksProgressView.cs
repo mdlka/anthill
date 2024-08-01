@@ -20,24 +20,29 @@ namespace YellowSquad.Anthill.Core.Tasks
             _map = map;
         }
 
-        public void Render(HashSet<AxialCoordinate> activeTaskGroupsPositions)
+        public void Render(Dictionary<AxialCoordinate, ITaskGroup> activeTaskGroups)
         {
-            DestroyExtraViews(activeTaskGroupsPositions);
+            DestroyExtraViews(activeTaskGroups);
             
-            foreach (var taskGroupPosition in activeTaskGroupsPositions)
+            foreach (var taskGroup in activeTaskGroups)
             {
-                if (_views.ContainsKey(taskGroupPosition))
+                if (_views.ContainsKey(taskGroup.Key))
+                {
+                    _views[taskGroup.Key].Render(taskGroup.Value.Progress);
                     continue;
+                }
+
+                var viewInstance = Instantiate(_taskProgressTemplate, taskGroup.Key.ToVector3(_map.Scale) + _viewsOffset,
+                    _taskProgressTemplate.transform.rotation, _viewsContent);
+                viewInstance.Render(taskGroup.Value.Progress);
                 
-                _views.Add(taskGroupPosition, 
-                    Instantiate(_taskProgressTemplate, taskGroupPosition.ToVector3(_map.Scale) + _viewsOffset, 
-                        _taskProgressTemplate.transform.rotation, _viewsContent));
+                _views.Add(taskGroup.Key, viewInstance);
             }
         }
 
-        private void DestroyExtraViews(HashSet<AxialCoordinate> activeTaskGroupsPositions)
+        private void DestroyExtraViews(Dictionary<AxialCoordinate, ITaskGroup> activeTaskGroups)
         {
-            int extraPositionsCount = _views.Count - activeTaskGroupsPositions.Count;
+            int extraPositionsCount = _views.Count - activeTaskGroups.Count;
 
             if (extraPositionsCount <= 0)
                 return;
@@ -46,7 +51,7 @@ namespace YellowSquad.Anthill.Core.Tasks
             int index = 0;
             
             foreach (var pair in _views)
-                if (activeTaskGroupsPositions.Contains(pair.Key) == false)
+                if (activeTaskGroups.ContainsKey(pair.Key) == false)
                     extraPositions[index++] = pair.Key;
 
             foreach (var position in extraPositions)

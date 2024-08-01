@@ -8,6 +8,8 @@ namespace YellowSquad.Anthill.Core.Tasks
         bool AllTaskCompleted { get;  }
         bool HasFreeTask { get; }
         bool Cancelled { get; }
+        
+        float Progress { get; }
 
         ITask TakeClosestTask(FracAxialCoordinate position);
         void Cancel();

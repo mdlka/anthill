@@ -5,6 +5,6 @@ namespace YellowSquad.Anthill.Core.Tasks
 {
     public interface ITasksProgressView
     {
-        void Render(HashSet<AxialCoordinate> activeTaskGroupsPositions);
+        void Render(Dictionary<AxialCoordinate, ITaskGroup> activeTaskGroups);
     }
 }

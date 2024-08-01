@@ -8,7 +8,7 @@ namespace YellowSquad.Anthill.Core.Tasks
     public class DefaultStorage : ITaskStorage
     {
         private readonly HashSet<ITaskGroup> _taskGroups = new();
-        private readonly HashSet<AxialCoordinate> _activeTaskGroupsPositions = new();
+        private readonly Dictionary<AxialCoordinate, ITaskGroup> _activeTaskGroups = new();
 
         public bool HasFreeTaskGroup => _taskGroups.Any(group => group.HasFreeTask);
 
@@ -23,7 +23,9 @@ namespace YellowSquad.Anthill.Core.Tasks
                 throw new InvalidOperationException();
             
             _taskGroups.Add(taskGroup);
-            _activeTaskGroupsPositions.Add(taskGroup.TargetCellPosition);
+            
+            if (_activeTaskGroups.ContainsKey(taskGroup.TargetCellPosition) == false)
+                _activeTaskGroups.Add(taskGroup.TargetCellPosition, taskGroup);
         }
 
         public void CancelTaskGroup(AxialCoordinate position)
@@ -37,7 +39,7 @@ namespace YellowSquad.Anthill.Core.Tasks
             targetTaskGroup.Cancel();
             
             _taskGroups.Remove(targetTaskGroup);
-            _activeTaskGroupsPositions.Remove(position);
+            _activeTaskGroups.Remove(position);
         }
 
         public ITaskGroup FindTaskGroup()
@@ -52,7 +54,7 @@ namespace YellowSquad.Anthill.Core.Tasks
         public void Visualize(ITasksProgressView view)
         {
             RemoveCompletedTasks();
-            view.Render(_activeTaskGroupsPositions);
+            view.Render(_activeTaskGroups);
         }
 
         private void RemoveCompletedTasks()
@@ -63,10 +65,10 @@ namespace YellowSquad.Anthill.Core.Tasks
             if (tasksBeforeRemove == _taskGroups.Count) 
                 return;
             
-            _activeTaskGroupsPositions.Clear();
+            _activeTaskGroups.Clear();
 
             foreach (var taskGroup in _taskGroups)
-                _activeTaskGroupsPositions.Add(taskGroup.TargetCellPosition);
+                _activeTaskGroups.Add(taskGroup.TargetCellPosition, taskGroup);
         }
     }
 }
