@@ -39,6 +39,9 @@ namespace YellowSquad.Anthill.Core.Tasks
                         
             foreach (var part in targetHex.Parts)
             {
+                if (part.Destroyed)
+                    continue;
+                
                 tasks.Add(new TaskWithCallback(
                     new TakePartTask(targetHexMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), targetHex, part), 
                     onComplete: () => 
