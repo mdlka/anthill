@@ -171,6 +171,13 @@
       "dependencies": {},
       "hash": "4e63373a25f750961262e5eba8f7a40d58442014"
     },
+    "ga.fuquna.vatbaker": {
+      "version": "1.0.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://registry.npmjs.com"
+    },
     "net.tnrd.serializableinterface": {
       "version": "https://github.com/Thundernerd/Unity3D-SerializableInterface.git",
       "depth": 0,

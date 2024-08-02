@@ -11,6 +11,7 @@
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.9.1",
     "com.yellowsquad.assetpath": "https://github.com/mdlka/com.yellowsquad.assetpath.git#2.2.0",
+    "ga.fuquna.vatbaker": "1.0.3",
     "net.tnrd.serializableinterface": "https://github.com/Thundernerd/Unity3D-SerializableInterface.git",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
@@ -43,5 +44,14 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "fuqunaga",
+      "url": "https://registry.npmjs.com",
+      "scopes": [
+        "ga.fuquna"
+      ]
+    }
+  ]
 }
