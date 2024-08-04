@@ -11,6 +11,7 @@ namespace YellowSquad.Anthill.Core.Ants
         private readonly List<FracAxialCoordinate> _lastPositions = new();
         private readonly List<Matrix4x4> _matrices = new();
         private readonly List<float> _lastRotationY = new();
+        private readonly List<bool> _wasInHome = new();
 
         private readonly List<Matrix4x4> _partsMatrices = new();
 
@@ -42,6 +43,7 @@ namespace YellowSquad.Anthill.Core.Ants
                 throw new InvalidOperationException();
             
             _ants.Add(ant);
+            _wasInHome.Add(false);
             _lastPositions.Add(ant.CurrentPosition);
             _lastRotationY.Add(0f);
             _matrices.Add(WorldMatrixFor(ant.CurrentPosition.ToVector3(_mapScale), 0f, _scale));
@@ -55,8 +57,18 @@ namespace YellowSquad.Anthill.Core.Ants
 
             for (int i = 0; i < _ants.Count; i++)
             {
+                if (_wasInHome[i] == false && _ants[i].Moving == false && _ants[i].InHome)
+                {
+                    _wasInHome[i] = true;
+                    _matrices[i] = WorldMatrixFor(Vector3.zero, 0, 0);
+                    _partsMatrices[i] = _matrices[i];
+                    continue;
+                }
+                
                 if (_ants[i].Moving == false && _lastPositions[i] == _ants[i].CurrentPosition) 
                     continue;
+                
+                _wasInHome[i] = false;
                 
                 Vector3 currentPosition = _ants[i].CurrentPosition.ToVector3(_mapScale);
                 Vector3 lastPosition = _lastPositions[i].ToVector3(_mapScale);
