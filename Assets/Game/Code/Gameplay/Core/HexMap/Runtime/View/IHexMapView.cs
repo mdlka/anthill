@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using YellowSquad.HexMath;
 
@@ -19,9 +20,9 @@ namespace YellowSquad.Anthill.Core.HexMap
     public class MapCellChange
     {
         public AxialCoordinate Position { get; init; }
-        public IEnumerable<IReadOnlyPart> RemovedParts { get; init; }
-        public IEnumerable<IReadOnlyPart> AddedParts { get; init; }
-        public IEnumerable<IReadOnlyPart> ChangedSizeParts { get; init; }
+        public IEnumerable<IReadOnlyPart> RemovedParts { get; init; } = Array.Empty<IReadOnlyPart>();
+        public IEnumerable<IReadOnlyPart> AddedParts { get; init; } = Array.Empty<IReadOnlyPart>();
+        public IEnumerable<IReadOnlyPart> ChangedSizeParts { get; init; } = Array.Empty<IReadOnlyPart>();
 
         public MapCell MapCell { get; init; }
         

@@ -49,9 +49,7 @@ namespace YellowSquad.Anthill.Core.Tasks
                             _map.Visualize(_mapView, new MapCellChange
                             {
                                 Position = targetPosition,
-                                AddedParts = Array.Empty<IReadOnlyPart>(),
                                 ChangedSizeParts = new[] {part},
-                                RemovedParts = Array.Empty<IReadOnlyPart>(),
                                 MapCell = _map.MapCell(targetPosition),
                                 ChangeType = ChangeType.Hex
                             });
@@ -61,8 +59,6 @@ namespace YellowSquad.Anthill.Core.Tasks
                         _map.Visualize(_mapView, new MapCellChange
                         {
                             Position = targetPosition,
-                            AddedParts = Array.Empty<IReadOnlyPart>(),
-                            ChangedSizeParts = Array.Empty<IReadOnlyPart>(),
                             RemovedParts = new[] {part},
                             MapCell = _map.MapCell(targetPosition),
                             ChangeType = ChangeType.Hex
@@ -84,8 +80,6 @@ namespace YellowSquad.Anthill.Core.Tasks
                                 {
                                     Position = neighborPosition,
                                     AddedParts = _map.HexFrom(neighborPosition).Parts,
-                                    RemovedParts = Array.Empty<IReadOnlyPart>(),
-                                    ChangedSizeParts = Array.Empty<IReadOnlyPart>(),
                                     MapCell = _map.MapCell(neighborPosition),
                                     ChangeType = ChangeType.Hex
                                 });
