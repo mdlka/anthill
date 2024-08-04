@@ -12,19 +12,28 @@ namespace YellowSquad.Anthill.Core.Ants
         private readonly List<Matrix4x4> _matrices = new();
         private readonly List<float> _lastRotationY = new();
 
+        private readonly List<Matrix4x4> _partsMatrices = new();
+
         [SerializeField] private Mesh _mesh;
         [SerializeField] private Material _material;
         [SerializeField, Min(0f)] private float _scale;
         [SerializeField] private float _rotationX;
         [SerializeField] private bool _invertRotationY;
+        [Header("Part")] 
+        [SerializeField] private float _partScale;
+        [SerializeField] private Vector3 _partOffset;
+        [SerializeField] private Material _partMaterial;
+        [SerializeField] private Mesh _partMesh;
 
         private RenderParams _renderParams;
+        private RenderParams _partRenderParams;
         private float _mapScale;
 
         public void Initialize(float mapScale)
         {
             _mapScale = mapScale;
             _renderParams = new RenderParams(_material);
+            _partRenderParams = new RenderParams(_partMaterial);
         }
 
         public void Add(IAnt ant)
@@ -35,7 +44,8 @@ namespace YellowSquad.Anthill.Core.Ants
             _ants.Add(ant);
             _lastPositions.Add(ant.CurrentPosition);
             _lastRotationY.Add(0f);
-            _matrices.Add(WorldMatrixFor(ant.CurrentPosition.ToVector3(_mapScale), 0f));
+            _matrices.Add(WorldMatrixFor(ant.CurrentPosition.ToVector3(_mapScale), 0f, _scale));
+            _partsMatrices.Add(Matrix4x4.zero);
         }
         
         public void UpdateRender()
@@ -55,19 +65,24 @@ namespace YellowSquad.Anthill.Core.Ants
                     ? Quaternion.LookRotation((lastPosition - currentPosition).normalized).eulerAngles.y
                     : _lastRotationY[i];
                 
-                _matrices[i] = WorldMatrixFor(currentPosition, _lastRotationY[i]);
+                _matrices[i] = WorldMatrixFor(currentPosition, _lastRotationY[i], _scale);
                 _lastPositions[i] = _ants[i].CurrentPosition;
+
+                _partsMatrices[i] = _ants[i].HasPart
+                    ? WorldMatrixFor(currentPosition + _partOffset, _lastRotationY[i], _partScale)
+                    : WorldMatrixFor(Vector3.zero, 0, 0);
             }
 
             Graphics.RenderMeshInstanced(_renderParams, _mesh, 0, _matrices);
+            Graphics.RenderMeshInstanced(_partRenderParams, _partMesh, 0, _partsMatrices);
         }
 
-        private Matrix4x4 WorldMatrixFor(Vector3 currentPosition, float rotationY)
+        private Matrix4x4 WorldMatrixFor(Vector3 currentPosition, float rotationY, float scale)
         {
             if (_invertRotationY)
                 rotationY += 180;
             
-            return Matrix4x4.TRS(currentPosition, Quaternion.Euler(_rotationX, rotationY, 0f), Vector3.one * _scale);
+            return Matrix4x4.TRS(currentPosition, Quaternion.Euler(_rotationX, rotationY, 0f), Vector3.one * scale);
         }
     }
 }

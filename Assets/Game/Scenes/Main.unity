@@ -1783,6 +1783,10 @@ MonoBehaviour:
   _scale: 1.2
   _rotationX: -90
   _invertRotationY: 0
+  _partScale: 1
+  _partOffset: {x: 0, y: 0.25, z: 0}
+  _partMaterial: {fileID: 2100000, guid: 9807396b2487f174494518f02afe17a8, type: 2}
+  _partMesh: {fileID: -7380182904174563647, guid: 445a129f96a85024bbf7d69d1c636c22, type: 3}
 --- !u!1 &1846138167
 GameObject:
   m_ObjectHideFlags: 0
@@ -2067,6 +2071,10 @@ MonoBehaviour:
   _scale: 1.5
   _rotationX: -90
   _invertRotationY: 0
+  _partScale: 1.5
+  _partOffset: {x: 0, y: 0.25, z: 0}
+  _partMaterial: {fileID: 2100000, guid: dbc4ef709485fad4b9e80d770408e4c3, type: 2}
+  _partMesh: {fileID: -992649034684317380, guid: 3a1219b243e3c604888704d3872d464e, type: 3}
 --- !u!4 &2047135645
 Transform:
   m_ObjectHideFlags: 0

@@ -7,5 +7,8 @@ namespace YellowSquad.Anthill.Core.Ants
     {
         FracAxialCoordinate CurrentPosition { get; }
         bool Moving { get; }
+        
+        bool HasPart { get; }
+        bool InHome { get; }
     }
 }

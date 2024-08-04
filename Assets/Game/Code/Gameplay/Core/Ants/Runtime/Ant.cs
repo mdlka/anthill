@@ -12,6 +12,7 @@ namespace YellowSquad.Anthill.Core.Ants
 
         private ITask _currentTask;
         private bool _taskSold;
+        private bool _lastTaskCancelled = true;
 
         public Ant(IHome home, IMovement movement, ITaskStore taskStore) : this(home, movement, taskStore, new AlwaysCompletedTask()) { }
 
@@ -23,9 +24,10 @@ namespace YellowSquad.Anthill.Core.Ants
             _currentTask = startTask;
         }
 
+        public bool HasPart { get; private set; }
         public FracAxialCoordinate CurrentPosition => _movement.CurrentPosition;
         public bool Moving => _movement.ReachedTargetPosition == false;
-        private bool InHome => CurrentPosition.AxialRound() == _home.Position;
+        public bool InHome => CurrentPosition.AxialRound() == _home.Position;
 
         public void Update(float deltaTime)
         {
@@ -36,6 +38,7 @@ namespace YellowSquad.Anthill.Core.Ants
                     if (InHome == false)
                     {
                         _movement.MoveTo(_home.Position);
+                        HasPart = !_lastTaskCancelled;
                         return;
                     }
 
@@ -43,6 +46,7 @@ namespace YellowSquad.Anthill.Core.Ants
                     {
                         _taskStore.Sell(_currentTask);
                         _taskSold = true;
+                        HasPart = false;
                     }
                     
                     if (_home.HasFreeTaskGroup == false)
@@ -62,13 +66,20 @@ namespace YellowSquad.Anthill.Core.Ants
             {
                 if (_movement.ReachedTargetPosition)
                 {
+                    _lastTaskCancelled = _currentTask.Cancelled;
+                    
                     if (_currentTask.Cancelled)
                         _currentTask = _alwaysCompletedTask;
-                    
+
                     if (_currentTask.Completed)
+                    {
                         _movement.MoveTo(_home.Position);
+                        HasPart = !_lastTaskCancelled;
+                    }
                     else
+                    {
                         _currentTask.UpdateProgress(deltaTime);
+                    }
                 }
             }
             
