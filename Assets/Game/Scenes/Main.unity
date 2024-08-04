@@ -1781,6 +1781,8 @@ MonoBehaviour:
   _mesh: {fileID: 812271037453180174, guid: 28e73c3191ab6d842b63d7598fc1d83a, type: 3}
   _material: {fileID: 2100000, guid: 9807396b2487f174494518f02afe17a8, type: 2}
   _scale: 1.2
+  _rotationX: -90
+  _invertRotationY: 0
 --- !u!1 &1846138167
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,6 +2065,8 @@ MonoBehaviour:
   _mesh: {fileID: 2280812795296497523, guid: 13911b3e3c27c634a82fbefe00c563db, type: 3}
   _material: {fileID: 2100000, guid: 9807396b2487f174494518f02afe17a8, type: 2}
   _scale: 1.5
+  _rotationX: -90
+  _invertRotationY: 0
 --- !u!4 &2047135645
 Transform:
   m_ObjectHideFlags: 0

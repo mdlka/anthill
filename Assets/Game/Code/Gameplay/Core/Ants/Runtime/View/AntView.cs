@@ -15,6 +15,8 @@ namespace YellowSquad.Anthill.Core.Ants
         [SerializeField] private Mesh _mesh;
         [SerializeField] private Material _material;
         [SerializeField, Min(0f)] private float _scale;
+        [SerializeField] private float _rotationX;
+        [SerializeField] private bool _invertRotationY;
 
         private RenderParams _renderParams;
         private float _mapScale;
@@ -62,7 +64,10 @@ namespace YellowSquad.Anthill.Core.Ants
 
         private Matrix4x4 WorldMatrixFor(Vector3 currentPosition, float rotationY)
         {
-            return Matrix4x4.TRS(currentPosition, Quaternion.Euler(-90f, rotationY, 0f), Vector3.one * _scale);
+            if (_invertRotationY)
+                rotationY += 180;
+            
+            return Matrix4x4.TRS(currentPosition, Quaternion.Euler(_rotationX, rotationY, 0f), Vector3.one * _scale);
         }
     }
 }
