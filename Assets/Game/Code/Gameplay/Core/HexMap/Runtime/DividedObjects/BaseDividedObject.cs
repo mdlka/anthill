@@ -19,7 +19,7 @@ namespace YellowSquad.Anthill.Core.HexMap
 
         public bool HasParts => _parts.Count - _destroyedParts != 0;
         public Hardness Hardness { get; }
-        public IEnumerable<IReadOnlyPart> Parts => _parts;
+        public IEnumerable<IPart> Parts => _parts;
         public abstract bool CanRestore { get; }
 
         public void DestroyClosestPartFor(Vector3 localPosition)

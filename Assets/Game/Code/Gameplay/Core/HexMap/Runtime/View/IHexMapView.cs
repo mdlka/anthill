@@ -21,7 +21,8 @@ namespace YellowSquad.Anthill.Core.HexMap
         public AxialCoordinate Position { get; init; }
         public IEnumerable<IReadOnlyPart> RemovedParts { get; init; }
         public IEnumerable<IReadOnlyPart> AddedParts { get; init; }
-        
+        public IEnumerable<IReadOnlyPart> ChangedSizeParts { get; init; }
+
         public MapCell MapCell { get; init; }
         
         public ChangeType ChangeType { get; init; }

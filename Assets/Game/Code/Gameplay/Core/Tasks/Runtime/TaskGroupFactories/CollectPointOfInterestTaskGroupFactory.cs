@@ -43,13 +43,26 @@ namespace YellowSquad.Anthill.Core.Tasks
             foreach (var part in targetPointOfInterest.Parts)
             {
                 tasks.Add(new TaskWithCallback(
-                    new TakePartTask(targetMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), targetPointOfInterest, part, _taskPrice), 
+                    new TakePartTask(targetMatrix.MultiplyPoint(part.LocalPosition).ToFracAxialCoordinate(_map.Scale), targetPointOfInterest, part, _taskPrice, 
+                        onProgress: () =>
+                        {
+                            _map.Visualize(_mapView, new MapCellChange
+                            {
+                                Position = targetPosition,
+                                AddedParts = Array.Empty<IReadOnlyPart>(),
+                                ChangedSizeParts = new[] {part},
+                                RemovedParts = Array.Empty<IReadOnlyPart>(),
+                                MapCell = _map.MapCell(targetPosition),
+                                ChangeType = ChangeType.PointOfInterest
+                            });
+                        }), 
                     onComplete: () => 
                     { 
                         _map.Visualize(_mapView, new MapCellChange
                         {
                             Position = targetPosition,
                             AddedParts = Array.Empty<IReadOnlyPart>(),
+                            ChangedSizeParts = Array.Empty<IReadOnlyPart>(),
                             RemovedParts = new[] {part},
                             MapCell = _map.MapCell(targetPosition),
                             ChangeType = ChangeType.PointOfInterest

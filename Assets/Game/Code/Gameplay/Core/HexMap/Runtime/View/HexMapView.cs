@@ -36,7 +36,7 @@ namespace YellowSquad.Anthill.Core.HexMap
                     continue;
                 
                 var view = _hexViews.First(view => view.Hardness == pair.Value.Hex.Hardness).View;
-                view.Render(pair.Value.Hex.Parts, Array.Empty<IReadOnlyPart>(), HexMatrixBy(mapScale, pair.Key));
+                view.Render(pair.Value.Hex.Parts, Array.Empty<IReadOnlyPart>(), Array.Empty<IReadOnlyPart>(), HexMatrixBy(mapScale, pair.Key));
             }
 
             Initialized = true;
@@ -59,7 +59,7 @@ namespace YellowSquad.Anthill.Core.HexMap
                     continue;
 
                 var view = _hexViews.First(view => view.Hardness == change.MapCell.Hex.Hardness).View;
-                view.Render(change.AddedParts, change.RemovedParts, HexMatrixBy(mapScale, change.Position));
+                view.Render(change.AddedParts, change.RemovedParts, change.ChangedSizeParts, HexMatrixBy(mapScale, change.Position));
             }
         }
 

@@ -2,8 +2,10 @@
 
 namespace YellowSquad.Anthill.Core.HexMap
 {
-    internal interface IPart : IReadOnlyPart
+    public interface IPart : IReadOnlyPart
     {
+        void Resize(float size);
+        
         void Destroy();
         void Restore();
     }
@@ -11,6 +13,7 @@ namespace YellowSquad.Anthill.Core.HexMap
     public interface IReadOnlyPart
     {
         Vector3 LocalPosition { get; }
+        float Size { get; }
         bool Destroyed { get; }
     }
 }

@@ -8,7 +8,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         bool HasParts { get; }
         bool CanRestore { get; }
         Hardness Hardness { get; }
-        IEnumerable<IReadOnlyPart> Parts { get; }
+        IEnumerable<IPart> Parts { get; }
 
         void DestroyClosestPartFor(Vector3 localPosition);
         void Restore();

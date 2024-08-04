@@ -26,7 +26,8 @@ namespace YellowSquad.Anthill.Core.HexMap
                     continue;
 
                 var setting = SettingBy(cell.Value.PointOfInterestType);
-                setting.DividedObjectView.Render(cell.Value.DividedPointOfInterest.Parts, Array.Empty<IReadOnlyPart>(), 
+                setting.DividedObjectView.Render(cell.Value.DividedPointOfInterest.Parts, 
+                    Array.Empty<IReadOnlyPart>(), Array.Empty<IReadOnlyPart>(), 
                     PointOfInterestMatrixBy(mapScale, cell.Key, cell.Value.PointOfInterestType));
             }
 
@@ -63,7 +64,7 @@ namespace YellowSquad.Anthill.Core.HexMap
                     continue;
                 
                 var setting = SettingBy(change.MapCell.PointOfInterestType);
-                setting.DividedObjectView.Render(change.AddedParts, change.RemovedParts, 
+                setting.DividedObjectView.Render(change.AddedParts, change.RemovedParts, change.ChangedSizeParts,
                     PointOfInterestMatrixBy(mapScale, change.Position, change.MapCell.PointOfInterestType));
             }
         }

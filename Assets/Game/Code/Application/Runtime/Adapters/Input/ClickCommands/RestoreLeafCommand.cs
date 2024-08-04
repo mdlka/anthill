@@ -35,6 +35,7 @@ namespace YellowSquad.Anthill.Application.Adapters
                 Position = position,
                 AddedParts = _map.DividedPointOfInterestFrom(position).Parts,
                 RemovedParts = Array.Empty<IReadOnlyPart>(),
+                ChangedSizeParts = Array.Empty<IReadOnlyPart>(),
                 MapCell = _map.MapCell(position),
                 ChangeType = ChangeType.PointOfInterest
             });
