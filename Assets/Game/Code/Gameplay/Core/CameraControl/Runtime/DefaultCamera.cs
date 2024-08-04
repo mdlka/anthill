@@ -18,8 +18,8 @@ namespace YellowSquad.Anthill.Core.CameraControl
             _camera = camera;
             _settings = settings;
 
-            _camera.orthographicSize = _settings.ZoomLimits.Clamp(_camera.orthographicSize);
-            _currentZoom = _camera.orthographicSize / _settings.ZoomLimits.Max;
+            _camera.fieldOfView = _settings.ZoomLimits.Clamp(_camera.fieldOfView);
+            _currentZoom = _camera.fieldOfView / _settings.ZoomLimits.Max;
             _defaultPositionY = _camera.transform.position.y;
         }
 
@@ -41,7 +41,7 @@ namespace YellowSquad.Anthill.Core.CameraControl
             var cursorWorldPositionBeforeZoom = ScreenToWorldPoint(pointerPosition.Invoke());
             
             _currentZoom = Mathf.Clamp01(_currentZoom + delta * _settings.ZoomSpeed);
-            _camera.orthographicSize = Mathf.Lerp(_settings.ZoomLimits.Min, _settings.ZoomLimits.Max, _currentZoom);
+            _camera.fieldOfView = Mathf.Lerp(_settings.ZoomLimits.Min, _settings.ZoomLimits.Max, _currentZoom);
             
             var cursorWorldPositionAfterZoom = ScreenToWorldPoint(pointerPosition.Invoke());
             
@@ -50,6 +50,7 @@ namespace YellowSquad.Anthill.Core.CameraControl
 
         public Vector3 ScreenToWorldPoint(Vector3 position)
         {
+            position.z = _camera.transform.position.y;
             return _camera.ScreenToWorldPoint(position);
         }
 
