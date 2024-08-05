@@ -8,7 +8,11 @@ namespace YellowSquad.Anthill.Core.HexMap
 {
     internal class PointsOfInterestView : MonoBehaviour
     {
+        private readonly Dictionary<AxialCoordinate, ParticleSystem> _effectInstances = new();
+
         [SerializeField] private List<PointSetting> _settings;
+        [SerializeField] private ParticleSystem _effectTemplate;
+        [SerializeField] private float _effectOffsetY;
 
         private bool _initialized;
         
@@ -21,6 +25,13 @@ namespace YellowSquad.Anthill.Core.HexMap
             {
                 if (cell.Value.PointOfInterestType == PointOfInterestType.Empty)
                     continue;
+
+                if (cell.Value.Hex.HasParts)
+                {
+                    var effectInstance = Instantiate(_effectTemplate,
+                        cell.Key.ToVector3(mapScale) + Vector3.up * _effectOffsetY, Quaternion.identity, transform);
+                    _effectInstances.Add(cell.Key, effectInstance);
+                }
                 
                 if (cell.Value.HasDividedPointOfInterest == false)
                     continue;
@@ -58,7 +69,16 @@ namespace YellowSquad.Anthill.Core.HexMap
             foreach (var change in changes)
             {
                 if (change.ChangeType != ChangeType.PointOfInterest)
+                {
+                    if (_effectInstances.ContainsKey(change.Position) && change.MapCell.Hex.HasParts == false)
+                    {
+                        var effect = _effectInstances[change.Position];
+                        _effectInstances.Remove(change.Position);
+                        Destroy(effect.gameObject);
+                    }
+                    
                     continue;
+                }
                 
                 if (change.MapCell.PointOfInterestType != PointOfInterestType.Leaf)
                     continue;

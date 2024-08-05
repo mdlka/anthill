@@ -932,6 +932,8 @@ MonoBehaviour:
     <DividedObjectView>k__BackingField: {fileID: 1532054369}
     <SizeFactor>k__BackingField: 0.92
     <Rotation>k__BackingField: {x: 0, y: 30, z: 0}
+  _effectTemplate: {fileID: 1870284157905041288, guid: 2631356ee2e770f468b856bcd8b9b9a4, type: 3}
+  _effectOffsetY: 0.75
 --- !u!1001 &783423198
 PrefabInstance:
   m_ObjectHideFlags: 0
