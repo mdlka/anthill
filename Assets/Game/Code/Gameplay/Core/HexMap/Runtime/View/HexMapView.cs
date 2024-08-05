@@ -49,9 +49,12 @@ namespace YellowSquad.Anthill.Core.HexMap
             
             _pointsOfInterestView.Render(mapScale, changes);
             _updateLeafView.Render(mapScale, changes);
-            
-            _closedHexesView.Clear();
-            _closedHexesView.Render(closedPositions, position => HexMatrixBy(mapScale, position));
+
+            if (changes.Any(c => c.ChangeType == ChangeType.Hex && (c.RemovedParts.Any() || c.AddedParts.Any())))
+            {
+                _closedHexesView.Clear();
+                _closedHexesView.Render(closedPositions, position => HexMatrixBy(mapScale, position));
+            }
             
             foreach (var change in changes)
             {
