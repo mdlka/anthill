@@ -47,7 +47,7 @@ namespace YellowSquad.Anthill.Core.Tasks
                 throw new ArgumentOutOfRangeException(nameof(deltaTime));
 
             _elapsedTime += deltaTime;
-            _targetPart.Resize(Mathf.Lerp(1f, 0.3f, _elapsedTime / _targetDuration));
+            _targetPart.Resize(Mathf.Lerp(1f, 0.5f, _elapsedTime / _targetDuration));
             _onProgress?.Invoke();
 
             if (CanComplete == false || _onCompletedInvoked) 
