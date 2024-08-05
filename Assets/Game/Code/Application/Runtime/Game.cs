@@ -26,6 +26,7 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private CameraSettings _cameraSettings;
         [SerializeField] private TimeScale _timeScale;
         [SerializeField] private TasksProgressView _diggerTasksProgressView;
+        [SerializeField] private TaskStoreView _taskStoreView;
         [SerializeField, Min(1)] private int _homesCapacity;
         [SerializeField, Min(0)] private float _delayBetweenHomeFindTask;
         [SerializeField, Min(0)] private float _delayBetweenTasks;
@@ -76,7 +77,7 @@ namespace YellowSquad.Anthill.Application
             _anthill = new DefaultAnthill(
                 new Queen(
                     map.PointsOfInterestPositions(PointOfInterestType.Queen)[0],
-                    new DefaultAntFactory(_movementPath, _movementSettings, new TaskStore(wallet)),
+                    new DefaultAntFactory(_movementPath, _movementSettings, new TaskStore(map.Scale, wallet, _taskStoreView)),
                     new HomeList(_homesCapacity, map, map.PointsOfInterestPositions(PointOfInterestType.DiggersHome)
                         .Select(position => new AntHome(position, _diggerTaskStorage, _stopwatch, _delayBetweenHomeFindTask))
                         .ToArray<IHome>()),

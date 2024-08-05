@@ -44,7 +44,7 @@ namespace YellowSquad.Anthill.Core.Ants
 
                     if (_taskSold == false)
                     {
-                        _taskStore.Sell(_currentTask);
+                        _taskStore.Sell(_currentTask, _home.Position);
                         _taskSold = true;
                         HasPart = false;
                     }
