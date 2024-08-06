@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using TNRD;
 using UnityEngine;
@@ -39,7 +40,8 @@ namespace YellowSquad.Anthill.Application
         [SerializeField, Min(0)] private int _mapTargetAnts;
         [SerializeField, Min(0)] private int _startWalletValue;
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
-        
+        [SerializeField] private UpgradeShopInfo _upgradeShopSettings;
+
         private IAnthill _anthill;
         private InputRoot _inputRoot;
         private LeafTasksLoop _leafTasksLoop;
@@ -111,13 +113,15 @@ namespace YellowSquad.Anthill.Application
             {
                 new UpgradeButtonDTO
                 {
-                    ButtonName = "Add digger",
+                    ButtonName = _upgradeShopSettings.DiggerButton.HeaderEn,
+                    Icon = _upgradeShopSettings.DiggerButton.Icon,
                     Upgrade = new CallbackUpgrade(new DiggersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 10), wallet), 
                         () => mapGoal.AddProgress()),
                 },
                 new UpgradeButtonDTO
                 {
-                    ButtonName = "Add loader",
+                    ButtonName = _upgradeShopSettings.LoaderButton.HeaderEn,
+                    Icon = _upgradeShopSettings.LoaderButton.Icon,
                     Upgrade = new CallbackUpgrade(new LoadersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 10), wallet),
                         () => mapGoal.AddProgress()),
                 },
@@ -142,5 +146,20 @@ namespace YellowSquad.Anthill.Application
             _cameraSettings?.OnDrawGizmos();
         }
 #endif
+    }
+
+    [Serializable]
+    internal class UpgradeShopInfo
+    {
+        [field: SerializeField] public ButtonInfo DiggerButton { get; private set; }
+        [field: SerializeField] public ButtonInfo LoaderButton { get; private set; }
+
+        [Serializable]
+        internal class ButtonInfo
+        {
+            [field: SerializeField] public string HeaderRu { get; private set; }
+            [field: SerializeField] public string HeaderEn { get; private set; }
+            [field: SerializeField] public Sprite Icon { get; private set; }
+        }
     }
 }

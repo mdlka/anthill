@@ -6,9 +6,9 @@ namespace YellowSquad.Anthill.Core.HexMap
 {
     internal class UpdateLeafView : MonoBehaviour
     {
-        private readonly Dictionary<AxialCoordinate, SpriteRenderer> _instances = new(); 
+        private readonly Dictionary<AxialCoordinate, GameObject> _instances = new(); 
         
-        [SerializeField] private SpriteRenderer _rendererTemplate;
+        [SerializeField] private GameObject _leafTemplate;
         [SerializeField] private Vector3 _offset;
 
         public void Render(float mapScale, params MapCellChange[] changes)
@@ -23,16 +23,16 @@ namespace YellowSquad.Anthill.Core.HexMap
                     if (_instances.ContainsKey(change.Position)) 
                         continue;
                     
-                    _instances.Add(change.Position, Instantiate(_rendererTemplate, 
+                    _instances.Add(change.Position, Instantiate(_leafTemplate, 
                         change.Position.ToVector3(mapScale) + _offset, 
-                        _rendererTemplate.transform.rotation, transform));
+                        _leafTemplate.transform.rotation, transform));
                 }
                 else
                 {
                     if (_instances.ContainsKey(change.Position) == false)
                         continue;
                     
-                    Destroy(_instances[change.Position].gameObject);
+                    Destroy(_instances[change.Position]);
                     _instances.Remove(change.Position);
                 }       
             }

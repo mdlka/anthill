@@ -700,7 +700,7 @@ MonoBehaviour:
   m_FillDirection: 0
   m_FillAmount: 0.513
   m_FillCenter: 1
-  m_PixelsPerUnitMultiplier: 1.4
+  m_PixelsPerUnitMultiplier: 2.15
 --- !u!1 &584620683
 GameObject:
   m_ObjectHideFlags: 0
@@ -1400,6 +1400,15 @@ MonoBehaviour:
   _mapTargetAnts: 200
   _startWalletValue: 999999
   _takeLeafTaskPrice: 5
+  _upgradeShopSettings:
+    <DiggerButton>k__BackingField:
+      <HeaderRu>k__BackingField: "\u041A\u043E\u043F\u0430\u0442\u0435\u043B\u044C"
+      <HeaderEn>k__BackingField: Digger
+      <Icon>k__BackingField: {fileID: -35613213, guid: 1e63806c56e47f54887be16a93875f3a, type: 3}
+    <LoaderButton>k__BackingField:
+      <HeaderRu>k__BackingField: "\u041D\u043E\u0441\u0438\u0442\u0435\u043B\u044C"
+      <HeaderEn>k__BackingField: Loader
+      <Icon>k__BackingField: {fileID: -1639661017, guid: 1e63806c56e47f54887be16a93875f3a, type: 3}
   references:
     version: 2
     RefIds:
@@ -1554,7 +1563,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 150}
-  m_SizeDelta: {x: 0, y: 200}
+  m_SizeDelta: {x: 0, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1470247849
 MonoBehaviour:
@@ -1641,7 +1650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f8e012879944c50bf78bc76c5f382f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rendererTemplate: {fileID: 6296677056517852150, guid: 4e88517251a55f543a9fb2d703096fcf, type: 3}
+  _leafTemplate: {fileID: 7448502917117181093, guid: 4e88517251a55f543a9fb2d703096fcf, type: 3}
   _offset: {x: 0, y: 1, z: 0}
 --- !u!1 &1616363465
 GameObject:
@@ -1756,7 +1765,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1.4
+  m_PixelsPerUnitMultiplier: 2.15
 --- !u!222 &1676241656
 CanvasRenderer:
   m_ObjectHideFlags: 0
