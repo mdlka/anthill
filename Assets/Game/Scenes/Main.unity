@@ -2237,7 +2237,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hexMesh: {fileID: 2770389371296501935, guid: 31919b3ed4728e2419689ec37a9ee2ac, type: 3}
-  _hexMaterial: {fileID: 2100000, guid: 12a967621630ed148ad88f2212e1347a, type: 2}
+  _hexMaterials:
+  - {fileID: 2100000, guid: 739bbbc592b2a93419ae7418e32e0dc0, type: 2}
+  - {fileID: 2100000, guid: 12a967621630ed148ad88f2212e1347a, type: 2}
+  - {fileID: 2100000, guid: 845b24e934832374a996de4948c911be, type: 2}
+  _factor: 1.75
 --- !u!4 &370521999118281186
 Transform:
   m_ObjectHideFlags: 0
