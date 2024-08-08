@@ -14,6 +14,10 @@ namespace YellowSquad.Anthill.Core.HexMap
         [SerializeField] private Mesh _hexMesh;
         [SerializeField] private Material[] _hexMaterials;
         [SerializeField] private float _factor;
+        
+#if UNITY_EDITOR
+        [SerializeField] private bool _updateInEditor;
+#endif
 
         private float _mapScale;
         private Vector3 _hexScale;
@@ -26,17 +30,23 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (_matrices.Count == 0)
                 return;
 
-            // foreach (var matrices in _matrices)
-            //     matrices.Clear();
-            //
-            // Vector3 offsetY = Vector3.up * _hexMesh.bounds.size.y;
-            // Vector3 groundHexScale = new Vector3(_hexScale.x, 1f, _hexScale.z);
-            //
-            // foreach (var position in _positions)
-            // {
-            //     int index = Mathf.RoundToInt(Mathf.Clamp01(Mathf.PerlinNoise(position.Q / _factor, position.R / _factor)) * _hexMaterials.Length);
-            //     _matrices[index].Add(Matrix4x4.TRS(position.ToVector3(_mapScale) - offsetY, Quaternion.Euler(0f, 30f, 0f), groundHexScale));
-            // }
+#if UNITY_EDITOR
+            if (_updateInEditor)
+            {
+                foreach (var matrices in _matrices)
+                    matrices.Clear();
+            
+                Vector3 offsetY = Vector3.up * _hexMesh.bounds.size.y;
+                Vector3 groundHexScale = new Vector3(_hexScale.x, 1f, _hexScale.z);
+            
+                foreach (var position in _positions)
+                {
+                    float value = Mathf.Clamp01(Mathf.PerlinNoise(position.Q * _factor, position.R * _factor));
+                    int index = Mathf.Clamp((int)(value * _hexMaterials.Length), 0, _hexMaterials.Length - 1);
+                    _matrices[index].Add(Matrix4x4.TRS(position.ToVector3(_mapScale) - offsetY, Quaternion.Euler(0f, 30f, 0f), groundHexScale));
+                }
+            }
+#endif
 
             for (int i = 0; i < _matrices.Count; i++)
                 if (_matrices[i].Count > 0)

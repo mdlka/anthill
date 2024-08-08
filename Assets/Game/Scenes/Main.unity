@@ -1136,7 +1136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 177638, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22451668, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
       propertyPath: m_Pivot.x
@@ -2634,6 +2634,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 12a967621630ed148ad88f2212e1347a, type: 2}
   - {fileID: 2100000, guid: 845b24e934832374a996de4948c911be, type: 2}
   _factor: 1.75
+  _updateInEditor: 0
 --- !u!1 &2086087279
 GameObject:
   m_ObjectHideFlags: 0
