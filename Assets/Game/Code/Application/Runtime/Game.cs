@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Agava.WebUtility;
 using TNRD;
 using UnityEngine;
 using YellowSquad.Anthill.Application.Adapters;
@@ -97,7 +98,7 @@ namespace YellowSquad.Anthill.Application
             var mapGoal = new MapGoal(_mapTargetAnts, _mapGoalView);
             var collectHexTaskGroupFactory = new CollectHexTaskGroupFactory(map, _hexMapView.Value, _stopwatch, _delayBetweenTasks);
 
-            _inputRoot = new InputRoot(map, new MouseInput(), 
+            _inputRoot = new InputRoot(map, Device.IsMobile ? new TouchInput() : new MouseInput(), 
                 new DefaultCamera(Camera.main, _cameraSettings), 
                 new IClickCommand[]
                 {
@@ -138,6 +139,23 @@ namespace YellowSquad.Anthill.Application
             
             _mapCellShop.Visualize(_mapCellCellShopView);
             _diggerTaskStorage.Visualize(_diggerTasksProgressView);
+        }
+        
+        private void OnGUI()
+        {
+            foreach (var touch in Input.touches)
+            {
+                var touchPosition = touch.position;
+                touchPosition.y = Screen.height - touchPosition.y;
+
+                var rect = new Rect(
+                    touchPosition.x - 50,
+                    touchPosition.y - 50,
+                    100,
+                    100);
+
+                GUI.Box(rect, $"{touch.fingerId}", new GUIStyle {fontSize = 64});
+            }
         }
 
 #if UNITY_EDITOR
