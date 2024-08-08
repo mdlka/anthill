@@ -8,7 +8,6 @@ namespace YellowSquad.Anthill.UserInput
         public bool PointerUp => Input.GetMouseButtonUp(0);
         
         public Vector2 PointerPosition => Input.mousePosition;
-        public Vector2 MoveDelta => -new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
         public float ZoomDelta => Input.mouseScrollDelta.y;
     }
 }

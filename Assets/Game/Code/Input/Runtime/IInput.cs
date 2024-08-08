@@ -8,7 +8,6 @@ namespace YellowSquad.Anthill.UserInput
         bool PointerUp { get; }
         
         Vector2 PointerPosition { get; }
-        Vector2 MoveDelta { get; }
         float ZoomDelta { get; }
     }
 }
