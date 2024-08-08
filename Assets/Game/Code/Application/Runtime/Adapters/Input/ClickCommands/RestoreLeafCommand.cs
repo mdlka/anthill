@@ -13,29 +13,33 @@ namespace YellowSquad.Anthill.Application.Adapters
         private readonly IHexMapView _mapView;
         private readonly IWallet _wallet;
         private readonly IPriceList _mapCellPriceList;
+        private readonly AddMoneyAnimation _animation;
 
-        public RestoreLeafCommand(IHexMap map, IHexMapView mapView, IWallet wallet, IPriceList mapCellPriceList)
+        public RestoreLeafCommand(IHexMap map, IHexMapView mapView, IWallet wallet, IPriceList mapCellPriceList, AddMoneyAnimation animation)
         {
             _map = map;
             _mapView = mapView;
             _wallet = wallet;
             _mapCellPriceList = mapCellPriceList;
+            _animation = animation;
         }
 
-        public bool TryExecute(AxialCoordinate position)
+        public bool TryExecute(ClickInfo clickInfo)
         {
-            if (CanExecute(position) == false)
+            if (CanExecute(clickInfo.MapPosition) == false)
                 return false;
 
             _wallet.Add((int)(_mapCellPriceList.CurrentPrice * RestoreLeafRewardFactor));
-            _map.DividedPointOfInterestFrom(position).Restore();
+            _map.DividedPointOfInterestFrom(clickInfo.MapPosition).Restore();
             _map.Visualize(_mapView, new MapCellChange
             {
-                Position = position,
-                AddedParts = _map.DividedPointOfInterestFrom(position).Parts,
-                MapCell = _map.MapCell(position),
+                Position = clickInfo.MapPosition,
+                AddedParts = _map.DividedPointOfInterestFrom(clickInfo.MapPosition).Parts,
+                MapCell = _map.MapCell(clickInfo.MapPosition),
                 ChangeType = ChangeType.PointOfInterest
             });
+            
+            _animation.Play(clickInfo.ScreenPosition, clickInfo.NormalizedZoom);
 
             return true;
         }

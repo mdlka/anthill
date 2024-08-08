@@ -16,12 +16,12 @@ namespace YellowSquad.Anthill.Application.Adapters
             _mapCellShop = mapCellShop;
         }
 
-        public bool TryExecute(AxialCoordinate position)
+        public bool TryExecute(ClickInfo clickInfo)
         {
-            if (CanExecute(position) == false)
+            if (CanExecute(clickInfo.MapPosition) == false)
                 return false;
             
-            _diggerTaskStorage.CancelTaskGroup(position);
+            _diggerTaskStorage.CancelTaskGroup(clickInfo.MapPosition);
             _mapCellShop.Sell();
             return true;
         }

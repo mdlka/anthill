@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.UserInput
 {
@@ -12,9 +11,9 @@ namespace YellowSquad.Anthill.UserInput
             _commands = commands;
         }
 
-        public bool TryExecute(AxialCoordinate position)
+        public bool TryExecute(ClickInfo clickInfo)
         {
-            return _commands.Any(command => command.TryExecute(position));
+            return _commands.Any(command => command.TryExecute(clickInfo));
         }
     }
 }

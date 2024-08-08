@@ -37,6 +37,7 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private SerializableInterface<IWalletView> _walletView;
         [SerializeField] private MapCellCellShopView _mapCellCellShopView;
         [SerializeField] private MapGoalView _mapGoalView;
+        [SerializeField] private AddMoneyAnimation _addMoneyAnimation;
         [SerializeField, Min(0)] private int _mapTargetAnts;
         [SerializeField, Min(0)] private int _startWalletValue;
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
@@ -103,7 +104,7 @@ namespace YellowSquad.Anthill.Application
                     new FirstTrueCommand(
                         new AddDiggerTaskCommand(_diggerTaskStorage, collectHexTaskGroupFactory, _mapCellShop), 
                         new RemoveDiggerTaskCommand(_diggerTaskStorage, _mapCellShop)),
-                    new RestoreLeafCommand(map, _hexMapView.Value, wallet, mapCellPriceList)
+                    new RestoreLeafCommand(map, _hexMapView.Value, wallet, mapCellPriceList, _addMoneyAnimation)
                 });
 
             _leafTasksLoop = new LeafTasksLoop(map, loaderTaskStorage, 

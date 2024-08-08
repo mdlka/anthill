@@ -24,6 +24,7 @@ namespace YellowSquad.Anthill.Core.CameraControl
         }
 
         public Vector3 Position => _camera.transform.position;
+        public float NormalizedZoom => _currentZoom / _settings.ZoomLimits.Max;
 
         public void StartMove(Vector2 pointerPosition)
         {
