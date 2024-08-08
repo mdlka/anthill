@@ -64,6 +64,24 @@ MonoBehaviour:
     m_Scale: 1
     m_Name: IconAtlas_3
     m_HashCode: -1264481556
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 4
+    m_Scale: 1
+    m_Name: IconAtlas_4
+    m_HashCode: -1264481557
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 5
+    m_Scale: 1
+    m_Name: IconAtlas_6
+    m_HashCode: -1264481559
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 6
+    m_Scale: 1
+    m_Name: IconAtlas_5
+    m_HashCode: -1264481558
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -74,7 +92,7 @@ MonoBehaviour:
       m_HorizontalAdvance: 256
     m_GlyphRect:
       m_X: 0
-      m_Y: 256
+      m_Y: 768
       m_Width: 256
       m_Height: 256
     m_Scale: 1
@@ -90,7 +108,7 @@ MonoBehaviour:
       m_HorizontalAdvance: 256
     m_GlyphRect:
       m_X: 256
-      m_Y: 256
+      m_Y: 768
       m_Width: 256
       m_Height: 256
     m_Scale: 1
@@ -106,7 +124,7 @@ MonoBehaviour:
       m_HorizontalAdvance: 256
     m_GlyphRect:
       m_X: 0
-      m_Y: 0
+      m_Y: 512
       m_Width: 256
       m_Height: 256
     m_Scale: 1
@@ -122,13 +140,61 @@ MonoBehaviour:
       m_HorizontalAdvance: 256
     m_GlyphRect:
       m_X: 256
-      m_Y: 0
+      m_Y: 512
       m_Width: 256
       m_Height: 256
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: 1953740215, guid: 1e63806c56e47f54887be16a93875f3a, type: 3}
+  - m_Index: 4
+    m_Metrics:
+      m_Width: 512
+      m_Height: 142
+      m_HorizontalBearingX: -256
+      m_HorizontalBearingY: 71
+      m_HorizontalAdvance: 512
+    m_GlyphRect:
+      m_X: 512
+      m_Y: 882
+      m_Width: 512
+      m_Height: 142
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: -1255276883, guid: 1e63806c56e47f54887be16a93875f3a, type: 3}
+  - m_Index: 5
+    m_Metrics:
+      m_Width: 256
+      m_Height: 256
+      m_HorizontalBearingX: -128
+      m_HorizontalBearingY: 128
+      m_HorizontalAdvance: 256
+    m_GlyphRect:
+      m_X: 0
+      m_Y: 256
+      m_Width: 256
+      m_Height: 256
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: -1923451717, guid: 1e63806c56e47f54887be16a93875f3a, type: 3}
+  - m_Index: 6
+    m_Metrics:
+      m_Width: 512
+      m_Height: 142
+      m_HorizontalBearingX: -256
+      m_HorizontalBearingY: 71
+      m_HorizontalAdvance: 512
+    m_GlyphRect:
+      m_X: 512
+      m_Y: 740
+      m_Width: 512
+      m_Height: 142
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: -622501138, guid: 1e63806c56e47f54887be16a93875f3a, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []
 --- !u!21 &9087320410240586074

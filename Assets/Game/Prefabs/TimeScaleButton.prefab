@@ -92,8 +92,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 42
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -172,7 +172,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 80, y: 80}
+  m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3779423928591249291
 MonoBehaviour:
@@ -188,8 +188,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 8377239471774063718}
   _text: {fileID: 752261933845211341}
-  _selectIcon: {fileID: -2413806693520163455, guid: cde55bc49f96aba47b1d8b2cfaddac50, type: 3}
-  _unselectIcon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  _selectColor: {r: 0.31764707, g: 0.47058824, b: 1, a: 1}
+  _unselectColor: {r: 0.681, g: 0.7525001, b: 1, a: 1}
 --- !u!222 &3445112231027546549
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -211,14 +211,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.22254895, g: 0.78113204, b: 0.39584565, a: 1}
+  m_Color: {r: 0.31764707, g: 0.47058827, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2413806693520163455, guid: cde55bc49f96aba47b1d8b2cfaddac50, type: 3}
+  m_Sprite: {fileID: -2079978240, guid: 1e63806c56e47f54887be16a93875f3a, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.2
 --- !u!114 &8377239471774063718
 MonoBehaviour:
   m_ObjectHideFlags: 0

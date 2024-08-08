@@ -9,8 +9,8 @@ namespace YellowSquad.Anthill.Core.GameTime
     {
         [SerializeField] private Button _button;
         [SerializeField] private TMP_Text _text;
-        [SerializeField] private Sprite _selectIcon;
-        [SerializeField] private Sprite _unselectIcon;
+        [SerializeField] private Color _selectColor;
+        [SerializeField] private Color _unselectColor;
 
         public event Action<TimeScaleButton> Clicked;
 
@@ -36,17 +36,17 @@ namespace YellowSquad.Anthill.Core.GameTime
 
         public void Select()
         {
-            ChangeIcon(_selectIcon);
+            ChangeColor(_selectColor);
         }
 
         public void Unselect()
         {
-            ChangeIcon(_unselectIcon);
+            ChangeColor(_unselectColor);
         }
 
-        private void ChangeIcon(Sprite icon)
+        private void ChangeColor(Color color)
         {
-            _button.image.sprite = icon;
+            _button.image.color = color;
         }
 
         private void OnButtonClick()

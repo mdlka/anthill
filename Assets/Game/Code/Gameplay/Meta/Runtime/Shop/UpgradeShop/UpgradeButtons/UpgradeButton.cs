@@ -11,6 +11,7 @@ namespace YellowSquad.Anthill.Meta
         [SerializeField] private TMP_Text _priceText;
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private TMP_Text _upgradeInfoText;
+        [SerializeField] private string _pricePrefix;
 
         private IUpgrade _upgrade;
 
@@ -27,7 +28,7 @@ namespace YellowSquad.Anthill.Meta
         private void Update()
         {
             _button.interactable = _upgrade.CanPerform;
-            _priceText.text = _upgrade.IsMax ? "Max" : $"Price: {_upgrade.CurrentPrice}";
+            _priceText.text = _upgrade.IsMax ? "Max" : $"{_pricePrefix}{_upgrade.CurrentPrice}";
             RenderUpgradeInfo();
         }
 

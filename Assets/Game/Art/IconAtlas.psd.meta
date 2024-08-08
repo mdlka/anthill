@@ -283,7 +283,7 @@ TextureImporter:
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -291,6 +291,69 @@ TextureImporter:
       bones: []
       spriteID: fd96cc9745174564f8881e6cf707b24a
       internalID: -1923451717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconAtlas_7
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 64, y: 64, z: 64, w: 64}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45a289a2b89789f42812df3cd0a6fb76
+      internalID: -2079978240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconAtlas_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 490
+        width: 180
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bedba72a371b7e041b453ac88fb136fe
+      internalID: 569552449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconAtlas_9
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 490
+        width: 180
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e51106ba9b961514a9d6b8bef2109703
+      internalID: 1774874106
       vertices: []
       indices: 
       edges: []
@@ -313,6 +376,9 @@ TextureImporter:
       IconAtlas_4: -1255276883
       IconAtlas_5: -622501138
       IconAtlas_6: -1923451717
+      IconAtlas_7: -2079978240
+      IconAtlas_8: 569552449
+      IconAtlas_9: 1774874106
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
