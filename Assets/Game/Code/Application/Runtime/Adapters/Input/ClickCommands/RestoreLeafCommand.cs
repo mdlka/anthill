@@ -13,9 +13,9 @@ namespace YellowSquad.Anthill.Application.Adapters
         private readonly IHexMapView _mapView;
         private readonly IWallet _wallet;
         private readonly IPriceList _mapCellPriceList;
-        private readonly AddMoneyAnimation _animation;
+        private readonly MoneyAnimation _animation;
 
-        public RestoreLeafCommand(IHexMap map, IHexMapView mapView, IWallet wallet, IPriceList mapCellPriceList, AddMoneyAnimation animation)
+        public RestoreLeafCommand(IHexMap map, IHexMapView mapView, IWallet wallet, IPriceList mapCellPriceList, MoneyAnimation animation)
         {
             _map = map;
             _mapView = mapView;
@@ -28,7 +28,7 @@ namespace YellowSquad.Anthill.Application.Adapters
         {
             if (CanExecute(clickInfo.MapPosition) == false)
                 return false;
-
+            
             _wallet.Add((int)(_mapCellPriceList.CurrentPrice * RestoreLeafRewardFactor));
             _map.DividedPointOfInterestFrom(clickInfo.MapPosition).Restore();
             _map.Visualize(_mapView, new MapCellChange
@@ -39,7 +39,7 @@ namespace YellowSquad.Anthill.Application.Adapters
                 ChangeType = ChangeType.PointOfInterest
             });
             
-            _animation.Play(clickInfo.ScreenPosition, clickInfo.NormalizedZoom);
+            _animation.Play(clickInfo.ScreenPosition, clickInfo.ZoomFactor);
 
             return true;
         }

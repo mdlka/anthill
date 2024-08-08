@@ -94,7 +94,7 @@ namespace YellowSquad.Anthill.UserInput
                 ScreenPosition = clickPosition,
                 WorldPosition = targetPosition,
                 MapPosition = mapClickPosition,
-                NormalizedZoom = _camera.NormalizedZoom
+                ZoomFactor = _camera.ZoomFactor
             };
 
             foreach (var clickCommand in _clickCommands)

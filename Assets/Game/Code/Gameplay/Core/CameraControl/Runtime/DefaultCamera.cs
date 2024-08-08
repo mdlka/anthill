@@ -10,21 +10,21 @@ namespace YellowSquad.Anthill.Core.CameraControl
         private readonly CameraSettings _settings;
         private readonly float _defaultPositionY;
 
+        private float _zoom;
         private Vector3 _startMovePosition;
-        private float _currentZoom;
 
         public DefaultCamera(Camera camera, CameraSettings settings)
         {
             _camera = camera;
             _settings = settings;
 
+            _zoom = _settings.ZoomLimits.InverseLerp(_camera.fieldOfView);
             _camera.fieldOfView = _settings.ZoomLimits.Clamp(_camera.fieldOfView);
-            _currentZoom = _camera.fieldOfView / _settings.ZoomLimits.Max;
             _defaultPositionY = _camera.transform.position.y;
         }
 
         public Vector3 Position => _camera.transform.position;
-        public float NormalizedZoom => _currentZoom / _settings.ZoomLimits.Max;
+        public float ZoomFactor => 1f - _zoom;
 
         public void StartMove(Vector2 pointerPosition)
         {
@@ -41,8 +41,8 @@ namespace YellowSquad.Anthill.Core.CameraControl
         {
             var cursorWorldPositionBeforeZoom = ScreenToWorldPoint(pointerPosition.Invoke());
             
-            _currentZoom = Mathf.Clamp01(_currentZoom + delta * _settings.ZoomSpeed);
-            _camera.fieldOfView = Mathf.Lerp(_settings.ZoomLimits.Min, _settings.ZoomLimits.Max, _currentZoom);
+            _zoom = Mathf.Clamp01(_zoom + delta * _settings.ZoomSpeed);
+            _camera.fieldOfView = _settings.ZoomLimits.Lerp(_zoom);
             
             var cursorWorldPositionAfterZoom = ScreenToWorldPoint(pointerPosition.Invoke());
             

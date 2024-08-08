@@ -13,6 +13,6 @@ namespace YellowSquad.Anthill.UserInput
         public Vector3 ScreenPosition { get; init; }
         public Vector3 WorldPosition { get; init; }
         public AxialCoordinate MapPosition { get; init; }
-        public float NormalizedZoom { get; init; }
+        public float ZoomFactor { get; init; }
     }
 }
