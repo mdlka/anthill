@@ -141,7 +141,7 @@ namespace YellowSquad.Anthill.Application
             _diggerTaskStorage.Visualize(_diggerTasksProgressView);
         }
         
-        private void OnGUI()
+        private void OnGUI() // TODO: Remove it after debug
         {
             foreach (var touch in Input.touches)
             {

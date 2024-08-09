@@ -4,13 +4,44 @@ namespace YellowSquad.Anthill.UserInput
 {
     public class TouchInput : IInput
     {
+        private const float ZoomFactor = 0.035f;
+
+        private int _lastTouchFingerId = -1;
+        private Vector2 _lastTouchPosition;
         private Touch _firstZoomTouch;
         private Touch _secondZoomTouch;
 
         public bool PointerDown => Input.GetMouseButtonDown(0);
-        public bool PointerUp => Input.GetMouseButtonUp(0);
+        public bool PointerUp => Input.GetMouseButtonUp(0) && Input.touchCount == 0;
 
-        public Vector2 PointerPosition => Input.touchCount > 0 ? Input.touches[0].position : Input.mousePosition;
+        public Vector2 PointerPosition
+        {
+            get
+            {
+                for (int i = 0; i < Input.touchCount; i++)
+                {
+                    var touch = Input.GetTouch(i);
+
+                    if (_lastTouchFingerId == -1)
+                        _lastTouchFingerId = touch.fingerId;
+                    
+                    if (touch.fingerId != _lastTouchFingerId)
+                        continue;
+
+                    _lastTouchPosition = touch.position;
+
+                    if (touch.phase == TouchPhase.Ended)
+                        _lastTouchFingerId = -1;
+                    
+                    break;
+                }
+
+                if (Input.touchCount == 0)
+                    _lastTouchFingerId = -1;
+                
+                return _lastTouchPosition;
+            }
+        }
 
         public float ZoomDelta
         {
@@ -35,7 +66,7 @@ namespace YellowSquad.Anthill.UserInput
                 _firstZoomTouch = newFirstTouch;
                 _secondZoomTouch = newSecondTouch;
 
-                return newDistance - startDistance;
+                return (newDistance - startDistance) * ZoomFactor;
             }
         }
     }

@@ -35,8 +35,10 @@ namespace YellowSquad.Anthill.UserInput
 
         public void Update(float deltaTime)
         {
-            if (_input.ZoomDelta != 0)
-                _camera.Zoom(-_input.ZoomDelta, () => _input.PointerPosition);
+            float zoomDelta = _input.ZoomDelta;
+            
+            if (zoomDelta != 0)
+                _camera.Zoom(-zoomDelta, () => _input.PointerPosition);
             
             if (_input.PointerDown)
                 OnPointerDown();
