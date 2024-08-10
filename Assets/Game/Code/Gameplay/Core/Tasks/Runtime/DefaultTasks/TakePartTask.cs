@@ -26,7 +26,7 @@ namespace YellowSquad.Anthill.Core.Tasks
             _targetPart = targetPart;
             _onProgress = onProgress;
 
-            _targetDuration = ((int)_targetDividedObject.Hardness + 1) * 2f;
+            _targetDuration = ((int)_targetDividedObject.Hardness + 1) * 3f;
         }
 
         public int Price { get; }
