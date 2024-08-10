@@ -14,7 +14,8 @@ namespace YellowSquad.Anthill.Core.Ants
         private bool _taskSold;
         private bool _lastTaskCancelled = true;
 
-        public Ant(IHome home, IMovement movement, ITaskStore taskStore) : this(home, movement, taskStore, new AlwaysCompletedTask()) { }
+        public Ant(IHome home, IMovement movement, ITaskStore taskStore) 
+            : this(home, movement, taskStore, new AlwaysCompletedTask()) { }
 
         private Ant(IHome home, IMovement movement, ITaskStore taskStore, ITask startTask)
         {

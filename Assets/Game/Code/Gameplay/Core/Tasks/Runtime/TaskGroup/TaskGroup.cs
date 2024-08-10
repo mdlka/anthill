@@ -31,7 +31,7 @@ namespace YellowSquad.Anthill.Core.Tasks
         
         public AxialCoordinate TargetCellPosition { get; }
         public bool AllTaskCompleted => _tookTasks.Count == _tasksCount && _tookTasks.All(task => task.Completed);
-        public bool HasFreeTask => _tasks.Count > 0 && _stopwatch.ElapsedTime(_stopwatchIndex) >= _delayBetweenTasks;
+        public bool HasFreeTask => _tasks.Count > 0 && _stopwatch.ElapsedTime(_stopwatchIndex) >= _delayBetweenTasks; // TODO: Test with removed stopwatch on big map
         public float Progress => 1.0f * _tookTasks.Count(task => task.Completed) / _tasksCount;
         public bool Cancelled { get; private set; }
 
