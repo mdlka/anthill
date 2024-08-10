@@ -140,23 +140,6 @@ namespace YellowSquad.Anthill.Application
             _mapCellShop.Visualize(_mapCellCellShopView);
             _diggerTaskStorage.Visualize(_diggerTasksProgressView);
         }
-        
-        private void OnGUI() // TODO: Remove it after debug
-        {
-            foreach (var touch in Input.touches)
-            {
-                var touchPosition = touch.position;
-                touchPosition.y = Screen.height - touchPosition.y;
-
-                var rect = new Rect(
-                    touchPosition.x - 50,
-                    touchPosition.y - 50,
-                    100,
-                    100);
-
-                GUI.Box(rect, $"{touch.fingerId}", new GUIStyle {fontSize = 64});
-            }
-        }
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
