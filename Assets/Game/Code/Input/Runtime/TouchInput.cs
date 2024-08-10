@@ -51,12 +51,12 @@ namespace YellowSquad.Anthill.UserInput
             {
                 var touch = Input.GetTouch(i);
 
-                if (touch.phase == TouchPhase.Began)
+                if (touch.phase == TouchPhase.Began && _pointersDown.Contains(touch.fingerId) == false)
                     _pointersDown.Enqueue(touch.fingerId);
-                else if (touch.phase == TouchPhase.Ended) 
+                else if (touch.phase == TouchPhase.Ended && _pointersUp.Contains(touch.fingerId) == false) 
                     _pointersUp.Enqueue(touch.fingerId);
 
-                if (_touchesPositions.ContainsKey(touch.fingerId))
+                if (_touchesPositions.ContainsKey(touch.fingerId) == false)
                     _touchesPositions.Add(touch.fingerId, touch.position);
 
                 _touchesPositions[touch.fingerId] = touch.position;
