@@ -8,7 +8,7 @@ namespace YellowSquad.Anthill.UserInput
         bool TryExecute(ClickInfo clickInfo);
     }
 
-    public class ClickInfo
+    public struct ClickInfo
     {
         public Vector3 ScreenPosition { get; init; }
         public Vector3 WorldPosition { get; init; }

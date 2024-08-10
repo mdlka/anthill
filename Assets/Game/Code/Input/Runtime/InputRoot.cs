@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using YellowSquad.Anthill.Core.CameraControl;
@@ -20,8 +19,10 @@ namespace YellowSquad.Anthill.UserInput
         private readonly IClickCommand[] _clickCommands;
         private readonly List<RaycastResult> _raycastResults = new();
 
-        private Vector2 _lastPointerDownPosition;
-        private float _lastPointerDownTime;
+        private readonly Dictionary<int, PointerDownInfo> _pointersDown = new();
+        private readonly List<int> _pointers = new();
+
+        private int _lastPointerId;
         private float _lastPointerUpTime;
         private bool _cameraMoving;
 
@@ -31,56 +32,80 @@ namespace YellowSquad.Anthill.UserInput
             _input = input;
             _camera = camera;
             _clickCommands = commands;
+            
+            _pointersDown.Add(0, default);
         }
+
+        private int CurrentPointerId => _pointers.Count > 0 ? _pointers[0] : _lastPointerId;
 
         public void Update(float deltaTime)
         {
+            _input.Update();
+            
             float zoomDelta = _input.ZoomDelta;
             
             if (zoomDelta != 0)
-                _camera.Zoom(-zoomDelta, () => _input.PointerPosition);
+                _camera.Zoom(-zoomDelta, () => _input.PointerPosition(CurrentPointerId));
             
-            if (_input.PointerDown)
-                OnPointerDown();
+            if (_input.HasPointerDown)
+                OnPointerDown(_input.ReadPointerDown());
             
             OnPointerMove();
             
-            if (_input.PointerUp)
-                OnPointerUp();
+            if (_input.HasPointerUp)
+                OnPointerUp(_input.ReadPointerUp());
         }
 
-        private void OnPointerDown()
+        private void OnPointerDown(int pointerId)
         {
-            _lastPointerDownTime = Time.realtimeSinceStartup;
-            _lastPointerDownPosition = _input.PointerPosition;
+            if (_pointersDown.ContainsKey(pointerId) == false)
+                _pointersDown.Add(pointerId, default);
+
+            _pointersDown[pointerId] = new PointerDownInfo
+            {
+                Time = Time.realtimeSinceStartup,
+                Position = _input.PointerPosition(pointerId),
+            };
+
+            _pointers.Add(pointerId);
         }
 
         private void OnPointerMove()
         {
-            if (_lastPointerDownTime - _lastPointerUpTime < MoveThreshold)
+            if (_pointersDown[CurrentPointerId].Time - _lastPointerUpTime < MoveThreshold)
                 return;
             
             if (_cameraMoving == false)
-                _camera.StartMove(_input.PointerPosition);
+                _camera.StartMove(_input.PointerPosition(CurrentPointerId));
 
-            _camera.Move(_input.PointerPosition);
+            _camera.Move(_input.PointerPosition(CurrentPointerId));
             _cameraMoving = true;
         }
 
-        private void OnPointerUp()
+        private void OnPointerUp(int pointerId)
         {
-            _lastPointerUpTime = Time.realtimeSinceStartup;
-            
-            if (_lastPointerUpTime - _lastPointerDownTime < MoveThreshold
-                || Vector2.Distance(_lastPointerDownPosition, _input.PointerPosition) <= PointerClickMaxDelta) 
-                OnPointerClick();
+            _lastPointerId = pointerId;
+            _pointers.Remove(pointerId);
 
-            _cameraMoving = false;
+            if (_pointers.Count == 0)
+            {
+                _lastPointerUpTime = Time.realtimeSinceStartup;
+                
+                if (_lastPointerUpTime - _pointersDown[pointerId].Time < MoveThreshold 
+                    || Vector2.Distance(_pointersDown[pointerId].Position, _input.PointerPosition(pointerId)) <= PointerClickMaxDelta)
+                    OnPointerClick(_input.PointerPosition(pointerId));
+                
+                _cameraMoving = false;
+            }
+            else
+            {
+                _camera.StartMove(_input.PointerPosition(CurrentPointerId));
+            }
         }
 
-        private void OnPointerClick()
+        private void OnPointerClick(Vector2 pointerPosition)
         {
-            var clickPosition = new Vector3(_input.PointerPosition.x, _input.PointerPosition.y, _camera.Position.y);
+            var clickPosition = new Vector3(pointerPosition.x, pointerPosition.y, _camera.Position.y);
             
             if (IsPointerOverUIObject(clickPosition))
                 return;
@@ -103,12 +128,18 @@ namespace YellowSquad.Anthill.UserInput
                 clickCommand.TryExecute(clickInfo);
         }
 
-        private bool IsPointerOverUIObject(Vector2 inputPosition)
+        private bool IsPointerOverUIObject(Vector2 pointerPosition)
         {
-            var eventDataCurrentPosition = new PointerEventData(EventSystem.current) { position = inputPosition };
+            var eventDataCurrentPosition = new PointerEventData(EventSystem.current) { position = pointerPosition };
             EventSystem.current.RaycastAll(eventDataCurrentPosition, _raycastResults);
 
-            return _raycastResults.Any(result => result.gameObject.layer == LayerMask.NameToLayer("UI"));
+            return _raycastResults.Count > 0;
+        }
+
+        private struct PointerDownInfo
+        {
+            public float Time { get; init; }
+            public Vector2 Position { get; init; }
         }
     }
 }

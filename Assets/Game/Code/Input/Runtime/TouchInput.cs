@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace YellowSquad.Anthill.UserInput
 {
@@ -6,42 +8,12 @@ namespace YellowSquad.Anthill.UserInput
     {
         private const float ZoomFactor = 0.035f;
 
-        private int _lastTouchFingerId = -1;
-        private Vector2 _lastTouchPosition;
+        private readonly Dictionary<int, Vector2> _touchesPositions = new();
+        private readonly Queue<int> _pointersDown = new();
+        private readonly Queue<int> _pointersUp = new();
+        
         private Touch _firstZoomTouch;
         private Touch _secondZoomTouch;
-
-        public bool PointerDown => Input.GetMouseButtonDown(0);
-        public bool PointerUp => Input.GetMouseButtonUp(0) && Input.touchCount == 0;
-
-        public Vector2 PointerPosition
-        {
-            get
-            {
-                for (int i = 0; i < Input.touchCount; i++)
-                {
-                    var touch = Input.GetTouch(i);
-
-                    if (_lastTouchFingerId == -1)
-                        _lastTouchFingerId = touch.fingerId;
-                    
-                    if (touch.fingerId != _lastTouchFingerId)
-                        continue;
-
-                    _lastTouchPosition = touch.position;
-
-                    if (touch.phase == TouchPhase.Ended)
-                        _lastTouchFingerId = -1;
-                    
-                    break;
-                }
-
-                if (Input.touchCount == 0)
-                    _lastTouchFingerId = -1;
-                
-                return _lastTouchPosition;
-            }
-        }
 
         public float ZoomDelta
         {
@@ -68,6 +40,51 @@ namespace YellowSquad.Anthill.UserInput
 
                 return (newDistance - startDistance) * ZoomFactor;
             }
+        }
+
+        public bool HasPointerDown => _pointersDown.Count > 0;
+        public bool HasPointerUp => _pointersUp.Count > 0;
+        
+        public void Update()
+        {
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                var touch = Input.GetTouch(i);
+
+                if (touch.phase == TouchPhase.Began)
+                    _pointersDown.Enqueue(touch.fingerId);
+                else if (touch.phase == TouchPhase.Ended) 
+                    _pointersUp.Enqueue(touch.fingerId);
+
+                if (_touchesPositions.ContainsKey(touch.fingerId))
+                    _touchesPositions.Add(touch.fingerId, touch.position);
+
+                _touchesPositions[touch.fingerId] = touch.position;
+            }
+        }
+
+        public int ReadPointerDown()
+        {
+            if (HasPointerDown == false)
+                throw new InvalidOperationException();
+
+            return _pointersDown.Dequeue();
+        }
+
+        public int ReadPointerUp()
+        {
+            if (HasPointerUp == false)
+                throw new InvalidOperationException();
+
+            return _pointersUp.Dequeue();
+        }
+
+        public Vector2 PointerPosition(int pointerId)
+        {
+            if (_touchesPositions.ContainsKey(pointerId) == false)
+                throw new ArgumentOutOfRangeException();
+
+            return _touchesPositions[pointerId];
         }
     }
 }
