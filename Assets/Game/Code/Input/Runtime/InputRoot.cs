@@ -32,8 +32,7 @@ namespace YellowSquad.Anthill.UserInput
             _input = input;
             _camera = camera;
             _clickCommands = commands;
-            
-            _pointersDown.Add(0, default);
+            _pointersDown[0] = default;
         }
 
         private int CurrentPointerId => _pointers.Count > 0 ? _pointers[0] : _lastPointerId;
@@ -58,9 +57,6 @@ namespace YellowSquad.Anthill.UserInput
 
         private void OnPointerDown(int pointerId)
         {
-            if (_pointersDown.ContainsKey(pointerId) == false)
-                _pointersDown.Add(pointerId, default);
-
             _pointersDown[pointerId] = new PointerDownInfo
             {
                 Time = Time.realtimeSinceStartup,
