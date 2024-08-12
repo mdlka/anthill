@@ -1,8 +1,8 @@
 {
-    "name": "YellowSquad.Anthill.Tutorial",
-    "rootNamespace": "YellowSquad.Anthill.Tutorial",
+    "name": "YellowSquad.BehaviorTree",
+    "rootNamespace": "YellowSquad.BehaviorTree",
     "references": [
-        "GUID:c79c13745ab341343888ea65f417c1f8"
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
