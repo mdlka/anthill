@@ -39,16 +39,27 @@ namespace YellowSquad.Anthill.Tutorial
         private IEnumerator Tutorial()
         {
             foreach (var targetButton in _targetButtons)
+                targetButton.Disable();
+            
+            foreach (var targetButton in _targetButtons)
             {
+                targetButton.Enable();
                 _uiTutorialArrow.ChangeTarget(targetButton.Transform);
                 yield return new WaitUntil(() => targetButton.ClickCount >= 5);
+                targetButton.Disable();
             }
-            
+
             _uiTutorialArrow.Disable();
 
             _worldTutorialArrow.ChangeTarget(_targetHexPoint);
             yield return new WaitUntil(() => _clickCommand.TargetHexClicked);
             _worldTutorialArrow.Disable();
+
+            foreach (var targetButton in _targetButtons)
+            {
+                targetButton.Enable();
+                targetButton.Dispose();
+            }
         }
     }
 }

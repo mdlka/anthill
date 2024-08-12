@@ -16,6 +16,16 @@ namespace YellowSquad.Anthill.Tutorial
 
         public Transform Transform => _button.transform;
         public int ClickCount { get; private set; }
+
+        public void Enable()
+        {
+            _button.enabled = true;
+        }
+
+        public void Disable()
+        {
+            _button.enabled = false;
+        }
         
         public void Dispose()
         {
