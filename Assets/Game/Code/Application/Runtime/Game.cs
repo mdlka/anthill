@@ -151,7 +151,7 @@ namespace YellowSquad.Anthill.Application
         private void OnDrawGizmos()
         {
             _movementPath?.OnDrawGizmos();
-            _currentLevel.CameraSettings?.OnDrawGizmos();
+            _currentLevel?.CameraSettings?.OnDrawGizmos();
         }
 #endif
     }
