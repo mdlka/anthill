@@ -7,8 +7,9 @@ namespace YellowSquad.Anthill.Meta
     public class LevelSwitchView : MonoBehaviour, ILevelSwitchView
     {
         [SerializeField] private Button _nextButton;
+        [SerializeField] private LevelSwitchWarning _warning;
 
-        private Action _onNextLevel;
+        private Action _onNextLevelButtonClick;
         
         public bool Rendered { get; private set; }
 
@@ -23,20 +24,20 @@ namespace YellowSquad.Anthill.Meta
             _nextButton.onClick.RemoveListener(OnNextButtonClick);
         }
 
-        public void Render(Action onNextLevel)
+        public void Render(Action onNextLevelButtonClick)
         {
             if (Rendered)
                 throw new InvalidOperationException();
             
             Rendered = true;
-
-            _onNextLevel = onNextLevel;
+            _onNextLevelButtonClick = onNextLevelButtonClick;
             _nextButton.gameObject.SetActive(true);
         }
         
         private void OnNextButtonClick()
         {
-            _onNextLevel?.Invoke();
+            if (_warning.Rendered == false)
+                _warning.Render(_onNextLevelButtonClick);
         }
     }
 }

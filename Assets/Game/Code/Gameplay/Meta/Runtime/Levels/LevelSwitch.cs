@@ -24,7 +24,7 @@ namespace YellowSquad.Anthill.Meta
             if (_view.Rendered)
                 return;
             
-            _view.Render(onNextLevel: () =>
+            _view.Render(onNextLevelButtonClick: () =>
             {
                 _levelList.NextLevel();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -6,6 +6,6 @@ namespace YellowSquad.Anthill.Meta
     {
         bool Rendered { get; }
         
-        void Render(Action onNextLevel);
+        void Render(Action onNextLevelButtonClick);
     }
 }
