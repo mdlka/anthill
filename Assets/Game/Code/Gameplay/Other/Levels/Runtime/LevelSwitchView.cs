@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace YellowSquad.Anthill.Meta
+namespace YellowSquad.Anthill.Levels
 {
     public class LevelSwitchView : MonoBehaviour, ILevelSwitchView
     {

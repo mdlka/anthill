@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace YellowSquad.Anthill.Meta
+namespace YellowSquad.Anthill.Levels
 {
     public interface ILevelSwitchView
     {

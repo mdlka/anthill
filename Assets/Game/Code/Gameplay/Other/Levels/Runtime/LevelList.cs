@@ -3,7 +3,7 @@ using UnityEngine;
 using YellowSquad.Anthill.Core.CameraControl;
 using YellowSquad.Anthill.Core.HexMap;
 
-namespace YellowSquad.Anthill.Meta
+namespace YellowSquad.Anthill.Levels
 {
     [CreateAssetMenu(menuName = "Anthill/Levels/Create LevelList", fileName = "LevelList", order = 56)]
     public class LevelList : ScriptableObject
@@ -12,6 +12,8 @@ namespace YellowSquad.Anthill.Meta
         [SerializeField] private Level[] _levels;
 
         [NonSerialized] private int _currentLevelIndex;
+
+        public bool CurrentLevelIsTutorial => _currentLevelIndex == 0;
 
         public Level CurrentLevel()
         {

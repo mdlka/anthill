@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using YellowSquad.Utils;
 
-namespace YellowSquad.Anthill.Meta
+namespace YellowSquad.Anthill.Levels
 {
     internal class LevelSwitchWarning : MonoBehaviour
     {

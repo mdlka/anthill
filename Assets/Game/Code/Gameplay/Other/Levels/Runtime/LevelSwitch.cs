@@ -1,7 +1,8 @@
 using UnityEngine.SceneManagement;
+using YellowSquad.Anthill.Meta;
 using YellowSquad.GameLoop;
 
-namespace YellowSquad.Anthill.Meta
+namespace YellowSquad.Anthill.Levels
 {
     public class LevelSwitch : IGameLoop
     {

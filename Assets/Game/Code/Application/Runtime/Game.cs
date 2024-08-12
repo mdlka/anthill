@@ -10,6 +10,7 @@ using YellowSquad.Anthill.Core.CameraControl;
 using YellowSquad.Anthill.Core.HexMap;
 using YellowSquad.Anthill.Core.Tasks;
 using YellowSquad.Anthill.Core.GameTime;
+using YellowSquad.Anthill.Levels;
 using YellowSquad.Anthill.UserInput;
 using YellowSquad.Anthill.Meta;
 
