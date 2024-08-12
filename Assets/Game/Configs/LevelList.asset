@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _editorLevelIndex: -1
   _levels:
+  - _mapFactory: {fileID: 11400000, guid: 514e82e2bb3468c419c728fbd6192f55, type: 2}
+    _cameraSettings: {fileID: 11400000, guid: 7b3b2548fe02af24ba94e1effd3bafc4, type: 2}
+    _startWalletValue: 1000
+    _goalAnts: 60
   - _mapFactory: {fileID: 11400000, guid: 96aaeffa1b8310b4c90c555b02fe8518, type: 2}
     _cameraSettings: {fileID: 11400000, guid: 101bcffc143aa6245ac82e1971dd5b19, type: 2}
     _startWalletValue: 99999
-    _goalAnts: 10
-  - _mapFactory: {fileID: 11400000, guid: 96aaeffa1b8310b4c90c555b02fe8518, type: 2}
-    _cameraSettings: {fileID: 11400000, guid: 101bcffc143aa6245ac82e1971dd5b19, type: 2}
-    _startWalletValue: 99999
-    _goalAnts: 20
+    _goalAnts: 200

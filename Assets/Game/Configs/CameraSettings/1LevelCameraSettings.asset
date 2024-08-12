@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9af585016aa04195b44d1b30e9532909, type: 3}
-  m_Name: CameraSettings
+  m_Name: 1LevelCameraSettings
   m_EditorClassIdentifier: 
   _zoomSpeed: 0.1
   _zoomLimits:

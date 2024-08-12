@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using YellowSquad.HexMath;
 
@@ -10,7 +11,7 @@ namespace YellowSquad.Anthill.Core.HexMap
     public class CustomMapFactory : BaseMapFactory
     {
         [Header("Map settings")]
-        [SerializeField, Min(0.01f)] private float _mapScale;
+        [SerializeField, Min(0.01f)] private float _mapScale = 1f;
         [Header("Hexes")]
         [SerializeField] private HexMesh _emptyHexMesh;
         [SerializeField] private HexMesh _targetHexMesh;
@@ -18,7 +19,7 @@ namespace YellowSquad.Anthill.Core.HexMap
         [SerializeField] private PointOfInterestMesh _targetLeafMesh;
         [SerializeField] private Hardness _targetLeafHardness;
         [Header("Editor settings")] 
-        [SerializeField, Min(0.0001f)] private float _textScaleFactor;
+        [SerializeField, Min(0.0001f)] private float _textScaleFactor = 1f;
         [SerializeField] private bool _currentHexEmpty;
         [SerializeField] private Hardness _currentHexHardness;
         [SerializeField] private PointOfInterestType _currentPointOfInterest;
@@ -76,6 +77,25 @@ namespace YellowSquad.Anthill.Core.HexMap
                 _ => null
             };
         }
+
+#if UNITY_EDITOR
+        [ContextMenu(nameof(MoveUp))]
+        private void MoveUp()
+        {
+            MoveHexes(new AxialCoordinate(0, 1));
+        }
+        
+        private void MoveHexes(AxialCoordinate distance)
+        {
+            var hexes = new List<EditorMapHex>();
+
+            foreach (var hex in _hexes)
+                hexes.Add(new EditorMapHex(hex.Position + distance, hex.Hardness, hex.PointOfInterestType, hex.Empty));
+
+            _hexes = hexes;
+            EditorUtility.SetDirty(this);
+        }
+#endif
         
         [Serializable]
         internal class EditorMapHex

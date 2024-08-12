@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a18a57fa8efd47a9857fa2c0bdd0ca10, type: 3}
-  m_Name: MainMap
+  m_Name: 1LevelMap
   m_EditorClassIdentifier: 
   _mapScale: 1
   _emptyHexMesh: {fileID: 11400000, guid: 0439ea377af6a6f4d93302092f579646, type: 2}
   _targetHexMesh: {fileID: 11400000, guid: bbb668aa6b883ec4db814b8a4250db69, type: 2}
   _targetLeafMesh: {fileID: 11400000, guid: 06c2e4d9b9a28c547a46431015c6cbf3, type: 2}
   _targetLeafHardness: 2
-  _textScaleFactor: 1
+  _textScaleFactor: 1.04
   _currentHexEmpty: 0
-  _currentHexHardness: 0
-  _currentPointOfInterest: 0
+  _currentHexHardness: 2
+  _currentPointOfInterest: 4
   _hexes:
   - _empty: 0
     _hardness: 1

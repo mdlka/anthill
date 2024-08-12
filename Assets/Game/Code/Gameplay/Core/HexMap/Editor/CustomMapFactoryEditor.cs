@@ -48,7 +48,7 @@ namespace YellowSquad.Anthill.Core.HexMap.Editor
         {
             foreach (var hex in _customMapFactory.Hexes)
             {
-                DrawHex(hex.Position, Color.green);
+                DrawHex(hex.Position, ColorBy(hex.PointOfInterestType), hex.Empty ? new Color(0.88f, 0.88f, 0.88f) : ColorBy(hex.Hardness));
                 DrawText($"{hex.Position.ToString()}\nEmpty: {hex.Empty}\n{hex.Hardness}\n{hex.PointOfInterestType.ToString()}", hex.Position.ToVector3(_customMapFactory.MapScale));
             }
 
@@ -92,7 +92,7 @@ namespace YellowSquad.Anthill.Core.HexMap.Editor
             HandleUtility.Repaint();
         }
 
-        private void DrawHex(AxialCoordinate position, Color color)
+        private void DrawHex(AxialCoordinate position, Color color, Color discColor)
         {
             var oldColor = Handles.color;
             Handles.color = color;
@@ -102,9 +102,10 @@ namespace YellowSquad.Anthill.Core.HexMap.Editor
                 var startPoint =  position.HexCornerPosition(i, _customMapFactory.MapScale);
                 var endPoint =  position.HexCornerPosition(i + 1, _customMapFactory.MapScale);
                 
-                Handles.DrawLine(startPoint, endPoint);
+                Handles.DrawLine(startPoint, endPoint, 3f);
             }
             
+            Handles.color = discColor;
             Handles.DrawSolidDisc(position.ToVector3(_customMapFactory.MapScale), Vector3.up, _customMapFactory.MapScale * 0.25f);
 
             Handles.color = oldColor;
@@ -136,6 +137,30 @@ namespace YellowSquad.Anthill.Core.HexMap.Editor
             return Mathf.Clamp((int)(100 / HandleUtility.GUIPointToWorldRay(Event.current.mousePosition).origin.y * _customMapFactory.MapScale), 
                 (int)(minSize * _customMapFactory.TextScaleFactor), 
                 (int)(maxSize * _customMapFactory.TextScaleFactor));
+        }
+
+        private Color ColorBy(PointOfInterestType type)
+        {
+            return type switch
+            {
+                PointOfInterestType.Empty => Color.black,
+                PointOfInterestType.Queen => Color.red,
+                PointOfInterestType.DiggersHome => Color.blue,
+                PointOfInterestType.LoadersHome => Color.yellow,
+                PointOfInterestType.Leaf => Color.green,
+                _ => throw new InvalidOperationException()
+            };
+        }
+
+        private Color ColorBy(Hardness hardness)
+        {
+            return hardness switch
+            {
+                Hardness.Min => new Color(0.56f, 0.56f, 0.56f),
+                Hardness.Medium => new Color(0.31f, 0.31f, 0.31f),
+                Hardness.Max => Color.black,
+                _ => throw new InvalidOperationException()
+            };
         }
 
         private enum EditState
