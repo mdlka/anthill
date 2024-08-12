@@ -87,7 +87,7 @@ namespace YellowSquad.Anthill.Core.Ants
 
         private IReadOnlyList<FracAxialCoordinate> SmoothPath(IReadOnlyList<FracAxialCoordinate> rawTargetPath)
         {
-            var randomOffset = _settings.RandomOffset();
+            var randomOffset = _settings.RandomOffset(_map.Scale);
             
             var targetPath = new List<FracAxialCoordinate>();
             var nextPosition = rawTargetPath[0];

@@ -38,6 +38,7 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private SerializableInterface<IWalletView> _walletView;
         [SerializeField] private MapCellCellShopView _mapCellCellShopView;
         [SerializeField] private MapGoalView _mapGoalView;
+        [SerializeField] private LevelSwitchView _levelSwitchView;
         [SerializeField] private MoneyAnimation _moneyAnimation;
         [SerializeField, Min(0)] private int _mapTargetAnts;
         [SerializeField, Min(0)] private int _startWalletValue;
@@ -49,6 +50,7 @@ namespace YellowSquad.Anthill.Application
         private LeafTasksLoop _leafTasksLoop;
         private MovementPath _movementPath;
         private MapCellShop _mapCellShop;
+        private LevelSwitch _levelSwitch;
         private ITaskStorage _diggerTaskStorage;
 
         private void Awake()
@@ -72,7 +74,6 @@ namespace YellowSquad.Anthill.Application
             _diggerView.Initialize(map.Scale);
             _loaderView.Initialize(map.Scale);
 
-            _movementSettings.Initialize(map.Scale);
             _movementPath = new MovementPath(map, new Path(new MapMovePolicy(map)), _movementSettings);
             
             var wallet = new DefaultWallet(_walletView.Value, _startWalletValue);
@@ -96,6 +97,8 @@ namespace YellowSquad.Anthill.Application
             _mapCellCellShopView.Initialize(map, _diggerTaskStorage);
 
             var mapGoal = new MapGoal(_mapTargetAnts, _mapGoalView);
+            _levelSwitch = new LevelSwitch(mapGoal, _levelSwitchView);
+            
             var collectHexTaskGroupFactory = new CollectHexTaskGroupFactory(map, _hexMapView.Value, _stopwatch, _delayBetweenTasks);
 
             _inputRoot = new InputRoot(map, Device.IsMobile ? new TouchInput() : new MouseInput(), 
@@ -136,6 +139,7 @@ namespace YellowSquad.Anthill.Application
             _anthill.Update(Time.deltaTime * _timeScale.Value);
             _inputRoot.Update(Time.deltaTime);
             _leafTasksLoop.Update(Time.deltaTime);
+            _levelSwitch.Update(Time.deltaTime);
             
             _mapCellShop.Visualize(_mapCellCellShopView);
             _diggerTaskStorage.Visualize(_diggerTasksProgressView);
