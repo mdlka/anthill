@@ -19,13 +19,13 @@ namespace YellowSquad.Anthill.Application
     {
         private readonly Stopwatch _stopwatch = new();
         
+        [SerializeField] private LevelList _levelList;
+
         [Header("Core settings")]
-        [SerializeField] private BaseMapFactory _mapFactory;
         [SerializeField] private SerializableInterface<IHexMapView> _hexMapView;
         [SerializeField] private AntView _diggerView;
         [SerializeField] private AntView _loaderView;
         [SerializeField] private MovementSettings _movementSettings;
-        [SerializeField] private CameraSettings _cameraSettings;
         [SerializeField] private TimeScale _timeScale;
         [SerializeField] private TasksProgressView _diggerTasksProgressView;
         [SerializeField] private TaskStoreView _taskStoreView;
@@ -40,8 +40,6 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private MapGoalView _mapGoalView;
         [SerializeField] private LevelSwitchView _levelSwitchView;
         [SerializeField] private MoneyAnimation _moneyAnimation;
-        [SerializeField, Min(0)] private int _mapTargetAnts;
-        [SerializeField, Min(0)] private int _startWalletValue;
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         [SerializeField] private UpgradeShopInfo _upgradeShopSettings;
 
@@ -52,6 +50,7 @@ namespace YellowSquad.Anthill.Application
         private MapCellShop _mapCellShop;
         private LevelSwitch _levelSwitch;
         private ITaskStorage _diggerTaskStorage;
+        private Level _currentLevel;
 
         private void Awake()
         {
@@ -62,7 +61,9 @@ namespace YellowSquad.Anthill.Application
 
         private void Start()
         {
-            var map = _mapFactory.Create();
+            _currentLevel = _levelList.CurrentLevel();
+            
+            var map = _currentLevel.MapFactory.Create();
             map.UpdateAllClosedPositions();
             map.Visualize(_hexMapView.Value);
 
@@ -76,7 +77,7 @@ namespace YellowSquad.Anthill.Application
 
             _movementPath = new MovementPath(map, new Path(new MapMovePolicy(map)), _movementSettings);
             
-            var wallet = new DefaultWallet(_walletView.Value, _startWalletValue);
+            var wallet = new DefaultWallet(_walletView.Value, _currentLevel.StartWalletValue);
             wallet.Spend(0); // initialize view
 
             _anthill = new DefaultAnthill(
@@ -96,13 +97,13 @@ namespace YellowSquad.Anthill.Application
             _mapCellShop = new MapCellShop(wallet, mapCellPriceList);
             _mapCellCellShopView.Initialize(map, _diggerTaskStorage);
 
-            var mapGoal = new MapGoal(_mapTargetAnts, _mapGoalView);
-            _levelSwitch = new LevelSwitch(mapGoal, _levelSwitchView);
+            var mapGoal = new MapGoal(_currentLevel.GoalAnts, _mapGoalView);
+            _levelSwitch = new LevelSwitch(_levelList, mapGoal, _levelSwitchView);
             
             var collectHexTaskGroupFactory = new CollectHexTaskGroupFactory(map, _hexMapView.Value, _stopwatch, _delayBetweenTasks);
 
             _inputRoot = new InputRoot(map, Device.IsMobile ? new TouchInput() : new MouseInput(), 
-                new DefaultCamera(Camera.main, _cameraSettings), 
+                new DefaultCamera(Camera.main, _currentLevel.CameraSettings), 
                 new IClickCommand[]
                 {
                     new FirstTrueCommand(
@@ -149,7 +150,7 @@ namespace YellowSquad.Anthill.Application
         private void OnDrawGizmos()
         {
             _movementPath?.OnDrawGizmos();
-            _cameraSettings?.OnDrawGizmos();
+            _currentLevel.CameraSettings?.OnDrawGizmos();
         }
 #endif
     }

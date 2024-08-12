@@ -5,11 +5,13 @@ namespace YellowSquad.Anthill.Meta
 {
     public class LevelSwitch : IGameLoop
     {
+        private readonly LevelList _levelList;
         private readonly MapGoal _mapGoal;
         private readonly ILevelSwitchView _view;
         
-        public LevelSwitch(MapGoal mapGoal, ILevelSwitchView view)
+        public LevelSwitch(LevelList levelList, MapGoal mapGoal, ILevelSwitchView view)
         {
+            _levelList = levelList;
             _mapGoal = mapGoal;
             _view = view;
         }
@@ -24,6 +26,7 @@ namespace YellowSquad.Anthill.Meta
             
             _view.Render(onNextLevel: () =>
             {
+                _levelList.NextLevel();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             });
         }

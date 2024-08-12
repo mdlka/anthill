@@ -1917,7 +1917,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aca19cc8f94431e4b85891a7c559ed49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mapFactory: {fileID: 11400000, guid: 96aaeffa1b8310b4c90c555b02fe8518, type: 2}
+  _levelList: {fileID: 11400000, guid: 03daae2ad7ce7d847a3997874ee982b0, type: 2}
   _hexMapView:
     mode: 0
     unityReference: {fileID: 2052305926}
@@ -1926,7 +1926,6 @@ MonoBehaviour:
   _diggerView: {fileID: 2047135644}
   _loaderView: {fileID: 1781903084}
   _movementSettings: {fileID: 11400000, guid: bf38443a5993f32458b3518bc57bc474, type: 2}
-  _cameraSettings: {fileID: 11400000, guid: 101bcffc143aa6245ac82e1971dd5b19, type: 2}
   _timeScale: {fileID: 11400000, guid: 9f1a443acede2ce4892358210c3ad8e4, type: 2}
   _diggerTasksProgressView: {fileID: 1616363467}
   _taskStoreView: {fileID: 1105394378}
@@ -1943,8 +1942,6 @@ MonoBehaviour:
   _mapGoalView: {fileID: 2042016630}
   _levelSwitchView: {fileID: 126165096}
   _moneyAnimation: {fileID: 240794278}
-  _mapTargetAnts: 20
-  _startWalletValue: 99999
   _takeLeafTaskPrice: 5
   _upgradeShopSettings:
     <DiggerButton>k__BackingField:

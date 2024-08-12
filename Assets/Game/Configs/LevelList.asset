@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730fb36417034fc79bc51e40ea2e27cf, type: 3}
+  m_Name: LevelList
+  m_EditorClassIdentifier: 
+  _editorLevelIndex: -1
+  _levels:
+  - _mapFactory: {fileID: 11400000, guid: 96aaeffa1b8310b4c90c555b02fe8518, type: 2}
+    _cameraSettings: {fileID: 11400000, guid: 101bcffc143aa6245ac82e1971dd5b19, type: 2}
+    _startWalletValue: 99999
+    _goalAnts: 10
+  - _mapFactory: {fileID: 11400000, guid: 96aaeffa1b8310b4c90c555b02fe8518, type: 2}
+    _cameraSettings: {fileID: 11400000, guid: 101bcffc143aa6245ac82e1971dd5b19, type: 2}
+    _startWalletValue: 99999
+    _goalAnts: 20
