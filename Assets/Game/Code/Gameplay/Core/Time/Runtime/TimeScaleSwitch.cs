@@ -19,24 +19,18 @@ namespace YellowSquad.Anthill.Core.GameTime
                 var buttonInstance = Instantiate(_buttonTemplate, _content);
                 buttonInstance.Initialize(speed);
                 
-                buttonInstance.Clicked += OnButtonClicked;
+                buttonInstance.Clicked += Select;
                 _buttons.Add(buttonInstance);
             }
             
             if (_buttons.Count > 0)
-                _buttons[0].Select();
+                Select(_buttons[0]);
         }
 
         private void OnDestroy()
         {
             foreach (var button in _buttons)
-                button.Clicked -= OnButtonClicked;
-        }
-
-        private void OnButtonClicked(TimeScaleButton button)
-        {
-            Select(button);
-            _timeScale.ChangeValue(button.TargetSpeed);
+                button.Clicked -= Select;
         }
 
         private void Select(TimeScaleButton button)
@@ -45,6 +39,7 @@ namespace YellowSquad.Anthill.Core.GameTime
                 localButton.Unselect();
             
             button.Select();
+            _timeScale.ChangeValue(button.TargetSpeed);
         }
     }
 }
