@@ -13,6 +13,7 @@ using YellowSquad.Anthill.Core.GameTime;
 using YellowSquad.Anthill.Levels;
 using YellowSquad.Anthill.UserInput;
 using YellowSquad.Anthill.Meta;
+using YellowSquad.Anthill.Tutorial;
 
 namespace YellowSquad.Anthill.Application
 {
@@ -21,6 +22,7 @@ namespace YellowSquad.Anthill.Application
         private readonly Stopwatch _stopwatch = new();
         
         [SerializeField] private LevelList _levelList;
+        [SerializeField] private TutorialRoot _tutorialRoot;
 
         [Header("Core settings")]
         [SerializeField] private SerializableInterface<IHexMapView> _hexMapView;
@@ -110,13 +112,14 @@ namespace YellowSquad.Anthill.Application
                     new FirstTrueCommand(
                         new AddDiggerTaskCommand(_diggerTaskStorage, collectHexTaskGroupFactory, _mapCellShop), 
                         new RemoveDiggerTaskCommand(_diggerTaskStorage, _mapCellShop)),
-                    new RestoreLeafCommand(map, _hexMapView.Value, wallet, mapCellPriceList, _moneyAnimation)
+                    new RestoreLeafCommand(map, _hexMapView.Value, wallet, mapCellPriceList, _moneyAnimation),
+                    _tutorialRoot.CreateTutorialCommand()
                 });
 
             _leafTasksLoop = new LeafTasksLoop(map, loaderTaskStorage, 
                 new CollectPointOfInterestTaskGroupFactory(map, _hexMapView.Value, _stopwatch, _delayBetweenTasks, _takeLeafTaskPrice));
             
-            _upgradeShop.Initialize(new[]
+            var shopButtons = _upgradeShop.Initialize(new[]
             {
                 new UpgradeButtonDTO
                 {
@@ -133,6 +136,9 @@ namespace YellowSquad.Anthill.Application
                         () => mapGoal.AddProgress()),
                 },
             });
+            
+            if (_levelList.CurrentLevelIsTutorial)
+                _tutorialRoot.StartTutorial(map.Scale, shopButtons);
         }
 
         private void Update()

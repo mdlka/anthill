@@ -15,6 +15,8 @@ namespace YellowSquad.Anthill.Meta
 
         private IUpgrade _upgrade;
 
+        internal Button Button => _button;
+
         public void Initialize(IUpgrade upgrade, string upgradeName, Sprite icon)
         {
             _upgrade = upgrade;

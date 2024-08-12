@@ -2,7 +2,10 @@
     "name": "YellowSquad.Anthill.Tutorial",
     "rootNamespace": "YellowSquad.Anthill.Tutorial",
     "references": [
-        "GUID:c79c13745ab341343888ea65f417c1f8"
+        "GUID:c79c13745ab341343888ea65f417c1f8",
+        "GUID:c1a201351f2fcb34dad2d362ac290285",
+        "GUID:26b82d191b6890848926b9f960099a47",
+        "GUID:e6d53f0b0f0b2244da4ab4237f0485fe"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
