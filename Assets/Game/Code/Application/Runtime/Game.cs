@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using Agava.WebUtility;
 using TNRD;
@@ -14,6 +15,8 @@ using YellowSquad.Anthill.Levels;
 using YellowSquad.Anthill.UserInput;
 using YellowSquad.Anthill.Meta;
 using YellowSquad.Anthill.Tutorial;
+using YellowSquad.GamePlatformSdk;
+using YellowSquad.Utils;
 
 namespace YellowSquad.Anthill.Application
 {
@@ -23,6 +26,7 @@ namespace YellowSquad.Anthill.Application
         
         [SerializeField] private LevelList _levelList;
         [SerializeField] private TutorialRoot _tutorialRoot;
+        [SerializeField] private CanvasGroup _blackScreen;
 
         [Header("Core settings")]
         [SerializeField] private SerializableInterface<IHexMapView> _hexMapView;
@@ -55,6 +59,8 @@ namespace YellowSquad.Anthill.Application
         private ITaskStorage _diggerTaskStorage;
         private Level _currentLevel;
 
+        private bool _gameInitialized;
+
         private void Awake()
         {
 #if !UNITY_EDITOR
@@ -62,8 +68,13 @@ namespace YellowSquad.Anthill.Application
 #endif
         }
 
-        private void Start()
+        private IEnumerator Start()
         {
+            _blackScreen.Enable();
+            
+            if (GamePlatformSdkContext.Current.Initialized == false)
+                yield return GamePlatformSdkContext.Current.Initialize();
+            
             _currentLevel = _levelList.CurrentLevel();
             
             var map = _currentLevel.MapFactory.Create();
@@ -107,7 +118,7 @@ namespace YellowSquad.Anthill.Application
 
             _inputRoot = new InputRoot(map, Device.IsMobile ? new TouchInput() : new MouseInput(), 
                 new DefaultCamera(Camera.main, _currentLevel.CameraSettings), 
-                new IClickCommand[]
+                new[]
                 {
                     new FirstTrueCommand(
                         new AddDiggerTaskCommand(_diggerTaskStorage, collectHexTaskGroupFactory, _mapCellShop), 
@@ -139,10 +150,16 @@ namespace YellowSquad.Anthill.Application
             
             if (_levelList.CurrentLevelIsTutorial)
                 _tutorialRoot.StartTutorial(map.Scale, shopButtons);
+
+            _gameInitialized = true;
+            _blackScreen.Disable(0.2f);
         }
 
         private void Update()
         {
+            if (GamePlatformSdkContext.Current.Initialized == false || _gameInitialized == false)
+                return;
+            
             _stopwatch.Update(Time.deltaTime * _timeScale.Value);
             _anthill.Update(Time.deltaTime * _timeScale.Value);
             _inputRoot.Update(Time.deltaTime);

@@ -14,10 +14,11 @@ namespace YellowSquad.GamePlatformSdk
             };
 
             Debug.Log("Sdk initialized");
+            Initialized = true;
             yield break;
         }
 
-        public bool Initialized => true;
+        public bool Initialized { get; private set; }
         public IAdvertisement Advertisement { get; } = new DefaultAdvertisement();
         public ISave Save { get; } = new DefaultSave();
         public Language Language { get; private set; }
