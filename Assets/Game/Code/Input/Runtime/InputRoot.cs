@@ -62,8 +62,9 @@ namespace YellowSquad.Anthill.UserInput
                 Time = Time.realtimeSinceStartup,
                 Position = _input.PointerPosition(pointerId),
             };
-
-            _pointers.Add(pointerId);
+            
+            if (_pointers.Contains(pointerId) == false)
+                _pointers.Add(pointerId);
         }
 
         private void OnPointerMove()
