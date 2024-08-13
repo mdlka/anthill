@@ -50,6 +50,10 @@ namespace YellowSquad.Anthill.Application
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         [SerializeField] private UpgradeShopInfo _upgradeShopSettings;
 
+        [Header("Debug")] 
+        [SerializeField] private bool _needDebugSdk;
+        [SerializeField] private Language _debugLanguage;
+
         private IAnthill _anthill;
         private InputRoot _inputRoot;
         private LeafTasksLoop _leafTasksLoop;
@@ -71,6 +75,9 @@ namespace YellowSquad.Anthill.Application
         private IEnumerator Start()
         {
             _blackScreen.Enable();
+            
+            if (_needDebugSdk)
+                GamePlatformSdkContext.EnableLanguageDebug(_debugLanguage);
             
             if (GamePlatformSdkContext.Current.Initialized == false)
                 yield return GamePlatformSdkContext.Current.Initialize();
