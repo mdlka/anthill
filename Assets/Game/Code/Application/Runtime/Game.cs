@@ -24,6 +24,7 @@ namespace YellowSquad.Anthill.Application
     {
         private readonly Stopwatch _stopwatch = new();
         
+        [SerializeField] private bool _skipTutorial;
         [SerializeField] private LevelList _levelList;
         [SerializeField] private TutorialRoot _tutorialRoot;
         [SerializeField] private CanvasGroup _blackScreen;
@@ -145,21 +146,21 @@ namespace YellowSquad.Anthill.Application
             {
                 new UpgradeButtonDTO
                 {
-                    ButtonName = _upgradeShopSettings.DiggerButton.HeaderEn,
+                    ButtonName = _upgradeShopSettings.DiggerButton.Headers.SelectCurrentLanguageText(),
                     Icon = _upgradeShopSettings.DiggerButton.Icon,
                     Upgrade = new CallbackUpgrade(new DiggersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 10), wallet), 
                         () => mapGoal.AddProgress()),
                 },
                 new UpgradeButtonDTO
                 {
-                    ButtonName = _upgradeShopSettings.LoaderButton.HeaderEn,
+                    ButtonName = _upgradeShopSettings.LoaderButton.Headers.SelectCurrentLanguageText(),
                     Icon = _upgradeShopSettings.LoaderButton.Icon,
                     Upgrade = new CallbackUpgrade(new LoadersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 10), wallet),
                         () => mapGoal.AddProgress()),
                 },
             });
             
-            if (_levelList.CurrentLevelIsTutorial)
+            if (_levelList.CurrentLevelIsTutorial && _skipTutorial == false)
                 _tutorialRoot.StartTutorial(map.Scale, shopButtons);
 
             _gameInitialized = true;
@@ -199,9 +200,8 @@ namespace YellowSquad.Anthill.Application
         [Serializable]
         internal class ButtonInfo
         {
-            [field: SerializeField] public string HeaderRu { get; private set; }
-            [field: SerializeField] public string HeaderEn { get; private set; }
             [field: SerializeField] public Sprite Icon { get; private set; }
+            [field: SerializeField] public LocalizedText[] Headers { get; private set; }
         }
     }
 }

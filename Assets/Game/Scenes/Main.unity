@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5278086}
+  - component: {fileID: 5278089}
   - component: {fileID: 5278088}
   - component: {fileID: 5278087}
   m_Layer: 5
@@ -261,6 +262,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5278085}
   m_CullTransparentMesh: 1
+--- !u!114 &5278089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5278085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84e2744a59b6d4b4ea10672ba817f936, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localizedTexts:
+  - <Language>k__BackingField: 0
+    <Text>k__BackingField: When you proceed to the next level, all progress will
+      be reset. Are you sure you want to continue?
+  - <Language>k__BackingField: 1
+    <Text>k__BackingField: "\u041F\u0440\u0438 \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u0435
+      \u043D\u0430 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0439 \u0443\u0440\u043E\u0432\u0435\u043D\u044C
+      \u0432\u0435\u0441\u044C \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441 \u0441\u0431\u0440\u043E\u0441\u0438\u0442\u044C\u0441\u044F.
+      \u0412\u044B \u0443\u0432\u0435\u0440\u0435\u043D\u044B, \u0447\u0442\u043E
+      \u0445\u043E\u0442\u0438\u0442\u0435 \u043F\u0435\u0440\u0435\u0439\u0442\u0438?"
+  - <Language>k__BackingField: 2
+    <Text>k__BackingField: "Sonraki seviyeye ge\xE7ti\u011Finizde t\xFCm ilerleme
+      s\u0131f\u0131rlanacak. Devam etmek istedi\u011Finizden emin misiniz?"
 --- !u!1 &13386058
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,6 +418,7 @@ GameObject:
   m_Component:
   - component: {fileID: 14963693}
   - component: {fileID: 14963695}
+  - component: {fileID: 14963696}
   - component: {fileID: 14963694}
   m_Layer: 5
   m_Name: Text (TMP)
@@ -516,6 +543,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14963692}
   m_CullTransparentMesh: 1
+--- !u!114 &14963696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14963692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84e2744a59b6d4b4ea10672ba817f936, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localizedTexts:
+  - <Language>k__BackingField: 0
+    <Text>k__BackingField: Next level
+  - <Language>k__BackingField: 1
+    <Text>k__BackingField: "\u0414\u0430\u043B\u044C\u0448\u0435"
+  - <Language>k__BackingField: 2
+    <Text>k__BackingField: "\u0130leri"
 --- !u!1 &55668711
 GameObject:
   m_ObjectHideFlags: 0
@@ -2744,6 +2790,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1183207170}
+  - component: {fileID: 1183207173}
   - component: {fileID: 1183207172}
   - component: {fileID: 1183207171}
   m_Layer: 5
@@ -2869,6 +2916,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1183207169}
   m_CullTransparentMesh: 1
+--- !u!114 &1183207173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183207169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84e2744a59b6d4b4ea10672ba817f936, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localizedTexts:
+  - <Language>k__BackingField: 0
+    <Text>k__BackingField: No
+  - <Language>k__BackingField: 1
+    <Text>k__BackingField: "\u041D\u0435\u0442"
+  - <Language>k__BackingField: 2
+    <Text>k__BackingField: "Hay\u0131r"
 --- !u!1 &1198841295
 GameObject:
   m_ObjectHideFlags: 0
@@ -3020,6 +3086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aca19cc8f94431e4b85891a7c559ed49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skipTutorial: 1
   _levelList: {fileID: 11400000, guid: 03daae2ad7ce7d847a3997874ee982b0, type: 2}
   _tutorialRoot: {fileID: 430848736}
   _blackScreen: {fileID: 414635695}
@@ -3050,14 +3117,24 @@ MonoBehaviour:
   _takeLeafTaskPrice: 5
   _upgradeShopSettings:
     <DiggerButton>k__BackingField:
-      <HeaderRu>k__BackingField: "\u041A\u043E\u043F\u0430\u0442\u0435\u043B\u044C"
-      <HeaderEn>k__BackingField: Digger
       <Icon>k__BackingField: {fileID: -35613213, guid: 1e63806c56e47f54887be16a93875f3a, type: 3}
+      <Headers>k__BackingField:
+      - <Language>k__BackingField: 0
+        <Text>k__BackingField: Digger
+      - <Language>k__BackingField: 1
+        <Text>k__BackingField: "\u041A\u043E\u043F\u0430\u0442\u0435\u043B\u044C"
+      - <Language>k__BackingField: 2
+        <Text>k__BackingField: "Kaz\u0131c\u0131"
     <LoaderButton>k__BackingField:
-      <HeaderRu>k__BackingField: "\u041D\u043E\u0441\u0438\u0442\u0435\u043B\u044C"
-      <HeaderEn>k__BackingField: Loader
       <Icon>k__BackingField: {fileID: -1639661017, guid: 1e63806c56e47f54887be16a93875f3a, type: 3}
-  _needDebugSdk: 1
+      <Headers>k__BackingField:
+      - <Language>k__BackingField: 0
+        <Text>k__BackingField: Loader
+      - <Language>k__BackingField: 1
+        <Text>k__BackingField: "\u041D\u043E\u0441\u0438\u0442\u0435\u043B\u044C"
+      - <Language>k__BackingField: 2
+        <Text>k__BackingField: "Ta\u015F\u0131y\u0131c\u0131"
+  _needDebugSdk: 0
   _debugLanguage: 0
   references:
     version: 2
@@ -3781,6 +3858,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1904539193}
+  - component: {fileID: 1904539196}
   - component: {fileID: 1904539195}
   - component: {fileID: 1904539194}
   m_Layer: 5
@@ -3906,6 +3984,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1904539192}
   m_CullTransparentMesh: 1
+--- !u!114 &1904539196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904539192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84e2744a59b6d4b4ea10672ba817f936, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localizedTexts:
+  - <Language>k__BackingField: 0
+    <Text>k__BackingField: Yes
+  - <Language>k__BackingField: 1
+    <Text>k__BackingField: "\u0414\u0430"
+  - <Language>k__BackingField: 2
+    <Text>k__BackingField: Evet
 --- !u!1 &2001549216
 GameObject:
   m_ObjectHideFlags: 0

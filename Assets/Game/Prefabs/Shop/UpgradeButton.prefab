@@ -413,6 +413,13 @@ MonoBehaviour:
   _nameText: {fileID: 348748186643112768}
   _upgradeInfoText: {fileID: 7648551083669757060}
   _pricePrefix: <size=110%><sprite=2><space=3></size>
+  _maxLocalization:
+  - <Language>k__BackingField: 0
+    <Text>k__BackingField: Max
+  - <Language>k__BackingField: 1
+    <Text>k__BackingField: "\u041C\u0430\u043A\u0441"
+  - <Language>k__BackingField: 2
+    <Text>k__BackingField: Maks
 --- !u!114 &1189871328672304181
 MonoBehaviour:
   m_ObjectHideFlags: 0

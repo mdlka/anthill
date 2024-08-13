@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YellowSquad.GamePlatformSdk;
 
 namespace YellowSquad.Anthill.Meta
 {
@@ -12,7 +13,9 @@ namespace YellowSquad.Anthill.Meta
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private TMP_Text _upgradeInfoText;
         [SerializeField] private string _pricePrefix;
+        [SerializeField] private LocalizedText[] _maxLocalization;
 
+        private string _localizedMax;
         private IUpgrade _upgrade;
 
         internal Button Button => _button;
@@ -22,6 +25,8 @@ namespace YellowSquad.Anthill.Meta
             _upgrade = upgrade;
             _icon.sprite = icon;
             _nameText.text = upgradeName;
+
+            _localizedMax = _maxLocalization.SelectCurrentLanguageText();
             
             RenderUpgradeInfo();
             _button.onClick.AddListener(OnButtonClick);
@@ -30,7 +35,7 @@ namespace YellowSquad.Anthill.Meta
         private void Update()
         {
             _button.interactable = _upgrade.CanPerform;
-            _priceText.text = _upgrade.IsMax ? "Max" : $"{_pricePrefix}{_upgrade.CurrentPrice}";
+            _priceText.text = _upgrade.IsMax ? _localizedMax : $"{_pricePrefix}{_upgrade.CurrentPrice}";
             RenderUpgradeInfo();
         }
 
