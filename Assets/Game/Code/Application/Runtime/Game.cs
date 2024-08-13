@@ -168,12 +168,12 @@ namespace YellowSquad.Anthill.Application
             });
             
             _gameInitialized = true;
-            _blackScreen.Disable(0.2f);
+            _blackScreen.Disable(0.5f);
 
             if (_skipTutorial || save.HasKey(SaveConstants.TutorialSaveKey) || _levelList.CurrentLevelIsTutorial == false) 
                 yield break;
             
-            yield return _tutorialRoot.StartTutorial(map.Scale, shopButtons);
+            yield return _tutorialRoot.StartTutorial(map.Scale, _anthill, shopButtons[0], shopButtons[1]);
             save.SetInt(SaveConstants.TutorialSaveKey, 1);
             save.Save();
         }
