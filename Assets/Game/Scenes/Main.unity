@@ -3057,6 +3057,8 @@ MonoBehaviour:
       <HeaderRu>k__BackingField: "\u041D\u043E\u0441\u0438\u0442\u0435\u043B\u044C"
       <HeaderEn>k__BackingField: Loader
       <Icon>k__BackingField: {fileID: -1639661017, guid: 1e63806c56e47f54887be16a93875f3a, type: 3}
+  _needDebugSdk: 1
+  _debugLanguage: 0
   references:
     version: 2
     RefIds:

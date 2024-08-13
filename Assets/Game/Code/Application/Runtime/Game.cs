@@ -50,9 +50,11 @@ namespace YellowSquad.Anthill.Application
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         [SerializeField] private UpgradeShopInfo _upgradeShopSettings;
 
+#if UNITY_EDITOR
         [Header("Debug")] 
         [SerializeField] private bool _needDebugSdk;
         [SerializeField] private Language _debugLanguage;
+#endif
 
         private IAnthill _anthill;
         private InputRoot _inputRoot;
@@ -76,8 +78,10 @@ namespace YellowSquad.Anthill.Application
         {
             _blackScreen.Enable();
             
+#if UNITY_EDITOR
             if (_needDebugSdk)
                 GamePlatformSdkContext.EnableLanguageDebug(_debugLanguage);
+#endif
             
             if (GamePlatformSdkContext.Current.Initialized == false)
                 yield return GamePlatformSdkContext.Current.Initialize();

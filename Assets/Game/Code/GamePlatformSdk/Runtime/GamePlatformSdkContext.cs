@@ -2,7 +2,9 @@
 {
     public static class GamePlatformSdkContext
     {
+#if UNITY_EDITOR
         private static bool _debugEnabled;
+#endif
         
         static GamePlatformSdkContext()
         {
@@ -15,6 +17,7 @@
         
         public static IGamePlatformSdk Current { get; private set; }
 
+#if UNITY_EDITOR
         public static void EnableLanguageDebug(Language targetLanguage)
         {
             if (_debugEnabled)
@@ -23,5 +26,6 @@
             Current = new DebugLanguageSdk(Current, targetLanguage);
             _debugEnabled = true;
         }
+#endif
     }
 }
