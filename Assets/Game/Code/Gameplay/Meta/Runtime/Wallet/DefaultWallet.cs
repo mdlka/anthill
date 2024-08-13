@@ -1,18 +1,22 @@
 ﻿using System;
+using YellowSquad.GamePlatformSdk;
 
 namespace YellowSquad.Anthill.Meta
 {
     public class DefaultWallet : IWallet
     {
         private readonly IWalletView _view;
+        private readonly ISave _save;
 
-        public DefaultWallet(IWalletView view, int startValue = 0)
+        public DefaultWallet(IWalletView view, ISave save, int startValue = 0)
         {
             if (startValue < 0)
                 throw new ArgumentOutOfRangeException(nameof(startValue));
             
             _view = view;
-            CurrentValue = startValue;
+            _save = save;
+
+            CurrentValue = _save.GetInt(SaveConstants.WalletSaveKey, startValue);
         }
         
         public int CurrentValue { get; private set; }
@@ -24,6 +28,8 @@ namespace YellowSquad.Anthill.Meta
 
             CurrentValue += value;
             _view.Render(CurrentValue);
+            
+            _save.SetInt(SaveConstants.WalletSaveKey, CurrentValue);
         }
 
         public void Spend(int value)
@@ -33,6 +39,8 @@ namespace YellowSquad.Anthill.Meta
 
             CurrentValue -= value;
             _view.Render(CurrentValue);
+            
+            _save.SetInt(SaveConstants.WalletSaveKey, CurrentValue);
         }
 
         public bool CanSpend(int value)

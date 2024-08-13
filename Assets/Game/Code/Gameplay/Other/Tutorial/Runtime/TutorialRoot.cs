@@ -22,7 +22,7 @@ namespace YellowSquad.Anthill.Tutorial
             return _clickCommand ??= new TutorialClickCommand(_targetHexPosition);
         }
 
-        public void StartTutorial(float mapScale, Button[] targetButtons)
+        public IEnumerator StartTutorial(float mapScale, Button[] targetButtons)
         {
             _targetHexPoint = new GameObject("TargetHexPoint").transform;
             _targetHexPoint.position = ((AxialCoordinate)_targetHexPosition).ToVector3(mapScale) + Vector3.up * _targetHexPositionOffsetY;
@@ -33,7 +33,7 @@ namespace YellowSquad.Anthill.Tutorial
             for (int i = 0; i < targetButtons.Length; i++)
                 _targetButtons[i] = new TutorialButton(targetButtons[i]);
 
-            StartCoroutine(Tutorial());
+            yield return Tutorial();
         }
         
         private IEnumerator Tutorial()

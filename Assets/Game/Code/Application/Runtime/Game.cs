@@ -86,6 +86,11 @@ namespace YellowSquad.Anthill.Application
             
             if (GamePlatformSdkContext.Current.Initialized == false)
                 yield return GamePlatformSdkContext.Current.Initialize();
+
+            var save = GamePlatformSdkContext.Current.Save;
+            
+            if (_levelList.Initialized == false)
+                _levelList.Initialize(save);
             
             _currentLevel = _levelList.CurrentLevel();
             
@@ -103,7 +108,7 @@ namespace YellowSquad.Anthill.Application
 
             _movementPath = new MovementPath(map, new Path(new MapMovePolicy(map)), _movementSettings);
             
-            var wallet = new DefaultWallet(_walletView.Value, _currentLevel.StartWalletValue);
+            var wallet = new DefaultWallet(_walletView.Value, save, _currentLevel.StartWalletValue);
             wallet.Spend(0); // initialize view
 
             _anthill = new DefaultAnthill(
@@ -160,11 +165,15 @@ namespace YellowSquad.Anthill.Application
                 },
             });
             
-            if (_levelList.CurrentLevelIsTutorial && _skipTutorial == false)
-                _tutorialRoot.StartTutorial(map.Scale, shopButtons);
-
             _gameInitialized = true;
             _blackScreen.Disable(0.2f);
+
+            if (_skipTutorial || save.HasKey(SaveConstants.TutorialSaveKey) || _levelList.CurrentLevelIsTutorial == false) 
+                yield break;
+            
+            yield return _tutorialRoot.StartTutorial(map.Scale, shopButtons);
+            save.SetInt(SaveConstants.TutorialSaveKey, 1);
+            save.Save();
         }
 
         private void Update()

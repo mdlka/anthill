@@ -2,6 +2,7 @@
 using UnityEngine;
 using YellowSquad.Anthill.Core.CameraControl;
 using YellowSquad.Anthill.Core.HexMap;
+using YellowSquad.GamePlatformSdk;
 
 namespace YellowSquad.Anthill.Levels
 {
@@ -12,8 +13,19 @@ namespace YellowSquad.Anthill.Levels
         [SerializeField] private Level[] _levels;
 
         [NonSerialized] private int _currentLevelIndex;
+        [NonSerialized] private ISave _save;
 
         public bool CurrentLevelIsTutorial => _currentLevelIndex == 0;
+        public bool Initialized => _save != null;
+
+        public void Initialize(ISave save)
+        {
+            if (Initialized)
+                throw new InvalidOperationException();
+            
+            _save = save;
+            _currentLevelIndex = _save.GetInt(SaveConstants.CurrentLevelSaveKey, _currentLevelIndex);
+        }
 
         public Level CurrentLevel()
         {
@@ -28,6 +40,12 @@ namespace YellowSquad.Anthill.Levels
         internal void NextLevel()
         {
             _currentLevelIndex = Math.Min(_currentLevelIndex + 1, _levels.Length - 1);
+            _save.SetInt(SaveConstants.CurrentLevelSaveKey, _currentLevelIndex);
+            
+            if (_save.HasKey(SaveConstants.WalletSaveKey))
+                _save.DeleteKey(SaveConstants.WalletSaveKey);
+            
+            _save.Save();
         }
     }
     

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace YellowSquad.GamePlatformSdk
 {
-    internal class DefaultSave : ISave
+    internal class PlayerPrefsSave : ISave
     {
         public IEnumerator Load()
         {
@@ -13,6 +13,11 @@ namespace YellowSquad.GamePlatformSdk
         public void DeleteAll()
         {
             PlayerPrefs.DeleteAll();
+        }
+
+        public void DeleteKey(string key)
+        {
+            PlayerPrefs.DeleteKey(key);
         }
 
         public bool HasKey(string key)
@@ -28,6 +33,16 @@ namespace YellowSquad.GamePlatformSdk
         public string GetString(string key, string defaultValue = "")
         {
             return PlayerPrefs.GetString(key, defaultValue);
+        }
+
+        public void SetInt(string key, int value)
+        {
+            PlayerPrefs.SetInt(key, value);
+        }
+
+        public int GetInt(string key, int defaultValue = 0)
+        {
+            return PlayerPrefs.GetInt(key, defaultValue);
         }
 
         public int GetLeaderboardScore(string leaderboardName)
