@@ -45,6 +45,9 @@ namespace YellowSquad.Anthill.Levels
             if (_save.HasKey(SaveConstants.WalletSaveKey))
                 _save.DeleteKey(SaveConstants.WalletSaveKey);
             
+            if (_save.HasKey(SaveConstants.AnthillSaveKey))
+                _save.DeleteKey(SaveConstants.AnthillSaveKey);
+            
             _save.Save();
         }
     }

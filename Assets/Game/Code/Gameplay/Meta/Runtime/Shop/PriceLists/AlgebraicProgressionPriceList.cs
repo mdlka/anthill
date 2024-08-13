@@ -4,9 +4,10 @@ namespace YellowSquad.Anthill.Meta
 {
     public class AlgebraicProgressionPriceList : IPriceList
     {
+        private readonly int _startPrice;
         private readonly int _addValue;
 
-        public AlgebraicProgressionPriceList(int startPrice, int addValue)
+        public AlgebraicProgressionPriceList(int startPrice, int addValue, int startPriceNumber = 0)
         {
             if (startPrice < 0)
                 throw new ArgumentOutOfRangeException(nameof(startPrice));
@@ -14,14 +15,19 @@ namespace YellowSquad.Anthill.Meta
             if (addValue <= 0)
                 throw new ArgumentOutOfRangeException(nameof(addValue));
 
-            CurrentPrice = startPrice;
+            if (startPriceNumber < 0)
+                throw new ArgumentOutOfRangeException(nameof(startPriceNumber));
+
+            _startPrice = startPrice;
             _addValue = addValue;
+
+            CurrentPriceNumber = startPriceNumber;
         }
 
-        public int CurrentPriceNumber { get; private set; } = 1;
-        public int CurrentPrice { get; private set; }
+        public int CurrentPriceNumber { get; private set; }
+        public int CurrentPrice => _startPrice + _addValue * CurrentPriceNumber;
         public bool HasNext => true;
-        public bool HasPrevious => CurrentPriceNumber > 1;
+        public bool HasPrevious => CurrentPriceNumber >= 1;
 
         public void Next()
         {
@@ -29,7 +35,6 @@ namespace YellowSquad.Anthill.Meta
                 throw new InvalidOperationException();
             
             CurrentPriceNumber += 1;
-            CurrentPrice += _addValue;
         }
 
         public void Previous()
@@ -38,7 +43,6 @@ namespace YellowSquad.Anthill.Meta
                 throw new InvalidOperationException();
             
             CurrentPriceNumber -= 1;
-            CurrentPrice -= _addValue;
         }
     }
 }

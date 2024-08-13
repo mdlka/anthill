@@ -12,5 +12,7 @@ namespace YellowSquad.Anthill.Core.Ants
         
         void AddLoader();
         void AddDigger();
+
+        void Load();
     }
 }

@@ -23,7 +23,7 @@ namespace YellowSquad.Anthill.Core.Ants
         public bool CanCreateDigger => _diggersHomes.HasFreeHome;
         public bool CanCreateLoader => _loadersHomes.HasFreeHome;
 
-        public IAnt CreateDigger()
+        public IAnt CreateDigger(bool spawnInHome = false)
         {
             if (CanCreateDigger == false)
                 throw new InvalidOperationException();
@@ -31,10 +31,10 @@ namespace YellowSquad.Anthill.Core.Ants
             var freeHome = _diggersHomes.FindFreeHome();
 
             _diggersHomes.AddAntTo(freeHome.Position);
-            return _antFactory.CreateDigger(freeHome, _position);
+            return _antFactory.CreateDigger(freeHome, spawnInHome ? freeHome.Position : _position);
         }
 
-        public IAnt CreateLoader()
+        public IAnt CreateLoader(bool spawnInHome = false)
         {
             if (CanCreateLoader == false)
                 throw new InvalidOperationException();
@@ -42,7 +42,7 @@ namespace YellowSquad.Anthill.Core.Ants
             var freeHome = _loadersHomes.FindFreeHome();
 
             _loadersHomes.AddAntTo(freeHome.Position);
-            return _antFactory.CreateLoader(freeHome, _position);
+            return _antFactory.CreateLoader(freeHome, spawnInHome ? freeHome.Position : _position);
         }
     }
 }

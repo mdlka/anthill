@@ -1,3 +1,5 @@
+using System;
+
 namespace YellowSquad.Anthill.Meta
 {
     public class MapGoal
@@ -17,9 +19,12 @@ namespace YellowSquad.Anthill.Meta
 
         public bool Complete => _currentValue >= _targetValue;
 
-        public void AddProgress()
+        public void AddProgress(int value = 1)
         {
-            _currentValue += 1;
+            if (value < 0)
+                throw new InvalidOperationException();
+            
+            _currentValue += value;
             _view.Render(_currentValue, _targetValue);
         }
     }

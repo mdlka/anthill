@@ -110,6 +110,9 @@ namespace YellowSquad.Anthill.Application
             
             var wallet = new DefaultWallet(_walletView.Value, save, _currentLevel.StartWalletValue);
             wallet.Spend(0); // initialize view
+            
+            var mapGoal = new MapGoal(_currentLevel.GoalAnts, _mapGoalView);
+            _levelSwitch = new LevelSwitch(_levelList, mapGoal, _levelSwitchView);
 
             _anthill = new DefaultAnthill(
                 new Queen(
@@ -121,16 +124,15 @@ namespace YellowSquad.Anthill.Application
                     new HomeList(_homesCapacity, map, map.PointsOfInterestPositions(PointOfInterestType.LoadersHome)
                         .Select(position => new AntHome(position, loaderTaskStorage, _stopwatch, _delayBetweenHomeFindTask))
                         .ToArray<IHome>())),
-                _diggerView, 
-                _loaderView);
+                _diggerView, _loaderView, save);
+
+            _anthill.Load();
+            mapGoal.AddProgress(_anthill.Diggers.CurrentCount + _anthill.Loaders.CurrentCount);
 
             var mapCellPriceList = new CellsPriceList(map, 10, 25);
             _mapCellShop = new MapCellShop(wallet, mapCellPriceList);
             _mapCellCellShopView.Initialize(map, _diggerTaskStorage);
 
-            var mapGoal = new MapGoal(_currentLevel.GoalAnts, _mapGoalView);
-            _levelSwitch = new LevelSwitch(_levelList, mapGoal, _levelSwitchView);
-            
             var collectHexTaskGroupFactory = new CollectHexTaskGroupFactory(map, _hexMapView.Value, _stopwatch, _delayBetweenTasks);
 
             _inputRoot = new InputRoot(map, Device.IsMobile ? new TouchInput() : new MouseInput(), 
@@ -146,21 +148,21 @@ namespace YellowSquad.Anthill.Application
 
             _leafTasksLoop = new LeafTasksLoop(map, loaderTaskStorage, 
                 new CollectPointOfInterestTaskGroupFactory(map, _hexMapView.Value, _stopwatch, _delayBetweenTasks, _takeLeafTaskPrice));
-            
+
             var shopButtons = _upgradeShop.Initialize(new[]
             {
                 new UpgradeButtonDTO
                 {
                     ButtonName = _upgradeShopSettings.DiggerButton.Headers.SelectCurrentLanguageText(),
                     Icon = _upgradeShopSettings.DiggerButton.Icon,
-                    Upgrade = new CallbackUpgrade(new DiggersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 10), wallet), 
+                    Upgrade = new CallbackUpgrade(new DiggersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 10, _anthill.Diggers.CurrentCount), wallet), 
                         () => mapGoal.AddProgress()),
                 },
                 new UpgradeButtonDTO
                 {
                     ButtonName = _upgradeShopSettings.LoaderButton.Headers.SelectCurrentLanguageText(),
                     Icon = _upgradeShopSettings.LoaderButton.Icon,
-                    Upgrade = new CallbackUpgrade(new LoadersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 10), wallet),
+                    Upgrade = new CallbackUpgrade(new LoadersCountUpgrade(_anthill, new AlgebraicProgressionPriceList(0, 10, _anthill.Loaders.CurrentCount), wallet),
                         () => mapGoal.AddProgress()),
                 },
             });
