@@ -24,7 +24,7 @@ namespace YellowSquad.Anthill.Application
 {
     public class Game : MonoBehaviour
     {
-        private const int IntervalBetweenSaveInSeconds = 30;
+        private const int IntervalBetweenSaveInSeconds = 5;
 
         private readonly Stopwatch _stopwatch = new();
         
