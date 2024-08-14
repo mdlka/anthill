@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using Agava.WebUtility;
+using Newtonsoft.Json;
 using TNRD;
 using UnityEngine;
 using YellowSquad.Anthill.Application.Adapters;
@@ -16,12 +17,15 @@ using YellowSquad.Anthill.UserInput;
 using YellowSquad.Anthill.Meta;
 using YellowSquad.Anthill.Tutorial;
 using YellowSquad.GamePlatformSdk;
+using YellowSquad.HexMath;
 using YellowSquad.Utils;
 
 namespace YellowSquad.Anthill.Application
 {
     public class Game : MonoBehaviour
     {
+        private const int IntervalBetweenSaveInSeconds = 30;
+
         private readonly Stopwatch _stopwatch = new();
         
         [SerializeField] private bool _skipTutorial;
@@ -65,8 +69,11 @@ namespace YellowSquad.Anthill.Application
         private LevelSwitch _levelSwitch;
         private ITaskStorage _diggerTaskStorage;
         private Level _currentLevel;
-
+        private CellsPriceList _mapCellPriceList;
+        private ISave _save;
+        
         private bool _gameInitialized;
+        private float _saveElapsedTime;
 
         private void Awake()
         {
@@ -87,19 +94,19 @@ namespace YellowSquad.Anthill.Application
             if (GamePlatformSdkContext.Current.Initialized == false)
                 yield return GamePlatformSdkContext.Current.Initialize();
 
-            var save = GamePlatformSdkContext.Current.Save;
+            _save = GamePlatformSdkContext.Current.Save;
             
             if (_levelList.Initialized == false)
-                _levelList.Initialize(save);
-            
+                _levelList.Initialize(_save);
+
             _currentLevel = _levelList.CurrentLevel();
             
-            var map = _currentLevel.MapFactory.Create();
+            var map = _currentLevel.MapFactory.Create(_save);
             map.UpdateAllClosedPositions();
             map.Visualize(_hexMapView.Value);
 
-            var loaderTaskStorage = new DefaultStorage();
-            _diggerTaskStorage = new DefaultStorage();
+            var loaderTaskStorage = new DefaultStorage(_save, "", needSave: false);
+            _diggerTaskStorage = new DefaultStorage(_save, SaveConstants.DiggerTaskStorageSaveKey, needSave: true);
             
             _diggerTasksProgressView.Initialize(map);
 
@@ -108,7 +115,7 @@ namespace YellowSquad.Anthill.Application
 
             _movementPath = new MovementPath(map, new Path(new MapMovePolicy(map)), _movementSettings);
             
-            var wallet = new DefaultWallet(_walletView.Value, save, _currentLevel.StartWalletValue);
+            var wallet = new DefaultWallet(_walletView.Value, _save, _currentLevel.StartWalletValue);
             wallet.Spend(0); // initialize view
             
             var mapGoal = new MapGoal(_currentLevel.GoalAnts, _mapGoalView);
@@ -124,16 +131,28 @@ namespace YellowSquad.Anthill.Application
                     new HomeList(_homesCapacity, map, map.PointsOfInterestPositions(PointOfInterestType.LoadersHome)
                         .Select(position => new AntHome(position, loaderTaskStorage, _stopwatch, _delayBetweenHomeFindTask))
                         .ToArray<IHome>())),
-                _diggerView, _loaderView, save);
+                _diggerView, _loaderView, _save);
 
             _anthill.Load();
             mapGoal.AddProgress(_anthill.Diggers.CurrentCount + _anthill.Loaders.CurrentCount);
 
-            var mapCellPriceList = new CellsPriceList(map, 10, 25);
-            _mapCellShop = new MapCellShop(wallet, mapCellPriceList);
+            _mapCellPriceList = new CellsPriceList(map, _save, 10, 25);
+            _mapCellPriceList.Load();
+
+            _mapCellShop = new MapCellShop(wallet, _mapCellPriceList);
             _mapCellCellShopView.Initialize(map, _diggerTaskStorage);
 
             var collectHexTaskGroupFactory = new CollectHexTaskGroupFactory(map, _hexMapView.Value, _stopwatch, _delayBetweenTasks);
+            
+            if (_save.HasKey(SaveConstants.DiggerTaskStorageSaveKey))
+            {
+                var diggerTaskStorageSaveData = JsonConvert.DeserializeObject<TaskStorageSave>(
+                    _save.GetString(SaveConstants.DiggerTaskStorageSaveKey));
+
+                foreach (AxialCoordinate position in diggerTaskStorageSaveData.ActiveTasks)
+                    if (map.HasPosition(position) && map.HexFrom(position).HasParts)
+                        _diggerTaskStorage.AddTaskGroup(collectHexTaskGroupFactory.Create(position));
+            }
 
             _inputRoot = new InputRoot(map, Device.IsMobile ? new TouchInput() : new MouseInput(), 
                 new DefaultCamera(Camera.main, _currentLevel.CameraSettings), 
@@ -142,7 +161,7 @@ namespace YellowSquad.Anthill.Application
                     new FirstTrueCommand(
                         new AddDiggerTaskCommand(_diggerTaskStorage, collectHexTaskGroupFactory, _mapCellShop), 
                         new RemoveDiggerTaskCommand(_diggerTaskStorage, _mapCellShop)),
-                    new RestoreLeafCommand(map, _hexMapView.Value, wallet, mapCellPriceList, _moneyAnimation),
+                    new RestoreLeafCommand(map, _hexMapView.Value, wallet, _mapCellPriceList, _moneyAnimation),
                     _tutorialRoot.CreateTutorialCommand()
                 });
 
@@ -170,12 +189,11 @@ namespace YellowSquad.Anthill.Application
             _gameInitialized = true;
             _blackScreen.Disable(0.5f);
 
-            if (_skipTutorial || save.HasKey(SaveConstants.TutorialSaveKey) || _levelList.CurrentLevelIsTutorial == false) 
+            if (_skipTutorial || _save.HasKey(SaveConstants.TutorialSaveKey) || _levelList.CurrentLevelIsTutorial == false) 
                 yield break;
             
             yield return _tutorialRoot.StartTutorial(map.Scale, _anthill, shopButtons[0], shopButtons[1]);
-            save.SetInt(SaveConstants.TutorialSaveKey, 1);
-            save.Save();
+            _save.SetInt(SaveConstants.TutorialSaveKey, 1);
         }
 
         private void Update()
@@ -191,6 +209,14 @@ namespace YellowSquad.Anthill.Application
             
             _mapCellShop.Visualize(_mapCellCellShopView);
             _diggerTaskStorage.Visualize(_diggerTasksProgressView);
+
+            _saveElapsedTime += Time.deltaTime;
+
+            if (_save.HasKey(SaveConstants.TutorialSaveKey) == false || _saveElapsedTime < IntervalBetweenSaveInSeconds)
+                return;
+
+            _saveElapsedTime = 0f;
+            _save.Save();
         }
 
 #if UNITY_EDITOR

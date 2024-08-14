@@ -58,6 +58,10 @@ namespace YellowSquad.GamePlatformSdk
         public void Save()
         {
             PlayerPrefs.Save();
+            
+#if UNITY_EDITOR
+            Debug.Log("Save");
+#endif
         }
     }
 }

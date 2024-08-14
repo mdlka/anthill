@@ -3,7 +3,8 @@
     "rootNamespace": "YellowSquad.Anthill.Core.HexMap",
     "references": [
         "GUID:c1a201351f2fcb34dad2d362ac290285",
-        "GUID:763839ec1c5c97d419d2b9a1111400bf"
+        "GUID:763839ec1c5c97d419d2b9a1111400bf",
+        "GUID:9eff7665c6a04294397d2a716921d9c2"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

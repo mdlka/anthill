@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
+using YellowSquad.GamePlatformSdk;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.HexMap
@@ -24,23 +26,34 @@ namespace YellowSquad.Anthill.Core.HexMap
         [SerializeField] private Hardness _currentHexHardness;
         [SerializeField] private PointOfInterestType _currentPointOfInterest;
         [SerializeField] private List<EditorMapHex> _hexes;
-        
+
         internal float MapScale => _mapScale;
         internal float TextScaleFactor => _textScaleFactor;
         internal IEnumerable<EditorMapHex> Hexes => _hexes;
 
-        public override IHexMap Create()
+        public override IHexMap Create(ISave save)
         {
+            var openedPositions = new HashSet<AxialCoordinate>();
+            var mapSave = new MapSave();
+
+            if (save.HasKey(SaveConstants.MapSaveKey))
+            {
+                mapSave = JsonConvert.DeserializeObject<MapSave>(save.GetString(SaveConstants.MapSaveKey));
+
+                foreach (var position in mapSave.OpenPositions)
+                    openedPositions.Add(new AxialCoordinate(position.Q, position.R));
+            }
+            
             var hexes = _hexes.ToDictionary(
                 hex => hex.Position, 
                 hex => new MapCell(
-                    new Hex(hex.Hardness, hex.Empty ? _emptyHexMesh : _targetHexMesh),
+                    new Hex(hex.Hardness, hex.Empty || openedPositions.Contains(hex.Position) ? _emptyHexMesh : _targetHexMesh),
                     hex.PointOfInterestType,
                     DividedPointOfInterestBy(hex.PointOfInterestType)));
             
-            return new Map(_mapScale, hexes);
+            return new Map(_mapScale, hexes, save, mapSave);
         }
-        
+
         public override string ToString()
         {
             return string.Join(' ', _hexes.Select(pair => $"({pair.Position.ToString()})"));

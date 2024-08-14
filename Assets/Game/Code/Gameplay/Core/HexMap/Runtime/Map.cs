@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using YellowSquad.GamePlatformSdk;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.HexMap
@@ -7,31 +9,40 @@ namespace YellowSquad.Anthill.Core.HexMap
     internal class Map : IHexMap
     {
         private readonly float _scale;
+        private readonly ISave _save;
+        private readonly MapSave _saveData;
         private readonly Dictionary<AxialCoordinate, MapCell> _cells;
         private readonly HashSet<AxialCoordinate> _closedPositions = new();
 
-        public Map(IReadOnlyDictionary<AxialCoordinate, MapCell> cells) : this(1f, cells) { }
+        public Map(IReadOnlyDictionary<AxialCoordinate, MapCell> cells, ISave save, MapSave saveData) : this(1f, cells, save, saveData) { }
         
-        public Map(float scale, IReadOnlyDictionary<AxialCoordinate, MapCell> cells)
+        public Map(float scale, IReadOnlyDictionary<AxialCoordinate, MapCell> cells, ISave save, MapSave saveData)
         {
             if (scale <= 0)
                 throw new ArgumentOutOfRangeException(nameof(scale));
             
             _scale = scale;
+            _save = save;
+            _saveData = saveData;
             _cells = new Dictionary<AxialCoordinate, MapCell>(cells);
         }
 
         public float Scale => _scale;
         public int TotalCells => _cells.Count;
         public IEnumerable<AxialCoordinate> Positions => _cells.Keys;
-        
+
         public void UpdateAllClosedPositions()
         {
             _closedPositions.Clear();
-            
+
             foreach (var pair in _cells)
+            {
                 if (CalculateClosed(pair.Key))
                     _closedPositions.Add(pair.Key);
+                
+                if (pair.Value.Hex.HasParts == false)
+                    _saveData.OpenPositions.Add(pair.Key);
+            }
         }
 
         public void UpdateClosedPositionNeighbor(AxialCoordinate position)
@@ -39,12 +50,19 @@ namespace YellowSquad.Anthill.Core.HexMap
             if (HasPosition(position) == false)
                 throw new ArgumentOutOfRangeException();
 
+            if (_cells[position].Hex.HasParts == false) 
+            {
+                // Band-aid. Because this method is called after a hex is broken
+                _saveData.OpenPositions.Add(position);
+                _save.SetString(SaveConstants.MapSaveKey, JsonConvert.SerializeObject(_saveData));
+            }
+
             if (_closedPositions.Contains(position) && CalculateClosed(position) == false)
                 _closedPositions.Remove(position);
             
             var openedNeighborPositions = NeighborHexPositions(position, 
                 where: pos => _closedPositions.Contains(pos) && CalculateClosed(pos) == false);
-            
+
             foreach (var neighborPosition in openedNeighborPositions)
                 _closedPositions.Remove(neighborPosition);
         }
@@ -149,5 +167,11 @@ namespace YellowSquad.Anthill.Core.HexMap
             return HasObstacleIn(position) &&
                    NeighborHexPositions(position, where: pos => HasObstacleIn(pos) == false).Count == 0;
         }
+    }
+    
+    [Serializable]
+    internal class MapSave
+    {
+        [JsonProperty] public HashSet<AxialCoordinateSave> OpenPositions = new();
     }
 }

@@ -9,7 +9,7 @@ namespace YellowSquad.Anthill.Application.Tests
     {
         // Has an obstacle if value is true
         private readonly Dictionary<AxialCoordinate, bool> _mapWithObstacles;
-        
+
         public StubHexMap(Dictionary<AxialCoordinate, bool> mapWithObstacles)
         {
             _mapWithObstacles = mapWithObstacles;
@@ -18,7 +18,7 @@ namespace YellowSquad.Anthill.Application.Tests
         public float Scale => 1f;
         public int TotalCells => _mapWithObstacles.Count;
         public IEnumerable<AxialCoordinate> Positions { get; }
-        
+
         public void UpdateAllClosedPositions()
         {
             throw new NotImplementedException();

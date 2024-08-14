@@ -1,14 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using UnityEngine;
+using YellowSquad.GamePlatformSdk;
 using YellowSquad.HexMath;
 
 namespace YellowSquad.Anthill.Core.Tasks
 {
     public class DefaultStorage : ITaskStorage
     {
+        private readonly ISave _save;
+        private readonly string _saveKey;
+        private readonly bool _needSave;
+        
         private readonly HashSet<ITaskGroup> _taskGroups = new();
         private readonly Dictionary<AxialCoordinate, ITaskGroup> _activeTaskGroups = new();
+
+        public DefaultStorage(ISave save, string saveKey, bool needSave)
+        {
+            _save = save;
+            _saveKey = saveKey;
+            _needSave = needSave;
+        }
 
         public bool HasFreeTaskGroup => _taskGroups.Any(group => group.HasFreeTask);
 
@@ -26,6 +40,8 @@ namespace YellowSquad.Anthill.Core.Tasks
             
             if (_activeTaskGroups.ContainsKey(taskGroup.TargetCellPosition) == false)
                 _activeTaskGroups.Add(taskGroup.TargetCellPosition, taskGroup);
+
+            Save();
         }
 
         public void CancelTaskGroup(AxialCoordinate position)
@@ -40,6 +56,8 @@ namespace YellowSquad.Anthill.Core.Tasks
             
             _taskGroups.Remove(targetTaskGroup);
             _activeTaskGroups.Remove(position);
+
+            Save();
         }
 
         public ITaskGroup FindTaskGroup()
@@ -70,5 +88,25 @@ namespace YellowSquad.Anthill.Core.Tasks
             foreach (var taskGroup in _taskGroups)
                 _activeTaskGroups.Add(taskGroup.TargetCellPosition, taskGroup);
         }
+        
+        private void Save()
+        {
+            if (_needSave == false)
+                return;
+            
+            var saveData = new TaskStorageSave();
+
+            foreach (var pair in _activeTaskGroups)
+                if (pair.Value.AllTaskCompleted == false)
+                    saveData.ActiveTasks.Add(pair.Key);
+            
+            _save.SetString(_saveKey, JsonConvert.SerializeObject(saveData));
+        }
+    }
+
+    [Serializable]
+    public class TaskStorageSave
+    {
+        [JsonProperty] public HashSet<AxialCoordinateSave> ActiveTasks = new();
     }
 }
