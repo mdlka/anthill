@@ -22,7 +22,8 @@ namespace YellowSquad.GamePlatformSdk
 
         public void DeleteKey(string key)
         {
-            PlayerPrefs.DeleteKey(key);
+            if (PlayerPrefs.HasKey(key))
+                PlayerPrefs.DeleteKey(key);
         }
 
         public bool HasKey(string key)

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace YellowSquad.Anthill.Tutorial
@@ -17,12 +16,12 @@ namespace YellowSquad.Anthill.Tutorial
 
         public void Enable()
         {
-            _button.enabled = true;
+            _button.gameObject.SetActive(true);
         }
 
         public void Disable()
         {
-            _button.enabled = false;
+            _button.gameObject.SetActive(false);
         }
     }
 }

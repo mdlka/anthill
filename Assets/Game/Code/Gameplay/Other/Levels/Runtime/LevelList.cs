@@ -42,11 +42,11 @@ namespace YellowSquad.Anthill.Levels
             _currentLevelIndex = Math.Min(_currentLevelIndex + 1, _levels.Length - 1);
             _save.SetInt(SaveConstants.CurrentLevelSaveKey, _currentLevelIndex);
             
-            if (_save.HasKey(SaveConstants.WalletSaveKey))
-                _save.DeleteKey(SaveConstants.WalletSaveKey);
-            
-            if (_save.HasKey(SaveConstants.AnthillSaveKey))
-                _save.DeleteKey(SaveConstants.AnthillSaveKey);
+            _save.DeleteKey(SaveConstants.WalletSaveKey);
+            _save.DeleteKey(SaveConstants.AnthillSaveKey);
+            _save.DeleteKey(SaveConstants.MapSaveKey);
+            _save.DeleteKey(SaveConstants.MapCellPriceListSaveKey);
+            _save.DeleteKey(SaveConstants.DiggerTaskStorageSaveKey);
             
             _save.Save();
         }
