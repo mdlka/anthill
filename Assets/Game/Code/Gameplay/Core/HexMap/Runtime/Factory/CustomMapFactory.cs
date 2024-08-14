@@ -97,6 +97,36 @@ namespace YellowSquad.Anthill.Core.HexMap
         {
             MoveHexes(new AxialCoordinate(0, 1));
         }
+
+        [ContextMenu(nameof(MoveDown))]
+        private void MoveDown()
+        {
+            MoveHexes(new AxialCoordinate(0, -1));
+        }
+
+        [ContextMenu(nameof(SetNotEmptyAllHex))]
+        private void SetNotEmptyAllHex()
+        {
+            var hexes = new List<EditorMapHex>();
+
+            foreach (var hex in _hexes)
+                hexes.Add(new EditorMapHex(hex.Position, hex.Hardness, hex.PointOfInterestType, empty: false));
+
+            _hexes = hexes;
+            EditorUtility.SetDirty(this);
+        }
+
+        [ContextMenu(nameof(SetCurrentHardnessForAllHex))]
+        private void SetCurrentHardnessForAllHex()
+        {
+            var hexes = new List<EditorMapHex>();
+
+            foreach (var hex in _hexes)
+                hexes.Add(new EditorMapHex(hex.Position, _currentHexHardness, hex.PointOfInterestType, hex.Empty));
+
+            _hexes = hexes;
+            EditorUtility.SetDirty(this);
+        }
         
         private void MoveHexes(AxialCoordinate distance)
         {
