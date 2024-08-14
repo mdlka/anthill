@@ -746,18 +746,6 @@ MonoBehaviour:
     _hardness: 0
     _pointOfInterestType: 0
     _position:
-      <Q>k__BackingField: -10
-      <R>k__BackingField: -11
-  - _empty: 0
-    _hardness: 0
-    _pointOfInterestType: 0
-    _position:
-      <Q>k__BackingField: -9
-      <R>k__BackingField: -12
-  - _empty: 0
-    _hardness: 0
-    _pointOfInterestType: 0
-    _position:
       <Q>k__BackingField: -6
       <R>k__BackingField: -15
   - _empty: 0
@@ -790,12 +778,6 @@ MonoBehaviour:
     _position:
       <Q>k__BackingField: -7
       <R>k__BackingField: -14
-  - _empty: 0
-    _hardness: 0
-    _pointOfInterestType: 0
-    _position:
-      <Q>k__BackingField: -8
-      <R>k__BackingField: -13
   - _empty: 0
     _hardness: 0
     _pointOfInterestType: 0
@@ -892,12 +874,6 @@ MonoBehaviour:
     _position:
       <Q>k__BackingField: -12
       <R>k__BackingField: -10
-  - _empty: 0
-    _hardness: 0
-    _pointOfInterestType: 0
-    _position:
-      <Q>k__BackingField: -10
-      <R>k__BackingField: -12
   - _empty: 0
     _hardness: 0
     _pointOfInterestType: 0
@@ -1493,12 +1469,6 @@ MonoBehaviour:
       <Q>k__BackingField: -6
       <R>k__BackingField: -14
   - _empty: 0
-    _hardness: 0
-    _pointOfInterestType: 0
-    _position:
-      <Q>k__BackingField: -8
-      <R>k__BackingField: -12
-  - _empty: 0
     _hardness: 1
     _pointOfInterestType: 0
     _position:
@@ -2144,12 +2114,6 @@ MonoBehaviour:
     _hardness: 2
     _pointOfInterestType: 4
     _position:
-      <Q>k__BackingField: -6
-      <R>k__BackingField: -4
-  - _empty: 0
-    _hardness: 2
-    _pointOfInterestType: 4
-    _position:
       <Q>k__BackingField: 5
       <R>k__BackingField: -9
   - _empty: 0
@@ -2216,12 +2180,6 @@ MonoBehaviour:
     _hardness: 2
     _pointOfInterestType: 2
     _position:
-      <Q>k__BackingField: -4
-      <R>k__BackingField: -3
-  - _empty: 0
-    _hardness: 2
-    _pointOfInterestType: 2
-    _position:
       <Q>k__BackingField: 1
       <R>k__BackingField: -8
   - _empty: 0
@@ -2272,3 +2230,45 @@ MonoBehaviour:
     _position:
       <Q>k__BackingField: 10
       <R>k__BackingField: -16
+  - _empty: 0
+    _hardness: 2
+    _pointOfInterestType: 4
+    _position:
+      <Q>k__BackingField: -4
+      <R>k__BackingField: -3
+  - _empty: 0
+    _hardness: 2
+    _pointOfInterestType: 2
+    _position:
+      <Q>k__BackingField: -6
+      <R>k__BackingField: -4
+  - _empty: 0
+    _hardness: 1
+    _pointOfInterestType: 0
+    _position:
+      <Q>k__BackingField: -8
+      <R>k__BackingField: -12
+  - _empty: 0
+    _hardness: 1
+    _pointOfInterestType: 0
+    _position:
+      <Q>k__BackingField: -8
+      <R>k__BackingField: -13
+  - _empty: 0
+    _hardness: 1
+    _pointOfInterestType: 0
+    _position:
+      <Q>k__BackingField: -10
+      <R>k__BackingField: -11
+  - _empty: 0
+    _hardness: 1
+    _pointOfInterestType: 0
+    _position:
+      <Q>k__BackingField: -10
+      <R>k__BackingField: -12
+  - _empty: 0
+    _hardness: 2
+    _pointOfInterestType: 4
+    _position:
+      <Q>k__BackingField: -9
+      <R>k__BackingField: -12
