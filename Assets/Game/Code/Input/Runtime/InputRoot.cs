@@ -12,6 +12,7 @@ namespace YellowSquad.Anthill.UserInput
     {
         private const float MoveThreshold = 0.1f;
         private const float PointerClickMaxDelta = 0.1f;
+        private const float HexHeight = 0.8f;
 
         private readonly IHexMap _map;
         private readonly IInput _input;
@@ -25,6 +26,9 @@ namespace YellowSquad.Anthill.UserInput
         private int _lastPointerId;
         private float _lastPointerUpTime;
         private bool _cameraMoving;
+        
+        private Plane _lowerPlane;
+        private Plane _upperPlane;
 
         public InputRoot(IHexMap map, IInput input, ICamera camera, IClickCommand[] commands)
         {
@@ -33,6 +37,9 @@ namespace YellowSquad.Anthill.UserInput
             _camera = camera;
             _clickCommands = commands;
             _pointersDown[0] = default;
+
+            _lowerPlane = new Plane(Vector3.up, 0f);
+            _upperPlane = new Plane(Vector3.up, -HexHeight);
         }
 
         private int CurrentPointerId => _pointers.Count > 0 ? _pointers[0] : _lastPointerId;
@@ -107,8 +114,22 @@ namespace YellowSquad.Anthill.UserInput
             if (IsPointerOverUIObject(clickPosition))
                 return;
             
-            var targetPosition = _camera.ScreenToWorldPoint(clickPosition);
+            var clickRay = _camera.ScreenPointToRay(pointerPosition);
+            var targetPosition = Vector3.zero;
+            
+            if (_upperPlane.Raycast(clickRay, out float distance))
+                targetPosition = clickRay.GetPoint(distance);
+
             var mapClickPosition = targetPosition.ToAxialCoordinate(_map.Scale);
+
+            if (_map.HasPosition(mapClickPosition) == false || _map.HexFrom(mapClickPosition).HasParts == false)
+            {
+                if (_lowerPlane.Raycast(clickRay, out distance))
+                {
+                    targetPosition = clickRay.GetPoint(distance);
+                    mapClickPosition = targetPosition.ToAxialCoordinate(_map.Scale);
+                }
+            }
             
             if (_map.HasPosition(mapClickPosition) == false || _map.IsClosed(mapClickPosition))
                 return;

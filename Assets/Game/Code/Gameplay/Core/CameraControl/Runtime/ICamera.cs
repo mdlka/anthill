@@ -14,5 +14,6 @@ namespace YellowSquad.Anthill.Core.CameraControl
         void Zoom(float delta, Func<Vector2> pointerPosition);
 
         Vector3 ScreenToWorldPoint(Vector3 position);
+        Ray ScreenPointToRay(Vector3 position);
     }
 }

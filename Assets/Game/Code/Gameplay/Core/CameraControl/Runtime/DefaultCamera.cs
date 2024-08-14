@@ -55,6 +55,11 @@ namespace YellowSquad.Anthill.Core.CameraControl
             return _camera.ScreenToWorldPoint(position);
         }
 
+        public Ray ScreenPointToRay(Vector3 position)
+        {
+            return _camera.ScreenPointToRay(position);
+        }
+
         private Vector3 ClampCameraPosition(Vector3 position)
         {
             position.x = Mathf.Clamp(position.x, _settings.Bounds.min.x, _settings.Bounds.max.x);
