@@ -9,10 +9,13 @@ namespace YellowSquad.GamePlatformSdk
             yield return Agava.YandexGames.YandexGamesSdk.Initialize();
             yield return Save.Load();
 
-            Language = Agava.YandexGames.YandexGamesSdk.Environment.i18n.lang == "en"
-                ? Language.English
-                : Language.Russian;
-            
+            Language = Agava.YandexGames.YandexGamesSdk.Environment.i18n.lang switch
+            {
+                "en" => Language.English,
+                "tr" => Language.Turkish,
+                _ => Language.Russian
+            };
+
             Agava.YandexGames.YandexGamesSdk.GameReady();
             Initialized = true;
         }

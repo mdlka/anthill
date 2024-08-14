@@ -10,6 +10,7 @@ namespace YellowSquad.GamePlatformSdk
             Language = Application.systemLanguage switch
             {
                  SystemLanguage.Russian or SystemLanguage.Belarusian or SystemLanguage.Ukrainian => Language.Russian,
+                 SystemLanguage.Turkish => Language.Turkish,
                 _ => Language.English
             };
 
