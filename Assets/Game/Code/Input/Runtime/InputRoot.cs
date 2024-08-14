@@ -122,7 +122,9 @@ namespace YellowSquad.Anthill.UserInput
 
             var mapClickPosition = targetPosition.ToAxialCoordinate(_map.Scale);
 
-            if (_map.HasPosition(mapClickPosition) == false || _map.HexFrom(mapClickPosition).HasParts == false)
+            if (_map.HasPosition(mapClickPosition) == false 
+                || (_map.HexFrom(mapClickPosition).HasParts == false 
+                    && _map.MapCell(mapClickPosition).PointOfInterestType != PointOfInterestType.Leaf))
             {
                 if (_lowerPlane.Raycast(clickRay, out distance))
                 {
