@@ -13,8 +13,11 @@ namespace YellowSquad.Anthill.Core.GameTime
         [SerializeField] private Color _unselectColor;
 
         public event Action<TimeScaleButton> Clicked;
+        public virtual event Action<TimeScaleButton> Deactivated;
 
         public float TargetSpeed { get; private set; }
+        public bool Selected { get; private set; }
+        public virtual bool Activated => true;
 
         private void OnEnable()
         {
@@ -30,19 +33,28 @@ namespace YellowSquad.Anthill.Core.GameTime
         {
             TargetSpeed = targetSpeed;
             _text.text = $"x{targetSpeed}";
-            
+
             Unselect();
+            OnInitialize();
         }
 
         public void Select()
         {
+            if (Activated == false)
+                throw new InvalidOperationException();
+            
             ChangeColor(_selectColor);
+            Selected = true;
         }
 
         public void Unselect()
         {
             ChangeColor(_unselectColor);
+            Selected = false;
         }
+
+        public virtual void ActivateFor(float durationInSeconds) { }
+        protected virtual void OnInitialize() {}
 
         private void ChangeColor(Color color)
         {
