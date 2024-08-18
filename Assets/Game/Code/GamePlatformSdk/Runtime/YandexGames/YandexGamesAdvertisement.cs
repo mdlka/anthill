@@ -9,7 +9,13 @@ namespace YellowSquad.GamePlatformSdk
         protected override void OnShowInterstitial(Action onEnd)
         {
             AudioListener.pause = true;
-            onEnd += () => AudioListener.pause = false;
+            Time.timeScale = 0;
+            
+            onEnd += () =>
+            {
+                AudioListener.pause = false;
+                Time.timeScale = 1f;
+            };
             
             InterstitialAd.Show(
                 onCloseCallback: _ => onEnd.Invoke(), 
@@ -20,7 +26,13 @@ namespace YellowSquad.GamePlatformSdk
         protected override void OnShowRewarded(Action<Result> onEnd)
         {
             AudioListener.pause = true;
-            onEnd += _ => AudioListener.pause = false;
+            Time.timeScale = 0;
+            
+            onEnd += _ =>
+            {
+                AudioListener.pause = false;
+                Time.timeScale = 1f;
+            };
             
             VideoAd.Show(
                 onRewardedCallback: () => onEnd.Invoke(Result.Success), 
