@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using UnityEngine;
 using YellowSquad.GamePlatformSdk;
 using YellowSquad.HexMath;
+using YellowSquad.Utils;
 
 namespace YellowSquad.Anthill.Core.Tasks
 {
@@ -14,7 +14,7 @@ namespace YellowSquad.Anthill.Core.Tasks
         private readonly string _saveKey;
         private readonly bool _needSave;
         
-        private readonly HashSet<ITaskGroup> _taskGroups = new();
+        private readonly OrderedSet<ITaskGroup> _taskGroups = new();
         private readonly Dictionary<AxialCoordinate, ITaskGroup> _activeTaskGroups = new();
 
         public DefaultStorage(ISave save, string saveKey, bool needSave)
