@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 730fb36417034fc79bc51e40ea2e27cf, type: 3}
   m_Name: LevelList
   m_EditorClassIdentifier: 
-  _editorLevelIndex: -1
+  _editorLevelIndex: 2
   _levels:
   - _mapFactory: {fileID: 11400000, guid: 514e82e2bb3468c419c728fbd6192f55, type: 2}
     _cameraSettings: {fileID: 11400000, guid: 7b3b2548fe02af24ba94e1effd3bafc4, type: 2}
@@ -22,3 +22,7 @@ MonoBehaviour:
     _cameraSettings: {fileID: 11400000, guid: 101bcffc143aa6245ac82e1971dd5b19, type: 2}
     _startWalletValue: 1000
     _goalAnts: 200
+  - _mapFactory: {fileID: 11400000, guid: af824ac6a7e3b664792064df77e99b51, type: 2}
+    _cameraSettings: {fileID: 11400000, guid: 379b88e03119138449e154127e070f44, type: 2}
+    _startWalletValue: 1000
+    _goalAnts: 130
