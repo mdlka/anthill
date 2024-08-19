@@ -57,10 +57,10 @@ namespace YellowSquad.Anthill.Core.GameTime
                         return;
                     
                     button.ActivateFor(_rewardedSpeedDurationInSeconds);
+                    Select(button);
                 });
 
-                if (GamePlatformSdkContext.Current.Advertisement.LastRewardedResult == Result.Failure)
-                    return;
+                return;
             }
             
             foreach (var localButton in _buttons)
