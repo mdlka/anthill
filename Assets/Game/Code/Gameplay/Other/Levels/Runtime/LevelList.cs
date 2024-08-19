@@ -39,7 +39,7 @@ namespace YellowSquad.Anthill.Levels
 
         internal void NextLevel()
         {
-            _currentLevelIndex = Math.Min(_currentLevelIndex + 1, _levels.Length - 1);
+            _currentLevelIndex = _currentLevelIndex == _levels.Length - 1 ? 1 : _currentLevelIndex + 1;
             _save.SetInt(SaveConstants.CurrentLevelSaveKey, _currentLevelIndex);
             
             _save.DeleteKey(SaveConstants.WalletSaveKey);

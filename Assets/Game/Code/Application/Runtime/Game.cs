@@ -212,7 +212,7 @@ namespace YellowSquad.Anthill.Application
 
             _saveElapsedTime += Time.deltaTime;
 
-            if (_save.HasKey(SaveConstants.TutorialSaveKey) == false || _saveElapsedTime < IntervalBetweenSaveInSeconds)
+            if ((_save.HasKey(SaveConstants.TutorialSaveKey) == false && _skipTutorial == false) || _saveElapsedTime < IntervalBetweenSaveInSeconds)
                 return;
 
             _saveElapsedTime = 0f;
