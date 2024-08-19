@@ -103,6 +103,18 @@ namespace YellowSquad.Anthill.Core.HexMap
         {
             MoveHexes(new AxialCoordinate(0, -1));
         }
+        
+        [ContextMenu(nameof(MoveLeft))]
+        private void MoveLeft()
+        {
+            MoveHexes(new AxialCoordinate(-1, 0));
+        }
+        
+        [ContextMenu(nameof(MoveRight))]
+        private void MoveRight()
+        {
+            MoveHexes(new AxialCoordinate(1, 0));
+        }
 
         [ContextMenu(nameof(SetNotEmptyAllHex))]
         private void SetNotEmptyAllHex()
@@ -125,6 +137,13 @@ namespace YellowSquad.Anthill.Core.HexMap
                 hexes.Add(new EditorMapHex(hex.Position, _currentHexHardness, hex.PointOfInterestType, hex.Empty));
 
             _hexes = hexes;
+            EditorUtility.SetDirty(this);
+        }
+
+        [ContextMenu(nameof(SortHexes))]
+        private void SortHexes()
+        {
+            _hexes.Sort((a, b) => (int)a.PointOfInterestType < (int)b.PointOfInterestType ? -1 : 1);
             EditorUtility.SetDirty(this);
         }
         
