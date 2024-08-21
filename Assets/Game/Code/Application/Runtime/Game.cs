@@ -55,6 +55,10 @@ namespace YellowSquad.Anthill.Application
         [SerializeField, Min(0)] private int _takeLeafTaskPrice;
         [SerializeField] private UpgradeShopInfo _upgradeShopSettings;
 
+        [Header("Ads")] 
+        [SerializeField, Min(0)] private int _delayBetweenAdsInSeconds;
+        [SerializeField] private AdsTimer _adsTimer;
+
 #if UNITY_EDITOR
         [Header("Debug")] 
         [SerializeField] private bool _needDebugSdk;
@@ -192,11 +196,16 @@ namespace YellowSquad.Anthill.Application
             _gameInitialized = true;
             _blackScreen.Disable(0.5f);
 
-            if (_skipTutorial || _save.HasKey(SaveConstants.TutorialSaveKey) || _levelList.CurrentLevelIsTutorial == false) 
+            if (_skipTutorial || _save.HasKey(SaveConstants.TutorialSaveKey) || _levelList.CurrentLevelIsTutorial == false)
+            {
+                _adsTimer.StartTimer(_delayBetweenAdsInSeconds);
                 yield break;
+            }
             
             yield return _tutorialRoot.StartTutorial(map, _anthill, _diggerTaskStorage, shopButtons[0], shopButtons[1]);
             _save.SetInt(SaveConstants.TutorialSaveKey, 1);
+            
+            _adsTimer.StartTimer(_delayBetweenAdsInSeconds);
         }
 
         private void Update()

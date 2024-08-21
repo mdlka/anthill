@@ -11,6 +11,8 @@ namespace YellowSquad.GamePlatformSdk
         Result LastRewardedResult { get; }
         double LastAdTime { get; }
 
+        bool CanShowInterstitial { get; }
+
         void ShowInterstitial(Action onEnd);
         void ShowRewarded(Action<Result> onEnd);
         

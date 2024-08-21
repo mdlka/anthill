@@ -11,27 +11,37 @@ namespace YellowSquad.GamePlatformSdk
         
         public Result LastRewardedResult { get; private set; }
         public double LastAdTime { get; private set; } = -SdkSettings.MinIntervalBetweenAdsInSeconds;
-        
+        public bool CanShowInterstitial => 
+            Time.realtimeSinceStartupAsDouble - LastAdTime >= SdkSettings.MinIntervalBetweenAdsInSeconds;
+
         public void ShowInterstitial(Action onEnd)
         {
-            if (CanShowAds() == false)
+            if (CanShowInterstitial == false)
                 return;
 
             AdsStarted?.Invoke();
-            onEnd += () => AdsEnded?.Invoke();
+            onEnd += () =>
+            {
+                LastAdTime = Time.realtimeSinceStartupAsDouble;
+                AdsEnded?.Invoke();
+            };
             OnShowInterstitial(onEnd);
         }
 
         public void ShowRewarded(Action<Result> onEnd)
         {
             AdsStarted?.Invoke();
-            onEnd += _ => AdsEnded?.Invoke();
+            onEnd += _ =>
+            {
+                LastAdTime = Time.realtimeSinceStartupAsDouble;
+                AdsEnded?.Invoke();
+            };
             OnShowRewarded(onEnd);
         }
 
         public IEnumerator ShowInterstitial()
         {
-            if (CanShowAds() == false)
+            if (CanShowInterstitial == false)
                 yield break;
 
             bool ended = false;
@@ -55,11 +65,6 @@ namespace YellowSquad.GamePlatformSdk
             AdsEnded?.Invoke();
             
             LastAdTime = Time.realtimeSinceStartupAsDouble;
-        }
-
-        private bool CanShowAds()
-        {
-            return Time.realtimeSinceStartupAsDouble - LastAdTime >= SdkSettings.MinIntervalBetweenAdsInSeconds;
         }
 
         protected abstract void OnShowInterstitial(Action onEnd);
