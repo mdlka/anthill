@@ -99,8 +99,6 @@ namespace YellowSquad.Anthill.Application
             {
                 yield return GamePlatformSdkContext.Current.Initialize();
                 yield return GamePlatformSdkContext.Current.Advertisement.ShowInterstitial();
-                
-                GamePlatformSdkContext.Current.Ready();
             }
 
             _save = GamePlatformSdkContext.Current.Save;
@@ -196,7 +194,7 @@ namespace YellowSquad.Anthill.Application
             });
             
             _gameInitialized = true;
-            _blackScreen.Disable(0.5f);
+            _blackScreen.Disable(0.5f, onComplete: () => GamePlatformSdkContext.Current.Ready());
 
             if (_skipTutorial || _save.HasKey(SaveConstants.TutorialSaveKey) || _levelList.CurrentLevelIsTutorial == false)
             {

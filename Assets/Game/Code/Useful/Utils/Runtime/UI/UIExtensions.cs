@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using UnityEngine;
 
 namespace YellowSquad.Utils
@@ -12,11 +13,11 @@ namespace YellowSquad.Utils
             canvasGroup.DOFade(1, duration).SetUpdate(true);
         }
         
-        public static void Disable(this CanvasGroup canvasGroup, float duration = 0)
+        public static void Disable(this CanvasGroup canvasGroup, float duration = 0, Action onComplete = null)
         {
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
-            canvasGroup.DOFade(0, duration).SetUpdate(true);
+            canvasGroup.DOFade(0, duration).OnComplete(() => onComplete?.Invoke()).SetUpdate(true);
         }
     }
 }
