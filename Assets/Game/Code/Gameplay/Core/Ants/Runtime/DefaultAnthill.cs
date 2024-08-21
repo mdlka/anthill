@@ -63,10 +63,10 @@ namespace YellowSquad.Anthill.Core.Ants
 
             _saveData = JsonConvert.DeserializeObject<AnthillSave>(_save.GetString(SaveConstants.AnthillSaveKey));
 
-            for (int i = 0; i < _saveData.DiggersCount; i++)
+            for (int i = 0; i < _saveData.DiggersCount && _diggers.CurrentCount < _diggers.MaxCount; i++)
                 _diggers.Add(_queen.CreateDigger(spawnInHome: true));
 
-            for (int i = 0; i < _saveData.LoadersCount; i++)
+            for (int i = 0; i < _saveData.LoadersCount && _loaders.CurrentCount < _loaders.MaxCount; i++)
                 _loaders.Add(_queen.CreateLoader(spawnInHome: true));
         }
 
