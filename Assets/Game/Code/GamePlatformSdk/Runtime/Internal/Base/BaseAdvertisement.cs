@@ -46,9 +46,6 @@ namespace YellowSquad.GamePlatformSdk
 
         public IEnumerator ShowRewarded()
         {
-            if (CanShowAds() == false)
-                yield break;
-            
             bool ended = false;
             LastRewardedResult = Result.Failure;
             
