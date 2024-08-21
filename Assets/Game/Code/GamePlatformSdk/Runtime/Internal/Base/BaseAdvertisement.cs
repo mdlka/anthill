@@ -10,7 +10,7 @@ namespace YellowSquad.GamePlatformSdk
         public event Action AdsEnded;
         
         public Result LastRewardedResult { get; private set; }
-        public double LastAdTime { get; private set; } = -SdkSettings.IntervalBetweenAdsInSeconds;
+        public double LastAdTime { get; private set; } = -SdkSettings.MinIntervalBetweenAdsInSeconds;
         
         public void ShowInterstitial(Action onEnd)
         {
@@ -59,7 +59,7 @@ namespace YellowSquad.GamePlatformSdk
 
         private bool CanShowAds()
         {
-            return Time.realtimeSinceStartupAsDouble - LastAdTime >= SdkSettings.IntervalBetweenAdsInSeconds;
+            return Time.realtimeSinceStartupAsDouble - LastAdTime >= SdkSettings.MinIntervalBetweenAdsInSeconds;
         }
 
         protected abstract void OnShowInterstitial(Action onEnd);
