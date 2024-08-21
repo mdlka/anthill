@@ -99,6 +99,8 @@ namespace YellowSquad.Anthill.Application
             {
                 yield return GamePlatformSdkContext.Current.Initialize();
                 yield return GamePlatformSdkContext.Current.Advertisement.ShowInterstitial();
+                
+                GamePlatformSdkContext.Current.Ready();
             }
 
             _save = GamePlatformSdkContext.Current.Save;
@@ -210,7 +212,7 @@ namespace YellowSquad.Anthill.Application
 
         private void Update()
         {
-            if (GamePlatformSdkContext.Current.Initialized == false || _gameInitialized == false)
+            if (GamePlatformSdkContext.Current.Initialized == false || _gameInitialized == false || _adsTimer.ShowAds)
                 return;
             
             _stopwatch.Update(Time.deltaTime * _timeScale.Value);

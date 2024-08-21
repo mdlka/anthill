@@ -7,7 +7,7 @@ using YellowSquad.Utils;
 
 namespace YellowSquad.Anthill.Application
 {
-    public class AdsTimer : MonoBehaviour
+    internal class AdsTimer : MonoBehaviour
     {
         [SerializeField] private int _delayBeforeAdsInSeconds = 3;
         [SerializeField] private TMP_Text _timerText;
@@ -15,6 +15,8 @@ namespace YellowSquad.Anthill.Application
         [SerializeField] private LocalizedText[] _warningText;
 
         private bool _timerStarted;
+        
+        internal bool ShowAds { get; private set; }
 
         private void Awake()
         {
@@ -42,11 +44,11 @@ namespace YellowSquad.Anthill.Application
                 _timerText.text = $"{_warningText.SelectCurrentLanguageText()}: {_delayBeforeAdsInSeconds}";
                 _canvasGroup.Enable(0.2f);
 
-                yield return new WaitForSeconds(0.2f);
+                ShowAds = true;
 
                 while (elapsedTime < _delayBeforeAdsInSeconds)
                 {
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSecondsRealtime(1f);
                     elapsedTime += 1;
                 
                     _timerText.text = $"{_warningText.SelectCurrentLanguageText()}: {_delayBeforeAdsInSeconds - elapsedTime}";
@@ -54,6 +56,8 @@ namespace YellowSquad.Anthill.Application
 
                 _canvasGroup.Disable();
                 yield return GamePlatformSdkContext.Current.Advertisement.ShowInterstitial();
+
+                ShowAds = false;
             }
         }
     }

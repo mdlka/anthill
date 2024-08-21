@@ -19,6 +19,11 @@ namespace YellowSquad.GamePlatformSdk
             yield break;
         }
 
+        public void Ready()
+        {
+            Debug.Log("Game ready");
+        }
+
         public bool Initialized { get; private set; }
         public IAdvertisement Advertisement { get; } = new DefaultAdvertisement();
         public ISave Save { get; } = new PlayerPrefsSave();

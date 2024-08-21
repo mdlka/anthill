@@ -17,6 +17,11 @@ namespace YellowSquad.GamePlatformSdk
             yield return _targetSdk.Initialize();
         }
 
+        public void Ready()
+        {
+            _targetSdk.Ready();
+        }
+
         public bool Initialized => _targetSdk.Initialized;
         public IAdvertisement Advertisement => _targetSdk.Advertisement;
         public ISave Save => _targetSdk.Save;

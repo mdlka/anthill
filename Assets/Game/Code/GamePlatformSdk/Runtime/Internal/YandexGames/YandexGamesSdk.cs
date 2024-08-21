@@ -4,6 +4,8 @@ namespace YellowSquad.GamePlatformSdk
 {
     internal class YandexGamesSdk : IGamePlatformSdk
     {
+        private bool _readyWasCalled;
+        
         public IEnumerator Initialize()
         {
             yield return Agava.YandexGames.YandexGamesSdk.Initialize();
@@ -16,8 +18,16 @@ namespace YellowSquad.GamePlatformSdk
                 _ => Language.Russian
             };
 
-            Agava.YandexGames.YandexGamesSdk.GameReady();
             Initialized = true;
+        }
+
+        public void Ready()
+        {
+            if (_readyWasCalled)
+                return;
+            
+            Agava.YandexGames.YandexGamesSdk.GameReady();
+            _readyWasCalled = true;
         }
 
         public bool Initialized { get; private set; }

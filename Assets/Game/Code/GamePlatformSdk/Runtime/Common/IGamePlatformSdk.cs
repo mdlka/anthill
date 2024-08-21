@@ -6,6 +6,8 @@ namespace YellowSquad.GamePlatformSdk
     {
         IEnumerator Initialize();
 
+        void Ready();
+
         bool Initialized { get; }
         IAdvertisement Advertisement { get; }
         ISave Save { get; }
