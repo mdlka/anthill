@@ -90,9 +90,12 @@ namespace YellowSquad.Anthill.Application
             if (_needDebugSdk)
                 GamePlatformSdkContext.EnableLanguageDebug(_debugLanguage);
 #endif
-            
+
             if (GamePlatformSdkContext.Current.Initialized == false)
+            {
                 yield return GamePlatformSdkContext.Current.Initialize();
+                yield return GamePlatformSdkContext.Current.Advertisement.ShowInterstitial();
+            }
 
             _save = GamePlatformSdkContext.Current.Save;
             
