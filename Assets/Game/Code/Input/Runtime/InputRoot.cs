@@ -26,6 +26,7 @@ namespace YellowSquad.Anthill.UserInput
         private int _lastPointerId;
         private float _lastPointerUpTime;
         private bool _cameraMoving;
+        private bool _hasFocus = true;
         
         private Plane _lowerPlane;
         private Plane _upperPlane;
@@ -46,6 +47,9 @@ namespace YellowSquad.Anthill.UserInput
 
         public void Update(float deltaTime)
         {
+            if (_hasFocus == false)
+                return;
+            
             _input.Update();
             
             float zoomDelta = _input.ZoomDelta;
@@ -60,6 +64,20 @@ namespace YellowSquad.Anthill.UserInput
             
             if (_input.HasPointerUp)
                 OnPointerUp(_input.ReadPointerUp());
+        }
+
+        public void LostFocus()
+        {
+            _hasFocus = false;
+
+            _pointers.Clear();
+            _cameraMoving = false;
+            _lastPointerUpTime = Time.realtimeSinceStartup;
+        }
+
+        public void ReturnFocus()
+        {
+            _hasFocus = true;
         }
 
         private void OnPointerDown(int pointerId)

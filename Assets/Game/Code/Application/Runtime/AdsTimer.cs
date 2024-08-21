@@ -2,6 +2,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using YellowSquad.Anthill.UserInput;
 using YellowSquad.GamePlatformSdk;
 using YellowSquad.Utils;
 
@@ -16,22 +17,20 @@ namespace YellowSquad.Anthill.Application
 
         private bool _timerStarted;
         
-        internal bool ShowAds { get; private set; }
-
         private void Awake()
         {
             _canvasGroup.Disable();
         }
 
-        public void StartTimer(int delayInSeconds)
+        public void StartTimer(int delayInSeconds, InputRoot inputRoot)
         {
             if (_timerStarted)
                 throw new InvalidOperationException();
 
-            StartCoroutine(Working(delayInSeconds));
+            StartCoroutine(Working(delayInSeconds, inputRoot));
         }
 
-        private IEnumerator Working(int delayInSeconds)
+        private IEnumerator Working(int delayInSeconds, InputRoot inputRoot)
         {
             while (true)
             {
@@ -43,8 +42,9 @@ namespace YellowSquad.Anthill.Application
                 int elapsedTime = 0;
                 _timerText.text = $"{_warningText.SelectCurrentLanguageText()}: {_delayBeforeAdsInSeconds}";
                 _canvasGroup.Enable(0.2f);
-
-                ShowAds = true;
+                
+                inputRoot.LostFocus();
+                Time.timeScale = 0;
 
                 while (elapsedTime < _delayBeforeAdsInSeconds)
                 {
@@ -57,7 +57,8 @@ namespace YellowSquad.Anthill.Application
                 _canvasGroup.Disable();
                 yield return GamePlatformSdkContext.Current.Advertisement.ShowInterstitial();
 
-                ShowAds = false;
+                inputRoot.ReturnFocus();
+                Time.timeScale = 1;
             }
         }
     }

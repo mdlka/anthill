@@ -198,19 +198,19 @@ namespace YellowSquad.Anthill.Application
 
             if (_skipTutorial || _save.HasKey(SaveConstants.TutorialSaveKey) || _levelList.CurrentLevelIsTutorial == false)
             {
-                _adsTimer.StartTimer(_delayBetweenAdsInSeconds);
+                _adsTimer.StartTimer(_delayBetweenAdsInSeconds, _inputRoot);
                 yield break;
             }
             
             yield return _tutorialRoot.StartTutorial(map, _anthill, _diggerTaskStorage, shopButtons[0], shopButtons[1]);
             _save.SetInt(SaveConstants.TutorialSaveKey, 1);
             
-            _adsTimer.StartTimer(_delayBetweenAdsInSeconds);
+            _adsTimer.StartTimer(_delayBetweenAdsInSeconds, _inputRoot);
         }
 
         private void Update()
         {
-            if (GamePlatformSdkContext.Current.Initialized == false || _gameInitialized == false || _adsTimer.ShowAds)
+            if (GamePlatformSdkContext.Current.Initialized == false || _gameInitialized == false)
                 return;
             
             _stopwatch.Update(Time.deltaTime * _timeScale.Value);
