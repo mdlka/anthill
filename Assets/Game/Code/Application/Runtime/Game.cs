@@ -96,10 +96,9 @@ namespace YellowSquad.Anthill.Application
 #endif
 
             if (GamePlatformSdkContext.Current.Initialized == false)
-            {
                 yield return GamePlatformSdkContext.Current.Initialize();
-                yield return GamePlatformSdkContext.Current.Advertisement.ShowInterstitial();
-            }
+            
+            yield return GamePlatformSdkContext.Current.Advertisement.ShowInterstitial();
 
             _save = GamePlatformSdkContext.Current.Save;
             
