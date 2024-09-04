@@ -8,11 +8,11 @@
       "hash": "32d39130ea78dce0c3ea0ed83ec5f022efefde42"
     },
     "com.agava.yandexgames": {
-      "version": "https://github.com/forcepusher/com.agava.yandexgames.git#16.1.1",
+      "version": "https://github.com/mdlka/com.agava.yandexgames.git#16.2.0",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "3bdb25b6765d133a66c5032258d772a5ac5d58b8"
+      "hash": "6f56be9cccf1bcf4f59ccf2542f2703356f1a982"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -154,9 +154,9 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
+        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"
