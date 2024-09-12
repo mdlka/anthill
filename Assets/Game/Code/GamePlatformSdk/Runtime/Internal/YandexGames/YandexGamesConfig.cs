@@ -35,12 +35,17 @@ namespace YellowSquad.GamePlatformSdk
             yield return new WaitUntil(() => _loaded);
         }
 
-        public string ValueBy(string key)
+        public string GetString(string key)
         {
             if (_loaded == false)
                 throw new InvalidOperationException();
 
             return _config[key];
+        }
+
+        public int GetInt(string key)
+        {
+            return int.Parse(GetString(key));
         }
     }
 }

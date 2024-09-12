@@ -7,6 +7,7 @@ namespace YellowSquad.GamePlatformSdk
     {
         IEnumerator Load(Dictionary<string, string> defaultConfig);
         
-        string ValueBy(string key);
+        string GetString(string key);
+        int GetInt(string key);
     }
 }

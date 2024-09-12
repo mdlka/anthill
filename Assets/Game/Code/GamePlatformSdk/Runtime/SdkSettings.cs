@@ -2,6 +2,6 @@
 {
     internal static class SdkSettings
     {
-        public const long MinIntervalBetweenAdsInSeconds = 60;
+        public const long MinIntervalBetweenAdsInSeconds = 30;
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Agava.WebUtility;
 using Newtonsoft.Json;
@@ -96,11 +97,18 @@ namespace YellowSquad.Anthill.Application
 #endif
 
             if (GamePlatformSdkContext.Current.Initialized == false)
+            {
                 yield return GamePlatformSdkContext.Current.Initialize();
+                yield return GamePlatformSdkContext.Current.Config.Load(new Dictionary<string, string>
+                {
+                    { ConfigConstants.DelayBetweenAdsInSeconds, _delayBetweenAdsInSeconds.ToString() }
+                });
+            }
             
             yield return GamePlatformSdkContext.Current.Advertisement.ShowInterstitial();
 
             _save = GamePlatformSdkContext.Current.Save;
+            var config = GamePlatformSdkContext.Current.Config;
             
             if (_levelList.Initialized == false)
                 _levelList.Initialize(_save);
@@ -197,14 +205,14 @@ namespace YellowSquad.Anthill.Application
 
             if (_skipTutorial || _save.HasKey(SaveConstants.TutorialSaveKey) || _levelList.CurrentLevelIsTutorial == false)
             {
-                _adsTimer.StartTimer(_delayBetweenAdsInSeconds, _inputRoot);
+                _adsTimer.StartTimer(config.GetInt(ConfigConstants.DelayBetweenAdsInSeconds), _inputRoot);
                 yield break;
             }
             
             yield return _tutorialRoot.StartTutorial(map, _anthill, _diggerTaskStorage, shopButtons[0], shopButtons[1]);
             _save.SetInt(SaveConstants.TutorialSaveKey, 1);
             
-            _adsTimer.StartTimer(_delayBetweenAdsInSeconds, _inputRoot);
+            _adsTimer.StartTimer(config.GetInt(ConfigConstants.DelayBetweenAdsInSeconds), _inputRoot);
         }
 
         private void Update()
