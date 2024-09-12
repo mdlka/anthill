@@ -33,6 +33,7 @@ namespace YellowSquad.GamePlatformSdk
         public bool Initialized { get; private set; }
 
         public IAdvertisement Advertisement { get; } = new YandexGamesAdvertisement();
+        public IConfig Config { get; } = new YandexGamesConfig();
         public ISave Save { get; } = new YandexGamesCloudSave();
         public Language Language { get; private set; }
     }

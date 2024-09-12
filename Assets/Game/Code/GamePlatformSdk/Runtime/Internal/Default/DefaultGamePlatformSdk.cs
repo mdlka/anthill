@@ -26,6 +26,7 @@ namespace YellowSquad.GamePlatformSdk
 
         public bool Initialized { get; private set; }
         public IAdvertisement Advertisement { get; } = new DefaultAdvertisement();
+        public IConfig Config { get; } = new LocalConfig();
         public ISave Save { get; } = new PlayerPrefsSave();
         public Language Language { get; private set; }
     }

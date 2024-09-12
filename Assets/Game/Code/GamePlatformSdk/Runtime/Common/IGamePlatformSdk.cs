@@ -10,8 +10,9 @@ namespace YellowSquad.GamePlatformSdk
 
         bool Initialized { get; }
         IAdvertisement Advertisement { get; }
+        IConfig Config { get; }
         ISave Save { get; }
-        
+
         Language Language { get; }
     }
 }
