@@ -105,7 +105,9 @@ namespace YellowSquad.Anthill.Application
                 });
             }
             
+#if !VK_GAMES
             yield return GamePlatformSdkContext.Current.Advertisement.ShowInterstitial();
+#endif
 
             _save = GamePlatformSdkContext.Current.Save;
             var config = GamePlatformSdkContext.Current.Config;
