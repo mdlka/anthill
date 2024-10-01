@@ -10,6 +10,8 @@
         {
 #if YANDEX && !UNITY_EDITOR
             Current = new YandexGamesSdk();
+#elif VK_GAMES && !UNITY_EDITOR
+            Current = new VkGamesSdk();
 #else
             Current = new DefaultGamePlatformSdk();
 #endif
