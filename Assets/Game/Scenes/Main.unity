@@ -3300,7 +3300,7 @@ MonoBehaviour:
         <Text>k__BackingField: "\u0414\u043E\u0431\u044B\u0442\u0447\u0438\u043A"
       - <Language>k__BackingField: 2
         <Text>k__BackingField: "Ta\u015F\u0131y\u0131c\u0131"
-  _delayBetweenAdsInSeconds: 180
+  _delayBetweenAdsInSeconds: 60
   _adsTimer: {fileID: 173341664}
   _needDebugSdk: 0
   _debugLanguage: 0
