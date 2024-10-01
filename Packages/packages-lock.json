@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.agava.vkgames": {
+      "version": "https://github.com/mdlka/com.agava.vkgames.git#2.0.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d60ebb7db4f72bc9848487d869cbf29a1e26f28e"
+    },
     "com.agava.webutility": {
       "version": "https://github.com/forcepusher/com.agava.webutility.git#3.1.0",
       "depth": 0,
