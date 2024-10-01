@@ -12,6 +12,7 @@ namespace YellowSquad.GamePlatformSdk
         IAdvertisement Advertisement { get; }
         IConfig Config { get; }
         ISave Save { get; }
+        ISocialInteraction SocialInteraction { get; }
 
         Language Language { get; }
     }

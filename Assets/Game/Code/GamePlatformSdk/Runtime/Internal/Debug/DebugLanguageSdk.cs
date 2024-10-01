@@ -26,6 +26,7 @@ namespace YellowSquad.GamePlatformSdk
         public IAdvertisement Advertisement => _targetSdk.Advertisement;
         public IConfig Config => _targetSdk.Config;
         public ISave Save => _targetSdk.Save;
+        public ISocialInteraction SocialInteraction => _targetSdk.SocialInteraction;
         public Language Language { get; }
     }
 }

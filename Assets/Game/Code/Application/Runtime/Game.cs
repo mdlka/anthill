@@ -110,6 +110,10 @@ namespace YellowSquad.Anthill.Application
 #endif
 
             _save = GamePlatformSdkContext.Current.Save;
+
+            if (_save.HasKey(SaveConstants.TutorialSaveKey))
+                GamePlatformSdkContext.Current.SocialInteraction.InviteFriends();
+            
             var config = GamePlatformSdkContext.Current.Config;
             
             if (_levelList.Initialized == false)

@@ -35,6 +35,7 @@ namespace YellowSquad.GamePlatformSdk
         public IAdvertisement Advertisement { get; } = new YandexGamesAdvertisement();
         public IConfig Config { get; } = new YandexGamesConfig();
         public ISave Save { get; } = new YandexGamesCloudSave();
+        public ISocialInteraction SocialInteraction { get; } = new NullableSocialInteraction();
         public Language Language { get; private set; }
     }
 }

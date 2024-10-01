@@ -20,6 +20,7 @@ namespace YellowSquad.GamePlatformSdk
         public IAdvertisement Advertisement { get; } = new VkGamesAdvertisement();
         public IConfig Config { get; } = new LocalConfig();
         public ISave Save { get; } = new PlayerPrefsSave();
+        public ISocialInteraction SocialInteraction { get; } = new VkSocialInteraction();
         public Language Language { get; private set; }
     }
 }

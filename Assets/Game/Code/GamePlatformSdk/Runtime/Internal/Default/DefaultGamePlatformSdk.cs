@@ -28,6 +28,7 @@ namespace YellowSquad.GamePlatformSdk
         public IAdvertisement Advertisement { get; } = new DefaultAdvertisement();
         public IConfig Config { get; } = new LocalConfig();
         public ISave Save { get; } = new PlayerPrefsSave();
+        public ISocialInteraction SocialInteraction { get; } = new NullableSocialInteraction();
         public Language Language { get; private set; }
     }
 }
